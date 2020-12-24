@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<form action="action_page.php">
+<style>
+  body { 
+  background-image: url("drive-download-20201223T155423Z-001/0_GRID/IG 1x3.png");
+  background-size: 100%;
+  }
+
+  .btn {
+    background-color: #f4511e;
+    border: none;
+    outline : none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 12px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    font-family: "Mechanical Pencil", "Mechanical Pencil", monospace;
+  }
+  .btn:hover {opacity: 1}
+
+  input[type=text]{
+  width: 30%;
+  padding: 6px 10px;
+  margin: 2px 0;
+  border: none;
+  font-family: "Mechanical Pencil", "Mechanical Pencil", monospace;
+  }
+  
+  h4{
+    color: #009562;
+  }
+
+  img{
+    transform: rotate(43.51deg);
+  }
+  </style>
+
+<body style="font-family:Mechanical Pencil">
+  <div class="container">
+    <h2>let's get to know you!</h2>
+
+      <div class="container mt-3">
+        <div class="media border p-3">
+            <img src="drive-download-20201223T155423Z-001/0_VISTOCK/MASKOT/emo-fear.png" alt="emo-fear" width=80 height=80>
+          <div class="media-body">
+            <h4>uhm.. your name?</h4>
+            <label for="name"></label>
+            <input type="text" id="Name" placeholder="Name" name="name" required> <br> <br> 
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-3">
+        <div class="media border p-3">
+            <img src="drive-download-20201223T155423Z-001/0_VISTOCK/MASKOT/emo-anger.png" alt="emo-anger" width=80 height=80>
+          <div class="media-body">
+            <h4>Where are you from!!</h4>
+            <label for="ins"></label>
+            <input type="text" id="Ins" placeholder="Institution" name="ins" required><br> <br>
+          </div>
+        </div>
+      </div>
+
+
+  <button class="btn">Submit</button>
+  </div>
+  </div>
+</body>  
+</form>
