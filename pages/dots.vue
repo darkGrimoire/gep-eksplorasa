@@ -1,19 +1,15 @@
 <template>
-  <div class="connect-dots_page">
+  <div class="connect_dots_page">
     <div class="title">
       <h3>CONNECT THE DOTS</h3>
     </div>
     <canvas id="test_canvas" @mousedown="createDoodle" />
+    <div class="dots_teks">
+    </div>
     <div class="footer">
-      <button id="back_button">
-        Back
-      </button>
-      <button id="skip_button">
-        Skip
-      </button>
-      <button id="next_button">
-        Next
-      </button>
+      <button id="back_button">Back</button>
+      <button id="skip_button" @click="skipCanvas()">Skip</button>
+      <button id="next_button">Next</button>
     </div>
   </div>
 </template>
@@ -59,23 +55,34 @@ export default {
         ctx.fillRect(this.coord[i][0], this.coord[i][1], 5, 5)
       }
     },
+    createLine(coord_awal, coord_akhir) {
+      let c = document.getElementById("test_canvas")
+      let ctx = c.getContext("2d")
+      ctx.beginPath()
+      ctx.moveTo(coord_awal[0], coord_awal[1])
+      ctx.lineTo(coord_akhir[0], coord_akhir[1])
+      ctx.strokeStyle = "black"
+      ctx.stroke()
+    },
     removeSkip() {
       document.getElementById("skip_button").style.visibility = "hidden"
+    },
+    skipCanvas() {
+      while (this.pos < this.coord.length - 1) {
+        this.createLine(this.coord[this.pos], this.coord[this.pos + 1])
+        this.pos = this.pos + 1
+      }
+      this.removeSkip()
     },
     createDoodle: function(event) {
       if (this.pos >= this.coord.length - 1) {
         return
       }
       let c = document.getElementById("test_canvas")
-      let ctx = c.getContext("2d")
       let x = this.getCursorPosition(c, event)
       let is_in_position = this.isPointInRange(x, this.coord[this.pos + 1])
       if (is_in_position) {
-        ctx.beginPath()
-        ctx.moveTo(this.coord[this.pos][0], this.coord[this.pos][1])
-        ctx.lineTo(this.coord[this.pos + 1][0], this.coord[this.pos + 1][1])
-        ctx.strokeStyle = "black"
-        ctx.stroke()
+        this.createLine(this.coord[this.pos], this.coord[this.pos + 1])
         this.pos = this.pos + 1
         if (this.pos == this.coord.length - 1) {
           this.removeSkip()
@@ -87,6 +94,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.connect_dots_page {
+    font-family: 'Mechanical Pencil';
+    font-size: 40px;
+}
 .title {
   text-align: center;
   margin: 10px 0px 15px 0px;
