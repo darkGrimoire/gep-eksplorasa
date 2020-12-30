@@ -42,7 +42,7 @@ export default {
   .outer-container { 
   background-image: url("/bg_home.jpg");
   background-size: cover;
-  height: 100%;
+  height: 100vh;
   // object-fit: cover;
   font-family: Mechanical Pencil;
   display: flex;
