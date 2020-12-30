@@ -1,31 +1,33 @@
 <template>
-    <div class="outer-container">
-        <div class="slideshow">
-            <div class="logo">
-                <img src="/logo/EKSPLO2_UTAMA.png" style="width:100%">
-            </div>
+  <div class="outer-container">
+    <div class="slideshow">
+      <div class="logo">
+        <img src="/logo/EKSPLO2_UTAMA.png" style="width:100%">
+      </div>
 
-            <div class="logo"> 
-                <img src="/logo/EKSPLO2_ijo.png" style="width:100%">
-            </div>
+      <div class="logo"> 
+        <img src="/logo/EKSPLO2_ijo.png" style="width:100%">
+      </div>
 
-            <div class="logo">
-                <img src="/logo/EKSPLO2_kuning.png" style="width:100%">
-            </div>
+      <div class="logo">
+        <img src="/logo/EKSPLO2_kuning.png" style="width:100%">
+      </div>
 
-            <div class="logo">
-                <img src="/logo/EKSPLO2_merah.png" style="width:100%">
-            </div>
+      <div class="logo">
+        <img src="/logo/EKSPLO2_merah.png" style="width:100%">
+      </div>
 
-            <div class="logo">
-                <img src="/logo/EKSPLO2_biru.png" style="width:100%">
-            </div>
-        </div>
-
-        <div class="start">
-            <button type="button">start explore!</button>
-        </div>
+      <div class="logo">
+        <img src="/logo/EKSPLO2_biru.png" style="width:100%">
+      </div>
     </div>
+
+    <div class="start">
+      <button type="button">
+        start explore!
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -40,7 +40,7 @@ export default {
 
 <style lang="scss">
   .outer-container { 
-  background-image: url("/bg_home.png");
+  background-image: url("/bg_home.jpg");
   background-size: cover;
   height: 100%;
   // object-fit: cover;
