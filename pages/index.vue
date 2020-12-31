@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <form action="/action_page.php">
+    <form v-show="!storage">
       <label for="nama">Nama</label>
-      <input type="text" id="nama" placeholder="Masukkan nama" v-model="form.nama">
+      <input type="text" id="nama" placeholder="Masukkan nama" v-model="form.nama" autocomplete="off">
 
       <label for="institusi">Institusi</label>
-      <input type="text" id="institusi" placeholder="Dari institusi mana?" v-model="form.institusi">
+      <input type="text" id="institusi" placeholder="Dari institusi mana?" v-model="form.institusi" autocomplete="off">
 
       <input type="submit" value="Submit" @click.prevent="submit">
+      <br>
     </form>
+    <br><div>ada di storage = {{ storage?"ada":"belum" }}<br><input type="button" @click.prevent="hapusstorage" value="Hapus" v-show="storage"></div>
   </div>
 </template>
 
@@ -17,12 +19,30 @@
 export default {
   name: 'Bukutamu',
   data() {
-    return {form:{
-      nama: "",
-      institusi: ""
-    }
+    return {
+      storage: false,
+      form:{
+        nama: "",
+        institusi: ""
+      }
   }},
+  mounted() {
+    this.tulishasilcekstorage()
+  },
   methods:{
+    hapusstorage(){
+      if(this.cekstorage()){
+        localStorage.removeItem("nama")
+        localStorage.removeItem("visited")
+        window.location.reload()
+      }
+    },
+    cekstorage(){
+      return (localStorage.getItem("nama") && localStorage.getItem("nama")!="" && localStorage.getItem("visited"))
+    },
+    tulishasilcekstorage(){
+      this.storage = this.cekstorage()
+    },
     submit(){
       const data = {
           nama: this.form.nama,
@@ -34,9 +54,13 @@ export default {
         }
         return this.$fire.firestore.collection('bukutamu').add({
           ...data
-        }).then(() => {
-          console.log("ok")
-          return true
+        }).then(() => 
+        {
+          if(process.client){
+            localStorage.setItem("nama", this.nama)
+            localStorage.setItem("visited", true)
+            return window.location.reload()
+          }
         }).catch(() => {
           console.log("gk")
           return false
@@ -62,7 +86,7 @@ input[type=text], select, textarea {
   resize: vertical;
 }
 
-input[type=submit] {
+input[type=submit],[type=button] {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
@@ -71,7 +95,7 @@ input[type=submit] {
   cursor: pointer;
 }
 
-input[type=submit]:hover {
+input[type=submit],[type=button]:hover {
   background-color: #45a049;
 }
 
