@@ -10,7 +10,7 @@
       <input type="submit" value="Submit" @click.prevent="submit">
       <br>
     </form>
-    <br><div>ada di storage = {{ storage?"ada":"belum" }}<br><input type="button" @click.prevent="hapusstorage" value="Hapus" v-show="storage"></div>
+    <br><div>Ada di storage = {{ storage?"ada":"belum" }}<br><span v-show="form.visited">Nama = {{ form.nama }}</span><br><input type="button" @click.prevent="hapusstorage" value="Hapus" v-show="storage"></div>
   </div>
 </template>
 
@@ -42,6 +42,8 @@ export default {
     },
     tulishasilcekstorage(){
       this.storage = this.cekstorage()
+      this.form.nama = localStorage.getItem("nama")
+      this.form.visited = localStorage.getItem("visited")
     },
     submit(){
       const data = {
@@ -57,7 +59,7 @@ export default {
         }).then(() => 
         {
           if(process.client){
-            localStorage.setItem("nama", this.nama)
+            localStorage.setItem("nama", this.form.nama)
             localStorage.setItem("visited", true)
             return window.location.reload()
           }
