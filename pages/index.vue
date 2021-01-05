@@ -1,97 +1,158 @@
 <template>
-  <div class="outer-container">
-    <h2>let's get to know you!</h2>
+  <div class="container">
+    <div class="content">
+      <div class="atas">
+        <div class="fear">
+          <img src="/maskot/emo-fear.png" style="width:100%">
+        </div>
 
-    <div class="container">
-      <div class="media border">
-        <img src="/maskot/emo-fear.png" alt="emo-fear" width="80" height="80">
-        <div class="media-body">
-          <h4>uhm.. your name?</h4>
-          <label for="name" />
-          <input id="Name" class="input-box" type="text" placeholder="Name" name="name" required> <br> <br> 
+        <div class="sad">
+          <img src="/maskot/emo-sad.png" style="width:100%">
+        </div>
+      </div>
+
+      <div class="slideshow">
+        <!-- placeholder -->
+        <div class="logo"> 
+          <img src="/logo/EKSPLO2_kuning.png" style="width:100%">
+        </div>
+      </div>
+
+      <div class="start">
+        <button type="button">
+          <a href="/bukutamu">start explore!</a>
+        </button>
+      </div>
+
+      <div class="bawah">
+        <div class="joy">
+          <img src="/maskot/emo-joy.png" style="width:100%">
+        </div>
+
+        <div class="anger">
+          <img src="/maskot/emo-anger.png" style="width:100%">
         </div>
       </div>
     </div>
-
-    <div class="container">
-      <div class="media border">
-        <img src="/maskot/emo-anger.png" alt="emo-anger" width="80" height="80">
-        <div class="media-body">
-          <h4>Where are you from!!</h4>
-          <label for="ins" />
-          <input id="Ins" type="text" placeholder="Institution" name="ins" required><br> <br>
-        </div>
-      </div>
-    </div>
-
-
-    <button class="btn">
-      Submit
-    </button>
   </div>
 </template>
 
 <script>
-
-export default {
-  name: 'Landing'
-}
+    export default {
+        
+    }
 </script>
 
-<style lang="scss">
-  .outer-container { 
-  background-image: url("/bg_home.jpg");
-  background-size: cover;
-  height: 100vh;
-  // object-fit: cover;
-  font-family: Mechanical Pencil;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  }
+<style lang="scss" scoped>
+    * {
+        box-sizing: border-box;
+    }
 
-  .media {
-    display: flex;
-    margin-left: 35%;
-  }
+    a {
+      color:inherit;
+      text-decoration: none;
+    }
 
-  .btn {
-    background-color: #f4511e;
-    border: none;
-    outline : none;
-    color: white;
-    padding: 12px 24px;
-    text-align: center;
-    font-size: 12px;
-    margin: 4px 2px;
-    opacity: 0.6;
-    transition: 0.3s;
-    font-family: "Mechanical Pencil", "Mechanical Pencil", monospace;
-  }
-  .btn:hover {opacity: 1}
+    .container {
+        background-image: url("/bg_home.jpg");
+        background-size: cover;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    img {
+        vertical-align: middle;
+    }
 
-  input[type=text]{
-  width: 350px;
-  padding: 6px 10px;
-  margin: 2px 0;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  font-size: 24px;
-  font-family: "Mechanical Pencil", "Mechanical Pencil", monospace;
-  }
+    .fear {
+        max-width: 150px;
+        position: relative;
+        margin-right: 175px;
+        transform: rotate(45deg);
+        transition: transform 1s;
+    }
 
-  h2 {
-    font-size: 50px;
-  }
-  
-  h4{
-    color: #009562;
-    font-size: 30px;
-  }
+    .fear:hover {
+        transform: rotate(20deg);
+    }
 
-  img{
-    transform: rotate(43.51deg);
-  }
+    .sad {
+        max-width: 150px;
+        position: relative;
+        margin-left: 175px;
+        transition: transform 1s;
+    }
+
+    .sad:hover {
+        transform: rotate(25deg);
+    }
+
+    .joy {
+        max-width: 150px;
+        position: relative;
+        margin-right: 300px;
+        transform: rotate(20deg);
+        transition: transform 1s;
+    }
+
+    .joy:hover {
+        transform: rotate(-20deg);
+    }
+
+    .anger {
+        max-width: 150px;
+        position: relative;
+        margin-left: 300px;
+        transform: rotate(-20deg);
+        transition: transform 1s;
+    }
+
+    .anger:hover {
+        transform: rotate(20deg);
+    }
+
+    .atas {
+        display: flex;
+        justify-content: center;
+        padding: 50px;
+    }
+
+    .bawah {
+        display: flex;
+        justify-content: center;
+        padding: 25px;
+    }
+
+    /* Slideshow container */
+    .slideshow {
+      max-width: 1000px;
+      position: relative;
+      margin: auto;
+    }
+
+    .start {
+        align-content: center;
+        vertical-align: middle;
+        padding: 20px;
+    }
+
+    button {
+        font-family: Mechanical Pencil;
+        font-size: 50px;
+        align-content: center;
+        vertical-align: middle;
+        background-color: transparent;
+        border: none;
+        transition: 0.5s;
+        padding: 10px;
+    }
+
+    button:hover {
+      background-color: black;
+      color: white;
+    }
 </style>
