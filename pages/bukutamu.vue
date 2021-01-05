@@ -155,8 +155,7 @@ export default {
 
   .submitcls {
     margin-top: 75px;
-    display: flex;
-    align-content: stretch;
+    margin-right: 125px;
   }
 
 </style>
