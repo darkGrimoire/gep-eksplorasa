@@ -1,40 +1,40 @@
 <template>
-<div class="container">
+  <div class="container">
     <div class="content">
-        <div class="atas">
-            <div class="fear">
-                <img src="/maskot/emo-fear.png" style="width:100%">
-            </div>
-
-            <div class="sad">
-                <img src="/maskot/emo-sad.png" style="width:100%">
-            </div>
+      <div class="atas">
+        <div class="fear">
+          <img src="/maskot/emo-fear.png" style="width:100%">
         </div>
 
-        <div class="slideshow">
-            <!-- placeholder -->
-            <div class="logo"> 
-                <img src="/logo/EKSPLO2_kuning.png" style="width:100%">
-            </div>
+        <div class="sad">
+          <img src="/maskot/emo-sad.png" style="width:100%">
+        </div>
+      </div>
+
+      <div class="slideshow">
+        <!-- placeholder -->
+        <div class="logo"> 
+          <img src="/logo/EKSPLO2_kuning.png" style="width:100%">
+        </div>
+      </div>
+
+      <div class="start">
+        <button type="button">
+          start explore!
+        </button>
+      </div>
+
+      <div class="bawah">
+        <div class="joy">
+          <img src="/maskot/emo-joy.png" style="width:100%">
         </div>
 
-        <div class="start">
-            <button type="button">
-                start explore!
-            </button>
+        <div class="anger">
+          <img src="/maskot/emo-anger.png" style="width:100%">
         </div>
-
-        <div class="bawah">
-            <div class="joy">
-                <img src="/maskot/emo-joy.png" style="width:100%">
-            </div>
-
-            <div class="anger">
-                <img src="/maskot/emo-anger.png" style="width:100%">
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -51,8 +51,7 @@
     .container {
         background-image: url("/bg_home.jpg");
         background-size: cover;
-        height: 100%;
-        width: 100%;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
