@@ -1,17 +1,38 @@
 <template>
   <div class="page-container">
-    <div class="main-container">
+    <canvas 
+      id="canvasTop"
+      ref="canvas" 
+      class="canvas"
+      @click="handleClick"
+      @mousemove="handleMouseMove" 
+    />
+    <div ref="mainContainer" class="main-container">
       <img src="/gif/uc-text.gif" class="text-gif">
       <img src="/gif/house.gif" class="house-gif">
       <div class="countdown-container">
+        <div class="count-text">
+          <div class="number">
+            {{ days }}
+          </div>
+          <div class="text">
+            DAYS
+          </div>
+          <div class="number">
+            {{ hours }}
+          </div>
+          <div class="text">
+            HOURS
+          </div>
+        </div>
         <img src="/gif/countdown.gif" class="count-gif">
       </div>
     </div>
     <div class="link-container">
-      <a href="https://www.instagram.com/geplfm/">
+      <a href="https://www.instagram.com/geplfm/" target="_blank">
         <img class="link" src="/img/ig.png">
       </a>
-      <a href="https://www.twitter.com/GEPLFMITB">
+      <a href="https://www.twitter.com/GEPLFMITB" target="_blank">
         <img src="/img/twitter.png" class="link">
       </a>
     </div>
@@ -19,11 +40,75 @@
 </template>
 
 <script>
-
+const gepDate = new Date(2021, 1, 22)
 export default {
   name: 'UnderConstruction',
- 
-}
+  data () {
+      return {
+        timerInterval: null,
+        days: 0,
+        hours: 0,
+        radius: 70,
+        canvas: null,
+        offsetX: null,
+        offsetY: null,
+        startX: null,
+        startY: null,
+        isDown: false
+      }
+    },
+    mounted () {
+      this.setupCanvas()
+      this.updateTimer()
+      this.startCountdown()
+
+    },
+    methods: {
+      updateTimer () {
+        const now = new Date().setMinutes(0,0,0)
+        const remainingHour = Math.floor((gepDate - now) / 1000 / 60 / 60)
+        this.days = Math.floor(remainingHour / 24) 
+        this.hours = Math.floor(remainingHour % 24) 
+      },
+      startCountdown () {
+        this.timerInterval = setInterval(() => this.updateTimer(), 1000 * 60)
+      },
+      setupCanvas(){
+        const canvas = this.$refs.canvas
+        canvas.height = window.innerHeight
+        canvas.width = window.innerWidth
+        const ctx = canvas.getContext('2d')
+        ctx.fillStyle = "#d1bb10"
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        // set "erase" compositing once at start of app for better performance
+        ctx.globalCompositeOperation = "destination-out"
+        this.canvas = ctx
+      }, 
+      handleMouseMove(e) {
+        this.erase(this.getXY(e))
+      },
+      getXY(e){
+        console.log(e)
+        const r = this.$refs.canvas.getBoundingClientRect()
+        return { 
+          x: e.clientX - r.left, 
+          y: e.clientY - r.top 
+        }
+      },
+      erase(pos) {
+        this.canvas.beginPath()
+        console.log(pos)
+        this.canvas.arc(pos.x, pos.y, this.radius, 0, 2 * Math.PI)
+        this.canvas.closePath()
+        this.canvas.fill()
+      },
+      handleClick(e){
+        //console.log(document.elementsFromPoint(e.clientX,e.clientY)[1].click())
+        document.elementsFromPoint(e.clientX,e.clientY)[1].click()
+        // this.$refs.mainContainer.click
+      }
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -34,10 +119,20 @@ export default {
   .page-container {
     position: relative;
     background-image: url("/img/uc-bg.png");
+    background-size: 100% auto;
+    background-repeat: repeat-y;
     background-position: center top;
     height: 100vh;
     width: 100vw;
 
+    .canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 2;
+    }
     .main-container {
       display: flex;
       flex-direction: column;
@@ -65,6 +160,19 @@ export default {
 
         .count-text{
           position: absolute;
+          width: 70%;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          top: 53%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #e14423;
+
+         .number {
+            font-family: 'KG HAPPY Solid';
+            font-size: 3.5rem;
+          }
         }
       }
     }
@@ -73,10 +181,91 @@ export default {
       position: absolute;
       bottom: 20px;
       left: 20px;
+     
 
       .link {
         width: 50px;
         margin-left: 25px;
+      }
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .page-container {
+      .main-container {
+        .text-gif {
+          width: 80vw;
+        }
+        .house-gif {
+          margin-top: 30px;
+          width: 60vw;
+        }
+        .countdown-container{
+          margin-top: 60px;
+          width: 80vw;
+          .count-text{
+            .number {
+              font-size: 5rem;
+            }
+            .text {
+              font-size: 3rem;
+            }
+          }
+        }
+      }
+
+      .link-container {
+        bottom: 30px;
+        left: 40px;
+      
+        .link {
+          width: 70px;
+          margin-left: 30px;
+        }
+      }
+    }
+  }
+  @media (min-width: 461px) and (max-width: 540px) {
+    .name {
+      font-size: 20px;
+    }
+    .position {
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 460px) {
+    .page-container {
+      .main-container {
+        .text-gif {
+          width: 80vw;
+        }
+        .house-gif {
+          margin-top: 30px;
+          width: 70vw;
+        }
+        .countdown-container{
+          margin-top: 60px;
+          width: 90vw;
+          .count-text{
+            .number {
+              font-size: 2rem;
+            }
+            .text {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+
+      .link-container {
+        bottom: 15px;
+        left: 15px;
+     
+        .link {
+          width: 40px;
+          margin-left: 20px;
+        }
       }
     }
   }
