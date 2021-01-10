@@ -1,7 +1,6 @@
 <template>
   <div class="page-container">
     <canvas 
-      id="canvasTop"
       ref="canvas" 
       class="canvas"
       @click="handleClick"
@@ -66,9 +65,15 @@ export default {
     methods: {
       updateTimer () {
         const now = new Date().setMinutes(0,0,0)
-        const remainingHour = Math.floor((gepDate - now) / 1000 / 60 / 60)
-        this.days = Math.floor(remainingHour / 24) 
-        this.hours = Math.floor(remainingHour % 24) 
+        const remainingTime = gepDate - now
+        if (remainingTime > 0) {
+          const remainingHour = Math.floor(remainingTime / 1000 / 60 / 60)
+          this.days = Math.floor(remainingHour / 24) 
+          this.hours = Math.floor(remainingHour % 24) 
+        } else {
+          this.days = 0
+          this.hours = 0
+        }
       },
       startCountdown () {
         this.timerInterval = setInterval(() => this.updateTimer(), 1000 * 60)
@@ -80,7 +85,6 @@ export default {
         const ctx = canvas.getContext('2d')
         ctx.fillStyle = "#d1bb10"
         ctx.fillRect(0, 0, canvas.width, canvas.height)
-        // set "erase" compositing once at start of app for better performance
         ctx.globalCompositeOperation = "destination-out"
         this.canvas = ctx
       }, 
@@ -103,9 +107,7 @@ export default {
         this.canvas.fill()
       },
       handleClick(e){
-        //console.log(document.elementsFromPoint(e.clientX,e.clientY)[1].click())
         document.elementsFromPoint(e.clientX,e.clientY)[1].click()
-        // this.$refs.mainContainer.click
       }
     }
   }
@@ -192,6 +194,9 @@ export default {
   
   @media (max-width: 1024px) {
     .page-container {
+      .canvas {
+        display: none;
+      }
       .main-container {
         .text-gif {
           width: 80vw;
