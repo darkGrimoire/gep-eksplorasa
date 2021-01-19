@@ -1,29 +1,35 @@
 <template>
   <div class="container">
-    <img src="about us.png" class="aboutus">
-    
-    <div class="menu">
+    <div class="content">
+      <img src="about us.png" class="aboutus">
       
-      <div class="katalog">
-        <div class="katpng"></div>
-        Katalog<br>Karya
-      </div>
+      <div class="menu">
+        
+        <div class="sub1">
+          <div class="katalog">
+            <div class="katpng"></div>
+            Katalog<br>Karya
+          </div>
 
-      <div class="catkur">
-        <div class="kurpng"></div>
-        Catatan<br>Kuratorial
-      </div>
-      
-      <div class="gep">
-        <div class="gepng"></div>
-        About GEP
-      </div>
+          <div class="catkur">
+            <div class="kurpng"></div>
+            Catatan<br>Kuratorial
+          </div>
+        </div>
+        
+        <div class="sub2">
+          <div class="gep">
+            <div class="gepng"></div>
+            About GEP
+          </div>
 
-      <div class="merch">
-        <div class="merpng"></div>
-        Merch
-      </div>
+          <div class="merch">
+            <div class="merpng"></div>
+            Merch
+          </div>
+        </div>
 
+      </div>
     </div>
   </div>
 </template>
@@ -59,8 +65,14 @@ export default {
     flex-direction: row;
   }
 
-  .menu img {
-    height: 250px;
+  .sub1 {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .sub2 {
+    display: flex;
+    flex-direction: row;
   }
 
   .aboutus {
@@ -134,5 +146,73 @@ export default {
 
   .merch:hover .merpng {
     background-image: url("/merch_after.png");
+  }
+
+  @media only screen and (max-width: 1080px) {
+    .content {
+      transform: scale(0.9);
+    }
+    
+    .menu {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @media only screen and (max-width: 460px) {
+    .container {
+      background-image: url("/MERAH.png");
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      overflow: auto;
+    }
+
+    .content {
+      transform: scale(0.9);
+    }
+    
+    .menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sub1 {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sub2 {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .aboutus {
+      margin-bottom: 0px;
+    }
+
+    .katalog {
+      margin: 0px;
+      align-items: center;
+    }
+
+    .catkur {
+      margin: 0px;
+      align-items: center;
+    }
+
+    .gep {
+      margin: 0px;
+      align-items: center;
+    }
+
+    .merch {
+      margin: 0px;
+      align-items: center;
+    }
   }
 </style>
