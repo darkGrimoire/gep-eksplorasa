@@ -8,24 +8,24 @@
         <div class="sub1">
           <div class="katalog">
             <div class="katpng"></div>
-            Katalog<br>Karya
+            <a href="/">Katalog<br>Karya</a>
           </div>
 
           <div class="catkur">
             <div class="kurpng"></div>
-            Catatan<br>Kuratorial
+            <a href="/">Catatan<br>Kuratorial</a>
           </div>
         </div>
         
         <div class="sub2">
           <div class="gep">
             <div class="gepng"></div>
-            About GEP
+            <a href="/">About GEP</a>
           </div>
 
           <div class="merch">
             <div class="merpng"></div>
-            Merch
+            <a href="/">Merch</a>
           </div>
         </div>
 
@@ -58,6 +58,15 @@ export default {
     align-items: center;
     flex-direction: column;
     text-align: center;
+  }
+
+  a {
+    color: #d1bb10;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 
   .menu {
@@ -97,6 +106,10 @@ export default {
     background-image: url("/katalog_after.png");
   }
 
+  .katalog:hover a {
+    text-decoration: underline;
+  }
+
   .catkur {
     display: flex;
     flex-direction: column;
@@ -112,6 +125,10 @@ export default {
 
   .catkur:hover .kurpng {
     background-image: url("/catkur_after.png");
+  }
+
+  .catkur:hover a {
+    text-decoration: underline;
   }
 
   .gep {
@@ -131,6 +148,10 @@ export default {
     background-image: url("/gep_after.png");
   }
 
+  .gep:hover a {
+    text-decoration: underline;
+  }
+
   .merch {
     display: flex;
     flex-direction: column;
@@ -148,9 +169,13 @@ export default {
     background-image: url("/merch_after.png");
   }
 
+  .merch:hover a {
+    text-decoration: underline;
+  }
+
   @media only screen and (max-width: 1080px) {
     .content {
-      transform: scale(0.9);
+      transform: scale(0.85);
     }
     
     .menu {
@@ -163,17 +188,12 @@ export default {
     .container {
       background-image: url("/MERAH.png");
       background-size: cover;
-      height: 100vh;
+      height: auto;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       text-align: center;
-      overflow: auto;
-    }
-
-    .content {
-      transform: scale(0.9);
     }
     
     .menu {
@@ -193,6 +213,7 @@ export default {
 
     .aboutus {
       margin-bottom: 0px;
+      height: 150px;
     }
 
     .katalog {
@@ -200,9 +221,19 @@ export default {
       align-items: center;
     }
 
+    .katpng {
+      height: 200px;
+      width: 200px;
+    }
+
     .catkur {
       margin: 0px;
       align-items: center;
+    }
+
+    .kurpng {
+      height: 200px;
+      width: 200px;
     }
 
     .gep {
@@ -210,9 +241,19 @@ export default {
       align-items: center;
     }
 
+    .gepng {
+      height: 200px;
+      width: 200px;
+    }
+
     .merch {
       margin: 0px;
       align-items: center;
+    }
+
+    .merpng {
+      height: 200px;
+      width: 200px;
     }
   }
 </style>
