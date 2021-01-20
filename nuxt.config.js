@@ -25,6 +25,11 @@ export default {
   plugins: [
   ],
 
+  router: {
+    // ran before every route on both client and server
+    // middleware: 'redirect'
+  },
+
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
@@ -33,7 +38,7 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    // '@nuxtjs/vuetify'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -54,8 +59,7 @@ export default {
         services: {
           firestore: true,
           storage: true,
-          analytics: true,
-          auth: true
+          analytics: true
         }
       }
     ]

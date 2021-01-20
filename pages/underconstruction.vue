@@ -5,6 +5,7 @@
       class="canvas"
       @click="handleClick"
       @mousemove="handleMouseMove" 
+      @resize="handleResize"
     />
     <div ref="mainContainer" class="main-container">
       <img src="/gif/uc-text.gif" class="text-gif">
@@ -47,7 +48,7 @@ export default {
         timerInterval: null,
         days: 0,
         hours: 0,
-        radius: 70,
+        radius: 100,
         canvas: null,
         offsetX: null,
         offsetY: null,
@@ -108,6 +109,10 @@ export default {
       },
       handleClick(e){
         document.elementsFromPoint(e.clientX,e.clientY)[1].click()
+      },
+      handleResize(){
+        this.canvas.height = window.innerHeight
+        this.canvas.width = window.innerWidth
       }
     }
   }
@@ -131,8 +136,8 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      height: 100vh;
-      width: 100vw;
+      // height: 100vh; prevent distortion
+      // width: 100vw;
       z-index: 2;
     }
     .main-container {
