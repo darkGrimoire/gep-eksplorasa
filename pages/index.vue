@@ -7,7 +7,10 @@
 <script>
 
 export default {
-  name: 'Landing'
+  name: 'Landing',
+   mounted(){
+    this.$router.replace({path: "/underconstruction"})
+  }
 }
 </script>
 
