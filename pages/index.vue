@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <img src="about us.png" class="aboutus">
+      <img src="bout/about us.png" class="aboutus">
       
       <div class="menu">
         
@@ -13,14 +13,14 @@
 
           <div class="catkur">
             <div class="kurpng"></div>
-            <a href="/">Catatan<br>Kuratorial</a>
+            <a href="/catatankuratorial">Catatan<br>Kuratorial</a>
           </div>
         </div>
         
         <div class="sub2">
           <div class="gep">
             <div class="gepng"></div>
-            <a href="/">About GEP</a>
+            <a href="/aboutgep">About GEP</a>
           </div>
 
           <div class="merch">
@@ -51,7 +51,7 @@ export default {
 
   .container {
     background-image: url("/MERAH.png");
-    background-size: cover;
+    background-size: 1536px;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -98,12 +98,12 @@ export default {
   .katpng {
     height: 250px;
     width: 250px;
-    background-image: url("/katalog_before.png");
+    background-image: url("/bout/katalog_before.png");
     background-size: cover;
   }
 
   .katalog:hover .katpng {
-    background-image: url("/katalog_after.png");
+    background-image: url("/bout/katalog_after.png");
   }
 
   .katalog:hover a {
@@ -119,12 +119,12 @@ export default {
   .kurpng {
     height: 250px;
     width: 250px;
-    background-image: url("/catkur_before.png");
+    background-image: url("/bout/catkur_before.png");
     background-size: cover;
   }
 
   .catkur:hover .kurpng {
-    background-image: url("/catkur_after.png");
+    background-image: url("/bout/catkur_after.png");
   }
 
   .catkur:hover a {
@@ -140,12 +140,12 @@ export default {
   .gepng {
     height: 250px;
     width: 250px;
-    background-image: url("/gep_before.png");
+    background-image: url("/bout/gep_before.png");
     background-size: cover;
   }
 
   .gep:hover .gepng {
-    background-image: url("/gep_after.png");
+    background-image: url("/bout/gep_after.png");
   }
 
   .gep:hover a {
@@ -161,12 +161,12 @@ export default {
   .merpng {
     height: 250px;
     width: 250px;
-    background-image: url("/merch_before.png");
+    background-image: url("/bout/merch_before.png");
     background-size: cover;
   }
 
   .merch:hover .merpng {
-    background-image: url("/merch_after.png");
+    background-image: url("/bout/merch_after.png");
   }
 
   .merch:hover a {
@@ -187,7 +187,7 @@ export default {
   @media only screen and (max-width: 460px) {
     .container {
       background-image: url("/MERAH.png");
-      background-size: cover;
+      background-size: 1536px;
       height: auto;
       display: flex;
       justify-content: center;
