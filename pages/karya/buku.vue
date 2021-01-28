@@ -1,16 +1,18 @@
 <template>
   <div class="container">
-    <button class="previous-button" @click="turnPrevious">
+    <!-- <button @click="turnPrevious">
       Previous
-    </button>
+    </button> -->
     <fw-turn id="album" ref="book" :options="option">
+      <div ignore="1" class="next-button" @click="turnNext" />
+      <div ignore="1" class="previous-button" @click="turnPrevious" />
       <div v-for="i in 6" :key="i">
         <img :src="`/book/${i}.jpg`">
       </div>
     </fw-turn>
-    <button class="next-button" @click="turnNext">
+    <!-- <button @click="turnNexts">
       Next
-    </button>
+    </button> -->
   </div>
 </template>
 
@@ -22,8 +24,8 @@ import $ from "jquery"
     data() {
       return {
         option: {
-          width: 500*2,
-          height: 500/(1076/1521),
+          width: 300*2,
+          height: 300/(1076/1521),
           autoCenter: true,
         },
         selector: undefined
@@ -56,11 +58,26 @@ import $ from "jquery"
   }
 
   #album {
-    margin: 5%;
+    position: relative;
   }
   img {
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
+  .next-button,
+  .previous-button {
+    background-color: red;
+    height: 100px;
+    width: 20px;
+    position: absolute;
+  }
+
+  .next-button{
+    right: -22px;
+  }
+  .previous-button{
+    left: -22px;
+  }
+
 </style>

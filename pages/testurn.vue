@@ -3,17 +3,13 @@
     <!--<pre>  Full screen : {{ fs }}
     <button @click="fulskrin()">Go {{ fs?"back":"fullscreen" }}</button>
     </pre>-->
-    <button @click="turnPrevious" v-show="fs">
-      Previous
-    </button>
-    <fw-turn id="album" ref="book" :options="option" v-show="fs">
+    <div v-show="fs" ignore="1" class="next-button" @click="turnNext" />
+    <div v-show="fs" ignore="1" class="previous-button" @click="turnPrevious" />
+    <fw-turn v-show="fs" id="album" ref="book" :options="option">
       <div v-for="i in 6" :key="i">
         <img :src="`/book/${i}.jpg`">
       </div>
     </fw-turn>
-    <button @click="turnNext" v-show="fs">
-      Next
-    </button>
   </div>
 </template>
 
@@ -26,8 +22,8 @@ import $ from "jquery"
       return {
         fs: false,
         option: {
-          width: 500*2,
-          height: 500/(1076/1521),
+          width: 300,
+          height: 300/(1076/1521),
           autoCenter: true,
           display: "single"
         },
@@ -110,10 +106,27 @@ import $ from "jquery"
 
   #album {
     //margin: 5%;
+    position: relative;
   }
   img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+  
+  .next-button,
+  .previous-button {
+    background-color: red;
+    height: 100px;
+    width: 20px;
+    position: absolute;
+    z-index: 999;
+  }
+
+  .next-button{
+    right: 22px;
+  }
+  .previous-button{
+    left: 22px;
   }
 </style>
