@@ -1,14 +1,22 @@
 <template>
   <div class="container">
-    <fw-turn id="album" :options="option">
+    <button class="previous-button" @click="turnPrevious">
+      Previous
+    </button>
+    <fw-turn id="album" ref="book" :options="option">
       <div v-for="i in 6" :key="i">
         <img :src="`/book/${i}.jpg`">
       </div>
     </fw-turn>
+    <button class="next-button" @click="turnNext">
+      Next
+    </button>
   </div>
 </template>
 
 <script>
+import $ from "jquery"
+
   export default {
     name: "TestBuku",
     data() {
@@ -17,7 +25,20 @@
           width: 500*2,
           height: 500/(1076/1521),
           autoCenter: true,
-        }
+        },
+        selector: undefined
+      }
+    },
+    mounted () {
+      console.log(this.$refs.book.selector)
+      this.selector = this.$refs.book.selector
+    },
+    methods: {
+      turnNext() {
+        $(this.selector).turn('next')
+      },
+      turnPrevious() {
+        $(this.selector).turn('previous')
       }
     },
   }
