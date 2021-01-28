@@ -3,7 +3,7 @@ export default {
   target: 'server',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - GEP',
+    titleTemplate: '%s',
     title: 'GEP Eksplorasa',
     meta: [
       { charset: 'utf-8' },
@@ -11,7 +11,7 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon/gep.ico' }
     ]
   },
 
@@ -27,7 +27,7 @@ export default {
 
   router: {
     // ran before every route on both client and server
-    // middleware: 'redirect'
+    middleware: 'redirect'
   },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

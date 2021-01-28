@@ -91,9 +91,14 @@ export default {
       }, 
       handleMouseMove(e) {
         this.erase(this.getXY(e))
+        if (document.elementsFromPoint(e.clientX,e.clientY)[1].className === "link"){
+          document.elementsFromPoint(e.clientX,e.clientY)[0].style.cursor = "pointer"
+        } else if (document.elementsFromPoint(e.clientX,e.clientY)[0].style.cursor === "pointer") {
+          document.elementsFromPoint(e.clientX,e.clientY)[0].style.cursor = "default"
+        }
       },
       getXY(e){
-        console.log(e)
+        // console.log(e)
         const r = this.$refs.canvas.getBoundingClientRect()
         return { 
           x: e.clientX - r.left, 
@@ -102,7 +107,7 @@ export default {
       },
       erase(pos) {
         this.canvas.beginPath()
-        console.log(pos)
+        // console.log(pos)
         this.canvas.arc(pos.x, pos.y, this.radius, 0, 2 * Math.PI)
         this.canvas.closePath()
         this.canvas.fill()
