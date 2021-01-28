@@ -27,7 +27,7 @@ export default {
 
   router: {
     // ran before every route on both client and server
-    middleware: 'redirect'
+    // middleware: 'redirect' // ONLY ENABLE IN MASTER BRANCH COMING SOON DEPLOYMENT
   },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
