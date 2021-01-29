@@ -6,6 +6,7 @@
         <img src="kuro/paper.png" class="top">
         <img src="kuro/paper.png" class="top2">
         <img src="kuro/paper.png" class="top2">
+        <img src="kuro/paper.png" class="top3">
       
         <div class="papertext">
           <div class="header">
@@ -41,7 +42,7 @@ export default {
 <style lang="scss" scoped>
   div {
     font-family: 'Mechanical Pencil';
-    font-size: 29px;
+    font-size: 25px;
     color: #1f1f1f;
     text-align: center;
   }
@@ -63,10 +64,9 @@ export default {
   }
 
   p {
-    width: 980px;
+    width: 853px;
     margin: 20px 0;
     text-align: center;
-    transform: scale(1.1);
   }
 
   .container {
@@ -80,6 +80,7 @@ export default {
   }
 
   .content {
+    padding: 105px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -94,25 +95,20 @@ export default {
     text-decoration: underline;
   }
 
-  .br {
-    height: 50px;
-  }
-
   .paper {
-    transform: scale(0.80);
-    margin-top: -50px;
-    margin-bottom: -10px;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
   }
 
   .top {
+    width: 1050px;
     margin-bottom: -30px;
   }
 
   .top2 {
+    width: 1050px;
     margin-bottom: -30px;
   }
 
@@ -128,7 +124,7 @@ export default {
   }
 
   .header {
-    width: 1240px;
+    width: 1000px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -136,26 +132,28 @@ export default {
   }
 
   .emo {
-    height: 65px;
-    margin-left: 50px;
-    margin-top: 25px;
+    height: 55px;
+    margin-left: 30px;
+    margin-top: 10px;
   }
 
   .date {
-    width: 300px;
+    width: 235px;
   }
 
   .garis {
+    width: 1000px;
     margin-top: -30px;
   }
 
   .catkur {
+    width: 725px;
     margin-bottom: 30px;
   }
 
   .printilan {
     width: 100%;
-    top: -15px;
+    top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
@@ -165,129 +163,443 @@ export default {
   }
 
   .clip {
-    width: 65px;
+    width: 50px;
+    margin-top: -13px;
     margin-left: 400px;
   }
 
   .tape {
-    width: 250px;
-    margin-left: 1339px;
-    margin-top: 100px;
+    width: 200px;
+    margin-left: 1082px;
+    margin-top: 85px;
   }
   
   .pensil {
-    margin-right: 1330px;
-    margin-top: 60px;
+    width: 180px;
+    margin-right: 1100px;
+    margin-top: 50px;
   }
 
-  @media only screen and (min-width: 650px) {
+  // amount of paper
+
+  @media only screen and (min-width: 800px) {
+    .top2 {display: none;}
+  }
+
+  @media only screen and (min-width: 500px) {
+    .top3 {display: none;}
     .top2 {
-      display: none;
+      margin-top: -75px;
     }
   }
+
+  // actual different css
 
   @media only screen and (max-width: 1295px) {
-    .content {
-      transform: scale(0.9);
-    }
-  }
-
-  @media only screen and (max-width: 1160px) {
-    .content {
-      transform: scale(0.8);
-    }
-  }
-
-  @media only screen and (max-width: 1025px) {
     div {
-      font-size: 35px;
+      font-size: 19px;
     }
 
-    .br {
-      height: 75px;
-    }
-
-    .content {
-      transform: scale(0.7);
-    }
-
-  @media only screen and (max-width: 920px) {
-    div {
-      font-size: 40px;
+    p {
+      width: 648px;
+      margin: 20px 0;
     }
 
     .content {
-      transform: scale(0.6);
+      padding: 80px;
+    }
+
+    .top {
+      width: 800px;
+    }
+
+    .papertext {
+        top: 15px;
+    }
+
+    .header {
+      width: 760px;
+    }
+
+    .emo {
+      height: 42px;
+      margin-left: 22px;
+      margin-top: -5px;
+    }
+
+    .date {
+      width: 178px;
+    }
+
+    .garis {
+      width: 760px;
+      padding-top: 10px;
+    }
+
+    .catkur {
+      width: 550px;
+    }
+
+    .clip {
+      width: 38px;
+      margin-top: -13px;
+      margin-left: 305px;
+    }
+
+    .tape {
+      width: 152px;
+      margin-left: 822px;
+      margin-top: 65px;
     }
     
+    .pensil {
+      width: 136px;
+      margin-right: 836px;
+      margin-top: 38px;
+    }
   }
 
-  @media only screen and (max-width: 775px) {
+  @media only screen and (max-width: 1024px) {
     div {
-      font-size: 40px;
+      font-size: 19px;
+    }
+
+    p {
+      width: 550px;
+      margin: 20px 0;
     }
 
     .content {
-      transform: scale(0.5);
+      padding: 65px;
     }
-  }
 
-  @media only screen and (max-width: 650px) {
-    div {
-      font-size: 55px;
+    .top {
+      width: 650px;
+    }
+
+    .papertext {
+      top: 12px;
+    }
+
+    .header {
+      width: 615px;
+    }
+
+    .emo {
+      height: 34px;
+      margin-left: 17px;
+      margin-top: -5px;
+    }
+
+    .date {
+      width: 144px;
+    }
+
+    .garis {
+      width: 615px;
+      padding-top: 10px;
     }
 
     .catkur {
-      margin-bottom: 100px;
+      width: 500px;
     }
 
-    .content {
-      transform: scale(0.4);
+    .clip {
+      width: 30px;
+      margin-top: -10px;
+      margin-left: 247px;
     }
 
-    .br {
-      margin-bottom: 150px;
+    .tape {
+      width: 123px;
+      margin-left: 668px;
+      margin-top: 52px;
+    }
+    
+    .pensil {
+      width: 110px;
+      margin-right: 677px;
+      margin-top: 30px;
     }
   }
 
-  @media only screen and (max-width: 530px) {
+  @media only screen and (max-width: 800px) {
     div {
-      font-size: 60px;
+      font-size: 18px;
+    }
+
+    p {
+      width: 341px;
+      margin: 12px 0;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .top {width: 400px;}
+
+    .top2 {width:400px;}
+
+    .papertext {
+      top: 7px;
+    }
+
+    .header {
+      width: 381px;
+    }
+
+    .emo {
+      height: 21px;
+      margin-left: 10px;
+      margin-top: -3px;
+    }
+
+    .date {
+      width: 89px;
+    }
+
+    .garis {
+      width: 381px;
+      padding-top: 20px;
     }
 
     .catkur {
-      margin-bottom: 150px;
+      width: 310px;
+      margin-bottom: 10px;
     }
 
-    .content {
-      transform: scale(0.35);
+    .br {height:10px;}
+
+    .clip {
+      width: 18px;
+      margin-top: -6px;
+      margin-left: 153px;
     }
 
-    .br {
-      margin-bottom: 150px;
+    .tape {
+      width: 76px;
+      margin-left: 413px;
+      margin-top: 32px;
+    }
+    
+    .pensil {
+      width: 68px;
+      margin-right: 419px;
+      margin-top: 18px;
     }
   }
 
-  @media only screen and (max-width: 460px) {
-    .container {
-      margin-top: -1110px;
-      margin-bottom: -1110px;
+  @media only screen and (max-width: 500px) {
+    div {
+      font-size: 15px;
+    }
+
+    p {
+      width: 257px;
+      margin: 8px 0;
     }
 
     .content {
-      transform: scale(0.28);
+      padding: 28px;
+    }
+
+    .top  {width:290px;}
+
+    .top2 {width:290px;}
+    .top3 {
+      width:290px;
+      margin-top: -100px;
+    }
+
+    .papertext {
+      top: 5px;
+    }
+
+    .header {
+      width: 276px;
+    }
+
+    .emo {
+      height: 19px;
+      margin-left: 15px;
+      margin-top: 5px;
+    }
+
+    .date {
+      width: 97px;
+    }
+
+    .garis {
+      width: 276px;
+      padding-top: 25px;
+    }
+
+    .catkur {
+      width: 250px;
+      margin-bottom: 5px;
+    }
+
+    .br {height:10px;}
+
+    .clip {
+      width: 19px;
+      margin-top: -5px;
+      margin-left: 39px;
+    }
+
+    .tape {
+      width: 58px;
+      margin-left: 298px;
+      margin-top: 65px;
+    }
+    
+    .pensil {
+      width: 58px;
+      margin-right: 304px;
+      margin-top: 110px;
     }
   }
 
   @media only screen and (max-width: 330px) {
-    .container {
-      margin-top: -1110px;
-      margin-bottom: -1110px;
+    div {
+      font-size: 12px;
+    }
+
+    p {
+      width: 190px;
+      margin: 6px 0;
     }
 
     .content {
-      transform: scale(0.21);
+      padding: 22px;
+    }
+
+    .top  {width:224px;}
+    .top2 {width:224px;}
+
+    .top3 {
+      width:224px;
+      margin-top: 0px;
+    }
+
+    .papertext {
+      top: 4px;
+    }
+
+    .header {
+      width: 213px;
+    }
+
+    .emo {
+      height: 15px;
+      margin-left: 15px;
+      margin-top: 5px;
+    }
+
+    .date {
+      width: 75px;
+    }
+
+    .garis {
+      width: 213px;
+      padding-top: 25px;
+    }
+
+    .catkur {
+      width: 190px;
+      margin-bottom: 5px;
+    }
+
+    .br {height:10px;}
+
+    .clip {
+      width: 15px;
+      margin-top: -4px;
+      margin-left: 30px;
+    }
+
+    .tape {
+      width: 45px;
+      margin-left: 231px;
+      margin-top: 50px;
+    }
+    
+    .pensil {
+      width: 45px;
+      margin-right: 234px;
+      margin-top: 85px;
     }
   }
-}
+
+  @media only screen and (max-width: 280px) {
+    .container {
+      background-image: url("/IJO.png");
+      background-size: 1536px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  // "custom" dimensions
+
+  @media only screen and (min-height: 650px) and (max-width: 370px) {
+    .container {
+      background-image: url("/IJO.png");
+      background-size: 1536px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  @media only screen and (min-width: 370px) and (max-width: 500px) and (min-height: 790px) {
+    .container {
+      background-image: url("/IJO.png");
+      background-size: 1536px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  @media only screen and (min-height: 800px) and (min-width: 375px) {
+    .container {
+      background-image: url("/IJO.png");
+      background-size: 1536px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  @media only screen and (min-height: 1000px) and (min-width: 700px) {
+    .container {
+      background-image: url("/IJO.png");
+      background-size: 1536px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .top2 {
+      margin-top: -60px;
+    }
+  }
 </style>

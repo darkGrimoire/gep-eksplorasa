@@ -6,6 +6,9 @@
       <div class="paper">
         <img src="boutgep/top.png" class="top">
         <img src="boutgep/mid.png" class="mid">
+        <img src="boutgep/mid.png" class="mid2">
+        <img src="boutgep/mid.png" class="mid3">
+        <img src="boutgep/mid.png" class="mid3">
         <img src="boutgep/bottom.png" class="bottom">
       
         <div class="papertext">
@@ -21,9 +24,10 @@
         </div>
       </div>
 
-      <h2>Meet The Team</h2>
-          <img src="boutgep/line2.png" class="line2">
-
+      <div class="team">
+        <h2>Meet The Team</h2>
+        <img src="boutgep/line2.png" class="line2">
+      </div>
     </div>
   </div>
 </template>
@@ -38,7 +42,7 @@ export default {
 <style lang="scss" scoped>
   div {
     font-family: 'Mechanical Pencil';
-    font-size: 32px;
+    font-size: 25px;
     color: #1f1f1f;
     text-align: center;
   }
@@ -46,7 +50,7 @@ export default {
   h1 {
     font-family: 'Quicksand';
     font-style: normal;
-    font-size: 60px;
+    font-size: 45px;
     color: #e14423;
     text-align: center;
   }
@@ -54,22 +58,21 @@ export default {
   h2 {
     font-family: 'Quicksand';
     font-style: normal;
-    font-size: 46px;
+    font-size: 45px;
     color: #ede5d1;
     text-align: center;
   }
 
   p {
-    width: 1000px;
-    margin: 20px 0;
+    width: 800px;
+    margin: 15px 0;
     text-align: center;
     line-height: 97%;
   }
 
   .container {
     background-image: url("/MERAH.png");
-    background-size: contain;
-    background-repeat: repeat-y;
+    background-size: 1536px;
     height: auto;
     display: flex;
     justify-content: center;
@@ -99,25 +102,33 @@ export default {
   }
 
   .paper {
-    transform: scale(0.77);
-    margin-top: -90px;
-    margin-bottom: -10px;
+    top: 35px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .top {
-    margin-bottom: -9px;
-    margin-right: 3.5px;
+    width: 1000px;
+    margin-bottom: -1px;
   }
 
   .mid {
-    margin-left: 14px;
-    margin-bottom: -9px;
+    width: 1015px;
+    margin-left: 15px;
+    margin-bottom: -1px;
+  }
+
+  .bottom {
+    width: 1000px;
+    margin-left: 3px;
+    margin-bottom: -1px;
   }
 
   .papertext {
       width: 100%;
-      top: 100px;
+      top: 74px;
       left: 0;
       display: flex;
       flex-direction: column;
@@ -127,90 +138,262 @@ export default {
   }
 
   .line {
-    width: 600px;
+    width: 444px;
   }
 
   .line2 {
-    width: 500px;
+    width: 444px;
     margin-top: -35px;
   }
 
   .divider {
-    height: 75px;
+    height: 60px;
     margin-top: 15px;
     margin-bottom: 75px;
   }
 
-  @media only screen and (max-width: 1080px) {
-    .content {
-      transform: scale(0.85);
-    }
-    
-    .menu {
-      display: flex;
-      flex-direction: column;
+  .team {
+    margin-top: 125px;
+  }
+
+  @media only screen and (min-width: 1030px) {
+    .mid2 {
+      display: none;
     }
   }
 
-  @media only screen and (max-width: 460px) {
-    .menu {
-      display: flex;
-      flex-direction: column;
+  @media only screen and (max-width: 1030px) {
+    div {
+      font-size: 25px;
     }
 
-    .sub1 {
-      display: flex;
-      flex-direction: column;
+    h1 {
+      font-size: 45px;
     }
 
-    .sub2 {
-      display: flex;
-      flex-direction: column;
+    h2 {
+      font-size: 45px;
     }
 
-    .aboutus {
-      margin-bottom: 0px;
+    p {
+      width: 584px;
+      margin: 15px 0;
+    }
+
+    .content {
+      padding-top: 70px;
+    }
+
+    .aboutgep {
+      height: 300px;
+    }
+
+    .paper {
+      top: 35px;
+    }
+
+    .top {
+      width: 725px;
+    }
+
+    .mid {
+      width: 735px;
+      margin-left: 11px;
+    }
+
+    .mid2 {
+      width: 735px;
+      margin-left: 11px;
+      margin-bottom: -1px;
+    }
+
+    .bottom {
+      width: 723px;
+      margin-left: 2px;
+    }
+
+    .papertext {
+      top: 100px;
+    }
+
+    .line {
+      width: 444px;
+    }
+
+    .line2 {
+      width: 444px;
+      margin-top: -35px;
+    }
+
+    .divider {
+      height: 60px;
+      margin-top: 20px;
+      margin-bottom: 75px;
+    }
+
+    .team {
+      margin-top: 125px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    div {
+      font-size: 24px;
+    }
+
+    h1 {
+      font-size: 35px;
+    }
+
+    h2 {
+      font-size: 35px;
+    }
+
+    p {
+      width: 350px;
+      margin: 15px 0;
+    }
+
+    .content {
+      padding-top: 40px;
+    }
+
+    .aboutgep {
+      height: 200px;
+    }
+
+    .paper {
+      top: 35px;
+    }
+
+    .top {
+      width: 440px;
+    }
+
+    .mid {
+      width: 447px;
+      margin-left: 6px;
+    }
+
+    .mid2 {
+      width: 447px;
+      margin-left: 6px;
+    }
+
+    .mid3 {
+      width: 447px;
+      margin-left: 6px;
+      margin-bottom: -1px;
+    }
+
+    .bottom {
+      width: 440px;
+      margin-left: 1px;
+    }
+
+    .papertext {
+      top: 75px;
+    }
+
+    .line {
+      width: 270px;
+    }
+
+    .line2 {
+      width: 270px;
+      margin-top: -35px;
+    }
+
+    .divider {
+      height: 50px;
+      margin-top: 20px;
+      margin-bottom: 70px;
+    }
+
+    .team {
+      margin-top: 125px;
+    }
+  }
+
+  @media only screen and (min-width: 770px) {
+    .mid3 {display: none;}
+  }
+
+  @media only screen and (max-width: 470px) {
+    div {
+      font-size: 15px;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+
+    h2 {
+      font-size: 25px;
+    }
+
+    p {
+      width: 200px;
+      margin: 15px 0;
+    }
+
+    .content {
+      padding-top: 40px;
+    }
+
+    .aboutgep {
       height: 150px;
     }
 
-    .katalog {
-      margin: 0px;
-      align-items: center;
+    .paper {
+      top: 35px;
     }
 
-    .katpng {
-      height: 200px;
+    .top {
+      width: 260px;
+    }
+
+    .mid {
+      width: 264px;
+      margin-left: 4px;
+    }
+
+    .mid2 {
+      width: 264px;
+      margin-left: 4px;
+    }
+
+    .mid3 {
+      width: 264px;
+      margin-left: 4px;
+    }
+
+    .bottom {
+      width: 260px;
+      margin-left: 1px;
+    }
+
+    .papertext {
+      top: 27px;
+    }
+
+    .line {
       width: 200px;
     }
 
-    .catkur {
-      margin: 0px;
-      align-items: center;
-    }
-
-    .kurpng {
-      height: 200px;
+    .line2 {
       width: 200px;
+      margin-top: -35px;
     }
 
-    .gep {
-      margin: 0px;
-      align-items: center;
+    .divider {
+      height: 30px;
+      margin-top: 5px;
+      margin-bottom: 30px;
     }
 
-    .gepng {
-      height: 200px;
-      width: 200px;
-    }
-
-    .merch {
-      margin: 0px;
-      align-items: center;
-    }
-
-    .merpng {
-      height: 200px;
-      width: 200px;
+    .team {
+      margin-top: 75px;
     }
   }
 </style>

@@ -5,25 +5,25 @@
       
       <div class="menu">
         
-        <div class="sub1">
-          <div class="katalog">
+        <div class="sub">
+          <div class="item">
             <div class="katpng"></div>
             <a href="/">Katalog<br>Karya</a>
           </div>
 
-          <div class="catkur">
+          <div class="item">
             <div class="kurpng"></div>
             <a href="/catatankuratorial">Catatan<br>Kuratorial</a>
           </div>
         </div>
         
-        <div class="sub2">
-          <div class="gep">
+        <div class="sub">
+          <div class="item">
             <div class="gepng"></div>
             <a href="/aboutgep">About GEP</a>
           </div>
 
-          <div class="merch">
+          <div class="item">
             <div class="merpng"></div>
             <a href="/">Merch</a>
           </div>
@@ -55,9 +55,15 @@ export default {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     text-align: center;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   a {
@@ -74,186 +80,197 @@ export default {
     flex-direction: row;
   }
 
-  .sub1 {
+  .sub {
     display: flex;
     flex-direction: row;
-  }
-
-  .sub2 {
-    display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
   .aboutus {
     height: 200px;
-    margin-bottom: 30px;
+    margin-bottom: 75px;
   }
 
-  .katalog {
+  .item {
     display: flex;
     flex-direction: column;
-    margin: 0px 15px;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 60px;
   }
 
   .katpng {
-    height: 250px;
-    width: 250px;
+    height: 175px;
+    width: 175px;
     background-image: url("/bout/katalog_before.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
-  .katalog:hover .katpng {
+  .item:hover .katpng {
     background-image: url("/bout/katalog_after.png");
   }
 
-  .katalog:hover a {
+  .item:hover a {
     text-decoration: underline;
-  }
-
-  .catkur {
-    display: flex;
-    flex-direction: column;
-    margin: 0px 15px;
   }
 
   .kurpng {
-    height: 250px;
-    width: 250px;
+    height: 175px;
+    width: 175px;
     background-image: url("/bout/catkur_before.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
-  .catkur:hover .kurpng {
+  .item:hover .kurpng {
     background-image: url("/bout/catkur_after.png");
   }
 
-  .catkur:hover a {
-    text-decoration: underline;
-  }
-
-  .gep {
-    display: flex;
-    flex-direction: column;
-    margin: 0px 15px;
-  }
-
   .gepng {
-    height: 250px;
-    width: 250px;
+    height: 175px;
+    width: 175px;
     background-image: url("/bout/gep_before.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
-  .gep:hover .gepng {
+  .item:hover .gepng {
     background-image: url("/bout/gep_after.png");
   }
 
-  .gep:hover a {
-    text-decoration: underline;
-  }
-
-  .merch {
-    display: flex;
-    flex-direction: column;
-    margin: 0px 15px;
-  }
-
   .merpng {
-    height: 250px;
-    width: 250px;
+    height: 175px;
+    width: 175px;
     background-image: url("/bout/merch_before.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
-  .merch:hover .merpng {
+  .item:hover .merpng {
     background-image: url("/bout/merch_after.png");
   }
 
-  .merch:hover a {
-    text-decoration: underline;
-  }
+  @media only screen and (max-width: 1155px) {
+    .menu {
+      flex-direction: row;
+    }
 
-  @media only screen and (max-width: 1080px) {
-    .content {
-      transform: scale(0.85);
+    .aboutus {
+      height: 175px;
+      margin-bottom: 60px;
+    }
+
+    .item {
+      margin: 0px 40px;
+    }
+
+    .katpng {
+      height: 150px;
+      width: 150px;
     }
     
-    .menu {
-      display: flex;
-      flex-direction: column;
+    .kurpng {
+      height: 150px;
+      width: 150px;
+    }
+    
+    .gepng {
+      height: 150px;
+      width: 150px;
+    }
+
+    .merpng {
+      height: 150px;
+      width: 150px;
     }
   }
 
-  @media only screen and (max-width: 460px) {
-    .container {
-      background-image: url("/MERAH.png");
-      background-size: 1536px;
-      height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-    }
-    
+  @media only screen and (max-width: 900px) {
     .menu {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sub1 {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .sub2 {
-      display: flex;
       flex-direction: column;
     }
 
     .aboutus {
-      margin-bottom: 0px;
+      margin-bottom: 35px;
+    }
+
+    .item {
+      margin: 20px 60px;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    div {
+      font-size: 15px;
+    }
+
+    .aboutus {
       height: 150px;
     }
 
-    .katalog {
-      margin: 0px;
-      align-items: center;
+    .item {
+      margin: 20px 30px;
     }
 
     .katpng {
-      height: 200px;
-      width: 200px;
+      height: 110px;
+      width: 110px;
     }
-
-    .catkur {
-      margin: 0px;
-      align-items: center;
-    }
-
+    
     .kurpng {
-      height: 200px;
-      width: 200px;
+      height: 110px;
+      width: 110px;
     }
-
-    .gep {
-      margin: 0px;
-      align-items: center;
-    }
-
+    
     .gepng {
-      height: 200px;
-      width: 200px;
-    }
-
-    .merch {
-      margin: 0px;
-      align-items: center;
+      height: 110px;
+      width: 110px;
     }
 
     .merpng {
-      height: 200px;
-      width: 200px;
+      height: 110px;
+      width: 110px;
+    }
+  }
+
+  @media only screen and (max-width: 320px) {
+    div {
+      font-size: 13px;
+    }
+
+    .aboutus {
+      height: 125px;
+      margin-bottom: 30px;
+    }
+
+    .item {
+      margin: 20px 25px;
+    }
+
+    .katpng {
+      height: 90px;
+      width: 90px;
+    }
+    
+    .kurpng {
+      height: 90px;
+      width: 90px;
+    }
+    
+    .gepng {
+      height: 90px;
+      width: 90px;
+    }
+
+    .merpng {
+      height: 90px;
+      width: 90px;
     }
   }
 </style>
