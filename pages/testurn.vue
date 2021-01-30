@@ -1,10 +1,12 @@
 <template>
-  <div class="container" :style="[ fs ? { backgroundImage: `url(/img/uc-bg.png)` } : null ]">
+  <div class="container" :class="[ fs ? 'reader-bg' : null ]">
     <!--<pre>  Full screen : {{ fs }}
     <button @click="fulskrin()">Go {{ fs?"back":"fullscreen" }}</button>
     </pre>-->
-    <div v-show="fs" ignore="1" class="next-button" @click="turnNext" />
-    <div v-show="fs" ignore="1" class="previous-button" @click="turnPrevious" />
+    <div v-show="!fs" ignore="1" class="read-button button" @click="fulskrin"><fa :icon="['fas', 'book-open']" /> Read</div>
+    <div v-show="fs" ignore="1" class="next-button button" @click="turnNext"><fa :icon="['fas', 'chevron-right']" /></div>
+    <div v-show="fs" ignore="1" class="previous-button button" @click="turnPrevious"><fa :icon="['fas', 'chevron-left']" /></div>
+    <div v-show="fs" ignore="1" class="exit-button button" @click="fulskrin"><fa :icon="['fas', 'times']" /> Close</div>
     <fw-turn v-show="fs" id="album" ref="book" :options="option">
       <div v-for="i in 6" :key="i">
         <img :src="`/book/${i}.jpg`">
@@ -94,9 +96,13 @@ import $ from "jquery"
 </script>
 
 <style lang="scss" scoped>
+  .reader-bg{
+    //backgroundImage: `url(/img/uc-bg.png)`
+    background-color: #212121;
+  }
   .container {
     overflow: hidden;
-    /*background-image: url("/img/uc-bg.png");*/
+    background-image: url("/img/uc-bg.png");
     background-size: cover;
     height: 100vh;
     display: flex;
@@ -113,20 +119,35 @@ import $ from "jquery"
     height: 100%;
     object-fit: contain;
   }
-  
-  .next-button,
-  .previous-button {
-    background-color: red;
-    height: 100px;
-    width: 20px;
+
+  .next-button{
+    right: 5px;
+    font-size: 30px; /* Set a font size */
+  }
+  .previous-button{
+    left: 5px;
+    font-size: 30px; /* Set a font size */
+  }
+  .exit-button{
+    bottom: 50px;
+    font-size: 20px; /* Set a font size */
+  }
+  .read-button{
+    font-size: 30px; /* Set a font size */
+  }
+
+  .button {
+    //background-color: DodgerBlue;
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    cursor: pointer; /* Mouse pointer on hover */
     position: absolute;
     z-index: 999;
   }
 
-  .next-button{
-    right: 22px;
-  }
-  .previous-button{
-    left: 22px;
-  }
+  /* Darker background on mouse-over */
+  /*.button:hover {
+    background-color: rgba(33, 33, 33, 0.75);
+  }*/
 </style>
