@@ -1,17 +1,21 @@
 <template>
-  <div class="container" :class="[ fs ? 'reader-bg' : null ]">
+  <div class="container">
     <!--<pre>  Full screen : {{ fs }}
     <button @click="fulskrin()">Go {{ fs?"back":"fullscreen" }}</button>
     </pre>-->
-    <div v-show="!fs" ignore="1" class="read-button button" @click="fulskrin"><fa :icon="['fas', 'book-open']" /> Read</div>
-    <div v-show="fs" ignore="1" class="next-button button" @click="turnNext"><fa :icon="['fas', 'chevron-right']" /></div>
-    <div v-show="fs" ignore="1" class="previous-button button" @click="turnPrevious"><fa :icon="['fas', 'chevron-left']" /></div>
-    <div v-show="fs" ignore="1" class="exit-button button" @click="fulskrin"><fa :icon="['fas', 'times']" /> Close</div>
-    <fw-turn v-show="fs" id="album" ref="book" :options="option">
-      <div v-for="i in 6" :key="i">
-        <img :src="`/book/${i}.jpg`">
+    <div ignore="1" class="read-button button" @click="fulskrin"><fa :icon="['fas', 'book-open']" /> Read</div>
+    <div class="reader-bg" v-show="fs">
+      <div class="reader">
+        <div v-show="fs" ignore="1" class="next-button button" @click="turnNext"><fa :icon="['fas', 'chevron-right']" /></div>
+        <div v-show="fs" ignore="1" class="previous-button button" @click="turnPrevious"><fa :icon="['fas', 'chevron-left']" /></div>
+        <div v-show="fs" ignore="1" class="exit-button button" @click="fulskrin"><fa :icon="['fas', 'times']" /> Close</div>
+        <fw-turn v-show="fs" id="album" ref="book" :options="option">
+          <div v-for="i in 6" :key="i">
+            <img :src="`/book/${i}.jpg`">
+          </div>
+        </fw-turn>
       </div>
-    </fw-turn>
+    </div>
   </div>
 </template>
 
@@ -96,18 +100,33 @@ import $ from "jquery"
 </script>
 
 <style lang="scss" scoped>
-  .reader-bg{
-    //backgroundImage: `url(/img/uc-bg.png)`
-    background-color: #212121;
-  }
-  .container {
+  .container, .reader {
     overflow: hidden;
-    background-image: url("/img/uc-bg.png");
     background-size: cover;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .container {
+    background-image: url("/img/uc-bg.png");
+  }
+  .reader-bg{
+    //backgroundImage: `url(/img/uc-bg.png)`
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+  }
+
+  .reader {
+    z-index: 2;
   }
 
   #album {
@@ -143,7 +162,8 @@ import $ from "jquery"
     padding: 12px 16px; /* Some padding */
     cursor: pointer; /* Mouse pointer on hover */
     position: absolute;
-    z-index: 999;
+    font-family: cursive;
+    user-select: none;
   }
 
   /* Darker background on mouse-over */
