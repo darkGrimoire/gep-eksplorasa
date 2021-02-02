@@ -30,6 +30,7 @@
         </div>
       </div>
     </div>
+    <rcp />
   </div>
 </template>
 
@@ -41,8 +42,12 @@
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
   import gsap from 'gsap'
+  import rcp from '~/components/rcp.vue'
   export default {
     name: "Test",
+    components: {
+      rcp,
+    },
     data() {
       return {
         drag: false,
