@@ -19,6 +19,7 @@
     "@nuxtjs/fontawesome": "^1.1.2",
     "core-js": "^3.6.5",
     "firebase": "^8.0.1",
+    "gsap": "^3.6.0",
     "nuxt": "^2.14.6",
     "vue-screen-size": "^1.0.1"
   },

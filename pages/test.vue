@@ -1,6 +1,15 @@
 <template>
   <div class="main">
-    <div class="top-cont">
+    <div class="top-cont" 
+         :style="{'transform': 'translate(calc(-50% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
+         @mousedown="startDrag($event)" 
+         @mousemove="dragContainer($event)" 
+         @mouseup="endDrag($event)"
+         @mouseleave="endDrag($event)"
+         @touchstart="startDrag($event)" 
+         @touchmove="dragContainer($event)" 
+         @touchend="endDrag($event)"
+    >
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont cat">
@@ -30,8 +39,83 @@
 // top-cont: tempat perhitungan rasio
 // canvas: kalau mau ada tooltip, taro disini
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
+  const SCALE = 2
+  import gsap from 'gsap'
   export default {
-    name: "Test"
+    name: "Test",
+    data() {
+      return {
+        drag: false,
+        mouseStart: {
+          x: undefined,
+          y: undefined // not used for now though
+        },
+        computedDisplacement: 0,
+        transformed: 0,
+        xBoundary: undefined
+      }
+    },
+    computed: {
+      sign() {
+        return this.computedDisplacement >= 0 ? '+' : '-'
+      }
+    },
+    mounted () {
+      this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+      window.addEventListener("resize", this.handleResize)
+    },
+    methods: {
+      startDrag(e) {
+        if (window.matchMedia("(orientation: portrait)").matches){
+          // enable dragging and keep mouseStart point
+          let interaction = this.determineInteraction(e)
+          this.drag = true
+          this.mouseStart.x = interaction.clientX
+          this.mouseStart.y = interaction.clientY
+        }
+      },
+      dragContainer(e){
+        // if dragging, calculate target position and tween to that position
+        if (this.drag){
+          let interaction = this.determineInteraction(e)
+          let targetDisplacement = this.clamp(interaction.clientX - this.mouseStart.x + this.transformed, this.xBoundary/(2*SCALE), -this.xBoundary/(2*SCALE))
+          gsap.to(this.$data, {computedDisplacement: targetDisplacement})
+        }
+      },
+      endDrag(e){
+        // if mouse click released or out of window while dragging, disable dragging,
+        // calculate target end position and tween, keep last transformation position, and delete mouseStart (optional)
+        if (this.drag){
+          let interaction = this.determineInteraction(e)
+          this.drag = false
+          let targetDisplacement = this.clamp(interaction.clientX - this.mouseStart.x + this.transformed, this.xBoundary/(2*SCALE), -this.xBoundary/(2*SCALE))
+          this.transformed = targetDisplacement
+          gsap.to(this.$data, {computedDisplacement: targetDisplacement})
+          // console.log(`target: ${targetDisplacement}`)
+          // console.log(`transformed: ${this.transformed}`)
+          this.mouseStart.x = undefined
+          this.mouseStart.y = undefined
+        }
+      },
+      clamp(attribute, max, min){
+        return Math.min(max, Math.max(min, attribute))
+      },
+      determineInteraction(e){
+        let interaction = e
+        if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel'){
+            let evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent
+            interaction = evt.touches[0] || evt.changedTouches[0]
+        }
+        return interaction
+      },
+      handleResize(){
+        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+        if (window.matchMedia("(orientation: landscape)").matches){
+          this.computedDisplacement = 0
+        }
+        // console.log(`resize! ${this.xBoundary} | ${this.computedDisplacement}`)
+      }
+    },
   }
 </script>
 
@@ -43,6 +127,8 @@ html {
   background-color: white;
   width: 100vw;
   height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .top-cont {
@@ -54,8 +140,8 @@ html {
   transform: translate(-50%, -50%);
   padding-bottom: 62.5%;
   @media only screen and (orientation: portrait) {
-    width: 150%;
-    padding-bottom: 93.75%;
+    width: 200%;
+    padding-bottom: 125%;
   }
 }
 
