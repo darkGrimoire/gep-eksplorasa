@@ -19,6 +19,7 @@
 </template>
 
 <script>
+/* eslint no-undef: 0 */
 if (process.client){
   require('~/assets/turnjs4/lib/turn')
   require('~/assets/turnjs4/lib/zoom')
