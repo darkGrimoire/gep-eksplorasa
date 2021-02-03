@@ -236,7 +236,7 @@ export default {
     }
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 660px) {
     div {
       font-size: 24px;
     }
@@ -315,7 +315,86 @@ export default {
     }
   }
 
-  @media only screen and (min-width: 770px) {
+  @media only screen and (min-width: 660px) and (max-width: 768px) {
+    div {
+      font-size: 24px;
+    }
+
+    h1 {
+      font-size: 35px;
+    }
+
+    h2 {
+      font-size: 35px;
+    }
+
+    p {
+      width: 450px;
+      margin: 15px 0;
+    }
+
+    .content {
+      padding-top: 40px;
+    }
+
+    .aboutgep {
+      height: 200px;
+    }
+
+    .paper {
+      top: 35px;
+    }
+
+    .top {
+      width: 600px;
+    }
+
+    .mid {
+      width: 610px;
+      margin-left: 8px;
+    }
+
+    .mid2 {
+      width: 610px;
+      margin-left: 8px;
+    }
+
+    .mid3 {
+      width: 610px;
+      margin-left: 8px;
+      margin-bottom: -1px;
+    }
+
+    .bottom {
+      width: 600px;
+      margin-left: 1px;
+    }
+
+    .papertext {
+      top: 75px;
+    }
+
+    .line {
+      width: 270px;
+    }
+
+    .line2 {
+      width: 270px;
+      margin-top: -35px;
+    }
+
+    .divider {
+      height: 50px;
+      margin-top: 20px;
+      margin-bottom: 70px;
+    }
+
+    .team {
+      margin-top: 125px;
+    }
+  }
+
+  @media only screen and (min-width: 769px) {
     .mid3 {display: none;}
   }
 

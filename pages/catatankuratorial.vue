@@ -323,7 +323,7 @@ export default {
     }
   }
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 768px) {
     div {
       font-size: 18px;
     }
@@ -387,6 +387,73 @@ export default {
       width: 68px;
       margin-right: 419px;
       margin-top: 18px;
+    }
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 800px) {
+    div {
+      font-size: 18px;
+    }
+
+    p {
+      width: 450px;
+      margin: 12px 0;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .top {width: 600px;}
+
+    .top2 {display: none;}
+
+    .papertext {
+      top: 7px;
+    }
+
+    .header {
+      width: 581px;
+    }
+
+    .emo {
+      height: 35px;
+      margin-left: 25px;
+      margin-top: 10px;
+    }
+
+    .date {
+      width: 150px;
+    }
+
+    .garis {
+      width: 581px;
+      padding-top: 20px;
+    }
+
+    .catkur {
+      width: 450px;
+      margin-bottom: 10px;
+    }
+
+    .br {height:10px;}
+
+    .clip {
+      width: 30px;
+      margin-top: -6px;
+      margin-left: 153px;
+    }
+
+    .tape {
+      width: 126px;
+      margin-left: 619px;
+      margin-top: 60px;
+    }
+    
+    .pensil {
+      width: 100px;
+      margin-right: 600px;
+      margin-top: 70px;
     }
   }
 
@@ -547,7 +614,7 @@ export default {
 
   // "custom" dimensions
 
-  @media only screen and (min-height: 650px) and (max-width: 370px) {
+  @media only screen and (min-height: 750px) {
     .container {
       background-image: url("/IJO.png");
       background-size: 1536px;
@@ -557,49 +624,6 @@ export default {
       align-items: center;
       flex-direction: column;
       text-align: center;
-    }
-  }
-
-  @media only screen and (min-width: 370px) and (max-width: 500px) and (min-height: 790px) {
-    .container {
-      background-image: url("/IJO.png");
-      background-size: 1536px;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-    }
-  }
-
-  @media only screen and (min-height: 800px) and (min-width: 375px) {
-    .container {
-      background-image: url("/IJO.png");
-      background-size: 1536px;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-    }
-  }
-
-  @media only screen and (min-height: 1000px) and (min-width: 700px) {
-    .container {
-      background-image: url("/IJO.png");
-      background-size: 1536px;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .top2 {
-      margin-top: -60px;
     }
   }
 </style>
