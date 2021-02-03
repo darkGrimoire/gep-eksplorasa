@@ -1,5 +1,6 @@
 # Custom
-assets/turnjs4/
+assets/turnjs4/*
+!assets/turnjs4/lib
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
