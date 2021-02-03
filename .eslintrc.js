@@ -22,6 +22,8 @@ module.exports = {
   rules: {
     semi: [2, "never"],
     "no-console": "off",
+    "no-unused-vars": "off",
+    "no-undef": "off",
     "vue/max-attributes-per-line": "off",
   },
 }
