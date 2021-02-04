@@ -117,6 +117,7 @@
         this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
         if (window.matchMedia("(orientation: landscape)").matches){
           this.computedDisplacement = 0
+          this.transformed = 0
         }
         // console.log(`resize! ${this.xBoundary} | ${this.computedDisplacement}`)
       }
