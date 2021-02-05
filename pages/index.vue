@@ -61,7 +61,7 @@ export default {
       this.setupCanvas()
       this.updateTimer()
       this.startCountdown()
-
+      setTimeout(() => this.canvasLogger(), 2000)
     },
     methods: {
       updateTimer () {
@@ -118,6 +118,24 @@ export default {
       handleResize(){
         this.canvas.height = window.innerHeight
         this.canvas.width = window.innerWidth
+      },
+      async canvasLogger(){
+        if (this.isCanvasBlank()){
+          try {
+            await this.$fire.analytics.logEvent('canvas_cleared')
+          } catch (e) {
+            setTimeout(() => this.canvasLogger(), 5000)
+          }
+        } else{
+          setTimeout(() => this.canvasLogger(), 2000)
+        }
+      },
+      isCanvasBlank() {
+        const pixelBuffer = new Uint32Array(
+          this.canvas.getImageData(0, 0, this.$refs.canvas.width, this.$refs.canvas.height).data.buffer
+        )
+
+        return !pixelBuffer.some(color => color !== 0)
       }
     }
   }

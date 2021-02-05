@@ -1,4 +1,4 @@
 export default function(ctx) {
-  if(ctx.route.fullPath != '/underconstruction')
-    ctx.redirect(301, '/underconstruction')
+  if(ctx.route.fullPath != '/')
+    ctx.redirect(301, '/')
 }
