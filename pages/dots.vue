@@ -50,12 +50,14 @@ export default {
   },
   methods: {
     windowChange() {
+      // FUNCTION TO BE CALLED WHEN WINDOWS CHANGE
       this.setUpPic()
       this.setUpCanvas()
       this.addCoordinate()
       this.retrieveCreatedLine()
     },
     setUpPic() {
+      // SET UP THE MARGIN OF ALL THE IMG INSIDE THE DOTS AREA
       let dots3_top = 0
       let dots2_top = 0
       const dotsPic1 = document.getElementsByClassName("dots-1")[0]
@@ -84,7 +86,7 @@ export default {
         dotsPic2.clientHeight -
         dotsGif.clientHeight -
         dotsPic2.clientHeight * 0.14
-      // SET THE TOP MARGIN OF ALL PIC AND GIF
+      // set the top of margin of all img
       dotsGif.style.top = gif_top + "px"
       dotsPic2.style.top = dots2_top + "px"
       dotsPic3.style.top = dots3_top + "px"
@@ -95,12 +97,10 @@ export default {
       dotsPic2.style.visibility = "visible"
       dotsPic3.style.visibility = "visible"
       dotsPic4.style.visibility = "visible"
-      dotsPic5.style.visibility = "visible"
-      
-      
-      
+      dotsPic5.style.visibility = "visible" 
     },
     setUpCanvas() {
+      // SET THE SIZE AND MARGIN OF THE CANVAS
       let c = document.getElementById("dots_canvas")
       document.getElementsByClassName(
         "dots-canvas"
@@ -109,6 +109,8 @@ export default {
       c.height = document.getElementsByClassName("dots-2")[0].offsetHeight
     },
     addCoordinate() {
+      // ADD THE COORDINATE OF THE DOTS TO THE coord VARIABLE
+      // INITIATE WITH EMPTY ARRAY
       this.coord = []
       const c = document.getElementById("dots_canvas")
       const dots_pic_width = document.getElementsByClassName("dots-2")[0]
@@ -155,12 +157,14 @@ export default {
       // END OF DEBUGGING SECTION
     },
     getCursorPosition(canvas, event) {
+      // GET THE CURSOR COORDINATE FROM THE canvas (0,0) POINT
       const rect = canvas.getBoundingClientRect()
       const x = event.clientX - rect.left
       const y = event.clientY - rect.top
       return [x, y]
     },
     isPointInRange(point, coord_range) {
+      // CHECK IF point IS IN THE VICINITY OF coord_range
       let batasRange = []
       batasRange.push(
         (document.getElementsByClassName("dots-2")[0].offsetWidth * 1.61) / 100
@@ -179,6 +183,7 @@ export default {
       return true
     },
     createLine(coord_awal, coord_akhir) {
+      // CREATE LINE FROM coord_awal TO coord_akhir
       let c = document.getElementById("dots_canvas")
       let ctx = c.getContext("2d")
       ctx.beginPath()
@@ -199,6 +204,7 @@ export default {
     //   this.removeSkip()
     // },
     handleMouseMove(e) {
+      // HANDLE MOUSE MOOVEMENT IN THE CANVAS AREA
       if (this.pos == this.coord.length - 1) {
         return
       }
@@ -223,11 +229,13 @@ export default {
       }
     },
     clearCanvas() {
+      // CLEAR THE CANVAS
       let c = document.getElementById("dots_canvas")
       let ctx = c.getContext("2d")
       ctx.clearRect(0, 0, c.width, c.height)
     },
     retrieveCreatedLine() {
+      // CREATE THE PREVIOUSLY CREATED LINE
       let i = 0
       while (i < this.pos) {
         this.createLine(this.coord[i], this.coord[i + 1])
@@ -235,6 +243,7 @@ export default {
       }
     },
     showTeks(urutan) {
+      // SHOW THE CAPTION TEXT BASED ON THE urutan
       const cap_class = "cap-" + urutan
       let cap_items = document.getElementsByClassName(cap_class)
       for (const cap_item of cap_items) {
