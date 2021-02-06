@@ -19,6 +19,10 @@
       <img src="/dots_3_grass.png" class="dots-3" />
       <img src="/dots_3_flower.png" class="dots-4" />
       <img src="/dots_3_flower.png" class="dots-5" />
+      <div class="button-area">
+        <button @click="skipCanvas" class="skip-button">Skip</button>
+        <button class="next-button">Next</button>
+      </div>
       <canvas
         class="dots-canvas"
         id="dots_canvas"
@@ -41,7 +45,9 @@ export default {
   },
   mounted() {
     this.setUpPic()
+    this.addAditionalGrass(false)
     this.setUpCanvas()
+    this.setUpButton()
     this.addCoordinate()
     window.addEventListener("resize", this.windowChange)
   },
@@ -52,7 +58,9 @@ export default {
     windowChange() {
       // FUNCTION TO BE CALLED WHEN WINDOWS CHANGE
       this.setUpPic()
+      this.addAditionalGrass(true)
       this.setUpCanvas()
+      this.setUpButton()
       this.addCoordinate()
       this.retrieveCreatedLine()
     },
@@ -72,15 +80,15 @@ export default {
       } else {
         const windowHeight = window.innerHeight
         const dots3_height = dotsPic3.offsetHeight
-        const dotsHeight =
-          windowHeight -
-          document.getElementsByClassName("judul")[0].clientHeight -
+        const text_element_height =
+          document.getElementsByClassName("judul")[0].clientHeight +
           document.getElementsByClassName("caption")[0].clientHeight
+        const dotsHeight = windowHeight - text_element_height
         dots3_top = dotsHeight - dots3_height
         dots2_top = dots3_top + dots3_height * 0.8 - dotsPic2.offsetHeight
       }
       dotsGif.style.width = dotsPic2.style.width
-      const bunga_top = parseInt(dots3_top) + (dotsPic3.offsetHeight * 0.21)
+      const bunga_top = parseInt(dots3_top) + dotsPic3.offsetHeight * 0.21
       const gif_top =
         parseInt(dots2_top) +
         dotsPic2.clientHeight -
@@ -92,12 +100,54 @@ export default {
       dotsPic3.style.top = dots3_top + "px"
       dotsPic4.style.top = bunga_top + "px"
       dotsPic5.style.top = bunga_top + "px"
-      
+
       dotsPic1.style.visibility = "visible"
       dotsPic2.style.visibility = "visible"
       dotsPic3.style.visibility = "visible"
       dotsPic4.style.visibility = "visible"
-      dotsPic5.style.visibility = "visible" 
+      dotsPic5.style.visibility = "visible"
+    },
+    addAditionalGrass(isResize) {
+      if (isResize) {
+        for (let i = 0; i < this.additional_grass; i++) {
+          const className = "additional-grass-" + i
+          document.getElementsByClassName(className)[0].remove()
+        }
+      }
+      const windowHeight = window.innerHeight
+      const text_element_height =
+        document.getElementsByClassName("judul")[0].clientHeight +
+        document.getElementsByClassName("caption")[0].clientHeight
+      const dots3Top = parseInt(
+        document.getElementsByClassName("dots-3")[0].style.top
+      )
+      const dots3Height = document.getElementsByClassName("dots-3")[0]
+        .offsetHeight
+      console.log(windowHeight)
+      console.log(text_element_height + dots3Top + dots3Height)
+      if (windowHeight > text_element_height + dots3Top + dots3Height) {
+        console.log("yellow")
+        let img = document.createElement("img")
+        img.src = "/dots_3_grass.png"
+        const className = "additional-grass-" + this.additional_grass
+        img.classList.add(className)
+        img.style.position = "absolute"
+        img.style.width = "100%"
+        img.style.top =
+          dots3Top + dots3Height * 0.4 * (this.additional_grass + 1) + "px"
+        img.style.zIndex = 1
+        let dotsArea = document.getElementsByClassName("dots")[0]
+        dotsArea.appendChild(img)
+        this.additional_grass += 1
+        const temp =
+          windowHeight -
+          (text_element_height +
+            dots3Top +
+            dots3Height * 0.5 * (this.additional_grass + 2))
+        if (temp > 0) {
+          this.addAditionalGrass()
+        }
+      }
     },
     setUpCanvas() {
       // SET THE SIZE AND MARGIN OF THE CANVAS
@@ -107,6 +157,16 @@ export default {
       )[0].style.top = document.getElementsByClassName("dots-2")[0].style.top
       c.width = document.body.clientWidth
       c.height = document.getElementsByClassName("dots-2")[0].offsetHeight
+    },
+    setUpButton() {
+      let div_button = document.getElementsByClassName("button-area")[0]
+      const dotsPic2 = document.getElementsByClassName("dots-2")[0]
+      const skip_top = parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight
+      div_button.style.top = skip_top + "px"
+      if (this.pos == 0) {
+        document.getElementsByClassName("skip-button")[0].style.visibility =
+          "visible"
+      }
     },
     addCoordinate() {
       // ADD THE COORDINATE OF THE DOTS TO THE coord VARIABLE
@@ -193,16 +253,21 @@ export default {
       ctx.lineWidth = 3
       ctx.stroke()
     },
-    // removeSkip() {
-    //   document.getElementById("skip_button").style.visibility = "hidden"
-    // },
-    // skipCanvas() {
-    //   while (this.pos < this.coord.length - 1) {
-    //     this.createLine(this.coord[this.pos], this.coord[this.pos + 1])
-    //     this.pos = this.pos + 1
-    //   }
-    //   this.removeSkip()
-    // },
+    endSetup() {
+      document.getElementsByClassName("dots-gif")[0].style.visibility =
+        "visible"
+      document.getElementsByClassName("skip-button")[0].style.visibility =
+        "hidden"
+      document.getElementsByClassName("next-button")[0].style.visibility =
+        "visible"
+    },
+    skipCanvas() {
+      while (this.pos < this.coord.length - 1) {
+        this.createLine(this.coord[this.pos], this.coord[this.pos + 1])
+        this.pos = this.pos + 1
+      }
+      this.endSetup()
+    },
     handleMouseMove(e) {
       // HANDLE MOUSE MOOVEMENT IN THE CANVAS AREA
       if (this.pos == this.coord.length - 1) {
@@ -222,8 +287,7 @@ export default {
           this.showTeks(this.pos)
           if (this.pos == this.coord.length - 1) {
             this.mouse_in_pos = false
-            document.getElementsByClassName("dots-gif")[0].style.visibility =
-              "visible"
+            this.endSetup()
           }
         }
       }
@@ -330,7 +394,8 @@ export default {
   z-index: 1;
   visibility: hidden;
 }
-.dots-4, .dots-5 {
+.dots-4,
+.dots-5 {
   position: absolute;
   width: 30%;
   z-index: 2;
@@ -349,6 +414,27 @@ export default {
   // background-color: yellow;
   z-index: 4;
 }
+.button-area {
+  position: absolute;
+  z-index: 3;
+  left: 60%;
+}
+button {
+  all: unset;
+  font-family: "Mechanical Pencil";
+  font-size: 40px;
+  z-index: inherit;
+}
+button:hover {
+  cursor: pointer;
+}
+.skip-button {
+  visibility: hidden;
+}
+.next-button {
+  visibility: hidden;
+}
+
 @media (max-width: 1024px) {
   .img-judul {
     width: 40%;
