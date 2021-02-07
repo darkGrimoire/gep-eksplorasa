@@ -1,24 +1,24 @@
 <template>
   <div class="connect-dots-page">
     <div class="judul">
-      <img src="/title.png" class="img-judul" />
+      <img src="/img/title.png" class="img-judul" />
     </div>
     <div class="caption">
-      <img src="/caption-1.png" class="caption-item cap-1" />
-      <img src="/caption-2.png" class="caption-item cap-2" />
-      <img src="/caption-3.png" class="caption-item cap-3" />
-      <img src="/caption-4.png" class="caption-item cap-4" />
-      <img src="/caption-5.png" class="caption-item-2 cap-5" />
-      <img src="/caption-6.png" class="caption-item-2 cap-6" />
-      <img src="/caption-7.png" class="caption-item-3 cap-6" />
+      <img src="/img/caption-1.png" class="caption-item cap-1" />
+      <img src="/img/caption-2.png" class="caption-item cap-2" />
+      <img src="/img/caption-3.png" class="caption-item cap-3" />
+      <img src="/img/caption-4.png" class="caption-item cap-4" />
+      <img src="/img/caption-5.png" class="caption-item-2 cap-5" />
+      <img src="/img/caption-6.png" class="caption-item-2 cap-6" />
+      <img src="/img/caption-7.png" class="caption-item-3 cap-6" />
     </div>
     <div class="dots">
-      <img src="/dots_1.png" class="dots-1" />
-      <img src="/dots_2.png" class="dots-2" />
-      <img src="/home-bgbest.gif" class="dots-gif" />
-      <img src="/dots_3_grass.png" class="dots-3" />
-      <img src="/dots_3_flower.png" class="dots-4" />
-      <img src="/dots_3_flower.png" class="dots-5" />
+      <img src="/img/dots_1.png" class="dots-1" />
+      <img src="/img/dots_2.png" class="dots-2" />
+      <img src="/gif/home-bgbest.gif" class="dots-gif" />
+      <img src="/img/dots_3_grass.png" class="dots-3" />
+      <img src="/img/dots_3_flower.png" class="dots-4" />
+      <img src="/img/dots_3_flower.png" class="dots-5" />
       <div class="button-area">
         <button @click="skipCanvas" class="skip-button">Skip</button>
         <button class="next-button">Next</button>
@@ -151,7 +151,7 @@ export default {
         /* Creating the element */
         console.log("yellow")
         let img = document.createElement("img")
-        img.src = "/dots_3_grass.png"
+        img.src = "/img/dots_3_grass.png"
         const className = "additional-grass-" + this.additional_grass
         img.classList.add(className)
         img.style.position = "absolute"
@@ -358,7 +358,7 @@ export default {
 
 <style lang="scss" scoped>
 .connect-dots-page {
-  background-image: url("/bg_home.jpg");
+  background-image: url("/img/bg_home.jpg");
   background-size: cover;
   height: 100vh;
 }
