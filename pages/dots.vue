@@ -27,6 +27,7 @@
         class="dots-canvas"
         id="dots_canvas"
         @mousemove="handleMouseMove"
+        @mousedown="handleTouch"
       />
     </div>
   </div>
@@ -40,7 +41,8 @@ export default {
       coord: [],
       pos: 0,
       additional_grass: 0,
-      mouse_in_pos: false
+      mouseHoverInPos: false,
+      mouseClickInPos: false
     }
   },
   mounted() {
@@ -74,7 +76,11 @@ export default {
       const dotsPic4 = document.getElementsByClassName("dots-4")[0]
       const dotsPic5 = document.getElementsByClassName("dots-5")[0]
       const dotsGif = document.getElementsByClassName("dots-gif")[0]
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 600) {
+        dots2_top = dotsPic1.clientHeight * 1.5
+        dots3_top = (dotsPic1.clientHeight * 1.5) + (dotsPic2.clientHeight * 0.5)
+      }
+      else if (window.innerWidth < 1024) {
         dots2_top = dotsPic1.clientHeight
         dots3_top = dotsPic1.clientHeight + dotsPic2.clientHeight * 0.5
       } else {
@@ -88,7 +94,10 @@ export default {
         dots2_top = dots3_top + dots3_height * 0.8 - dotsPic2.offsetHeight
       }
       dotsGif.style.width = dotsPic2.style.width
-      const bunga_top = parseInt(dots3_top) + dotsPic3.offsetHeight * 0.21
+      let bunga_top = parseInt(dots3_top) + dotsPic3.offsetHeight * 0.21
+      if (window.innerWidth < 600) {
+        bunga_top -= dotsPic3.offsetHeight * 0.61
+      }
       const gif_top =
         parseInt(dots2_top) +
         dotsPic2.clientHeight -
@@ -105,7 +114,9 @@ export default {
       dotsPic2.style.visibility = "visible"
       dotsPic3.style.visibility = "visible"
       dotsPic4.style.visibility = "visible"
-      dotsPic5.style.visibility = "visible"
+      if (window.innerWidth > 600) {
+        dotsPic5.style.visibility = "visible"
+      }
     },
     addAditionalGrass(isResize) {
       if (isResize) {
@@ -113,6 +124,7 @@ export default {
           const className = "additional-grass-" + i
           document.getElementsByClassName(className)[0].remove()
         }
+        this.additional_grass = 0
       }
       const windowHeight = window.innerHeight
       const text_element_height =
@@ -133,19 +145,17 @@ export default {
         img.classList.add(className)
         img.style.position = "absolute"
         img.style.width = "100%"
-        img.style.top =
-          dots3Top + dots3Height * 0.4 * (this.additional_grass + 1) + "px"
+        const imgTop =
+          dots3Top + dots3Height * 0.4 * (this.additional_grass + 1)
+        img.style.top = imgTop + "px"
         img.style.zIndex = 1
         let dotsArea = document.getElementsByClassName("dots")[0]
         dotsArea.appendChild(img)
         this.additional_grass += 1
         const temp =
-          windowHeight -
-          (text_element_height +
-            dots3Top +
-            dots3Height * 0.5 * (this.additional_grass + 2))
+          windowHeight - (text_element_height + imgTop + img.offsetHeight)
         if (temp > 0) {
-          this.addAditionalGrass()
+          this.addAditionalGrass(false)
         }
       }
     },
@@ -208,13 +218,13 @@ export default {
       coord_x = x_start + dots_pic_width * 0.75
       coord_y = dots_pic_height * 0.86
       this.coord.push([coord_x, coord_y])
-      // DEBUGGING SECTION
+      // CHECKING SECTION
       // let ctx = c.getContext("2d")
       // for (let i = 0; i < this.coord.length; i ++) {
       //   ctx.fillStyle = "yellow"
       //   ctx.fillRect(this.coord[i][0],this.coord[i][1],30,30)
       // }
-      // END OF DEBUGGING SECTION
+      // END OF CHECKING SECTION
     },
     getCursorPosition(canvas, event) {
       // GET THE CURSOR COORDINATE FROM THE canvas (0,0) POINT
@@ -265,6 +275,7 @@ export default {
       while (this.pos < this.coord.length - 1) {
         this.createLine(this.coord[this.pos], this.coord[this.pos + 1])
         this.pos = this.pos + 1
+        this.showTeks(this.pos)
       }
       this.endSetup()
     },
@@ -276,9 +287,9 @@ export default {
       let c = document.getElementById("dots_canvas")
       const mouse_coord = this.getCursorPosition(c, e)
       if (this.isPointInRange(mouse_coord, this.coord[this.pos])) {
-        this.mouse_in_pos = true
+        this.mouseHoverInPos = true
       }
-      if (this.mouse_in_pos) {
+      if (this.mouseHoverInPos) {
         this.clearCanvas()
         this.retrieveCreatedLine()
         this.createLine(this.coord[this.pos], mouse_coord)
@@ -286,9 +297,27 @@ export default {
           this.pos = this.pos + 1
           this.showTeks(this.pos)
           if (this.pos == this.coord.length - 1) {
-            this.mouse_in_pos = false
+            this.mouseHoverInPos = false
             this.endSetup()
           }
+        }
+      }
+    },
+    handleTouch(e) {
+      if (this.mouseHoverInPos) {
+        return
+      }
+      if (this.pos == this.coord.length - 1) {
+        return
+      } 
+      let c = document.getElementById("dots_canvas")
+      const mouse_coord = this.getCursorPosition(c,e)
+      if (this.isPointInRange(mouse_coord,this.coord[this.pos + 1])) {
+        this.createLine(this.coord[this.pos],this.coord[this.pos+1])
+        this.pos += 1
+        this.showTeks(this.pos)
+        if (this.pos == this.coord.length - 1) {
+          this.endSetup()
         }
       }
     },
@@ -367,7 +396,7 @@ export default {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  height: 15vw;
+  width: 50vw;
   visibility: hidden;
 }
 .dots-2 {
@@ -434,7 +463,6 @@ button:hover {
 .next-button {
   visibility: hidden;
 }
-
 @media (max-width: 1024px) {
   .img-judul {
     width: 40%;
@@ -449,7 +477,7 @@ button:hover {
     width: 4.5vw;
   }
   .dots-1 {
-    height: 20vw;
+    width: 67vw;
   }
   .dots-2 {
     width: 40vw;
@@ -457,6 +485,24 @@ button:hover {
   .dots-gif {
     width: 32vw;
     top: 18vh;
+  }
+}
+@media only screen and (max-width: 600px) {
+  button {
+    font-size: 20px;
+  }
+  .dots-1 {
+    width: 80vw;
+  }
+  .dots-2 {
+    width: 80vw;
+  }
+  .dots-gif {
+    width: 64vw;
+  }
+  .dots-4 {
+    left: 0%;
+    width: 100vw;
   }
 }
 // .dots-3 {
