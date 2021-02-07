@@ -30,6 +30,11 @@
         @mousedown="handleTouch"
       />
     </div>
+    <div class="easter">
+      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+        <button></button>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -77,13 +82,15 @@ export default {
       const dotsPic5 = document.getElementsByClassName("dots-5")[0]
       const dotsGif = document.getElementsByClassName("dots-gif")[0]
       if (window.innerWidth < 600) {
+        /* FOR PHONE */
         dots2_top = dotsPic1.clientHeight * 1.5
-        dots3_top = (dotsPic1.clientHeight * 1.5) + (dotsPic2.clientHeight * 0.5)
-      }
-      else if (window.innerWidth < 1024) {
+        dots3_top = dotsPic1.clientHeight * 1.5 + dotsPic2.clientHeight * 0.5
+      } else if (window.innerWidth < 1024) {
+        /* FOR MEDIUM SIZE WINDOWS */
         dots2_top = dotsPic1.clientHeight
         dots3_top = dotsPic1.clientHeight + dotsPic2.clientHeight * 0.5
       } else {
+        /* FOR COMPUTER */
         const windowHeight = window.innerHeight
         const dots3_height = dotsPic3.offsetHeight
         const text_element_height =
@@ -103,13 +110,13 @@ export default {
         dotsPic2.clientHeight -
         dotsGif.clientHeight -
         dotsPic2.clientHeight * 0.14
-      // set the top of margin of all img
+      /*Designate all top margin */
       dotsGif.style.top = gif_top + "px"
       dotsPic2.style.top = dots2_top + "px"
       dotsPic3.style.top = dots3_top + "px"
       dotsPic4.style.top = bunga_top + "px"
       dotsPic5.style.top = bunga_top + "px"
-
+      /* Show all picture */
       dotsPic1.style.visibility = "visible"
       dotsPic2.style.visibility = "visible"
       dotsPic3.style.visibility = "visible"
@@ -119,13 +126,16 @@ export default {
       }
     },
     addAditionalGrass(isResize) {
+      // ADD ADITIONAL GRASS WHEN THERE'S EMPTY SPACE BELOW INITIAL GRASS
       if (isResize) {
+        /* Create clean state for adding grass after resize */
         for (let i = 0; i < this.additional_grass; i++) {
           const className = "additional-grass-" + i
           document.getElementsByClassName(className)[0].remove()
         }
         this.additional_grass = 0
       }
+      /* Calculation */
       const windowHeight = window.innerHeight
       const text_element_height =
         document.getElementsByClassName("judul")[0].clientHeight +
@@ -138,6 +148,7 @@ export default {
       console.log(windowHeight)
       console.log(text_element_height + dots3Top + dots3Height)
       if (windowHeight > text_element_height + dots3Top + dots3Height) {
+        /* Creating the element */
         console.log("yellow")
         let img = document.createElement("img")
         img.src = "/dots_3_grass.png"
@@ -155,6 +166,7 @@ export default {
         const temp =
           windowHeight - (text_element_height + imgTop + img.offsetHeight)
         if (temp > 0) {
+          /* Add more grass if empty space still exist */
           this.addAditionalGrass(false)
         }
       }
@@ -169,6 +181,7 @@ export default {
       c.height = document.getElementsByClassName("dots-2")[0].offsetHeight
     },
     setUpButton() {
+      // SET THE TOP MARGIN OF THE BUTTON AREA
       let div_button = document.getElementsByClassName("button-area")[0]
       const dotsPic2 = document.getElementsByClassName("dots-2")[0]
       const skip_top = parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight
@@ -218,13 +231,6 @@ export default {
       coord_x = x_start + dots_pic_width * 0.75
       coord_y = dots_pic_height * 0.86
       this.coord.push([coord_x, coord_y])
-      // CHECKING SECTION
-      // let ctx = c.getContext("2d")
-      // for (let i = 0; i < this.coord.length; i ++) {
-      //   ctx.fillStyle = "yellow"
-      //   ctx.fillRect(this.coord[i][0],this.coord[i][1],30,30)
-      // }
-      // END OF CHECKING SECTION
     },
     getCursorPosition(canvas, event) {
       // GET THE CURSOR COORDINATE FROM THE canvas (0,0) POINT
@@ -264,6 +270,7 @@ export default {
       ctx.stroke()
     },
     endSetup() {
+      // FUNCTION CALLED AFTER DOTS FINISHED
       document.getElementsByClassName("dots-gif")[0].style.visibility =
         "visible"
       document.getElementsByClassName("skip-button")[0].style.visibility =
@@ -272,6 +279,7 @@ export default {
         "visible"
     },
     skipCanvas() {
+      // SKIP CREATING THE DOTS
       while (this.pos < this.coord.length - 1) {
         this.createLine(this.coord[this.pos], this.coord[this.pos + 1])
         this.pos = this.pos + 1
@@ -304,16 +312,17 @@ export default {
       }
     },
     handleTouch(e) {
+      // FOR PHONE, TOUCH THE NEXT DOTS TO CREATE THE LINE
       if (this.mouseHoverInPos) {
         return
       }
       if (this.pos == this.coord.length - 1) {
         return
-      } 
+      }
       let c = document.getElementById("dots_canvas")
-      const mouse_coord = this.getCursorPosition(c,e)
-      if (this.isPointInRange(mouse_coord,this.coord[this.pos + 1])) {
-        this.createLine(this.coord[this.pos],this.coord[this.pos+1])
+      const mouse_coord = this.getCursorPosition(c, e)
+      if (this.isPointInRange(mouse_coord, this.coord[this.pos + 1])) {
+        this.createLine(this.coord[this.pos], this.coord[this.pos + 1])
         this.pos += 1
         this.showTeks(this.pos)
         if (this.pos == this.coord.length - 1) {
@@ -462,6 +471,24 @@ button:hover {
 }
 .next-button {
   visibility: hidden;
+}
+a {
+  all: unset;
+}
+.easter {
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+}
+.easter a button {
+  background: transparent;
+  border: none !important;
+  font-size: 0;
+  width: 10vw;
+  height: 5vh;;
+}
+.easter a button:hover {
+  cursor: default;
 }
 @media (max-width: 1024px) {
   .img-judul {
