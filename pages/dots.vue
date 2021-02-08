@@ -102,7 +102,7 @@ export default {
       }
       dotsGif.style.width = dotsPic2.style.width
       let bunga_top = parseInt(dots3_top) + dotsPic3.offsetHeight * 0.21
-      if (window.innerWidth < 600) {
+      if (window.innerWidth < 800) {
         bunga_top -= dotsPic3.offsetHeight * 0.61
       }
       const gif_top =
