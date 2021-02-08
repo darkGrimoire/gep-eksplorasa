@@ -85,7 +85,7 @@ export default {
         /* FOR PHONE */
         dots2_top = dotsPic1.clientHeight * 1.5
         dots3_top = dotsPic1.clientHeight * 1.5 + dotsPic2.clientHeight * 0.5
-      } else if (window.innerWidth < 1024) {
+      } else if (window.innerWidth <= 1024) {
         /* FOR MEDIUM SIZE WINDOWS */
         dots2_top = dotsPic1.clientHeight
         dots3_top = dotsPic1.clientHeight + dotsPic2.clientHeight * 0.5
@@ -121,7 +121,7 @@ export default {
       dotsPic2.style.visibility = "visible"
       dotsPic3.style.visibility = "visible"
       dotsPic4.style.visibility = "visible"
-      if (window.innerWidth > 600) {
+      if (window.innerWidth > 800) {
         dotsPic5.style.visibility = "visible"
       }
     },
@@ -184,7 +184,7 @@ export default {
       // SET THE TOP MARGIN OF THE BUTTON AREA
       let div_button = document.getElementsByClassName("button-area")[0]
       const dotsPic2 = document.getElementsByClassName("dots-2")[0]
-      const skip_top = parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight
+      const skip_top = parseInt(dotsPic2.style.top) + (dotsPic2.offsetHeight * 0.9)
       div_button.style.top = skip_top + "px"
       if (this.pos == 0) {
         document.getElementsByClassName("skip-button")[0].style.visibility =
@@ -242,11 +242,17 @@ export default {
     isPointInRange(point, coord_range) {
       // CHECK IF point IS IN THE VICINITY OF coord_range
       let batasRange = []
+      let rangeAreaX = 1.61
+      let rangeAreaY = 1.62
+      if (window.matchMedia("(orientation: portrait)").matches) {
+        rangeAreaX *= 1.5
+        rangeAreaY *= 1.5
+      }
       batasRange.push(
-        (document.getElementsByClassName("dots-2")[0].offsetWidth * 1.61) / 100
+        (document.getElementsByClassName("dots-2")[0].offsetWidth * rangeAreaX) / 100
       )
       batasRange.push(
-        (document.getElementsByClassName("dots-2")[0].offsetHeight * 1.62) / 100
+        (document.getElementsByClassName("dots-2")[0].offsetHeight * rangeAreaY) / 100
       )
       for (let i = 0; i < 2; i++) {
         if (
@@ -454,7 +460,7 @@ export default {
 }
 .button-area {
   position: absolute;
-  z-index: 3;
+  z-index: 5;
   left: 60%;
 }
 button {
@@ -514,10 +520,7 @@ a {
     top: 18vh;
   }
 }
-@media only screen and (max-width: 600px) {
-  button {
-    font-size: 20px;
-  }
+@media only screen and (max-width: 800px) {
   .dots-1 {
     width: 80vw;
   }
@@ -530,6 +533,11 @@ a {
   .dots-4 {
     left: 0%;
     width: 100vw;
+  }
+}
+@media only screen and (max-width: 600px) {
+  button {
+    font-size: 30px;
   }
 }
 // .dots-3 {
