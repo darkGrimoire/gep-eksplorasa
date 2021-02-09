@@ -30,6 +30,7 @@
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/template-example/kitj1.png" alt="guide" style="opacity: .3;">
           </div>
+          <!-- Tambahin Objek lainnya disini -->
         </div>
       </div>
     </div>
@@ -51,6 +52,7 @@
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/template-example/kitj2.png" alt="guide" style="opacity: .3;">
           </div>
+          <!-- Tambahin Objek lainnya disini -->
         </div>
       </div>
     </div>
