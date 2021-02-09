@@ -20,7 +20,9 @@
     "@nuxtjs/firebase": "^7.1.0",
     "core-js": "^3.6.5",
     "firebase": "^8.0.1",
-    "nuxt": "^2.14.6"
+    "gsap": "^3.6.0",
+    "nuxt": "^2.14.6",
+    "vue-screen-size": "^1.0.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
