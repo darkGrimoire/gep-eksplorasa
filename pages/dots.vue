@@ -20,19 +20,23 @@
       <img src="/img/dots_3_flower.png" class="dots-4" />
       <img src="/img/dots_3_flower.png" class="dots-5" />
       <div class="button-area">
-        <button @click="skipCanvas" class="skip-button">Skip</button>
-        <button class="next-button">Next</button>
+        <button class="skip-button" @click="skipCanvas">
+          Skip
+        </button>
+        <button class="next-button">
+          Next
+        </button>
       </div>
       <canvas
-        class="dots-canvas"
         id="dots_canvas"
+        class="dots-canvas"
         @mousemove="handleMouseMove"
         @mousedown="handleTouch"
       />
     </div>
     <div class="easter">
       <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
-        <button></button>
+        <button />
       </a>
     </div>
   </div>
@@ -109,7 +113,8 @@ export default {
         parseInt(dots2_top) +
         dotsPic2.clientHeight -
         dotsGif.clientHeight -
-        dotsPic2.clientHeight * 0.14
+        dotsPic2.clientHeight * 0.14 +
+        3
       /*Designate all top margin */
       dotsGif.style.top = gif_top + "px"
       dotsPic2.style.top = dots2_top + "px"
@@ -184,7 +189,8 @@ export default {
       // SET THE TOP MARGIN OF THE BUTTON AREA
       let div_button = document.getElementsByClassName("button-area")[0]
       const dotsPic2 = document.getElementsByClassName("dots-2")[0]
-      const skip_top = parseInt(dotsPic2.style.top) + (dotsPic2.offsetHeight * 0.9)
+      const skip_top =
+        parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight * 0.9
       div_button.style.top = skip_top + "px"
       if (this.pos == 0) {
         document.getElementsByClassName("skip-button")[0].style.visibility =
@@ -249,10 +255,14 @@ export default {
         rangeAreaY *= 1.5
       }
       batasRange.push(
-        (document.getElementsByClassName("dots-2")[0].offsetWidth * rangeAreaX) / 100
+        (document.getElementsByClassName("dots-2")[0].offsetWidth *
+          rangeAreaX) /
+          100
       )
       batasRange.push(
-        (document.getElementsByClassName("dots-2")[0].offsetHeight * rangeAreaY) / 100
+        (document.getElementsByClassName("dots-2")[0].offsetHeight *
+          rangeAreaY) /
+          100
       )
       for (let i = 0; i < 2; i++) {
         if (
@@ -418,7 +428,7 @@ export default {
   width: 30vw;
   position: absolute;
   top: 0px;
-  left: 50%;
+  left: 50.3%;
   transform: translateX(-50%);
   visibility: hidden;
   z-index: 3;
@@ -427,7 +437,7 @@ export default {
   visibility: hidden;
   width: 24vw;
   position: absolute;
-  left: 50%;
+  left: 50.3%;
   transform: translateX(-50%);
   z-index: 2;
 }
@@ -491,7 +501,7 @@ a {
   border: none !important;
   font-size: 0;
   width: 10vw;
-  height: 5vh;;
+  height: 5vh;
 }
 .easter a button:hover {
   cursor: default;
@@ -525,9 +535,11 @@ a {
     width: 80vw;
   }
   .dots-2 {
+    left: 50.6%;
     width: 80vw;
   }
   .dots-gif {
+    left: 50.6%;
     width: 64vw;
   }
   .dots-4 {
