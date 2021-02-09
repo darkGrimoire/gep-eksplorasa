@@ -1,16 +1,32 @@
 <template>
   <div class="container">
-    <div class="zoom-icon zoom-icon-in" />
+    <div v-if="!isPhone" class="zoom-icon zoom-icon-in" />
 
-    <div class="book-viewport">
+    <div v-if="isPhone" v-show="fs" class="reader-bg" />
+
+    <div :class="['book-viewport', {blurred: (!fs && isPhone)}]">
       <div class="book-container">
         <div id="album" class="book">
-          <div ignore="1" class="next-button" @click="turnNext" />
-          <div ignore="1" class="previous-button" @click="turnPrevious" />
+          <div v-if="!isPhone" ignore="1" class="next-button" @click="turnNext" />
+          <div v-if="!isPhone" ignore="1" class="previous-button" @click="turnPrevious" />
         </div>
       </div>
     </div>
-    <div class="bottom">
+
+    <div v-if="isPhone" v-show="fs" ignore="1" class="next-button-mobile button" @click="turnNext">
+      <fa :icon="['fas', 'chevron-right']" />
+    </div>
+    <div v-if="isPhone" v-show="fs" ignore="1" class="previous-button-mobile button" @click="turnPrevious">
+      <fa :icon="['fas', 'chevron-left']" />
+    </div>
+    <div v-if="isPhone" v-show="fs" ignore="1" class="exit-button-mobile button" @click="triggerfs">
+      <fa :icon="['fas', 'times']" /> Close
+    </div>
+
+    <div v-if="isPhone" v-show="!fs" class="read-button-mobile button" @click="triggerfs">
+      <fa :icon="['fas', 'book-open']" /> Read
+    </div>
+    <div v-if="!isPhone" class="bottom">
       <div id="slider-bar" class="turnjs-slider">
         <div id="slider" />
       </div>
@@ -25,6 +41,11 @@ if (process.client){
   require('~/assets/turnjs4/lib/zoom')
   require('~/assets/turnjs4/lib/hash')
 }
+const PAGE_WIDTH = 500
+const PAGE_HEIGHT = 650
+const TARGET_ZOOM_WIDTH = 2214
+const STORAGE_LOCATION = ''
+const IMG_EXT = ''
 
   export default {
     name: "TestBuku",
@@ -32,8 +53,8 @@ if (process.client){
       return {
         options: {
           width: 500*2,
-          height: 500/(500/650),
-          duration: 1000,
+          height: 500/(PAGE_WIDTH/PAGE_HEIGHT),
+          duration: 500,
           gradients: true,
           autoCenter: true,
           elevation: 50,
@@ -42,14 +63,14 @@ if (process.client){
             turning: (event, page) => {
               var book = $(this.selector)
               this.currentPage = book.turn('page')
-              this.pages = book.turn('pages')
+              book.turn('pages')
               Hash.go('page/' + page).update()
               this.disableControls(page)
             },
             turned: (event, page) => {
               this.disableControls(page)
               $(this.selector).turn('center')
-              if ($('#slider').slider('instance')){
+              if (!this.isPhone && $('#slider').slider('instance')){
                 $('#slider').slider('value', this.getViewNumber($(this.selector), page))
               }
               if (page==1) { 
@@ -64,37 +85,86 @@ if (process.client){
         },
         selector: "#album",
         currentPage: undefined,
-        pages: undefined,
+        isPhone: false,
+        fs: false,
       }
     },
     mounted () {
-      // $('.container').fadeIn(1000)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.isPhone = true
+        this.options.width = 300
+        this.options.height = 300/(PAGE_WIDTH/PAGE_HEIGHT)
+        this.options.display = "single"
 
+        this.initializePhoneHandler()
+      }
       let flipbook = $(this.selector)
       flipbook.turn(this.options)
       
       this.initializeZoom()
-      this.initializeBinding()
-      this.initializeSlider()
+      if (!this.isPhone){
+        this.initializeBinding()
+        this.initializeSlider()
+      }
       this.initializeHash()
+
+      if (this.isPhone && !this.fs){
+        $('.previous-button-mobile').hide()
+        $('.next-button-mobile').hide()
+      }
 
       this.resizeViewport()
       $(this.selector).addClass('animated')
-      // $('.container').hide()
+      
     },
     methods: {
+      initializePhoneHandler(){
+        document.addEventListener("fullscreenchange", this.changefs)
+        document.addEventListener("mozfullscreenchange", this.changefs)
+        document.addEventListener("webkitfullscreenchange", this.changefs)
+        document.addEventListener("msfullscreenchange", this.changefs)
+      },
+      changefs() {
+        this.fs = !this.fs
+      },
+      triggerfs(){
+        let elem = document.documentElement
+          if(!this.fs) {
+            //$("#tes").attr("style", "background-image: url(\"/img/uc-bg.png\");")
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen()
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen()
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen()
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem = window.top.document.body //To break out of frame in IE
+                elem.msRequestFullscreen()
+            }
+          } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen()
+              } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen()
+              } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen()
+              } else if (document.msExitFullscreen) {
+                window.top.document.msExitFullscreen()
+              }
+          }
+      },
       initializeZoom(){
         $('.book-viewport').zoom({
-        flipbook: $('#album'),
+        flipbook: $(this.selector),
         max: () => { 
           return this.largeMagazineWidth()/$(this.selector).width()
         }, 
         when: {
           swipeLeft: () => {
-            $(this.selector).zoom('flipbook').turn('next')
+            $(this.selector).turn('next')
           },
           swipeRight: () => {
-            $(this.selector).zoom('flipbook').turn('previous')
+            $(this.selector).turn('previous')
           },
           resize: (event, scale, page, pageElement) => {
             if (scale==1)
@@ -103,6 +173,7 @@ if (process.client){
               this.loadLargePage(page, pageElement)
           },
           zoomIn: () => {
+            this.toggleControls(false)
             $('#slider-bar').hide()
             $('.made').hide()
             $(this.selector).removeClass('animated').addClass('zoom-in')
@@ -118,6 +189,7 @@ if (process.client){
             }
           },
           zoomOut: () => {
+            this.toggleControls(true)
             $('#slider-bar').fadeIn()
             $('.exit-message').hide()
             $('.made').fadeIn()
@@ -156,13 +228,17 @@ if (process.client){
         yep: (path, parts) => {
           var page = parts[1]
           if (page!==undefined) {
-            if ($(this.selector).turn('is'))
+            if ($(this.selector).turn('is')){
               $(this.selector).turn('page', page)
+              this.currentPage = page
+            }
           }
         },
         nop: () => {
-          if ($(this.selector).turn('is'))
+          if ($(this.selector).turn('is')){
             $(this.selector).turn('page', 1)
+            this.currentPage = 1
+          }
         }
       })
       },
@@ -199,8 +275,6 @@ if (process.client){
           $(this).addClass('next-button-down')
         }).bind($.mouseEvents.up, function() {
           $(this).removeClass('next-button-down')
-        }).click(function() {
-          $('.magazine').turn('next')
         })
         // Events for the previous button
         $('.previous-button').bind($.mouseEvents.over, function() {
@@ -211,8 +285,6 @@ if (process.client){
           $(this).addClass('previous-button-down')
         }).bind($.mouseEvents.up, function() {
           $(this).removeClass('previous-button-down')
-        }).click(function() {
-          $('.magazine').turn('previous')
         })
       },
       initializeSlider(){
@@ -258,7 +330,8 @@ if (process.client){
           $(this).appendTo(pageElement)
           pageElement.find('.loader').remove()
         })
-        img.attr('src', '/book/pages/' +  page + '.jpg')
+        // src = this.getFirebaseURL(page)
+        img.attr('src', '/book/pages/' +  page + '.jpg') // img.attr('src', src)
       },
       zoomTo(event) {
         setTimeout(() => {
@@ -270,14 +343,37 @@ if (process.client){
         }, 1)
       },
       disableControls(page) {
-        if (page==1)
+        if (page==1){
           $('.previous-button').hide()
-        else
+          $('.previous-button-mobile').hide()
+        }
+        else{
           $('.previous-button').show()
-        if (page==$(this.selector).turn('pages'))
+          $('.previous-button-mobile').show()
+        }
+        if (page==$(this.selector).turn('pages')){
           $('.next-button').hide()
-        else
+          $('.next-button-mobile').hide()
+        }
+        else{
           $('.next-button').show()
+          $('.next-button-mobile').show()
+        }
+      },
+      toggleControls(val){
+        if (val){
+          $('.previous-button').show()
+          $('.previous-button-mobile').show()
+          $('.next-button').show()
+          $('.next-button-mobile').show()
+          $('.exit-button-mobile').show()
+        } else{
+          $('.previous-button').hide()
+          $('.previous-button-mobile').hide()
+          $('.next-button').hide()
+          $('.next-button-mobile').hide()
+          $('.exit-button-mobile').hide()
+        }
       },
       resizeViewport() {
         var width = $(window).width(),
@@ -323,7 +419,7 @@ if (process.client){
         $(this.selector).addClass('animated')
       },
       largeMagazineWidth() {
-        return 2214
+        return this.isPhone ? TARGET_ZOOM_WIDTH/3 : TARGET_ZOOM_WIDTH
       },
       numberOfViews(book) {
         return book.turn('pages') / 2 + 1
@@ -334,7 +430,7 @@ if (process.client){
       setPreview(view) {
         var previewWidth = 112,
           previewHeight = 73,
-          previewSrc = '/book/pages/preview.jpg',
+          previewSrc = '/book/pages/preview.jpg', // previewSrc = this.getFirebaseURL('preview')
           preview = $(window._thumbPreview.children(':first')),
           numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2,
           width = (numPages==1) ? previewWidth/2 : previewWidth
@@ -395,13 +491,15 @@ if (process.client){
           $(this).appendTo(pageElement)
           prevImg.remove()
         })
-        img.attr('src', '/book/pages/' +  page + '-large.jpg')
+        // src = this.getFirebaseURL(page + '-large')
+        img.attr('src', '/book/pages/' +  page + '-large.jpg') // img.attr('src', src)
       },
       loadSmallPage(page, pageElement) {
         var img = pageElement.find('img')
         img.css({width: '100%', height: '100%'})
         img.unbind('load')
-        img.attr('src', '/book/pages/' +  page + '.jpg')
+        // src = this.getFirebaseURL(page)
+        img.attr('src', '/book/pages/' +  page + '.jpg') // img.attr('src', src)
       },
       isChrome() {
         return navigator.userAgent.indexOf('Chrome')!=-1
@@ -411,6 +509,12 @@ if (process.client){
       },
       turnPrevious() {
         $(this.selector).turn('previous')
+      },
+      getFirebaseURL(name){
+        let storageRef = this.$fire.storage.ref().child(STORAGE_LOCATION + name + IMG_EXT)
+        storageRef.getDownloadURL().then((url) => {
+          return url
+        })
       }
     },
     head: {
@@ -432,8 +536,77 @@ if (process.client){
 .container {
   overflow: hidden;
   background-image: url("/img/uc-bg.png");
-  background-size: cover;
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  background-position: center top;
   height: 100vh;
+  width: 100vw;
   position: relative;
+}
+
+.reader-bg{
+  //backgroundImage: `url(/img/uc-bg.png)`
+  background-color: rgba(0,0,0,0.7);
+  position: absolute;
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.book-viewport {
+  z-index: 1;
+}
+
+.button {
+  //background-color: DodgerBlue;
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 16px; /* Some padding */
+  cursor: pointer; /* Mouse pointer on hover */
+  position: absolute;
+  font-family: cursive;
+  user-select: none;
+  z-index: 99;
+}
+
+.next-button-mobile{
+  top: 50%;
+  transform: translate(0, -50%);
+  right: -5px;
+  font-size: 30px; /* Set a font size */
+}
+.previous-button-mobile{
+  top: 50%;
+  left: -5px;
+  transform: translate(0, -50%);
+  font-size: 30px; /* Set a font size */
+}
+.exit-button-mobile{
+  bottom: 50px;
+  font-size: 20px; /* Set a font size */
+}
+.read-button-mobile{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px; /* Set a font size */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blurred {
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+}
+
+.bottom {
+  z-index: 2;
 }
 </style>
