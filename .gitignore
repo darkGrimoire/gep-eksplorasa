@@ -1,6 +1,7 @@
 # Custom
 assets/turnjs4/*
 !assets/turnjs4/lib
+package-lock.json
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
