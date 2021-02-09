@@ -89,6 +89,11 @@ const IMG_EXT = ''
         fs: false,
       }
     },
+    beforeDestroy () {
+      if (this.isPhone){
+        this.destroyPhoneHandler()
+      }
+    },
     mounted () {
       if (window.matchMedia("(orientation: portrait)").matches){
         this.isPhone = true
@@ -123,6 +128,12 @@ const IMG_EXT = ''
         document.addEventListener("mozfullscreenchange", this.changefs)
         document.addEventListener("webkitfullscreenchange", this.changefs)
         document.addEventListener("msfullscreenchange", this.changefs)
+      },
+      destroyPhoneHandler(){
+        document.removeEventListener("fullscreenchange", this.changefs)
+        document.removeEventListener("mozfullscreenchange", this.changefs)
+        document.removeEventListener("webkitfullscreenchange", this.changefs)
+        document.removeEventListener("msfullscreenchange", this.changefs)
       },
       changefs() {
         this.fs = !this.fs
