@@ -30,6 +30,10 @@
         </div>
       </div>
     </div>
+    <div class="slide-controls">
+      <fa :icon="['fas', 'chevron-left']" class="right-arrow arrow" />
+      <fa :icon="['fas', 'chevron-right']" class="left-arrow arrow" />
+    </div>
     <rcp />
   </div>
 </template>
@@ -156,6 +160,32 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.slide-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  font-size: 100px;
+  color: white;
+  z-index: 99;
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    &:hover {
+      color: yellow;
+      transition: color 0.5s;
+    }
+  }
+  .right-arrow {
+    left: 20px;
+  }
+  .left-arrow {
+    right: 20px;
+  }
 }
 
 .cont {
