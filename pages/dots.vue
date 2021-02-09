@@ -1,24 +1,24 @@
 <template>
   <div class="connect-dots-page">
     <div class="judul">
-      <img src="/img/title.png" class="img-judul" />
+      <img src="/img/title.png" class="img-judul">
     </div>
     <div class="caption">
-      <img src="/img/caption-1.png" class="caption-item cap-1" />
-      <img src="/img/caption-2.png" class="caption-item cap-2" />
-      <img src="/img/caption-3.png" class="caption-item cap-3" />
-      <img src="/img/caption-4.png" class="caption-item cap-4" />
-      <img src="/img/caption-5.png" class="caption-item-2 cap-5" />
-      <img src="/img/caption-6.png" class="caption-item-2 cap-6" />
-      <img src="/img/caption-7.png" class="caption-item-3 cap-6" />
+      <img src="/img/caption-1.png" class="caption-item cap-1">
+      <img src="/img/caption-2.png" class="caption-item cap-2">
+      <img src="/img/caption-3.png" class="caption-item cap-3">
+      <img src="/img/caption-4.png" class="caption-item cap-4">
+      <img src="/img/caption-5.png" class="caption-item-2 cap-5">
+      <img src="/img/caption-6.png" class="caption-item-2 cap-6">
+      <img src="/img/caption-7.png" class="caption-item-3 cap-6">
     </div>
     <div class="dots">
-      <img src="/img/dots_1.png" class="dots-1" />
-      <img src="/img/dots_2.png" class="dots-2" />
-      <img src="/gif/home-bgbest.gif" class="dots-gif" />
-      <img src="/img/dots_3_grass.png" class="dots-3" />
-      <img src="/img/dots_3_flower.png" class="dots-4" />
-      <img src="/img/dots_3_flower.png" class="dots-5" />
+      <img src="/img/dots_1.png" class="dots-1">
+      <img src="/img/dots_2.png" class="dots-2">
+      <img src="/gif/home-bgbest.gif" class="dots-gif">
+      <img src="/img/dots_3_grass.png" class="dots-3">
+      <img src="/img/dots_3_flower.png" class="dots-4">
+      <img src="/img/dots_3_flower.png" class="dots-5">
       <div class="button-area">
         <button class="skip-button" @click="skipCanvas">
           Skip
@@ -374,9 +374,12 @@ export default {
 
 <style lang="scss" scoped>
 .connect-dots-page {
-  background-image: url("/img/bg_home.jpg");
-  background-size: cover;
+  background-image: url("/img/bg_beige.png");
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  background-position: center top;
   height: 100vh;
+  width: 100vw;
 }
 
 .judul {
@@ -386,9 +389,11 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+  position: relative;
+  top: 2.5%;
 }
 .img-judul {
-  width: 20%;
+  width: 17%;
 }
 .caption {
   display: flex;
@@ -531,6 +536,9 @@ a {
   }
 }
 @media only screen and (max-width: 800px) {
+  .connect-dots-page {
+    background-image: url("/img/bg_beige-min.png");
+  }
   .dots-1 {
     width: 80vw;
   }
@@ -545,6 +553,9 @@ a {
   .dots-4 {
     left: 0%;
     width: 100vw;
+  }
+  .judul {
+    top: 1.5%;
   }
 }
 @media only screen and (max-width: 600px) {
