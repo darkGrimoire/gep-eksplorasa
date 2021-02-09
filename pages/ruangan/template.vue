@@ -86,7 +86,8 @@
           slide0: -50,
           slide1: 50,
           slide2: 150
-        }
+        },
+        msg: 'Pesan Kurator Here'
       }
     },
     computed: {
@@ -110,6 +111,8 @@
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
+
+      // TODO: Add on enter animation here
       this.slide = 1
     },
     methods: {
@@ -254,36 +257,10 @@
   z-index: 50;
 }
 
-.cat {
-  left: 15%;
-  bottom: 25%;
-  width: 14%;
-}
-
-.kursi {
-  left: 75%;
-  top: 50%;
-  width: 18%;
-}
-
-.pintu {
-  left:50%;
-  top: 50%;
-  width:18%;
-}
-
 .center-anchor {
   transform: translate(-50%,-50%);
 }
 
-.sign {
-  top: 0;
-  left: 0;
-  width: 10%;
-  border: 1px solid red;
-}
+// Add Objects positions here
 
-.sign.center-anchor {
-  filter: grayscale(100%);
-}
 </style>
