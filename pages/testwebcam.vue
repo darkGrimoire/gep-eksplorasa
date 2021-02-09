@@ -27,14 +27,36 @@
           <div class="cont sign">
             <img src="/sign.png" alt="sign">
           </div>
+          <div class="cont video center-anchor">
+            <video id="videoElement" autoplay="true" />
+            <img id="frame" :src="frame" alt="frame">
+            <button id="captureButton" @click="capture">
+              Capture
+            </button>
+            <button id="prev" @click="switchFrame(-1)">
+              Previous Frame
+            </button>
+            <button id="next" @click="switchFrame(1)">
+              Next Frame
+            </button>
+            <a id="link" style="display: none;" />
+            <canvas id="snapshotCanvas" style="display: none;" />
+            <button v-show="displayBlackScreen" id="downloadButton" @click="download">
+              Download
+            </button>
+          </div>
         </div>
       </div>
     </div>
     <rcp />
+    <!-- <transition v-if="displayBlackScreen" name="fade" appear>
+      <div v-if="displayBlackScreen" class="black-screen" />
+    </transition> -->
   </div>
 </template>
 
 <script>
+// TODO: Buat agar top-cont bisa di drag pake javascript
 // --- keterangan tiap class
 // top-cont: tempat perhitungan rasio
 // canvas: kalau mau ada tooltip, taro disini
@@ -56,7 +78,14 @@
         },
         computedDisplacement: 0,
         transformed: 0,
-        xBoundary: undefined
+        xBoundary: undefined,
+        canvas: undefined,
+        ctx: undefined,
+        video: undefined,
+        frame: "/frame1.png",
+        frames: ["/frame1.png", "/frame2.png"],
+        displayBlackScreen: false,
+        newCanvas: undefined
       }
     },
     computed: {
@@ -67,8 +96,69 @@
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
+      this.setupScreenshot()
+      this.startCamera()
     },
     methods: {
+      setupScreenshot(){
+        this.canvas = document.querySelector("#snapshotCanvas")
+        this.ctx = this.canvas.getContext('2d')
+        this.video = document.querySelector("#videoElement")
+      },
+      switchFrame(n){
+        let cur_frame = this.frames.findIndex(x => x === this.frame)
+        let frames_len = this.frames.length
+        if (cur_frame+n === -1) {
+          cur_frame+=frames_len
+        }
+        this.frame = this.frames[(cur_frame+n) % frames_len]
+      },
+      capture(){
+        var newContext
+        var scaleFactor = 1280/this.canvas.width //How much we scale?
+        this.newCanvas = document.createElement('canvas')
+        newContext = this.newCanvas.getContext('2d')
+        this.newCanvas.width = this.canvas.width * scaleFactor
+        this.newCanvas.height = this.canvas.height * scaleFactor
+        newContext.scale(scaleFactor, scaleFactor)
+
+        this.ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height)
+        newContext.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height)
+        let frameObj = new Image()
+        frameObj.src = this.frame
+        this.ctx.drawImage(frameObj, 0, 0, this.canvas.width, this.canvas.height)
+        newContext.drawImage(frameObj, 0, 0, this.canvas.width, this.canvas.height)
+        this.canvas.style.display = "block"
+        this.displayBlackScreen = true
+        setTimeout(() => {
+          this.canvas.style.display = "none"
+          this.displayBlackScreen = false
+        }, 5000)
+      },
+      download(){
+        var link = document.getElementById('link')
+        link.setAttribute('download', 'MintyPaper.png')
+        link.setAttribute('href', this.newCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream"))
+        link.click()
+      },
+      startCamera(){
+        if (navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({video: {
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+              facingMode: "user"
+            }})
+            .then(stream => {
+              this.video.srcObject = stream
+              this.canvas.height = this.video.clientHeight
+              this.canvas.width = this.video.clientWidth
+            })
+            .catch(e => {
+              console.log("Something went wrong!")
+              console.log(e)
+            })
+        }
+      },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
           // enable dragging and keep mouseStart point
@@ -168,6 +258,48 @@ html {
   }
 }
 
+.video {
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  border: 10px #333 solid;
+  button {
+    position: absolute;
+  }
+  #prev{
+    left: 0;
+    bottom: -10%;
+  }
+  #next{
+    right: 0;
+    bottom: -10%;
+  }
+  #videoElement {
+    width: 100%;
+    background-color: #666;
+  }
+  #captureButton, #downloadButton {
+    bottom: 10%;
+    right: 10%;
+    z-index: 11;
+  }
+  #snapshotCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+  #frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .cat {
   left: 15%;
   bottom: 25%;
@@ -199,5 +331,13 @@ html {
 
 .sign.center-anchor {
   filter: grayscale(100%);
+}
+
+.black-screen {
+  background-color: black;
+  opacity: 0.7;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
 }
 </style>
