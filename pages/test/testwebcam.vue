@@ -12,21 +12,6 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont cat">
-            <img src="/cat.png" alt="cat">
-          </div>
-          <div class="cont kursi">
-            <img src="/kursi.png" alt="kursi">
-          </div>
-          <div class="cont pintu center-anchor">
-            <img src="/door.png" alt="kursi">
-          </div>
-          <div class="cont sign center-anchor">
-            <img src="/sign.png" alt="sign">
-          </div>
-          <div class="cont sign">
-            <img src="/sign.png" alt="sign">
-          </div>
           <div class="cont video center-anchor">
             <video id="videoElement" autoplay="true" />
             <img id="frame" :src="frame" alt="frame">
@@ -82,8 +67,8 @@
         canvas: undefined,
         ctx: undefined,
         video: undefined,
-        frame: "/frame1.png",
-        frames: ["/frame1.png", "/frame2.png"],
+        frame: "/testing/frame1.png",
+        frames: ["/testing/frame1.png", "/testing/frame2.png"],
         displayBlackScreen: false,
         newCanvas: undefined
       }
@@ -121,13 +106,16 @@
         this.newCanvas.width = this.canvas.width * scaleFactor
         this.newCanvas.height = this.canvas.height * scaleFactor
         newContext.scale(scaleFactor, scaleFactor)
-
         this.ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height)
         newContext.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height)
-        let frameObj = new Image()
+
+        var frameObj = new Image()
         frameObj.src = this.frame
-        this.ctx.drawImage(frameObj, 0, 0, this.canvas.width, this.canvas.height)
-        newContext.drawImage(frameObj, 0, 0, this.canvas.width, this.canvas.height)
+
+        frameObj.onload = () => {
+          this.ctx.drawImage(frameObj, 0, 0, this.canvas.width, this.canvas.height)
+          newContext.drawImage(frameObj, 0, 0, this.canvas.width, this.canvas.height)
+        }
         this.canvas.style.display = "block"
         this.displayBlackScreen = true
         setTimeout(() => {
@@ -150,8 +138,10 @@
             }})
             .then(stream => {
               this.video.srcObject = stream
-              this.canvas.height = this.video.clientHeight
-              this.canvas.width = this.video.clientWidth
+              this.video.addEventListener('loadedmetadata', () => {
+                this.canvas.height = this.video.clientHeight
+                this.canvas.width = this.video.clientWidth
+              })
             })
             .catch(e => {
               console.log("Something went wrong!")
@@ -300,37 +290,8 @@ html {
   }
 }
 
-.cat {
-  left: 15%;
-  bottom: 25%;
-  width: 14%;
-}
-
-.kursi {
-  left: 75%;
-  top: 50%;
-  width: 18%;
-}
-
-.pintu {
-  left:50%;
-  top: 50%;
-  width:18%;
-}
-
 .center-anchor {
   transform: translate(-50%,-50%);
-}
-
-.sign {
-  top: 0;
-  left: 0;
-  width: 10%;
-  border: 1px solid red;
-}
-
-.sign.center-anchor {
-  filter: grayscale(100%);
 }
 
 .black-screen {
