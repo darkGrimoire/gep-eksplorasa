@@ -20,6 +20,10 @@
         type: Boolean,
         default: false
       },
+      ignoreElement: {
+        type: String,
+        default: null
+      },
     },
     data() {
       return {
@@ -60,11 +64,11 @@
         this.rcpSpan.style.left = x + 20 + "px"
       },
       handleDragStart(e){
-        console.log(e.target)
         if (
           e &&
           e.target &&
-          (e.target.nodeName === "IMG" || e.target.nodeName === "img")
+          (e.target.nodeName === "IMG" || e.target.nodeName === "img") &&
+          (this.ignoreElement === null && !e.target.classList.contains(this.ignoreElement))
         ) {
           e.preventDefault()
         } 

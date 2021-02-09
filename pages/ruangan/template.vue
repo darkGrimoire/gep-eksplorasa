@@ -1,7 +1,21 @@
 <template>
   <div class="main">
-    <div class="top-cont" 
-         :style="{'transform': 'translate(calc(-50% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
+    <div class="slide-controls">
+      <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
+      <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
+    </div>
+    
+    <div id="slide0" class="top-cont" 
+         :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
+    >
+      <div class="canvas">
+        <div class="canvas canvas-hover" />
+      </div>
+    </div>
+    
+    <!-- SLIDE 1 -->
+    <div id="slide1" class="top-cont" 
+         :style="{'transform': 'translate(calc('+base.slide1+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
          @mousedown="startDrag($event)" 
          @mousemove="dragContainer($event)" 
          @mouseup="endDrag($event)"
@@ -12,27 +26,33 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont cat">
-            <img src="/cat.png" alt="cat">
-          </div>
-          <div class="cont kursi">
-            <img src="/kursi.png" alt="kursi">
-          </div>
-          <div class="cont pintu center-anchor">
-            <img src="/door.png" alt="kursi">
-          </div>
-          <div class="cont sign center-anchor">
-            <img src="/sign.png" alt="sign">
-          </div>
-          <div class="cont sign">
-            <img src="/sign.png" alt="sign">
+          <div class="cont guide">
+            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+            <img src="/template-example/kitj1.png" alt="guide" style="opacity: .3;">
           </div>
         </div>
       </div>
     </div>
-    <div class="slide-controls">
-      <fa :icon="['fas', 'chevron-left']" class="right-arrow arrow" />
-      <fa :icon="['fas', 'chevron-right']" class="left-arrow arrow" />
+
+    <!-- SLIDE 2 -->
+    <div id="slide2" class="top-cont" 
+         :style="{'transform': 'translate(calc('+base.slide2+'% '+sign+' '+(Math.abs(computedDisplacement)-1)+'px), -50%)'}" 
+         @mousedown="startDrag($event)" 
+         @mousemove="dragContainer($event)" 
+         @mouseup="endDrag($event)"
+         @mouseleave="endDrag($event)"
+         @touchstart="startDrag($event)" 
+         @touchmove="dragContainer($event)" 
+         @touchend="endDrag($event)"
+    >
+      <div class="canvas">
+        <div class="canvas canvas-hover">
+          <div class="cont guide">
+            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+            <img src="/template-example/kitj2.png" alt="guide" style="opacity: .3;">
+          </div>
+        </div>
+      </div>
     </div>
     <rcp />
   </div>
@@ -47,7 +67,7 @@
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
-    name: "Test",
+    name: "TemplateRuangan",
     components: {
       rcp,
     },
@@ -60,7 +80,13 @@
         },
         computedDisplacement: 0,
         transformed: 0,
-        xBoundary: undefined
+        xBoundary: undefined,
+        slide: 0,
+        base: {
+          slide0: -50,
+          slide1: 50,
+          slide2: 150
+        }
       }
     },
     computed: {
@@ -68,11 +94,30 @@
         return this.computedDisplacement >= 0 ? '+' : '-'
       }
     },
+    watch: {
+      slide(newVal) {
+        if (newVal === 2){
+          gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+        } else if (newVal === 1){
+          gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
+        } else if (newVal === 0){
+          gsap.to(this.base, {slide0: -50, slide1: 50, slide2: 150})
+        } else {
+          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+        }
+      }
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
+      this.slide = 1
     },
     methods: {
+      switchSlide(val){
+        this.slide += val
+        this.computedDisplacement = 0
+        this.transformed = 0
+      },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
           // enable dragging and keep mouseStart point
@@ -99,8 +144,6 @@
           let targetDisplacement = this.clamp(interaction.clientX - this.mouseStart.x + this.transformed, this.xBoundary/(2*SCALE), -this.xBoundary/(2*SCALE))
           this.transformed = targetDisplacement
           gsap.to(this.$data, {computedDisplacement: targetDisplacement})
-          // console.log(`target: ${targetDisplacement}`)
-          // console.log(`transformed: ${this.transformed}`)
           this.mouseStart.x = undefined
           this.mouseStart.y = undefined
         }
@@ -122,18 +165,14 @@
           this.computedDisplacement = 0
           this.transformed = 0
         }
-        // console.log(`resize! ${this.xBoundary} | ${this.computedDisplacement}`)
       }
     },
   }
 </script>
 
-<style lang="scss">
-html {
-  overflow: hidden;
-}
+<style lang="scss" scoped>
 .main {
-  background-color: white;
+  background-color: black;
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -147,10 +186,10 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding-bottom: 62.5%;
+  padding-bottom: 56.25%;
   @media only screen and (orientation: portrait) {
-    width: 200%;
-    padding-bottom: 125%;
+    width: 225%;
+    padding-bottom: 126.5625%;
   }
 }
 
@@ -168,23 +207,32 @@ html {
   left: 0;
   width: 100vw;
   height: 100vh;
-  font-size: 100px;
-  color: white;
-  z-index: 99;
   .arrow {
+    z-index: 99;
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
+    font-size: 100px;
+    color: rgba($color: white, $alpha: 0.2);
+    transition: color 0.2s ease-in-out;
     &:hover {
-      color: yellow;
-      transition: color 0.5s;
+      color: rgba($color: white, $alpha: 0.8);
+    }
+    &:active {
+      color: rgba($color: white, $alpha: 1.0);
+    }
+    @media only screen and (max-width: 600px) {
+      font-size: 70px;
+    }
+    @media only screen and (max-width: 450px) {
+      font-size: 50px;
     }
   }
   .right-arrow {
-    left: 20px;
+    right: 20px;
   }
   .left-arrow {
-    right: 20px;
+    left: 20px;
   }
 }
 
@@ -196,6 +244,14 @@ html {
     line-height: 0;
     width: 100%;
   }
+}
+
+.guide {
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 50;
 }
 
 .cat {
