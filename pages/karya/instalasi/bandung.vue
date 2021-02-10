@@ -37,7 +37,7 @@
         <div v-for="(data, count) in dataKarya" :key="data.id" class="swiper-slide" :data-hash="`slide${count+5}`">
           <img
             :src="data.src"
-            class="swiper-lazy"
+            class="swiper-lazy journal"
           >
           <div class="emosi-container">
             <div class="joy-container">
@@ -97,10 +97,6 @@ import 'swiper/swiper-bundle.css'
     name: 'InstalasiRasyid',
     data () {
       return {
-        dummy: [
-          {src: '/instalasi/mybdgjournal/1.png', joy: 5, sad: 0, fear: 1, anger: 2},
-          {src: '/instalasi/mybdgjournal/2.png', joy: 2, sad: 3, fear: 2, anger: 3}
-        ],
         dataKarya: [],
         storage: {},
         swiperOptions: {
@@ -304,16 +300,28 @@ import 'swiper/swiper-bundle.css'
   transition-delay: 1.5s;
 }
 
+.journal{
+  @media only screen and (max-width: 600px) {
+    width: 220%;
+  }
+}
+
 .opening {
   flex-direction: column;
   .opening-logo {
     margin-bottom: 20px;
+    @media only screen and (max-width: 800px) {
+      max-width: 90%;
+    }
   }
   .opening-spotify{
     opacity: .6;
     transition: opacity 0.5s;
     &:hover {
       opacity: 1;
+    }
+    @media only screen and (max-width: 600px) {
+      width: 250px;
     }
   }
   .opening-petunjuk {
@@ -332,6 +340,13 @@ import 'swiper/swiper-bundle.css'
   line-height: 1.5;
   flex-direction: column;
   padding: 12%;
+  @media only screen and (max-width: 800px) {
+    font-size: 1.2rem;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: .85rem;
+    line-height: 1.6;
+  }
   .intro {
     text-align: left;
   }
@@ -341,20 +356,32 @@ import 'swiper/swiper-bundle.css'
   }
   .petunjuk {
     font-size: 1.8rem;
+    @media only screen and (max-width: 800px) {
+      font-size: 1.4rem;
+    }
+    @media only screen and (max-width: 600px) {
+      font-size: 1rem;
+    }
   }
 }
 
 .emosi-container {
   position: absolute;
-  right: 20px;
-  bottom: 50px;
-  transform: translate(0, -100%);
+  left: 50%;
+  bottom: 10%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Lora', serif;
   font-size: 1rem;
   font-weight: 300;
+  @media only screen and (max-width: 800px) {
+    bottom: 12%;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: .85rem;
+  }
   .joy-container,
   .sad-container,
   .fear-container,
