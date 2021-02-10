@@ -16,7 +16,7 @@
             {{ days }}
           </div>
           <div class="text">
-            DAYS
+            DAYS Test
           </div>
           <div class="number">
             {{ hours }}
