@@ -4,7 +4,7 @@
     <center>
     <span style="color:white">
       <span v-for="(item, key) in events" :key="key">
-        {{item.nama}} - {{item.deskripsi}} - {{datetostring( convertTZ(new Date(1000*item.tanggal.seconds), "Asia/Jakarta") )}}<br>
+        {{item.nama}} - {{item.deskripsi}} - {{datetostring( convertToWIB(new Date(1000*item.tanggal.seconds)) )}}<br>
       </span>
       <br><br>
       <input type="text" v-model="date" placeholder="Masukin tanggal (dlm feb 2021)" /> <button class="button" @click.prevent="getevent">Get</button>
@@ -30,11 +30,14 @@ export default {
   },
   methods: {
       getevent() {
+        if(this.date>28||this.date<1){
+            return false
+        }
         this.eventout = ""
         let out = this.geteventbyday(this.date)
         for (let i in out){
           let event = out[i]
-          this.eventout += event.nama +" - "+ event.deskripsi +" - "+ this.datetostring(this.convertTZ( new Date(1000*event.tanggal.seconds), "Asia/Jakarta") )+"<br>"
+          this.eventout += event.nama +" - "+ event.deskripsi +" - "+ this.datetostring(this.convertToWIB( new Date(1000*event.tanggal.seconds)) )+"<br>"
         }
         if(this.eventout==""){
           this.eventout = "not found"
@@ -68,8 +71,8 @@ export default {
       },
         // karena cuma februari berarti pake integer tanggal aja hehe
       gettimestampbyday(tgl){
-        let start = this.convertTZ(new Date(2021, 1, parseInt(tgl), 0, 0, 0), "Asia/Jakarta")
-        let end = this.convertTZ(new Date(2021, 1, parseInt(tgl), 23, 59, 59), "Asia/Jakarta")
+        let start = this.convertToWIB(new Date(2021, 1, parseInt(tgl), 0, 0, 0))
+        let end = this.convertToWIB(new Date(2021, 1, parseInt(tgl), 23, 59, 59))
 
         return {
           start: start.getTime(),
@@ -89,10 +92,10 @@ export default {
 
         return out
       },
-      convertTZ(date, tzString) {
+      convertToWIB(date) {
         return new Date(
             (typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {
-                timeZone: tzString
+                timeZone: "Asia/Jakarta"
             })
         )
       }
