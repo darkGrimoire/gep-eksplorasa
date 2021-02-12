@@ -26,7 +26,7 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont guide">
+          <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide1.png" alt="guide" style="opacity: 0;">
           </div>
@@ -74,7 +74,7 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont guide">
+          <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide2.png" alt="guide" style="opacity: 0;">
           </div>
@@ -115,7 +115,7 @@
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
-    name: "TemplateRuangan",
+    name: "Joy",
     components: {
       rcp,
     },
@@ -166,8 +166,7 @@
     methods: {
       switchSlide(val){
         this.slide += val
-        this.computedDisplacement = 0
-        this.transformed = 0
+        gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
       },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
