@@ -34,7 +34,7 @@
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
-          <div class="cont pagar">
+          <div class="cont pagar1">
             <img src="/joy/pager1 1.png" alt="pagar">
           </div>
           <div class="cont rumput">
@@ -152,7 +152,7 @@
           if (oldVal > 2)
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
         } else if (newVal === 1){
-          gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
+          gsap.to(this.base, {slide0: -150, slide1: -75, slide2: 25})
           if (oldVal === 0)
             gsap.to('.transitionfade-in', {x: '-100%', duration: .7, delay: .2})
         } else if (newVal === 0){
@@ -347,6 +347,11 @@
   width: 64.5%;
   top: 56%;
   left: 35.1%;
+}
+.pagar1 {
+  width: 100%;
+  top: 29%;
+  left: 0;
 }
 .pagar {
   width: 100%;
