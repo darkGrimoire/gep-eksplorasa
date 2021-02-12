@@ -125,15 +125,12 @@ import 'swiper/swiper-bundle.css'
             this.storage = JSON.parse(localStorage.getItem('instalasi'))
             for ( let i = 1; i <= 14; i++ ){
               if (!(`foto${i}` in this.storage)){
-                console.log(`localStorage Removed`)
                 localStorage.removeItem('instalasi')
                 this.initializeLocalStorage()
                 break
               }
             }
           } catch (e){
-            console.log(e)
-            console.log(`localStorage Removed`)
             localStorage.removeItem('instalasi')
             this.initializeLocalStorage()
           }
