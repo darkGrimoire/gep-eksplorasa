@@ -36,7 +36,7 @@
         
         <div v-for="(data, count) in dataKarya" :key="data.id" class="swiper-slide" :data-hash="`slide${count+5}`">
           <img
-            :src="data.src"
+            :src="data.srcUrl"
             class="swiper-lazy journal"
           >
           <div class="emosi-container">
@@ -169,6 +169,7 @@ import 'swiper/swiper-bundle.css'
                 data.anger = 0
                 await this.initializeEmosi(change.doc.id)
               }
+              data.srcUrl = await this.getFromStorage(data.src)
               this.dataKarya.push(data)
             }
             if (change.type === "modified"){
@@ -249,6 +250,15 @@ import 'swiper/swiper-bundle.css'
         }).catch(() => {
           return false
         })
+      },
+      getFromStorage(src){
+        return this.$fire.storage.refFromURL(src).getDownloadURL()
+          .then(url => {
+            return url
+          })
+          .catch(error => {
+            console.log(error)
+          })
       }
     },
     head: {
