@@ -3,6 +3,9 @@ assets/turnjs4/*
 !assets/turnjs4/lib
 package-lock.json
 
+static/instalasi/*
+!static/instalasi/mybdgjournal
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
