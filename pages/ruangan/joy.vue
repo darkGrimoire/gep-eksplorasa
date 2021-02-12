@@ -317,13 +317,13 @@
 .transitionfade-in {
   background: linear-gradient(to right, black, black, transparent);
   width: 50vw;
-  height: 100vh;
+  height: 150vh;
   z-index: 999;
 }
 .transitionfade-out {
   background: linear-gradient(to left, black, black, transparent);
   width: 50vw;
-  height: 100vh;
+  height: 150vh;
   z-index: 999;
   right: 0;
   transform: translate(100%, 0);
