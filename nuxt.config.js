@@ -62,7 +62,16 @@ export default {
           analytics: true
         }
       }
-    ]
+    ],
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['faChevronRight','faChevronLeft', 'faTimes', 'faBookOpen']
+        }
+      ]
+    }]
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
