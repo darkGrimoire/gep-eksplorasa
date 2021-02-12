@@ -128,6 +128,7 @@
 
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
+        document.getElementsByClassName('loading')[0].style.display = 'none'
         // TODO: Add on enter animation here
         this.slide = 1
       }})
