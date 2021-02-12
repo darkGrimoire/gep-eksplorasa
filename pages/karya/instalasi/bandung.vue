@@ -34,7 +34,7 @@
           <img src="/instalasi/mybdgjournal/logo.png" alt="logo">
         </div>
         
-        <div v-for="(data, count) in dataKarya" :key="data.id" class="swiper-slide" :data-hash="`slide${count+5}`">
+        <div v-for="(data, count) in dataKarya" :key="data.id" :class="['swiper-slide', {black: data.isBlack}]" :data-hash="`slide${count+5}`">
           <img
             :src="data.srcUrl"
             class="swiper-lazy journal"
@@ -42,35 +42,27 @@
           <div class="emosi-container">
             <div class="joy-container">
               <div class="emosi-text">
-                joy: {{ data.joy }}
+                {{ data.joy }}
               </div>
-              <button :id="`joy${data.id}`" class="joy-button" @click="addEmotion('joy', data.id)">
-                joy
-              </button>
+              <img :id="`joy${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/jp.png' : '/instalasi/mybdgjournal/j.png'" :class="['joy-button', {isBlack: data.isBlack}]" @click="addEmotion('joy', data.id, $event)">
             </div>
             <div class="sad-container">
               <div class="emosi-text">
-                sad: {{ data.sad }}
+                {{ data.sad }}
               </div>
-              <button :id="`sad${data.id}`" class="sad-button" @click="addEmotion('sad', data.id)">
-                sad
-              </button>
+              <img :id="`sad${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/sp.png' : '/instalasi/mybdgjournal/s.png'" :class="['sad-button', {isBlack: data.isBlack}]" @click="addEmotion('sad', data.id, $event)">
             </div>
             <div class="fear-container">
               <div class="emosi-text">
-                fear: {{ data.fear }}
+                {{ data.fear }}
               </div>
-              <button :id="`fear${data.id}`" class="fear-button" @click="addEmotion('fear', data.id)">
-                fear
-              </button>
+              <img :id="`fear${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/fp.png' : '/instalasi/mybdgjournal/f.png'" :class="['fear-button', {isBlack: data.isBlack}]" @click="addEmotion('fear', data.id, $event)">
             </div>
             <div class="anger-container">
               <div class="emosi-text">
-                anger: {{ data.anger }}
+                {{ data.anger }}
               </div>
-              <button :id="`anger${data.id}`" class="anger-button" @click="addEmotion('anger', data.id)">
-                anger
-              </button>
+              <img :id="`anger${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/ap.png' : '/instalasi/mybdgjournal/a.png'" :class="['anger-button', {isBlack: data.isBlack}]" @click="addEmotion('anger', data.id, $event)">
             </div>
           </div>
           <div class="swiper-lazy-preloader" />
@@ -128,6 +120,8 @@ import 'swiper/swiper-bundle.css'
       await this.initializeDatabase()
       // initialize localStorage reading
       this.initializeLocalStorage()
+      
+      this.preloadImages()
     },
     methods: {
       initializeLocalStorage(){
@@ -139,6 +133,15 @@ import 'swiper/swiper-bundle.css'
                 localStorage.removeItem('instalasi')
                 this.initializeLocalStorage()
                 break
+              }
+              if (this.storage[`foto${i}`]){
+                // console.log(`#${this.storage[`foto${i}`]}${i}`)
+                let img = document.querySelector(`#${this.storage[`foto${i}`]}${i}`)
+                if (img.classList.contains('isBlack')){
+                  img.setAttribute('src', '/instalasi/mybdgjournal/'+this.storage[`foto${i}`][0]+'p-.png')
+                } else {
+                  img.setAttribute('src', '/instalasi/mybdgjournal/'+this.storage[`foto${i}`][0]+'-.png')
+                }
               }
             }
           } catch (e){
@@ -171,6 +174,7 @@ import 'swiper/swiper-bundle.css'
               }
               data.srcUrl = await this.getFromStorage(data.src)
               this.dataKarya.push(data)
+              this.dataKarya.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
             }
             if (change.type === "modified"){
               // console.log("Modified: ", change.doc.data())
@@ -191,13 +195,23 @@ import 'swiper/swiper-bundle.css'
           })
         })
       },
-      async addEmotion(emosi, id){
+      async addEmotion(emosi, id, e){
         // console.log(`${emosi} | ${id}`)
-        if (this.storage[`foto${id}`] !== null && this.storage[`foto${id}`] !== emosi){
+        if (this.storage[`foto${id}`] && this.storage[`foto${id}`] !== emosi){
           let oldEmosi = this.storage[`foto${id}`]
           this.storage[`foto${id}`] = emosi
           let parsed = JSON.stringify(this.storage)
           // console.log(`${oldEmosi} | ${parsed}`)
+
+          if (e.target.classList.contains('isBlack')){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/'+emosi[0]+'p-.png')
+            let oldEmosiEl = document.querySelector(`#${oldEmosi}${id}`)
+            oldEmosiEl.setAttribute('src', '/instalasi/mybdgjournal/'+oldEmosi[0]+'p.png')
+          } else {
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/'+emosi[0]+'-.png')
+            let oldEmosiEl = document.querySelector(`#${oldEmosi}${id}`)
+            oldEmosiEl.setAttribute('src', '/instalasi/mybdgjournal/'+oldEmosi[0]+'.png')
+          }
 
           localStorage.setItem('instalasi', parsed)
           // console.log(`asdf ${this.dataKarya[id-1][`${emosi}`]}`)
@@ -206,10 +220,16 @@ import 'swiper/swiper-bundle.css'
           } else {
             await this.updateDatabase(id, emosi, 1)  
           }
-        } else if (this.storage[`foto${id}`] === null) {
+        } else if (!this.storage[`foto${id}`]) {
           this.storage[`foto${id}`] = emosi
           let parsed = JSON.stringify(this.storage)
           // console.log(`2. ${parsed}`)
+
+          if (e.target.classList.contains('isBlack')){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/'+emosi[0]+'p-.png')
+          } else {
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/'+emosi[0]+'-.png')
+          }
           
           localStorage.setItem('instalasi', parsed)
           await this.updateDatabase(id, emosi, 1)
@@ -259,6 +279,21 @@ import 'swiper/swiper-bundle.css'
           .catch(error => {
             console.log(error)
           })
+      },
+      preloadImages(){
+        setTimeout(() => {
+          new Image().src = '/instalasi/mybdgjournal/j-.png'
+          new Image().src = '/instalasi/mybdgjournal/s-.png'
+          new Image().src = '/instalasi/mybdgjournal/f-.png'
+          new Image().src = '/instalasi/mybdgjournal/a-.png'
+        }, 1500)
+
+        setTimeout(() => {
+          new Image().src = '/instalasi/mybdgjournal/jp-.png'
+          new Image().src = '/instalasi/mybdgjournal/sp-.png'
+          new Image().src = '/instalasi/mybdgjournal/fp-.png'
+          new Image().src = '/instalasi/mybdgjournal/ap-.png'
+        }, 3000)
       }
     },
     head: {
@@ -377,35 +412,66 @@ import 'swiper/swiper-bundle.css'
 
 .emosi-container {
   position: absolute;
-  left: 50%;
   bottom: 10%;
-  transform: translate(-50%, -50%);
+  left: 50%;
+  transform: translate(-50%, 50%);
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  font-family: 'Lora', serif;
-  font-size: 1rem;
+  font-family: 'Mechanical Pencil', serif;
+  font-size: 2rem;
   font-weight: 300;
   @media only screen and (max-width: 800px) {
     bottom: 12%;
+    font-size: 3rem;
   }
   @media only screen and (max-width: 600px) {
-    font-size: .85rem;
+    font-size: 1.5rem;
   }
   .joy-container,
   .sad-container,
   .fear-container,
   .anger-container {
     text-align: center;
-    min-width: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 30px;
+    @media only screen and (max-width: 800px) {
+      margin: 0 15px;
+    }
+    @media only screen and (max-width: 600px) {
+      margin: 0 6px;
+    }
+    img {
+      max-width: 75px;
+      @media only screen and (max-width: 800px) {
+        max-width: 15vw;
+      }
+      @media only screen and (max-width: 600px) {
+        max-width: 15vw;
+      }
+    }
+    .emosi-text {
+      margin-right: 3px;
+    }
+  }
+  .joy-container {
+    color: #d1bb10;
+  }
+  .sad-container {
+    color: #305fe9;
+  }
+  .fear-container {
+    color: #009562;
+  }
+  .anger-container {
+    color: #e14423;
   }
 }
 
-.green-btn {
-  background-color: greenyellow;
-}
-.red-btn {
-  background-color: crimson;
+.black {
+  background-color: black;
 }
 </style>
 
