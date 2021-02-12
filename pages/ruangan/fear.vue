@@ -109,7 +109,10 @@
           <div class="cont tv">
             <img src="/fear/tv.gif" alt="tv">
           </div>
-          <div class="cont sadako">
+          <div v-show="!benda.saklar" class="cont sadako">
+            <img src="/fear/sadako 1.png" alt="sadako" :style="`opacity: ${benda.sadako}`" @mouseenter="benda.sadako = 1" @mouseout="benda.sadako = 0">
+          </div>
+          <div v-show="benda.saklar" class="cont sadako">
             <img src="/fear/sadako 1.png" alt="sadako">
           </div>
           <div class="cont sofa">
@@ -130,7 +133,10 @@
           <div class="cont tikus2">
             <img src="/fear/rat 2 1.png" alt="tikus">
           </div>
-          <div class="cont hantu1">
+          <div v-show="!benda.saklar" class="cont hantu1">
+            <img src="/fear/setanmini 1.png" alt="hantu" :style="`opacity: ${benda.setanmini}`" @mouseenter="benda.setanmini = 1" @mouseout="benda.setanmini = 0">
+          </div>
+          <div v-show="benda.saklar" class="cont hantu1">
             <img src="/fear/setanmini 1.png" alt="hantu">
           </div>
           <div class="cont box">
@@ -180,7 +186,9 @@
         },
         msg: 'Pesan Kurator Here',
         benda: {
-          saklar: true
+          saklar: false,
+          sadako: 0,
+          setanmini: 0
         }
       }
     },
