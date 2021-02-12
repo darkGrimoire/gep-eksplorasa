@@ -213,8 +213,8 @@
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
           gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
-          gsap.to('.transitionfade-out', {x: '50%', duration: .5})
-          gsap.to('.transitionfade-out', {x: '0', duration: 1.5, ease: 'none', delay: .5})
+          gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+          gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
         }
       }
     },
@@ -387,15 +387,18 @@
 
 .transitionfade-in {
   background: linear-gradient(to right, black, black, transparent);
-  width: 50vw;
-  height: 150vh;
+  width: 60vw;
+  height: 200vh;
+  top: -50%;
+  left: -5%;
   z-index: 999;
 }
 .transitionfade-out {
   background: linear-gradient(to left, black, black, transparent);
-  width: 50vw;
-  height: 150vh;
+  width: 60vw;
+  height: 200vh;
   z-index: 999;
+  top: -50%;
   right: 0;
   transform: translate(100%, 0);
 }
