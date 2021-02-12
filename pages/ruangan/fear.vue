@@ -26,6 +26,8 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
+          <div class="cont transitionfade-in" />
+          <div v-show="benda.saklar" class="cont darkness" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide-fear1.png" alt="guide" style="opacity: 0;">
@@ -64,7 +66,7 @@
             <img src="/fear/jaring 1.png" alt="jaring laba-laba">
           </div>
           <div class="cont saklar">
-            <img src="/fear/saklar 1.png" alt="saklar">
+            <img src="/fear/saklar 1.png" alt="saklar" @click="toggleSaklar">
           </div>
           <div class="cont lampu">
             <img src="/fear/lampu 1.png" alt="lampu">
@@ -86,6 +88,8 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
+          <div class="cont transitionfade-out" />
+          <div v-show="benda.saklar" class="cont darkness" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide-fear3.png" alt="guide" style="opacity: 0;">
@@ -114,8 +118,11 @@
           <div class="cont ventilasi">
             <img src="/fear/vent 1.png" alt="ventilasi">
           </div>
-          <div class="cont foto">
+          <div v-show="!benda.saklar" class="cont foto">
             <img src="/fear/fohepi 1.png" alt="foto" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
+          <div v-show="benda.saklar" class="cont foto">
+            <img src="/fear/fokripi 1.png" alt="foto">
           </div>
           <div class="cont tikus1">
             <img src="/fear/rat 1 1.png" alt="tikus">
@@ -171,7 +178,10 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here'
+        msg: 'Pesan Kurator Here',
+        benda: {
+          saklar: true
+        }
       }
     },
     computed: {
@@ -180,15 +190,23 @@
       }
     },
     watch: {
-      slide(newVal) {
+      slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          if (oldVal > 2)
+            gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
         } else if (newVal === 1){
           gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
+          if (oldVal === 0)
+            gsap.to('.transitionfade-in', {x: '-100%', duration: .7, delay: .2})
         } else if (newVal === 0){
           gsap.to(this.base, {slide0: -50, slide1: 50, slide2: 150})
+          if (oldVal === 1)
+            gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
           gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+          gsap.to('.transitionfade-out', {x: '50%', duration: .5})
+          gsap.to('.transitionfade-out', {x: '0', duration: 1.5, ease: 'none', delay: .5})
         }
       }
     },
@@ -267,6 +285,9 @@
         } else if (e.target.getAttribute('src') === "/fear/monster2 1.png"){
           e.target.setAttribute('src', "/fear/monster1 1.png")
         }
+      },
+      toggleSaklar(){
+        this.benda.saklar = !this.benda.saklar
       }
     },
   }
@@ -356,6 +377,21 @@
   z-index: 50;
 }
 
+.transitionfade-in {
+  background: linear-gradient(to right, black, black, transparent);
+  width: 50vw;
+  height: 150vh;
+  z-index: 999;
+}
+.transitionfade-out {
+  background: linear-gradient(to left, black, black, transparent);
+  width: 50vw;
+  height: 150vh;
+  z-index: 999;
+  right: 0;
+  transform: translate(100%, 0);
+}
+
 .center-anchor {
   transform: translate(-50%,-50%);
 }
@@ -382,6 +418,7 @@
   width: 17.4%;
   top: 74.7%;
   left: 9.6%;
+  z-index: 71;
 }
 
 .tv {
@@ -394,6 +431,7 @@
   width: 15.8%;
   top: 43.3%;
   left: 35.5%;
+  z-index: 71;
 }
 
 .sofa {
@@ -412,6 +450,7 @@
   width: 12.2%;
   top: 13%;
   left: 79.5%;
+  z-index: 71;
 }
 
 .tikus1 {
@@ -448,6 +487,7 @@
   width: 8.7%;
   top: 39%;
   left: 85%;
+  z-index: 71;
 }
 
 .tangga {
@@ -508,12 +548,21 @@
   width: 4%;
   top: 36%;
   left: 86.5%;
+  z-index: 71;
 }
 
 .lampu {
   width: 16%;
   top: -36.8%;
   left: 41.2%;
+}
 
+.darkness {
+  background-color: black;
+  opacity: .8;
+  z-index: 70;
+  width: 150%;
+  height: 200%;
+  top: -50%;
 }
 </style>

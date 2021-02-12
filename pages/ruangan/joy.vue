@@ -26,6 +26,7 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
+          <div class="cont transitionfade-in" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide1.png" alt="guide" style="opacity: 0;">
@@ -74,6 +75,7 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
+          <div class="cont transitionfade-out" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide2.png" alt="guide" style="opacity: 0;">
@@ -144,15 +146,23 @@
       }
     },
     watch: {
-      slide(newVal) {
+      slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          if (oldVal > 2)
+            gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
         } else if (newVal === 1){
           gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
+          if (oldVal === 0)
+            gsap.to('.transitionfade-in', {x: '-100%', duration: .7, delay: .2})
         } else if (newVal === 0){
           gsap.to(this.base, {slide0: -50, slide1: 50, slide2: 150})
+          if (oldVal === 1)
+            gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
           gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+          gsap.to('.transitionfade-out', {x: '50%', duration: .5})
+          gsap.to('.transitionfade-out', {x: '0', duration: 1.5, ease: 'none', delay: .5})
         }
       }
     },
@@ -302,6 +312,21 @@
   left: 50%;
   transform: translate(-50%,-50%);
   z-index: 50;
+}
+
+.transitionfade-in {
+  background: linear-gradient(to right, black, black, transparent);
+  width: 50vw;
+  height: 100vh;
+  z-index: 999;
+}
+.transitionfade-out {
+  background: linear-gradient(to left, black, black, transparent);
+  width: 50vw;
+  height: 100vh;
+  z-index: 999;
+  right: 0;
+  transform: translate(100%, 0);
 }
 
 .center-anchor {
