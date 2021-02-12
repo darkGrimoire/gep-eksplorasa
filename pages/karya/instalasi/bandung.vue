@@ -44,25 +44,25 @@
               <div class="emosi-text">
                 {{ data.joy }}
               </div>
-              <img :id="`joy${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/jp.png' : '/instalasi/mybdgjournal/j.png'" :class="['joy-button', {isBlack: data.isBlack}]" @click="addEmotion('joy', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
+              <img :id="`joy${data.id}`" :src="getButtonImage(data.id, 'joy')" :class="['joy-button', {isBlack: data.isBlack}]" @click="addEmotion('joy', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
             </div>
             <div class="sad-container">
               <div class="emosi-text">
                 {{ data.sad }}
               </div>
-              <img :id="`sad${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/sp.png' : '/instalasi/mybdgjournal/s.png'" :class="['sad-button', {isBlack: data.isBlack}]" @click="addEmotion('sad', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
+              <img :id="`sad${data.id}`" :src="getButtonImage(data.id, 'sad')" :class="['sad-button', {isBlack: data.isBlack}]" @click="addEmotion('sad', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
             </div>
             <div class="fear-container">
               <div class="emosi-text">
                 {{ data.fear }}
               </div>
-              <img :id="`fear${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/fp.png' : '/instalasi/mybdgjournal/f.png'" :class="['fear-button', {isBlack: data.isBlack}]" @click="addEmotion('fear', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
+              <img :id="`fear${data.id}`" :src="getButtonImage(data.id, 'fear')" :class="['fear-button', {isBlack: data.isBlack}]" @click="addEmotion('fear', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
             </div>
             <div class="anger-container">
               <div class="emosi-text">
                 {{ data.anger }}
               </div>
-              <img :id="`anger${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/ap.png' : '/instalasi/mybdgjournal/a.png'" :class="['anger-button', {isBlack: data.isBlack}]" @click="addEmotion('anger', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
+              <img :id="`anger${data.id}`" :src="getButtonImage(data.id, 'anger')" :class="['anger-button', {isBlack: data.isBlack}]" @click="addEmotion('anger', data.id, $event)" @mouseenter="handleHover(data.id, $event)" @mouseout="handleHoverEnd(data.id, $event)">
             </div>
           </div>
           <div class="swiper-lazy-preloader" />
@@ -111,10 +111,10 @@ import 'swiper/swiper-bundle.css'
       }
     },
     async mounted () {
-      // get and listen to data karya
-      await this.initializeDatabase()
       // initialize localStorage reading
       this.initializeLocalStorage()
+      // get and listen to data karya
+      await this.initializeDatabase()
       
       this.preloadImages()
     },
@@ -125,22 +125,15 @@ import 'swiper/swiper-bundle.css'
             this.storage = JSON.parse(localStorage.getItem('instalasi'))
             for ( let i = 1; i <= 14; i++ ){
               if (!(`foto${i}` in this.storage)){
+                console.log(`localStorage Removed`)
                 localStorage.removeItem('instalasi')
                 this.initializeLocalStorage()
                 break
               }
-              if (this.storage[`foto${i}`]){
-                // console.log(`#${this.storage[`foto${i}`]}${i}`)
-                let img = document.querySelector(`#${this.storage[`foto${i}`]}${i}`)
-                if (img.classList.contains('isBlack')){
-                  img.setAttribute('src', '/instalasi/mybdgjournal/'+this.storage[`foto${i}`][0]+'p-.png')
-                } else {
-                  img.setAttribute('src', '/instalasi/mybdgjournal/'+this.storage[`foto${i}`][0]+'-.png')
-                }
-                this.dataKarya[i].choosen = true
-              }
             }
           } catch (e){
+            console.log(e)
+            console.log(`localStorage Removed`)
             localStorage.removeItem('instalasi')
             this.initializeLocalStorage()
           }
@@ -169,7 +162,7 @@ import 'swiper/swiper-bundle.css'
                 await this.initializeEmosi(change.doc.id)
               }
               data.srcUrl = await this.getFromStorage(data.src)
-              data.choosen = false
+              data.choosen = this.storage[`foto${data.id}`] ? true : false
               this.dataKarya.push(data)
               this.dataKarya.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0))
             }
@@ -194,7 +187,7 @@ import 'swiper/swiper-bundle.css'
       },
       async addEmotion(emosi, id, e){
         // console.log(`${emosi} | ${id}`)
-        this.dataKarya[id].choosen = true
+        this.dataKarya.find(data => {return data.id === id}).choosen = true
         if (this.storage[`foto${id}`] && this.storage[`foto${id}`] !== emosi){
           let oldEmosi = this.storage[`foto${id}`]
           this.storage[`foto${id}`] = emosi
@@ -294,7 +287,7 @@ import 'swiper/swiper-bundle.css'
         }, 3000)
       },
       handleHover(id, e){
-        if (this.dataKarya[id].choosen){
+        if (this.dataKarya.find(data => {return data.id === id}).choosen){
           return
         }
         if (e.target.classList.contains('isBlack')){
@@ -320,7 +313,7 @@ import 'swiper/swiper-bundle.css'
         }
       },
       handleHoverEnd(id, e){
-        if (this.dataKarya[id].choosen){
+        if (this.dataKarya.find(data => {return data.id === id}).choosen){
           return
         }
         if (e.target.classList.contains('isBlack')){
@@ -342,6 +335,22 @@ import 'swiper/swiper-bundle.css'
             e.target.setAttribute('src', '/instalasi/mybdgjournal/f.png')
           } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/a-.png'){
             e.target.setAttribute('src', '/instalasi/mybdgjournal/a.png')
+          }
+        }
+      },
+      getButtonImage(id, emosi) {
+        let storageData = this.storage[`foto${id}`]
+        if ('isBlack' in this.dataKarya.find(data => {return data.id === id})) {
+          if (storageData === emosi) {
+            return '/instalasi/mybdgjournal/'+emosi[0]+'p-.png'
+          } else {
+            return '/instalasi/mybdgjournal/'+emosi[0]+'p.png'
+          }
+        } else {
+          if (storageData === emosi) {
+            return '/instalasi/mybdgjournal/'+emosi[0]+'-.png'
+          } else {
+            return '/instalasi/mybdgjournal/'+emosi[0]+'.png'
           }
         }
       }
