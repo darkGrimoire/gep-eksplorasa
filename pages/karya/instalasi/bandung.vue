@@ -44,25 +44,25 @@
               <div class="emosi-text">
                 {{ data.joy }}
               </div>
-              <img :id="`joy${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/jp.png' : '/instalasi/mybdgjournal/j.png'" :class="['joy-button', {isBlack: data.isBlack}]" @click="addEmotion('joy', data.id, $event)">
+              <img :id="`joy${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/jp.png' : '/instalasi/mybdgjournal/j.png'" :class="['joy-button', {isBlack: data.isBlack}]" @click="addEmotion('joy', data.id, $event)" @mouseenter="handleHover($event)" @mouseout="handleHoverEnd($event)">
             </div>
             <div class="sad-container">
               <div class="emosi-text">
                 {{ data.sad }}
               </div>
-              <img :id="`sad${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/sp.png' : '/instalasi/mybdgjournal/s.png'" :class="['sad-button', {isBlack: data.isBlack}]" @click="addEmotion('sad', data.id, $event)">
+              <img :id="`sad${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/sp.png' : '/instalasi/mybdgjournal/s.png'" :class="['sad-button', {isBlack: data.isBlack}]" @click="addEmotion('sad', data.id, $event)" @mouseenter="handleHover($event)" @mouseout="handleHoverEnd($event)">
             </div>
             <div class="fear-container">
               <div class="emosi-text">
                 {{ data.fear }}
               </div>
-              <img :id="`fear${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/fp.png' : '/instalasi/mybdgjournal/f.png'" :class="['fear-button', {isBlack: data.isBlack}]" @click="addEmotion('fear', data.id, $event)">
+              <img :id="`fear${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/fp.png' : '/instalasi/mybdgjournal/f.png'" :class="['fear-button', {isBlack: data.isBlack}]" @click="addEmotion('fear', data.id, $event)" @mouseenter="handleHover($event)" @mouseout="handleHoverEnd($event)">
             </div>
             <div class="anger-container">
               <div class="emosi-text">
                 {{ data.anger }}
               </div>
-              <img :id="`anger${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/ap.png' : '/instalasi/mybdgjournal/a.png'" :class="['anger-button', {isBlack: data.isBlack}]" @click="addEmotion('anger', data.id, $event)">
+              <img :id="`anger${data.id}`" :src="data.isBlack ? '/instalasi/mybdgjournal/ap.png' : '/instalasi/mybdgjournal/a.png'" :class="['anger-button', {isBlack: data.isBlack}]" @click="addEmotion('anger', data.id, $event)" @mouseenter="handleHover($event)" @mouseout="handleHoverEnd($event)">
             </div>
           </div>
           <div class="swiper-lazy-preloader" />
@@ -77,7 +77,6 @@
           </p>
         </div>
       </div>
-      <div class="swiper-pagination" />
     </div>
   </div>
 </template>
@@ -108,10 +107,6 @@ import 'swiper/swiper-bundle.css'
             replaceState: true,
             watchState: true
           },
-          pagination: {
-            el: '.swiper-pagination',
-            bulletActiveClass: 'custom-bullet-active'
-          }
         }
       }
     },
@@ -294,6 +289,52 @@ import 'swiper/swiper-bundle.css'
           new Image().src = '/instalasi/mybdgjournal/fp-.png'
           new Image().src = '/instalasi/mybdgjournal/ap-.png'
         }, 3000)
+      },
+      handleHover(e){
+        if (e.target.classList.contains('isBlack')){
+          if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/jp.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/jp-.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/sp.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/sp-.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/fp.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/fp-.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/ap.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/ap-.png')
+          }
+        } else {
+          if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/j.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/j-.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/s.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/s-.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/f.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/f-.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/a.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/a-.png')
+          }
+        }
+      },
+      handleHoverEnd(e){
+        if (e.target.classList.contains('isBlack')){
+          if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/jp-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/jp.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/sp-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/sp.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/fp-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/fp.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/ap-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/ap.png')
+          }
+        } else {
+          if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/j-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/j.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/s-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/s.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/f-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/f.png')
+          } else if (e.target.getAttribute('src') === '/instalasi/mybdgjournal/a-.png'){
+            e.target.setAttribute('src', '/instalasi/mybdgjournal/a.png')
+          }
+        }
       }
     },
     head: {
@@ -419,7 +460,7 @@ import 'swiper/swiper-bundle.css'
   justify-content: space-around;
   align-items: center;
   font-family: 'Mechanical Pencil', serif;
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: 300;
   @media only screen and (max-width: 800px) {
     bottom: 12%;
@@ -436,20 +477,21 @@ import 'swiper/swiper-bundle.css'
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 30px;
+    margin: 0 15px;
     @media only screen and (max-width: 800px) {
-      margin: 0 15px;
-    }
-    @media only screen and (max-width: 600px) {
-      margin: 0 6px;
+      margin: 0 8px;
     }
     img {
-      max-width: 75px;
+      cursor: pointer;
+      max-width: 45px;
       @media only screen and (max-width: 800px) {
-        max-width: 15vw;
+        max-width: 11vw;
       }
-      @media only screen and (max-width: 600px) {
-        max-width: 15vw;
+    }
+    .anger-button {
+      max-width: 60px;
+      @media only screen and (max-width: 800px) {
+        max-width: 14vw;
       }
     }
     .emosi-text {
@@ -472,12 +514,5 @@ import 'swiper/swiper-bundle.css'
 
 .black {
   background-color: black;
-}
-</style>
-
-<style lang="scss">
-.custom-bullet-active {
-  opacity: 1;
-  background: #333;
 }
 </style>
