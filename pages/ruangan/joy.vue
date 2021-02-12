@@ -152,7 +152,7 @@
           if (oldVal > 2)
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
         } else if (newVal === 1){
-          gsap.to(this.base, {slide0: -150, slide1: -75, slide2: 25})
+          gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
           if (oldVal === 0)
             gsap.to('.transitionfade-in', {x: '-100%', duration: .7, delay: .2})
         } else if (newVal === 0){
