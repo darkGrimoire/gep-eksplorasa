@@ -4,6 +4,8 @@
       <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
       <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
     </div>
+
+    <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
     
     <div id="slide0" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
@@ -124,8 +126,11 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
 
-      // TODO: Add on enter animation here
-      this.slide = 1
+      // wait for loading to finish
+      gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
+        // TODO: Add on enter animation here
+        this.slide = 1
+      }})
     },
     methods: {
       switchSlide(val){
