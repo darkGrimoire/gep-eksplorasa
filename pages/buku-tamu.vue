@@ -242,9 +242,9 @@ export default {
               font-size: 1em;
 
               &:hover{
-                cursor: pointer;
-                background-size: 80%;
+                cursor: pointer;              
                 background:url("/img/bubble-4-min.png") no-repeat center center;
+                background-size: 80%;
                 color: white;
               }
             }
