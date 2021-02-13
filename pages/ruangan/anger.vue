@@ -29,7 +29,7 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide">
+          <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/template-example/kitj1.png" alt="guide" style="opacity: .0;">
           </div>
@@ -94,7 +94,7 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <div class="cont guide">
+          <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/template-example/kitj2.png" alt="guide" style="opacity: .0;">
           </div>
@@ -200,6 +200,7 @@
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
+      document.onkeyup = this.handleKeyboard
 
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
@@ -259,6 +260,13 @@
         if (window.matchMedia("(orientation: landscape)").matches){
           this.computedDisplacement = 0
           this.transformed = 0
+        }
+      },
+      handleKeyboard(e){
+        if (this.slide === 2 && e.key === "ArrowLeft"){
+          this.switchSlide(-1)
+        } else if (this.slide === 1 && e.key === "ArrowRight"){
+          this.switchSlide(1)
         }
       }
     },

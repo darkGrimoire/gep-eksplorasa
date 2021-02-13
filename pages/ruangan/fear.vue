@@ -223,6 +223,7 @@
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
+      document.onkeyup = this.handleKeyboard
       
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
@@ -282,6 +283,13 @@
         if (window.matchMedia("(orientation: landscape)").matches){
           this.computedDisplacement = 0
           this.transformed = 0
+        }
+      },
+      handleKeyboard(e){
+        if (this.slide === 2 && e.key === "ArrowLeft"){
+          this.switchSlide(-1)
+        } else if (this.slide === 1 && e.key === "ArrowRight"){
+          this.switchSlide(1)
         }
       },
       handleObjChange(e){
