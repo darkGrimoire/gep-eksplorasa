@@ -5,6 +5,11 @@
 
       <div class="box">
         <img src="/events/kain.png" class="kain">
+        
+        <div class="kancing">
+          <img src="/events/kancing.png" class="kncg">
+          <img src="/events/kancing2.png" class="kncg2">
+        </div>
 
         <div class="isibox">
           <!-- nyomot dari w3 hehe ^-^ -->
@@ -18,7 +23,16 @@
               <button class="tablink" onclick="openPage('28')">28</button>
             </div>
 
-            <div id="22" class="tabcontent">isi 22</div>
+            <img src="/events/garis.png" class="garis">
+
+            <div id="22" class="tabcontent">
+              <div class="jam">17.00</div>
+              <div class="acara">
+                Workshop
+                <br>Bersama Siapa Hayo
+                <br><a href="">bit.ly/ape</a>
+              </div>
+            </div>
             <div id="23" class="tabcontent">isi 23</div>
             <div id="24" class="tabcontent">isi 24</div>
             <div id="25" class="tabcontent">isi 25</div>
@@ -135,9 +149,9 @@ export default {
 <style lang="scss" scoped>
   * {
     font-family: 'KG Happy Solid';
-    font-size: 20px;
+    font-size: 25px;
     color: #1f1f1f;
-    text-align: center;
+    text-align: left;
   }
 
   .container {
@@ -159,8 +173,10 @@ export default {
   }
 
   a {
-    color: #d1bb10;
+    color: #1f1f1f;
     text-decoration: none;
+    font-family: 'Mechanical Pencil';
+    font-size: 30px;
   }
 
   a:hover {
@@ -185,7 +201,12 @@ export default {
   }
 
   .tabcontent {
-    display: none;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .acara {
+    padding-left: 50px;
   }
 
   .judul {
@@ -203,6 +224,30 @@ export default {
   .kain {
     width: 975px;
     margin-top: -25px;
+  }
+
+  .kancing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: -100px;
+  }
+
+  .kncg {
+    width: 85px;  
+    margin-left: -465px;
+  }
+
+  .kncg2 {
+    width: 95px;
+    margin-right: -500px;
+    margin-top: 30px;
+  }
+
+  .garis {
+    width: 850px;
+    margin-top: -20px;
   }
 
   .isibox {

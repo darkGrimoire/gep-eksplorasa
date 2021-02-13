@@ -6,6 +6,11 @@
       <div class="box">
         <img src="/events/kain.png" class="kain">
 
+        <div class="kancing">
+          <img src="/events/kancing.png" class="kncg">
+          <img src="/events/kancing2.png" class="kncg2">
+        </div>
+
         <div class="isibox">
           <!-- nyomot dari w3 hehe ^-^ -->
             <div class="tanggal">
@@ -18,6 +23,8 @@
               <button class="tablink" v-on:click="getevent(28)">28</button>
             </div>
 
+            <img src="/events/garis.png" class="garis">
+
             <!--<div id="22" class="tabcontent">isi 22</div>
             <div id="23" class="tabcontent">isi 23</div>
             <div id="24" class="tabcontent">isi 24</div>
@@ -26,7 +33,22 @@
             <div id="27" class="tabcontent">isi 27</div>
             <div id="28" class="tabcontent">isi 28</div>-->
             <br><br>
-            <div class="tabcontent" style="display:block" v-html="eventout"></div>
+
+
+            <!-- contoh layout eventnya
+            <div id="22" class="tabcontent">
+              <div class="jam">17.00</div>
+              <div class="acara">
+                Workshop
+                <br>Bersama Siapa Hayo
+                <br><a href="">bit.ly/ape</a>
+              </div>
+            </div>
+            -->
+
+            <div class="tabcontent" style="display:block" v-html="eventout">
+              
+            </div>
 
           <!--<br><br>
           <center>
@@ -182,8 +204,10 @@ export default {
   }
 
   a {
-    color: #d1bb10;
+    color: #1f1f1f;
     text-decoration: none;
+    font-family: 'Mechanical Pencil';
+    font-size: 30px;
   }
 
   a:hover {
@@ -215,10 +239,16 @@ export default {
   }
 
   .tabcontent {
-    display: none;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .acara {
+    padding-left: 50px;
   }
 
   .judul {
+    margin-top: -30px;
     width: 525px;
   }
 
@@ -233,6 +263,30 @@ export default {
   .kain {
     width: 975px;
     margin-top: -25px;
+  }
+
+  .kancing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: -100px;
+  }
+
+  .kncg {
+    width: 85px;  
+    margin-left: -465px;
+  }
+
+  .kncg2 {
+    width: 95px;
+    margin-right: -500px;
+    margin-top: 30px;
+  }
+
+  .garis {
+    width: 850px;
+    margin-top: -20px;
   }
 
   .isibox {
