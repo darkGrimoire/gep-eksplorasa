@@ -4,6 +4,8 @@
       <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
       <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
     </div>
+
+    <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
     
     <div id="slide0" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
@@ -26,14 +28,15 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont guide">
+          <div class="cont transitionfade-in" />
+          <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide1.png" alt="guide" style="opacity: 0;">
           </div>
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
-          <div class="cont pagar">
+          <div class="cont pagar1">
             <img src="/joy/pager1 1.png" alt="pagar">
           </div>
           <div class="cont rumput">
@@ -74,7 +77,8 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont guide">
+          <div class="cont transitionfade-out" />
+          <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
             <img src="/guide2.png" alt="guide" style="opacity: 0;">
           </div>
@@ -115,7 +119,7 @@
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
-    name: "TemplateRuangan",
+    name: "Joy",
     components: {
       rcp,
     },
@@ -144,15 +148,23 @@
       }
     },
     watch: {
-      slide(newVal) {
+      slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          if (oldVal > 2)
+            gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
         } else if (newVal === 1){
           gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
+          if (oldVal === 0)
+            gsap.to('.transitionfade-in', {x: '-100%', duration: .7, delay: .2})
         } else if (newVal === 0){
           gsap.to(this.base, {slide0: -50, slide1: 50, slide2: 150})
+          if (oldVal === 1)
+            gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
           gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+          gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+          gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
         }
       }
     },
@@ -160,14 +172,17 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
 
-      // TODO: Add on enter animation here
-      this.slide = 1
+      // wait for loading to finish
+      gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
+        document.getElementsByClassName('loading')[0].style.display = 'none'
+        // TODO: Add on enter animation here
+        this.slide = 1
+      }})
     },
     methods: {
       switchSlide(val){
         this.slide += val
-        this.computedDisplacement = 0
-        this.transformed = 0
+        gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
       },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
@@ -305,6 +320,24 @@
   z-index: 50;
 }
 
+.transitionfade-in {
+  background: linear-gradient(to right, black, black, transparent);
+  width: 60vw;
+  height: 200vh;
+  top: -50%;
+  left: -5%;
+  z-index: 999;
+}
+.transitionfade-out {
+  background: linear-gradient(to left, black, black, transparent);
+  width: 60vw;
+  height: 200vh;
+  z-index: 999;
+  top: -50%;
+  right: 0;
+  transform: translate(100%, 0);
+}
+
 .center-anchor {
   transform: translate(-50%,-50%);
 }
@@ -323,6 +356,11 @@
   width: 64.5%;
   top: 56%;
   left: 35.1%;
+}
+.pagar1 {
+  width: 100%;
+  top: 29%;
+  left: 0;
 }
 .pagar {
   width: 100%;
