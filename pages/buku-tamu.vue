@@ -1,38 +1,41 @@
 <template>
   <div class="page-container">
     <div class="main-container">
-      <div class="title">
-        <img src="/img/emo-joy-min.png" class="smiley-left">
-        <img src="/img/bubble-1-min.png" class="image-title">
-        <img src="/img/emo-joy-min.png" class="smiley-right">
-      </div>
-      <div class="form-name">
-        <img src="/img/emo-fear-min.png" class="image">
+      <img src="/img/paper-min.png" class="background">
+      <div class="form-container">
+        <div class="title">
+          <img src="/img/emo-joy-min.png" class="smiley-left">
+          <img src="/img/bubble-1-min.png" class="image-title">
+          <img src="/img/emo-joy-min.png" class="smiley-right">
+        </div>
+        <div class="form-name">
+          <img src="/img/emo-fear-min.png" class="image">
        
-        <div class="field">
-          <div class="label">
-            uhm... your name?
+          <div class="field">
+            <div class="label">
+              uhm... your name?
+            </div>
+            <input type="text" class="input">
           </div>
-          <input type="text" class="input">
         </div>
-      </div>
-      <div class="form-from">
-        <img src="/img/emo-anger-min.png" class="image">
-        <div class="field">
-          <div class="label">
-            Where are you from !?
+        <div class="form-from">
+          <img src="/img/emo-anger-min.png" class="image">
+          <div class="field">
+            <div class="label">
+              Where are you from !?
+            </div>
+            <input type="text" class="input">
           </div>
-          <input type="text" class="input">
         </div>
-      </div>
-      <div class="form-submit">
-        <img src="/img/emo-sad-min.png" class="image">
-        <div class="field">
-          <div class="label">
-            submit please
-          </div>
-          <div class="btn">
-            submit
+        <div class="form-submit">
+          <img src="/img/emo-sad-min.png" class="image">
+          <div class="field">
+            <div class="label">
+              submit please
+            </div>
+            <div class="btn">
+              submit
+            </div>
           </div>
         </div>
       </div>
@@ -70,175 +73,186 @@ export default {
     width: 100vw;
 
     .main-container {
-      display: flex;
-      flex-direction: column;
       z-index: 1;
       position: absolute;
-      top: 0;
-      left: 0;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      background:url("/img/paper-min.png") no-repeat center center; 
-      background-size: 38%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
-      .title {
-        margin-bottom: 20px;
-        width: 35%;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        margin-bottom: 5vh;
-        
-        .smiley-left {
-          width: 10%;
-          margin-right: 20px;
-          transform: rotate(-17deg);
-        }
-
-        .image-title {
-          width: 70%;
-        }
-
-        .smiley-right {
-          width: 10%;
-          margin-left: 20px;
-          transform: rotate(3deg);
-        }
+      .background {
+        width: 40vw;
       }
 
-      .form-name {
-        margin-bottom: 5vh;
+      .form-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         display: flex;
-        justify-content: center;
-        width: 35%;
-        align-items: flex-end;
-        align-self: center;
-        
-       .image{
-          width: 4vw;
-          margin-right: 25px;
-          transform: rotate(30deg);
-        }
+        flex-direction: column;
+        align-items: center;
 
-        .field{
-          width: 70%;
-          .label {
-            font-size: 2.2rem;
-            color: #009562;
-            margin-bottom: 15px;
-            font-weight: 500;
-          }
-
-          .input {
-            background:url("/img/bubble-2-min.png") no-repeat center center; 
-            background-size: 100%;
-            border: none;
-            width: 100%;
-            font-size: 2rem;
-            color: white;
-            font-family: 'Mechanical Pencil';
-            padding: 20px 30px 20px 30px;
-            margin:  -20px -30px -10px -20px;
-
-            &:focus{
-              outline: none;
-            }
-          }
-        }
-      }
-
-      .form-from {
-        margin-bottom: 10vh;
-        display: flex;
-        justify-content: center;
-        width: 35%;
-        align-items: flex-end;
-        align-self: center;
-        
-       .image{
-          width: 4vw;
-          margin-right: 25px;
-          transform: rotate(-7deg);
-        }
-
-        .field{
-          width: 70%;
-          .label {
-            font-size: 2.2rem;
-            color: #E14423;
-            margin-bottom: 15px;
-            font-weight: 500;
-          }
-
-          .input {
-            background:url("/img/bubble-3-min.png") no-repeat center center; 
-            background-size: 100%;
-            border: none;
-            width: 100%;
-            font-size: 2rem;
-            color: white;
-            font-family: 'Mechanical Pencil';
-            padding: 20px 30px 20px 30px;
-            margin:  -20px -30px -10px -20px;
-
-            &:focus{
-              outline: none;
-            }
-          }
-        }
-      }
-
-      .form-submit {
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        width: 15%;
-        align-items: flex-end;
-        align-self: center;
-        
-       .image{
-          width: 4vw;
-          transform: rotate(2deg);
-          margin-right: -15px;
-        }
-
-        .field{
-          width: 70%;
+         .title {
+          margin-top: 17%;
+          margin-bottom: 7%;
+          width: 90%;
           display: flex;
-          flex-direction: column;
-          align-items: center;
-
-          .label {
-            font-size: 2.2rem;
-            color: #305fe9;
-            margin-bottom: 15px;
-            font-weight: 500;
+          justify-content: center;
+          
+          .smiley-left {
+            width: 10%;
+            margin-right: 20px;
+            transform: rotate(-17deg);
           }
 
-          .btn {
-            background:url("/img/bubble-5-min.png") no-repeat center center;
-            background-size: 80%;
-            text-align: center;
-            color: #305fe9;
-            width: 100%;
-            padding-top: 25px;
-            padding-bottom: 20px;
-            margin-top: -10px;
-            margin-bottom: -10px;
-            font-size: 2.5rem;
+          .image-title {
+            width: 70%;
+          }
 
-            &:hover{
-              cursor: pointer;
-              background:url("/img/bubble-4-min.png") no-repeat center center;
+          .smiley-right {
+            width: 10%;
+            margin-left: 20px;
+            transform: rotate(3deg);
+          }
+        }
+
+        .form-name {
+          margin-bottom: 7%;
+          display: flex;
+          justify-content: center;
+          width: 90%;
+          align-items: flex-end;
+          align-self: center;
+          
+          .image{
+            width: 10%;
+            margin-right: 25px;
+            transform: rotate(30deg);
+          }
+
+          .field{
+            width: 70%;
+            font-size: 3.6vh;
+            .label {
+              font-size: 1em;
+              color: #009562;
+              margin-bottom: 4%;
+              font-weight: 500;
+            }
+
+            .input {
+              background:url("/img/bubble-2-min.png") no-repeat center center; 
+              background-size: 100%;
+              border: none;
+              width: 100%;
+              font-size: 1em;
               color: white;
+              font-family: 'Mechanical Pencil';
+              padding: 20px 30px 20px 30px;
+              margin:  -20px -30px -10px -20px;
+
+              &:focus{
+                outline: none;
+              }
+            }
+          }
+        }
+
+        .form-from {
+          margin-bottom: 10%;
+          display: flex;
+          justify-content: center;
+          width: 90%;
+          align-items: flex-end;
+          align-self: center;
+          
+        .image{
+            width: 10%;
+            margin-right: 25px;
+            transform: rotate(-7deg);
+          }
+
+          .field{
+            width: 70%;
+            font-size: 3.6vh;
+            .label {
+              font-size: 1em;
+              color: #E14423;
+              margin-bottom: 4%;
+              font-weight: 500;
+            }
+
+            .input {
+              background:url("/img/bubble-3-min.png") no-repeat center center; 
+              background-size: 100%;
+              border: none;
+              width: 100%;
+              font-size: 1em;
+              color: white;
+              font-family: 'Mechanical Pencil';
+              padding: 20px 30px 20px 30px;
+              margin:  -20px -30px -10px -20px;
+
+              &:focus{
+                outline: none;
+              }
+            }
+          }
+        }
+
+        .form-submit {
+          margin-bottom: 20px;
+          display: flex;
+          justify-content: center;
+          width: 50%;
+          align-items: flex-end;
+          align-self: center;
+          
+          .image{
+            width: 20%;
+            transform: rotate(2deg);
+            margin-right: -15px;
+          }
+
+          .field{
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 3.4vh;
+
+            .label {
+              font-size: 1em;
+              color: #305fe9;
+              margin-bottom: 4%;
+              font-weight: 500;
+            }
+
+            .btn {
+              background:url("/img/bubble-5-min.png") no-repeat center center;
+              background-size: 80%;
+              text-align: center;
+              color: #305fe9;
+              width: 100%;
+              padding-top: 25px;
+              padding-bottom: 20px;
+              margin-top: -10px;
+              margin-bottom: -10px;
+              font-size: 1em;
+
+              &:hover{
+                cursor: pointer;
+                background:url("/img/bubble-4-min.png") no-repeat center center;
+                color: white;
+              }
             }
           }
         }
       }
-    }
 
+     
+    }
     .image-container {
       z-index: 0;
       position: absolute;
@@ -282,121 +296,11 @@ export default {
       }
     }
   }
-   @media (max-width: 1280px) and (min-width: 1025px) {
-    .page-container{
-      .main-container {
-        .title {         
-          width: 30%;
-        }
-
-      .form-name {
-        .field{
-          .label {
-            font-size: 1.7rem;
-            margin-bottom: 5px;
-          }
-
-          .input {
-            font-size: 1.8rem;
-            padding: 5px 30px 5px 30px;
-          }
-        }
-      }
-
-      .form-from {
-       .field{
-          .label {
-            font-size: 1.7rem;
-            margin-bottom: 5px;
-          }
-
-          .input {
-            font-size: 1.8rem;
-            padding: 5px 30px 5px 30px;
-          }
-        }
-      }
-
-      .form-submit {    
-        .image{        
-          margin-right: -10px;
-        }
-
-        .field{       
-          .label {
-            font-size: 1.6rem;        
-            margin-bottom: 5px;          
-          }
-
-          .btn {         
-            font-size: 1.7rem;       
-          }
-        }
-      }
-    }
-    }
-  }
   @media (max-width: 1024px) {
     .page-container{
       .main-container {
-        background-size: 90%;
-        .title {         
-          width: 80%;
-        }
-
-        .form-name {
-          width: 80%;
-          .image{
-            width: 10%;
-          }
-          .field{
-            .label {
-              font-size: 3rem;
-              margin-bottom: 20px;
-            }
-
-            .input {
-              font-size: 3rem;
-              padding: 5px 30px 5px 30px;
-            }
-          }
-        }
-
-        .form-from {
-          width: 80%;
-          .image{
-            width: 10%;
-          }
-          .field{
-            .label {
-              font-size: 3rem;
-              margin-bottom: 20px;
-            }
-
-            .input {
-              font-size: 3rem;
-              padding: 5px 30px 5px 30px;
-            }
-          }
-        }
-
-        .form-submit {    
-          width: 40%;
-          .image{     
-            width: 23%;   
-            margin-right: -15px;
-          }
-
-          .field{       
-            .label {
-              font-size: 3rem;        
-              margin-bottom: 15px;          
-            }
-
-            .btn {         
-              font-size: 3rem;       
-            }
-          }
+        .background {
+          width: 90vw;
         }
       }
       .image-container{
@@ -407,77 +311,45 @@ export default {
   @media (max-width: 460px) {
     .page-container{
       .main-container {
-        background-size: 90%;
-        .title {         
-          width: 80%;
-          margin-bottom: 20px;
-          .smiley-left {          
-            margin-right: 10px;          
-          }
-          .smiley-right {           
-            margin-left: 10px;           
-          }
-        }
-
-        .form-name {
-          width: 80%;
-          margin-bottom: 20px;
-          .image{
-            width: 10%;
-          }
-          .field{
-            .label {
-              font-size: 1.2rem;
-              margin-bottom: 0;
+        .form-container{
+          .title{
+            .smiley-left{
+              margin-right: 10px;
             }
-
-            .input {
-              font-size: 1.2rem;
-              padding: 5px 30px 5px 30px;
+            .smiley-right{
+              margin-left: 10px;
             }
           }
-        }
+          
+          .form-name{
+            .field{
+              font-size: 5vw;
 
-        .form-from {
-          width: 80%;
-          margin-bottom: 20px;
-          .image{
-            width: 10%;
-          }
-          .field{
-            .label {
-              font-size: 1.2rem;
-              margin-bottom: 0;
+              .input{
+                padding: 10px 20px 10px 20px;
+                margin:  -10px -20px -10px -20px;
+              }
             }
+           
+          }
 
-            .input {
-              font-size: 1.2rem;
-              padding: 5px 30px 5px 30px;
+          .form-from{
+            .field{
+              font-size: 5vw;
+
+              .input{
+                padding: 10px 20px 10px 20px;
+                margin:  -10px -20px -10px -20px;
+              }
+            }
+          }
+
+          .form-submit{
+            .field{
+              font-size: 5vw;
             }
           }
         }
-
-        .form-submit {    
-          width: 40%;
-          .image{     
-            width: 23%;  
-            margin-right: -5px; 
-          }
-
-          .field{       
-            .label {
-              font-size: 1.2rem;            
-            }
-
-            .btn {         
-              font-size: 1.2rem;   
-              padding: 10px 30px 10px 30px;    
-            }
-          }
-        }
-      }
-      .image-container{
-        display: none;
       }
     }
   }
