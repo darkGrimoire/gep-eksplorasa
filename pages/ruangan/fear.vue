@@ -6,7 +6,10 @@
     </div>
 
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
-    
+    <div v-show="slide === 3" class="narasi">
+      {{ msg }}
+    </div>
+
     <div id="slide0" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
     >
@@ -163,6 +166,8 @@
 // canvas: kalau mau ada tooltip, taro disini
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
+  const NEXT_ROOM = '/ruangan/sad'
+  const CLOSING = '/test/resetruangan'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
@@ -203,8 +208,10 @@
       slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
-          if (oldVal > 2)
+          if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
+            gsap.to('.narasi', {opacity: 0, duration: .5})
+          }
         } else if (newVal === 1){
           gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
           if (oldVal === 0)
@@ -214,9 +221,22 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
-          gsap.to('.transitionfade-out', {x: '40%', duration: .7})
-          gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
+          if (this.isAllRoomVisited()){
+            this.$router.push({path: CLOSING})
+          } else {
+            gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+            gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+            gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
+            gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
+            document.getElementsByClassName('loading')[0].style.display = 'block'
+            gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
+              if (this.isAllRoomVisited()){
+                this.$router.push({path: CLOSING})
+                } else {
+                this.$router.push({path: NEXT_ROOM})
+              }
+            }})
+          }
         }
       }
     },
@@ -224,6 +244,7 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
+      localStorage.setItem('fear', true)
       
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
@@ -236,6 +257,9 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      isAllRoomVisited(){
+        return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
       },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
@@ -286,6 +310,13 @@
         }
       },
       handleKeyboard(e){
+        // DEBUGGING PURPOSE
+        if (this.slide === 2 && e.key === "ArrowRight"){
+          this.switchSlide(1)
+        }
+
+
+
         if (this.slide === 2 && e.key === "ArrowLeft"){
           this.switchSlide(-1)
         } else if (this.slide === 1 && e.key === "ArrowRight"){
@@ -379,6 +410,24 @@
   .left-arrow {
     left: 20px;
   }
+}
+
+.narasi {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%,0);
+  z-index: 99;
+  font-family: 'Mechanical Pencil';
+  font-size: 75px;
+  color: rgba($color: white, $alpha: .9);
+  // background-image: linear-gradient(to right, rgba($color: white, $alpha: .1), transparent);
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent; 
+  // -moz-background-clip: text;
+  // -moz-text-fill-color: transparent;
+  opacity: 0;
+  text-align: center;
 }
 
 .cont {
