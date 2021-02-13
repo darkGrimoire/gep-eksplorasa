@@ -15,7 +15,7 @@
             <div class="label">
               uhm... your name?
             </div>
-            <input type="text" class="input">
+            <input v-model="form.nama" type="text" class="input" placeholder="Tell me!" required>
           </div>
         </div>
         <div class="form-from">
@@ -24,7 +24,7 @@
             <div class="label">
               Where are you from !?
             </div>
-            <input type="text" class="input">
+            <input v-model="form.institusi" type="text" class="input" placeholder="Tell me!" required @keyup.enter.prevent="submit">
           </div>
         </div>
         <div class="form-submit">
@@ -33,7 +33,7 @@
             <div class="label">
               submit please
             </div>
-            <div class="btn">
+            <div class="btn" @click.prevent="submit">
               submit
             </div>
           </div>
@@ -54,7 +54,69 @@
 
 export default {
   name: 'GuestBook',
-  
+  data() {
+    return {
+      form:{
+        nama: "",
+        institusi: "",
+        visited: false
+      }
+  }},
+  mounted() {
+    this.tulishasilcekstorage()
+  },
+  methods:{
+    hapusstorage(){
+      if(this.cekstorage()){
+        localStorage.removeItem("nama")
+        localStorage.removeItem("visited")
+        window.location.reload()
+      }
+    },
+    cekstorage(){
+      return (localStorage.getItem("nama") && localStorage.getItem("nama")!="" && localStorage.getItem("visited"))
+    },
+    tulishasilcekstorage(){
+      // this.form.nama = localStorage.getItem("nama")
+      this.form.visited = localStorage.getItem("visited")
+    },
+    submit(){
+      let now = new Date()
+      const data = {
+          nama: this.form.nama,
+          institusi: this.form.institusi,
+          time: now
+        }
+        if (data.nama==""||data.institusi==""){
+          alert('Tolong diisi semua ya :)')
+          return false
+        }
+        return this.$fire.firestore.collection('bukutamu').add({
+          ...data
+        }).then(async () => 
+        {
+          if(process.client){
+            if (!this.form.visited){
+              await this.$fire.analytics.logEvent('first_isi_buku_tamu', {
+                nama: this.form.nama,
+                institusi: this.form.institusi
+              })
+            }
+            localStorage.setItem("nama", this.form.nama)
+            localStorage.setItem("visited", true)
+            this.$router.push({
+              path: '/teras'
+            })
+          }
+        }).catch(() => {
+          alert('Ada kesalahan server. Mohon refresh dan mencoba kembali')
+          return false
+        })
+    }
+  },
+  head: {
+    title: 'Isi buku tamu :)'
+  }
 }
 </script>
 
@@ -155,6 +217,18 @@ export default {
               &:focus{
                 outline: none;
               }
+              &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+              color: rgba($color: white, $alpha: .7);
+                opacity: 1; /* Firefox */
+              }
+
+              &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color: rgba($color: white, $alpha: .7);
+              }
+
+              &::-ms-input-placeholder { /* Microsoft Edge */
+                color: rgba($color: white, $alpha: .7);
+              }
             }
           }
         }
@@ -196,6 +270,18 @@ export default {
 
               &:focus{
                 outline: none;
+              }
+              &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+              color: rgba($color: white, $alpha: .7);
+                opacity: 1; /* Firefox */
+              }
+
+              &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color: rgba($color: white, $alpha: .7);
+              }
+
+              &::-ms-input-placeholder { /* Microsoft Edge */
+                color: rgba($color: white, $alpha: .7);
               }
             }
           }
