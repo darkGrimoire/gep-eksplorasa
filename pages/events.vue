@@ -9,24 +9,26 @@
         <div class="isibox">
           <!-- nyomot dari w3 hehe ^-^ -->
             <div class="tanggal">
-              <button class="tablink" onclick="openPage('22', this)">22</button>
-              <button class="tablink" onclick="openPage('23')">23</button>
-              <button class="tablink" onclick="openPage('24', this)" id="defaultOpen">24</button>
-              <button class="tablink" onclick="openPage('25')">25</button>
-              <button class="tablink" onclick="openPage('26')">26</button>
-              <button class="tablink" onclick="openPage('27')">27</button>
-              <button class="tablink" onclick="openPage('28')">28</button>
+              <button class="tablink" v-on:click="getevent(22)">22</button>
+              <button class="tablink" v-on:click="getevent(23)">23</button>
+              <button class="tablink" v-on:click="getevent(24)" id="defaultOpen">24</button>
+              <button class="tablink" v-on:click="getevent(25)">25</button>
+              <button class="tablink" v-on:click="getevent(26)">26</button>
+              <button class="tablink" v-on:click="getevent(27)">27</button>
+              <button class="tablink" v-on:click="getevent(28)">28</button>
             </div>
 
-            <div id="22" class="tabcontent">isi 22</div>
+            <!--<div id="22" class="tabcontent">isi 22</div>
             <div id="23" class="tabcontent">isi 23</div>
             <div id="24" class="tabcontent">isi 24</div>
             <div id="25" class="tabcontent">isi 25</div>
             <div id="26" class="tabcontent">isi 26</div>
             <div id="27" class="tabcontent">isi 27</div>
-            <div id="28" class="tabcontent">isi 28</div>
+            <div id="28" class="tabcontent">isi 28</div>-->
+            <br><br>
+            <div class="tabcontent" style="display:block" v-html="eventout"></div>
 
-          <br><br>
+          <!--<br><br>
           <center>
           <span style="color:white">
             <span v-for="(item, key) in events" :key="key">
@@ -37,7 +39,8 @@
             <br><br>
             <span v-html="eventout"></span>
           </span>
-          </center>
+          </center>-->
+
         </div>
       </div>
     </div>
@@ -64,24 +67,25 @@
 
 <script>
 export default {
-  name: 'UnderConstruction',
+  name: 'Events',
   data () {
     return {
       events: [],
-      date: "",
       eventout: ""
     }
   },
   async mounted () {
       this.events = this.sortEventByTimestamp(await this.getDataFromCollection(this.$fire.firestore.collection("events")))
+      //this.getevent(this.convertToWIB(new Date()).getDate())
+      this.getevent(24)
   },
   methods: {
-      getevent() {
-        if(this.date>28||this.date<1){
+      getevent(date) {
+        if(date>28||date<1){
             return false
         }
         this.eventout = ""
-        let out = this.geteventbyday(this.date)
+        let out = this.geteventbyday(date)
         for (let i in out){
           let event = out[i]
           this.eventout += event.nama +" - "+ event.deskripsi +" - "+ this.datetostring(this.convertToWIB( new Date(1000*event.tanggal.seconds)) )+"<br>"
