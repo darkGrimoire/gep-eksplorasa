@@ -29,52 +29,32 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
+          <div v-show="!benda.lampu" class="cont darkness" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj1.png" alt="guide" style="opacity: .0;">
+            <img src="/guide-sad1.png" alt="guide" style="opacity: 0;">
           </div>
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
-            <img src="/anger/wall.png" alt="wall">
+            <img src="/sad/bgsad.png" alt="wall">
           </div>
           <div class="cont floor">
-            <img src="/anger/lt.png" alt="floor">
+            <img src="/sad/lantaisad.png" alt="floor">
           </div>
-          <div class="cont kulkas">
-            <img src="/anger/kulklos.png" alt="kulkas1">
+          <div class="cont bed">
+            <img src="/sad/bed3.png" alt="bed">
           </div>
-          <div class="cont lemari">
-            <img src="/anger/lmari.png" alt="lemari">
+          <div class="cont window">
+            <img src="/sad/ezgif.png" alt="window">
           </div>
-          <div class="cont piring">
-            <img src="/anger/piring.png" alt="piring">
+          <div v-show="!benda.lampu" class="cont meja-belajar">
+            <img src="/sad/nightstand.png" alt="meja belajar" @click="benda.lampu = true">
           </div>
-          <div class="cont rak1">
-            <img src="/anger/rak1.png" alt="rak1">
+          <div v-show="benda.lampu" class="cont meja-belajar">
+            <img src="/sad/nightstand3.png" alt="meja belajar" @click="benda.lampu = false" style="width: 96%;">
           </div>
-          <div class="cont rak2">
-            <img src="/anger/rak2.png" alt="rak2">
-          </div>
-          <div class="cont rak3">
-            <img src="/anger/rak3.png" alt="rak3">
-          </div>
-          <div class="cont pecah1">
-            <img src="/anger/pecah1.png" alt="pecah1">
-          </div>
-          <div class="cont pecah2">
-            <img src="/anger/pecah2.png" alt="pecah2">
-          </div>
-          <div class="cont trio">
-            <img src="/anger/trio.png" alt="trio">
-          </div>
-          <div class="cont air">
-            <img src="/anger/aer.png" alt="air">
-          </div>
-          <div class="cont tong">
-            <img src="/anger/tong.png" alt="tong">
-          </div>
-          <div class="cont oven">
-            <img src="/anger/kgif.gif" alt="oven">
+          <div class="cont poster">
+            <img src="/sad/psotersad.png" alt="poster">
           </div>
         </div>
       </div>
@@ -94,43 +74,26 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
+          <div v-show="!benda.lampu" class="cont darkness" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj2.png" alt="guide" style="opacity: .0;">
+            <img src="/guide-sad2.png" alt="guide" style="opacity: 0;">
           </div>
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
-            <img src="/anger/wall.png" alt="wall">
+            <img src="/sad/bgsad.png" alt="wall">
           </div>
           <div class="cont floor">
-            <img src="/anger/lt.png" alt="floor">
+            <img src="/sad/lantaisad.png" alt="floor">
           </div>
-          <div class="cont lemari2">
-            <img src="/anger/lemari.png" alt="lemari2">
+          <div class="cont lemari">
+            <img src="/sad/lemari3.png" alt="lemari">
           </div>
-          <div class="cont jendela">
-            <img src="/anger/jndl.png" alt="jendela">
-          </div>
-          <div class="cont frame">
-            <img src="/anger/frame.png" alt="frame">
-          </div>
-          <div class="cont meja">
-            <img src="/anger/meja.png" alt="meja">
-          </div>
-          <div class="cont meong">
-            <img src="/anger/meong.png" alt="meong">
-          </div>
-          <div class="cont rak">
-            <img src="/anger/rak.png" alt="rak">
-          </div>
-          <div class="cont trolley">
-            <img src="/anger/trolley.png" alt="trolley">
+          <div class="cont meja-pot">
+            <img src="/sad/mejaa.png" alt="meja">
           </div>
           <div class="cont tv">
-            <img src="/anger/tv1.png" alt="tv">
-          </div>
-          <div class="cont kran">
-            <img src="/anger/kran.gif" alt="kran">
+            <img src="/sad/tv.png" alt="tv">
           </div>
         </div>
       </div>
@@ -148,7 +111,7 @@
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
-    name: "Anger",
+    name: "Sad",
     components: {
       rcp,
     },
@@ -168,7 +131,10 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here'
+        msg: 'Pesan Kurator Here',
+        benda: {
+          lampu: true
+        }
       }
     },
     computed: {
@@ -281,6 +247,7 @@
   position: relative;
   overflow: hidden;
 }
+
 .top-cont {
   background-color: black;
   position: absolute;
@@ -294,6 +261,7 @@
     padding-bottom: 126.5625%;
   }
 }
+
 .canvas {
   position: absolute;
   top: 0;
@@ -301,6 +269,7 @@
   width: 100%;
   height: 100%;
 }
+
 .slide-controls {
   position: absolute;
   top: 0;
@@ -335,6 +304,7 @@
     left: 20px;
   }
 }
+
 .cont {
   position: absolute;
   line-height: 0;
@@ -344,6 +314,7 @@
     width: 100%;
   }
 }
+
 .guide {
   width: 100%;
   top: 50%;
@@ -370,122 +341,73 @@
   transform: translate(100%, 0);
 }
 
+
 .center-anchor {
   transform: translate(-50%,-50%);
 }
+
 // Add Objects positions here
-.wall{
-  width: 100%;
-  top: -90%;
+.bed {
+  width: 42%;
+  top: 26.1%;
+  left: 29%;
 }
-.floor{
-  width: 100%;
-  top: 74.5%;
-}
-.kulkas{
-  width: 20%;
-  top: 16%;
-  left: 6%;
-}
-.lemari{
-  width: 22%;
-  top: 46%;
-  left: 31%;
-}
-.piring{
-  width: 10%;
-  top: 36.5%;
-  left: 32%;
-}
-.rak1{
-  width: 17.5%;
-  top: 18%;
-  left: 31%;
-}
-.rak2{
-  width: 16%;
-  top: 27.2%;
-  left: 37%;
-}
-.rak3{
-  width: 16%;
-  top: 23.5%;
-  left: 76%;
-}
-.pecah1{
- width: 13%;
- top: 12%;
- left: 34.5%;
-}
-.pecah2{
- width: 13.2%;
- top: 24.5%;
- left: 41%;
-}
-.trio{
- width: 11.2%;
- top: 23.8%;
- left: 75.4%;
-}
-.air{
- width: 27.5%;
- top: 76%;
- left: 8.5%;
-}
-.tong{
- width: 15.9%;
- top: 54%;
- left: 83%;
-}
-.oven{
+
+.window {
   width: 26%;
-  top: 34%;
-  left: 54.5%;
+  top: 26%;
+  left: 3.2%;
 }
-// Add Objects positions here
-.frame{
-  width: 10.5%;
-  top: 14%;
-  left: 9.5%;
+
+.meja-belajar {
+  width: 30%;
+  top: 33.5%;
+  left: 69.7%;
+  z-index: 71;
 }
-.jendela{
-  width: 24.3%;
-  top: 7.5%;
-  left: 27.5%;
-}
-.lemari2{
-  width: 27%;
-  top: 5.5%;
-  left: 68.5%;
-}
-.meja{
-  width: 31%;
-  top: 47%;
-  left: 63%;
-}
-.meong{
-  width: 11.3%;
-  top: 29.5%;
+
+.poster {
+  width: 29%;
+  top: -2%;
   left: 35.5%;
 }
-.rak{
-  width: 13%;
-  top: 34%;
-  left: 56.5%;
+
+.wall {
+  width: 100%;
+  top: -61%;
+  left: 0;
 }
-.trolley{
-  width: 14%;
-  top: 45%;
-  left: 6.5%;
+
+.floor {
+  width: 100%;
+  top: 77%;
+  left: 0;
 }
-.tv{
-  width: 15%;
-  top: 31.5%;
-  left: 75.5%;
+
+.lemari {
+  width: 43%;
+  top: 15.5%;
+  left: -2.5%;
 }
-.kran{
-  width: 38.5%;
-  top: 37%;
-  left: 22.5%;
+
+.meja-pot {
+  width: 40%;
+  top: 22.1%;
+  left: 31%;
+}
+
+.tv {
+  width: 35%;
+  top: 28.8%;
+  left: 64.9%;
+}
+
+.darkness {
+  background-color: black;
+  opacity: .8;
+  z-index: 70;
+  width: 150%;
+  height: 200%;
+  top: -50%;
 }
 </style>
