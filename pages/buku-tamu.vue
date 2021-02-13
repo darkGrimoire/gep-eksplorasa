@@ -243,6 +243,7 @@ export default {
 
               &:hover{
                 cursor: pointer;
+                background-size: 80%;
                 background:url("/img/bubble-4-min.png") no-repeat center center;
                 color: white;
               }
