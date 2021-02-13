@@ -197,6 +197,13 @@ export default {
     background: none;
   }
 
+  button:active {
+    background-image: url("/events/circle.png");
+    background-size: 95px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
   .tablink {
     background-color: none;
     padding: 0 30px;
