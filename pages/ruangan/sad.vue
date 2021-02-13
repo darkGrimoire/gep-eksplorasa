@@ -413,6 +413,9 @@
   top: 33.5%;
   left: 69.7%;
   z-index: 71;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .poster {

@@ -623,6 +623,9 @@
   top: 36%;
   left: 86.5%;
   z-index: 71;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .lampu {
