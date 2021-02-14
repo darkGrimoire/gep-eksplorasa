@@ -32,10 +32,29 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj1.png" alt="guide" style="opacity: .3;">
-          </div>
+            <div class="genteng">
+            </div>
+            <div class="meong"></div>
+            <div class="open"></div>
+            <div class="keset">
+                <img src="/teras/keset 1.png">
+            </div>
+            <div class="jen1">
+                <img src="/teras/jki 1.png">
+            </div>
+            <div class="jen2">
+                <img src="/teras/jka 1.png">
+            </div>
+            <div class="pintu">
+                <div class="imgpintu"></div>
+            </div>
+
+            <div class="bg">
+                <img src="/teras/bg 2.png">
+            </div>
+            <div class="lantai">
+                <img src="/teras/lt 2.png">
+            </div>
           <!-- Tambahin Objek lainnya disini -->
         </div>
       </div>
@@ -57,7 +76,7 @@
           <div class="cont transitionfade-out" />
           <div class="cont guide">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj2.png" alt="guide" style="opacity: .3;">
+            <img src="/teras/guideteras.png" alt="guide" style="opacity: 1;">
           </div>
           <!-- Tambahin Objek lainnya disini -->
         </div>
@@ -334,6 +353,111 @@
 }
 .center-anchor {
   transform: translate(-50%,-50%);
+}
+
+.bg{
+  width: 100%;
+  height:75%;
+  z-index:0;
+}
+
+.lantai{
+    width: 100%;
+    height:25%;
+    z-index:0;
+}
+
+.pintu{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+.imgpintu{
+    width:20%;
+    height:55%;
+    top : 20.9%;
+    background-image:url("/teras/p1 1.png");
+    background-size:contain;
+    position:absolute;
+}
+
+.imgpintu:hover{
+    width:100%;
+    height:100%;
+    top : 19%;
+    left : 40%;
+    background-image:url("/teras/p2 1.png");
+    background-size: 20% 61%;
+    background-repeat:no-repeat;
+    position:absolute;
+}
+.jen1 img{
+    width:20%;
+    top:23%;
+    left:9%;
+    z-index:1;
+    position:absolute;
+}
+
+.jen2 img{
+    top:23%;
+    width:20%;
+    left:70%;
+    z-index:1;
+    position:absolute;   
+}
+
+.keset{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+.keset img{
+    width:25%;
+    top:77%;
+    position:absolute;
+}
+
+.meong{
+    background-image:url("/teras/meong2 1.png");
+    background-size:contain;
+    background-repeat:no-repeat;
+    width :20%;
+    height:20%;
+    top:65%;
+    left:70%;
+    position:absolute;
+}
+
+.meong:hover{
+    background-image:url("/teras/meong1 1.png");
+    background-size:contain;
+    background-repeat:no-repeat;
+    width :25%;
+    height:22%;
+    top:62%;
+    left:70%;
+    position:absolute;   
+}
+
+.genteng{
+    background-image:url("/teras/genteng 1.png");
+    background-size:contain;
+    width:100%;
+    height:15%;
+    position:absolute;
+}
+
+.open{
+    background-image:url("/teras/open 1.png");
+    background-size:contain;
+    background-repeat:no-repeat;
+    width:13%;
+    height:13%;
+    top:41%;
+    left:11.5%;
+    z-index:3;
+    position:absolute;    
 }
 // Add Objects positions here
 </style>
