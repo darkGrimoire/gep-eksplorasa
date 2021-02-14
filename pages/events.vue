@@ -82,7 +82,14 @@ export default {
           this.eventout += '<div class="jam">'+this.datetojam(this.convertToWIB( new Date(1000*event.tanggal.seconds)) )+'</div>'
           this.eventout += '<div class="acara">'
           this.eventout += event.nama + "<br>"
-          this.eventout += this.urlify(event.deskripsi)
+          if (event.deskripsi) {
+            this.eventout += event.deskripsi +"<br>"
+          }
+          if(Array.isArray(event.link) && event.link.length>0){
+            for (let j in event.link){
+              this.eventout += '<a href="' + event.link[j] + '" target="_blank">' + event.link[j] + '</a><br>'
+            }
+          }
           this.eventout += '</div></div>'
         }
         if(this.eventout==""){
