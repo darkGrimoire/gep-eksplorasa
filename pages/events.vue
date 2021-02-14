@@ -189,13 +189,16 @@ export default {
     text-decoration: none;
     font-size: 40px;
     background: none;
+    height: 75px;
   }
 
   button.active {
     background-image: url("/events/circle.png");
-    background-size: 95px;
+    background-size: 100px;
     background-repeat: no-repeat;
     background-position: center;
+    background-position-y: -15px;
+    color: #ede5d1;
   }
 
   .tablink {
