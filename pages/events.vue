@@ -24,6 +24,16 @@
             </div>
 
             <img src="/events/garis.png" class="garis">
+
+            <!-- templatenya
+            <div id="22" class="tabcontent">
+              <div class="jam">17.00</div>
+              <div class="acara">
+                Workshop
+                <br>Bersama Siapa Hayo
+                <br><a href="">bit.ly/ape</a>
+              </div>
+            </div> -->
             
             <div v-html="eventout">
             </div>
@@ -140,7 +150,7 @@ export default {
 /* ini kode cal yaaa gue ga berani hapus yang di bawah wkwk */
   * {
     font-family: 'KG Happy Solid';
-    font-size: 20px;
+    font-size: 25px;
     color: #1f1f1f;
     text-align: center;
   }
@@ -201,10 +211,13 @@ export default {
   .tabcontent {
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 50px;
   }
 
   .acara {
     padding-left: 50px;
+    text-align: left;
   }
 
   .judul {
