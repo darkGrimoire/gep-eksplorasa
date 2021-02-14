@@ -34,8 +34,9 @@
                 <br><a href="">bit.ly/ape</a>
               </div>
             </div> -->
-            
+            <div class="konten">
             <div v-html="eventout">
+            </div>
             </div>
         </div>
       </div>
@@ -211,11 +212,12 @@ export default {
   .tablink {
     background-color: none;
     padding: 0 30px;
+    margin-top: -20px;
     float: left;
     border: none;
     outline: none;
     cursor: pointer;
-    font-size: 40px;
+    font-size: 37px;
   }
 
   .tabcontent {
@@ -269,7 +271,7 @@ export default {
 
   .garis {
     width: 850px;
-    margin-top: -20px;
+    margin-top: -30px;
   }
 
   .isibox {
@@ -281,6 +283,30 @@ export default {
     align-items: center;
     text-align: center;
     position: absolute; 
+  }
+
+  .konten {
+    width: 800px;
+    height: 320px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .konten::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: none;
+  }
+
+  .konten::-webkit-scrollbar {
+    width: 7px;
+    background-color: none;
+  }
+
+  .konten::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #d1bb10;
   }
 
 
