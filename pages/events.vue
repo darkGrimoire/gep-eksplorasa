@@ -24,19 +24,8 @@
             </div>
 
             <img src="/events/garis.png" class="garis">
-
-            <!-- templatenya
-            <div id="22" class="tabcontent">
-              <div class="jam">17.00</div>
-              <div class="acara">
-                Workshop
-                <br>Bersama Siapa Hayo
-                <br><a href="">bit.ly/ape</a>
-              </div>
-            </div> -->
             <div class="konten">
-            <div v-html="eventout">
-            </div>
+              <div v-html="eventout"></div>
             </div>
         </div>
       </div>
@@ -56,8 +45,8 @@ export default {
   },
   async mounted () {
       this.events = this.sortEventByTimestamp(await this.getDataFromCollection(this.$fire.firestore.collection("events")))
-      //this.getevent(this.convertToWIB(new Date()).getDate())
-      this.getevent(24)
+      this.getevent(this.convertToWIB(new Date()).getDate())
+      //this.getevent(24)
   },
   methods: {
       getDataFromCollection(collection){
