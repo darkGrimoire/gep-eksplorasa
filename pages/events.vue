@@ -14,84 +14,31 @@
         <div class="isibox">
           <!-- nyomot dari w3 hehe ^-^ -->
             <div class="tanggal">
-              <button class="tablink" v-on:click="getevent(22)">22</button>
-              <button class="tablink" v-on:click="getevent(23)">23</button>
-              <button class="tablink" v-on:click="getevent(24)" id="defaultOpen">24</button>
-              <button class="tablink" v-on:click="getevent(25)">25</button>
-              <button class="tablink" v-on:click="getevent(26)">26</button>
-              <button class="tablink" v-on:click="getevent(27)">27</button>
-              <button class="tablink" v-on:click="getevent(28)">28</button>
+              <button class="tablink" :class="{active: date==22}" v-on:click="getevent(22)">22</button>
+              <button class="tablink" :class="{active: date==23}" v-on:click="getevent(23)">23</button>
+              <button class="tablink" :class="{active: date==24}" v-on:click="getevent(24)">24</button>
+              <button class="tablink" :class="{active: date==25}" v-on:click="getevent(25)">25</button>
+              <button class="tablink" :class="{active: date==26}" v-on:click="getevent(26)">26</button>
+              <button class="tablink" :class="{active: date==27}" v-on:click="getevent(27)">27</button>
+              <button class="tablink" :class="{active: date==28}" v-on:click="getevent(28)">28</button>
             </div>
 
             <img src="/events/garis.png" class="garis">
-
-            <!--<div id="22" class="tabcontent">isi 22</div>
-            <div id="23" class="tabcontent">isi 23</div>
-            <div id="24" class="tabcontent">isi 24</div>
-            <div id="25" class="tabcontent">isi 25</div>
-            <div id="26" class="tabcontent">isi 26</div>
-            <div id="27" class="tabcontent">isi 27</div>
-            <div id="28" class="tabcontent">isi 28</div>-->
-            <br><br>
-
-
-            <!-- contoh layout eventnya
-            <div id="22" class="tabcontent">
-              <div class="jam">17.00</div>
-              <div class="acara">
-                Workshop
-                <br>Bersama Siapa Hayo
-                <br><a href="">bit.ly/ape</a>
-              </div>
+            
+            <div v-html="eventout">
             </div>
-            -->
-
-            <div class="tabcontent" style="display:block" v-html="eventout">
-              
-            </div>
-
-          <!--<br><br>
-          <center>
-          <span style="color:white">
-            <span v-for="(item, key) in events" :key="key">
-              {{item.nama}} - {{item.deskripsi}} - {{datetostring( convertToWIB(new Date(1000*item.tanggal.seconds)) )}}<br>
-            </span>
-            <br><br>
-            <input type="text" v-model="date" placeholder="Masukin tanggal (dlm feb 2021)" /> <button class="button" @click.prevent="getevent">Get</button>
-            <br><br>
-            <span v-html="eventout"></span>
-          </span>
-          </center>-->
-
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<!-- punten yah aing jadiin comment juga biar masih kepreserve takutnya gue ga sengaja delete sesuatu,,, 
-<template>
-  <div class="page-container">
-    <br><br><br><br>
-    <center>
-    <span style="color:white">
-      <span v-for="(item, key) in events" :key="key">
-        {{item.nama}} - {{item.deskripsi}} - {{datetostring( convertToWIB(new Date(1000*item.tanggal.seconds)) )}}<br>
-      </span>
-      <br><br>
-      <input type="text" v-model="date" placeholder="Masukin tanggal (dlm feb 2021)" /> <button class="button" @click.prevent="getevent">Get</button>
-      <br><br>
-      <span v-html="eventout"></span>
-    </span>
-    </center>
-  </div> 
-</template> -->
-
 <script>
 export default {
   name: 'Events',
   data () {
     return {
+      date: 0,
       events: [],
       eventout: ""
     }
@@ -102,20 +49,6 @@ export default {
       this.getevent(24)
   },
   methods: {
-      getevent(date) {
-        if(date>28||date<1){
-            return false
-        }
-        this.eventout = ""
-        let out = this.geteventbyday(date)
-        for (let i in out){
-          let event = out[i]
-          this.eventout += event.nama +" - "+ event.deskripsi +" - "+ this.datetostring(this.convertToWIB( new Date(1000*event.tanggal.seconds)) )+"<br>"
-        }
-        if(this.eventout==""){
-          this.eventout = "not found"
-        }
-      },
       getDataFromCollection(collection){
         return collection.get()
           .then((snapshot) => {
@@ -125,6 +58,26 @@ export default {
             }))
             return data
           })
+      },
+      getevent(date) {
+        if(date>28||date<1){
+            return false
+        }
+        this.date = parseInt(date)
+        this.eventout = ""
+        let out = this.geteventbyday(date)
+        for (let i in out){
+          let event = out[i]
+          this.eventout += '<div class="tabcontent">'
+          this.eventout += '<div class="jam">'+this.datetojam(this.convertToWIB( new Date(1000*event.tanggal.seconds)) )+'</div>'
+          this.eventout += '<div class="acara">'
+          this.eventout += event.nama + "<br>"
+          this.eventout += this.urlify(event.deskripsi)
+          this.eventout += '</div></div>'
+        }
+        if(this.eventout==""){
+          this.eventout = "Nothing found :("
+        }
       },
       sortEventByTimestamp(arr){
         return arr.sort(function(a,b){return a.tanggal.seconds-b.tanggal.seconds})
@@ -137,7 +90,7 @@ export default {
       datetojam(d){
         let jam = d.getHours() < 10 ? "0" + d.getHours() : d.getHours()
         let mnt = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()
-        return jam+"."+mnt+" WIB"
+        return jam+"."+mnt//+" WIB"
       },
       datetostring(d){
         return this.datetodate(d)+" "+this.datetojam(d)
@@ -171,12 +124,19 @@ export default {
                 timeZone: "Asia/Jakarta"
             })
         )
+      },
+      urlify(text) {
+        let urlRegex = /((https|http)?:\/\/[^\s]+)/g
+        return text.replace(urlRegex, function(url) {
+          return '<a href="' + url + '" target="_blank">' + url + '</a>'
+        })
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<!-- sblmnya ada "scoped" tp w apus biar bisa pake v-html -->
+<style lang="scss">
 /* ini kode cal yaaa gue ga berani hapus yang di bawah wkwk */
   * {
     font-family: 'KG Happy Solid';
@@ -221,7 +181,7 @@ export default {
     background: none;
   }
 
-  button:active {
+  button.active {
     background-image: url("/events/circle.png");
     background-size: 95px;
     background-repeat: no-repeat;
