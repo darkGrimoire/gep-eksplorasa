@@ -68,7 +68,7 @@
           <div class="swiper-lazy-preloader" />
         </div>
 
-        <div class="swiper-slide narasi">
+        <div class="swiper-slide narasi black" data-hash="slide19" style="color: white;">
           <p class="intro">
             Bumi Pasundan lahir saat Tuhan sedang tersenyum<br><br>
           </p>

@@ -24,7 +24,8 @@
     "nuxt": "^2.14.6",
     "swiper": "^6.4.11",
     "vue-awesome-swiper": "^4.1.1",
-    "vue-screen-size": "^1.0.1"
+    "vue-screen-size": "^1.0.1",
+    "vue-youtube": "^1.4.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
