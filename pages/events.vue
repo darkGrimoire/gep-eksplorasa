@@ -304,18 +304,16 @@ export default {
       width: 850px;
       margin-top: -30px;
     }
+  }
 
+  @media only screen and (min-width: 651px) {
     .garisx {
-      display: none
+      display: none;
     }
   }
 
   @media only screen and (max-width: 999px) {
     .kain {
-      display: none;
-    }
-
-    .garisx {
       display: none;
     }
 
