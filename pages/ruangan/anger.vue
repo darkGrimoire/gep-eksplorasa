@@ -44,7 +44,7 @@
             <img src="/anger/lt.png" alt="floor">
           </div>
           <div class="cont kulkas">
-            <img src="/anger/kulklos.png" alt="kulkas1">
+            <img src="/anger/kulklos.png" alt="kulkas" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont lemari">
             <img src="/anger/lmari.png" alt="lemari">
@@ -121,7 +121,7 @@
             <img src="/anger/meja.png" alt="meja">
           </div>
           <div class="cont meong">
-            <img src="/anger/meong.png" alt="meong">
+            <img src="/anger/meong2.png" alt="meong" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont rak">
             <img src="/anger/rak.png" alt="rak">
@@ -130,7 +130,7 @@
             <img src="/anger/trolley.png" alt="trolley">
           </div>
           <div class="cont tv">
-            <img src="/anger/tv1.png" alt="tv">
+            <img src="/anger/tgif.gif" alt="tv">
           </div>
           <div class="cont kran">
             <img src="/anger/kran.gif" alt="kran">
@@ -298,9 +298,33 @@
         } else if (this.slide === 1 && e.key === "ArrowRight"){
           this.switchSlide(1)
         }
-      }
-    },
-  }
+      },
+
+        
+      handleObjChange(e){
+        console.log(e)
+        if (e.target.getAttribute('src') === "/anger/kulklos.png"){
+          e.target.setAttribute('src', "/anger/kulopen.png")
+        } else if (e.target.getAttribute('src') === "/anger/meong2.png"){
+          e.target.setAttribute('src', "/anger/meong.png")
+        } else if (e.target.getAttribute('src') === "/anger/tgif.gif"){
+          e.target.setAttribute('src', "/anger/tv2.png")
+        }
+      },
+      handleObjChangeEnd(e){
+        console.log(e)
+        if (e.target.getAttribute('src') === "/anger/kulopen.png"){
+          e.target.setAttribute('src', "/anger/kulklos.png")
+        } else if (e.target.getAttribute('src') === "/anger/meong.png"){
+          e.target.setAttribute('src', "/anger/meong2.png")
+        } else if (e.target.getAttribute('src') === "/anger/tv2.png"){
+          e.target.setAttribute('src', "/anger/tgif.gif")
+        }
+      },
+
+      },
+    }
+  
 </script>
 
 <style lang="scss" scoped>
@@ -432,9 +456,9 @@
   top: 74.5%;
 }
 .kulkas{
-  width: 20%;
-  top: 16%;
-  left: 6%;
+  width: 23.4%;
+  top: 16.8%;
+  left: 3.5%;
 }
 .lemari{
   width: 22%;
@@ -528,9 +552,9 @@
   left: 6.5%;
 }
 .tv{
-  width: 15%;
-  top: 31.5%;
-  left: 75.5%;
+  width: 12%;
+  top: 30.5%;
+  left: 77.5%;
 }
 .kran{
   width: 38.5%;
