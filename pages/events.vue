@@ -25,6 +25,7 @@
             </div>
 
             <img src="/events/garis.png" class="garis">
+            <img src="/events/garis.png" class="garisx">
             <div class="konten">
               <div v-html="eventout"></div>
             </div>
@@ -289,7 +290,7 @@ export default {
     background-color: #d1bb10;
   }
 
-  @media only screen and (min-width: 451px) {
+  @media only screen and (min-width: 1000px) {
     .kain {
       width: 975px;
       margin-top: -25px;
@@ -303,45 +304,42 @@ export default {
       width: 850px;
       margin-top: -30px;
     }
+
+    .garisx {
+      display: none
+    }
   }
 
-  @media only screen and (max-width: 450px) {
+  @media only screen and (max-width: 999px) {
     .kain {
       display: none;
     }
 
-    .garis {
+    .garisx {
       display: none;
     }
 
     * {
-      font-family: 'KG Happy Solid';
-      font-size: 25px;
-      color: #1f1f1f;
-      text-align: center;
+      font-size: 20px;
     }
 
     a {
-      font-size: 30px;
+      font-size: 20px;
     }
 
     button {
-      font-size: 40px;
-      height: 75px;
+      height: 50px;
     }
 
     button.active {
-      background-size: 100px;
-      background-position: center;
-      background-position-y: -15px;
+      background-size: 75px;
+      background-position-y: -14px;
     }
 
     .tablink {
-      padding: 0 30px;
-      margin-top: -20px;
-      float: left;
-      cursor: pointer;
-      font-size: 37px;
+      padding: 0 14px;
+      margin-top: 0px;
+      font-size: 27px;
     }
 
     .tabcontent {
@@ -354,46 +352,36 @@ export default {
     }
 
     .judul {
-      margin-top: -30px;
-      width: 300px;
-    }
-
-    .box {
-      top: 35px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .kancing {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-top: -95px;
-    }
-
-    .kncg {
-      width: 60px;  
-      margin-left: -450px;
-      display: none;
-    }
-
-    .kncg2 {
-      width: 100px;
-      margin-right: -300px;
-      margin-top: 20px;
-      display: none;
-    }
-
-    .garis {
-      width: 850px;
-      margin-top: -30px;
+      margin-top: 0px;
+      width: 380px;
     }
 
     .kainx {
-      width: 300px;
+      width: 525px;
+    }
+
+    .box {
+      top: 0px;
+    }
+
+    .kancing {
+      margin-top: -70px;
+    }
+
+    .kncg {
+      width: 50px;  
+      margin-left: -240px;
+    }
+
+    .kncg2 {
+      width: 85px;
+      margin-right: -300px;
+      margin-top: 0px;
+    }
+
+    .garis {
+      width: 480px;
+      margin-top: -5px;
     }
 
     .isibox {
@@ -403,9 +391,172 @@ export default {
     }
 
     .konten {
-      width: 800px;
-      height: 320px;
-      overflow: auto;
+      width: 420px;
+      height: 500px;
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    .kain {
+      display: none;
+    }
+
+    .garis {
+      display: none;
+    }
+
+    * {
+      font-size: 15px;
+    }
+
+    a {
+      font-size: 20px;
+    }
+
+    button {
+      height: 50px;
+    }
+
+    button.active {
+      background-size: 55px;
+      background-position-y: -4px;
+    }
+
+    .tablink {
+      padding: 0 10px;
+      margin-top: 0px;
+      font-size: 22px;
+    }
+
+    .tabcontent {
+      margin-top: 10px;
+      margin-bottom: 50px;
+    }
+
+    .acara {
+      padding-left: 20px;
+    }
+
+    .judul {
+      margin-top: 0px;
+      width: 350px;
+    }
+
+    .kainx {
+      width: 420px;
+    }
+
+    .box {
+      top: 0px;
+    }
+
+    .kancing {
+      margin-top: -65px;
+    }
+
+    .kncg {
+      width: 45px;  
+      margin-left: -190px;
+    }
+
+    .kncg2 {
+      width: 75px;
+      margin-right: -210px;
+      margin-top: 10px;
+    }
+
+    .garisx {
+      width: 375px;
+      margin-top: -15px;
+    }
+
+    .isibox {
+      width: 100%;
+      top: 30px;
+      left: 0;
+    }
+
+    .konten {
+      width: 325px;
+      height: 325px;
+    }
+  }
+
+  @media only screen and (max-width: 450px) {
+    * {
+      font-size: 10px;
+    }
+
+    a {
+      font-size: 15px;
+    }
+
+    button {
+      height: 50px;
+    }
+
+    button.active {
+      background-size: 40px;
+      background-position-y: 4px;
+    }
+
+    .tablink {
+      padding: 0 6px;
+      margin-top: 0px;
+      font-size: 15px;
+    }
+
+    .tabcontent {
+      margin-top: 10px;
+      margin-bottom: 50px;
+    }
+
+    .acara {
+      padding-left: 20px;
+    }
+
+    .judul {
+      margin-top: 0px;
+      width: 250px;
+    }
+
+    .kainx {
+      width: 270px;
+    }
+
+    .box {
+      top: 0px;
+    }
+
+    .kancing {
+      margin-top: -40px;
+    }
+
+    .kncg {
+      width: 30px;  
+      margin-left: -130px;
+    }
+
+    .kncg2 {
+      width: 50px;
+      margin-right: -130px;
+      margin-top: 10px;
+    }
+
+    .garisx {
+      width: 250px;
+      margin-top: -15px;
+    }
+
+    .isibox {
+      width: 100%;
+      top: 15px;
+      left: 0;
+    }
+
+    .konten {
+      width: 200px;
+      height: 210px;
     }
   }
 
