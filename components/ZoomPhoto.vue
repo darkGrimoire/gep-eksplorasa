@@ -54,6 +54,16 @@ import gsap from 'gsap'
             document.getElementsByClassName('bg-component')[0].style.display = 'none'
           }})
         }
+      },
+      full(newVal){
+        setTimeout(async () => {
+          this.computedSrc = await this.getLink(newVal)
+        }, 200)
+      },
+      poster(newVal){
+        setTimeout(async () => {
+          this.computedPoster = await this.getLink(newVal)
+        }, 200)
       }
     },
     async mounted () {
