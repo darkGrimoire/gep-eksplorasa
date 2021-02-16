@@ -1,14 +1,15 @@
 <template>
   <div class="container">
     <div class="content">
-      <img src="/events/events.png" class="judul">
+      <img src="/events/events.gif" class="judul">
 
       <div class="box">
         <img src="/events/kain.png" class="kain">
+        <img src="/events/kainx.png" class="kainx">
 
         <div class="kancing">
           <img src="/events/kancing.png" class="kncg">
-          <img src="/events/kancing2.png" class="kncg2">
+          <img src="/events/kancing.png" class="kncg2">
         </div>
 
         <div class="isibox">
@@ -153,7 +154,7 @@ export default {
   }
 
   .container {
-    background-image: url("/events/kuning.png");
+    background-image: url("/events/KUNING.png");
     background-size: 1536px;
     height: 100vh;
     display: flex;
@@ -234,33 +235,23 @@ export default {
     align-items: center;
   }
 
-  .kain {
-    width: 975px;
-    margin-top: -25px;
-  }
-
   .kancing {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    margin-top: -100px;
+    margin-top: -95px;
   }
 
   .kncg {
-    width: 85px;  
-    margin-left: -465px;
+    width: 60px;  
+    margin-left: -450px;
   }
 
   .kncg2 {
-    width: 95px;
+    width: 100px;
     margin-right: -500px;
-    margin-top: 30px;
-  }
-
-  .garis {
-    width: 850px;
-    margin-top: -30px;
+    margin-top: 20px;
   }
 
   .isibox {
@@ -296,6 +287,126 @@ export default {
   .konten::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #d1bb10;
+  }
+
+  @media only screen and (min-width: 451px) {
+    .kain {
+      width: 975px;
+      margin-top: -25px;
+    }
+
+    .kainx {
+      display: none;
+    }  
+
+    .garis {
+      width: 850px;
+      margin-top: -30px;
+    }
+  }
+
+  @media only screen and (max-width: 450px) {
+    .kain {
+      display: none;
+    }
+
+    .garis {
+      display: none;
+    }
+
+    * {
+      font-family: 'KG Happy Solid';
+      font-size: 25px;
+      color: #1f1f1f;
+      text-align: center;
+    }
+
+    a {
+      font-size: 30px;
+    }
+
+    button {
+      font-size: 40px;
+      height: 75px;
+    }
+
+    button.active {
+      background-size: 100px;
+      background-position: center;
+      background-position-y: -15px;
+    }
+
+    .tablink {
+      padding: 0 30px;
+      margin-top: -20px;
+      float: left;
+      cursor: pointer;
+      font-size: 37px;
+    }
+
+    .tabcontent {
+      margin-top: 10px;
+      margin-bottom: 50px;
+    }
+
+    .acara {
+      padding-left: 50px;
+    }
+
+    .judul {
+      margin-top: -30px;
+      width: 300px;
+    }
+
+    .box {
+      top: 35px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .kancing {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: -95px;
+    }
+
+    .kncg {
+      width: 60px;  
+      margin-left: -450px;
+      display: none;
+    }
+
+    .kncg2 {
+      width: 100px;
+      margin-right: -300px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .garis {
+      width: 850px;
+      margin-top: -30px;
+    }
+
+    .kainx {
+      width: 300px;
+    }
+
+    .isibox {
+      width: 100%;
+      top: 50px;
+      left: 0;
+    }
+
+    .konten {
+      width: 800px;
+      height: 320px;
+      overflow: auto;
+    }
   }
 
 
