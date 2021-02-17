@@ -47,7 +47,8 @@ export default {
   },
   async mounted () {
       this.events = this.sortEventByTimestamp(await this.getDataFromCollection(this.$fire.firestore.collection("events")))
-      this.getevent(this.convertToWIB(new Date()).getDate())
+      let tgl = this.convertToWIB(new Date()).getDate()
+      this.getevent(tgl>28||tgl<22?22:tgl)
       //this.getevent(24)
   },
   methods: {
