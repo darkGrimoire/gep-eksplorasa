@@ -79,6 +79,12 @@
           <div class="cont oven">
             <img src="/anger/kgif.gif" alt="oven">
           </div>
+          <div class="cont figura">
+            <img src="/anger/gep anger single photo-min.png" alt="figura">
+          </div>
+          <div class="cont koran">
+            <img src="/anger/gep anger article-min.png" alt="koran">
+          </div>
         </div>
       </div>
     </div>
@@ -134,6 +140,12 @@
           </div>
           <div class="cont kran">
             <img src="/anger/kran.gif" alt="kran">
+          </div>
+          <div class="cont gantungan">
+            <img src="/anger/gep anger photo series-min.png" alt="gantungan">
+          </div>
+          <div class="cont buku">
+            <img src="/anger/gep anger photobook-min.png" alt="buku">
           </div>
         </div>
       </div>
@@ -515,6 +527,16 @@
   top: 34%;
   left: 54.5%;
 }
+.figura{
+  width: 16%;
+  top: 4%;
+  left: 54.5%; 
+}
+.koran{
+  width: 19.5%;
+  top: 75.5%;
+  left: 43%;
+}
 // Add Objects positions here
 .frame{
   width: 10.5%;
@@ -560,5 +582,15 @@
   width: 38.5%;
   top: 37%;
   left: 22.5%;
+}
+.gantungan{
+  width: 17%;
+  top: 1.9%;
+  left: 49.5%;
+}
+.buku{  
+  width: 17%;
+  top: 73%;
+  left: 30.5%;
 }
 </style>
