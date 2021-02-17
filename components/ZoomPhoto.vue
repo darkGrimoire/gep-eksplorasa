@@ -2,9 +2,9 @@
   <div :class="['container-component', containerClass]">
     <div class="bg-component" style="display: none;" @click="handleBgClick" />
     <img v-show="!isFull" :src="computedPoster" alt="Photo" :class="['poster-component', posterClass]"
-         @click="isFull = !isFull"
+         @click="handlePhotoClick"
     >
-    <fa v-show="!isFull" :icon="['fas', 'search-plus']" class="zoom-icon" @click="isFull = !isFull" />
+    <fa v-show="!isFull" :icon="['fas', 'search-plus']" class="zoom-icon" @click="handlePhotoClick" />
     <img v-show="isFull" :src="computedSrc" alt="Photo-Full" :class="['full-component', fullClass]">
   </div>
 </template>
@@ -76,7 +76,12 @@ import gsap from 'gsap'
       handleBgClick() {
         if (this.isFull){
           this.isFull = false
+          this.$emit('onExitFull')
         }
+      },
+      handlePhotoClick(){
+        this.isFull = !this.isFull
+        this.$emit('onEnterFull')
       },
       async getLink(link) {
         if (this.isFirebaseLink(link)){
@@ -127,8 +132,8 @@ import gsap from 'gsap'
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 95%;
-  max-height: 95%;
+  max-width: 90%;
+  max-height: 90%;
   z-index: 10001;
   @media only screen and (max-width: 800px) {
     max-width: 80%;

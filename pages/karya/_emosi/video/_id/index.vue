@@ -5,24 +5,21 @@
       class="swiper"
     >
       <div class="swiper-wrapper">
-        <!-- TODO: SLIDE 1 -->
         <div id="slide1" class="swiper-slide" data-hash="slide1">
           <div class="slide-container">
             <zoom-photo v-if="!dbLoading" :poster="dataKarya.posterMin" 
                         :full="dataKarya.poster" 
                         :container-class="'poster-container'"
                         :poster-class="'poster-img'"
+                        @onEnterFull="setButtonLayer(0)"
+                        @onExitFull="setButtonLayer(10)"
             />
             <div class="caption-container no-swipe" @mousewheel.stop>
               <div class="title">
-                Sinopsis:
+                {{ dataKarya.captionTitle }}
               </div>
               <p class="deskripsi">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt sem non blandit porta. Praesent imperdiet diam at orci mollis lacinia. Aliquam vestibulum est quis mauris auctor pulvinar. Aenean ut est luctus, viverra neque sed, rhoncus purus. Donec sed erat eu ante eleifend venenatis. Integer dapibus finibus est sit amet ultrices. Proin non sem dui. Nullam viverra urna sapien, et tincidunt leo viverra a. Sed vehicula massa non cursus tristique. Morbi sed ultrices velit, ac vestibulum purus. Maecenas id libero ac felis consequat dictum at ut nunc. Quisque sit amet lorem sed urna sagittis condimentum.
-                <br><br>
-                Aliquam eget justo massa. Integer non risus ultricies, pellentesque quam in, consequat leo. Ut id finibus ipsum, nec laoreet turpis. Suspendisse sed mi dictum, porta risus tempus, tempor massa. Nulla facilisi. Integer tristique eros sed neque dapibus dictum. Fusce ultricies velit nec sollicitudin posuere. Cras mattis tellus at blandit porta. Pellentesque orci leo, semper vitae tincidunt a, gravida eget mi. Maecenas justo neque, aliquet eget nisl ut, dictum tincidunt velit. Praesent a neque ut mi pellentesque imperdiet. Phasellus dapibus justo elementum, porttitor elit eu, gravida nisl. Vestibulum sit amet efficitur dolor. Ut mollis ornare arcu quis pharetra. Quisque neque purus, posuere ut dapibus non, cursus vel lacus.
-                <br><br>  
-                Nam elementum tempus quam, sed dapibus dolor efficitur sed. Duis tempor hendrerit urna, eu sagittis tortor porttitor nec. Aenean consequat nisi sit amet augue aliquet elementum. Ut et ligula massa. Mauris condimentum dolor quis sem efficitur tincidunt. Sed gravida congue nunc ut efficitur. Etiam quis lacinia magna. Nullam magna nulla, lobortis a eros sed, pulvinar auctor purus. Donec non facilisis velit. Mauris diam lacus, maximus ac magna ut, laoreet semper elit. Proin non enim diam. Sed aliquam ex turpis, ultrices bibendum nisl maximus vel. Integer eu egestas lacus.
+                {{ dataKarya.caption }}
               </p>
             </div>
           </div>
@@ -38,12 +35,15 @@
         </div>
         <!-- TODO: SLIDE 3 -->
         <!-- Kalo ada deskripsi dan still image lain. Kalo gaada hapus aja -->
-        <div id="slide3" class="swiper-slide narasi" data-hash="slide3">
+        <!-- <div id="slide3" class="swiper-slide narasi" data-hash="slide3">
           <div>jadi ini slide 3</div>
-        </div>
+        </div> -->
       </div>
       <div slot="pagination" class="swiper-pagination" />
     </div>
+    <nuxt-link class="back-button" :to="'/ruangan/'+emosi">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -53,13 +53,6 @@ import { Youtube } from 'vue-youtube'
 import ZoomPhoto from '~/components/ZoomPhoto.vue'
 import loading from '~/components/Loading.vue'
 
-// TODO: Masukin yang sesuai
-const JUDUL_KARYA = '---JUDUL KARYA---'
-const PH = '---NAMA PH---'
-const EMOSI = 'anger'
-const JENIS = 'video'
-const ID = 'testing'
-
   export default {
     name: 'TemplateVideo',
     components: {
@@ -67,15 +60,21 @@ const ID = 'testing'
       ZoomPhoto,
       loading
     },
+    async asyncData({ params }) {
+      const id = params.id
+      const emosi = params.emosi
+      return { emosi, id }
+    },
     data () {
       return {
-        // TODO: Masukin data 
         dataKarya: {
-          judul: JUDUL_KARYA,
+          judul: '',
+          ph: '',
+          caption: '',
+          captionTitle: '',
           videoId: '',
           posterMin: '',
           poster: '',
-          ph: PH
         }, 
         swiperOptions: {
           slidesPerView: 1,
@@ -108,13 +107,19 @@ const ID = 'testing'
       }
     },
     mounted () {
-      const karyaRef = this.$fire.firestore.collection('karya').doc(EMOSI).collection(JENIS).doc(ID)
+      const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('video').doc(this.id)
       karyaRef.get()
         .then(doc => {
           let data = {id: doc.id, ...doc.data()}
+          this.dataKarya.judul = data.judul
+          this.dataKarya.ph = data.ph
+          this.dataKarya.caption = this.handleNewLines(data.caption)
+          this.dataKarya.captionTitle = data.caption_title ? data.caption_title : ''
           this.dataKarya.videoId = data.videoId
           this.dataKarya.poster = data.poster
-          this.dataKarya.posterMin = data.posterMin
+          this.dataKarya.posterMin = this.handleMin(data.poster)
+          this.dataKarya.next = data.next
+          this.dataKarya.prev = data.prev
           this.dbLoading = false
         })
         .catch(err => {
@@ -127,11 +132,30 @@ const ID = 'testing'
       },
       onPlayerReady(){
         this.videoLoading = false
+      },
+      handleNewLines(text){
+        return text.replaceAll("$\\n", "\n\n")
+      },
+      setButtonLayer(idx){
+        document.getElementsByClassName('back-button')[0].style.zIndex = idx
+        document.getElementsByClassName('swiper-pagination')[0].style.zIndex = idx
+      },
+      handleMin(text){
+        let pos = text.lastIndexOf('/')+'/'.length
+        return text.slice(0, pos) + 'min-' + text.slice(pos)
       }
     },
-    head: {
-      title: JUDUL_KARYA,
-      description: 'Video "'+JUDUL_KARYA+'" oleh '+PH
+    head() {
+      return {
+        title: this.dataKarya.judul,
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            description: 'Video "'+this.dataKarya.judul+'" oleh '+this.dataKarya.ph
+          }
+        ]
+      }
     }
   }
 </script>
@@ -145,6 +169,28 @@ const ID = 'testing'
   background-position: center top;
   height: 100vh;
   width: 100vw;
+}
+
+.back-button {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  color: white;
+  font-size: 50px;
+  font-family: 'Mechanical Pencil';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
 }
 
 .swiper {
@@ -208,12 +254,12 @@ const ID = 'testing'
 }
 
 .caption-container {
-  font-family: 'Alte Haas Grotesk';
+  font-family: 'Karla';
   text-align: left;
   color: white;
   margin: 0 5%;
   max-width: 40%;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 50vh;
   z-index: 100;
   .title {
@@ -221,6 +267,7 @@ const ID = 'testing'
   }
   .deskripsi {
     font-size: 16px;
+    white-space: pre-line;
   }
   @media only screen and (max-width: 800px) {
     max-height: 35vh;
@@ -267,4 +314,24 @@ const ID = 'testing'
     height: 160px;
   }
 }
+
+/* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 </style>
