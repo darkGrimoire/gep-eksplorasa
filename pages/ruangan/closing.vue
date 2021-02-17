@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
     <div v-show="slide === 2" class="narasi">
       {{ msg }}
@@ -228,22 +227,22 @@
 
       handleObjChange(e){
         console.log(e)
-        if (e.target.getAttribute('src') === "/closing/gantungan-out.png"){
+        if (e.target.getAttribute('src') === "/closing/1.png"){
           e.target.setAttribute('src', "/closing/gantungan-out.png")
-        } else if (e.target.getAttribute('src') === "/anger/meong2.png"){
-          e.target.setAttribute('src', "/anger/meong.png")
-        } else if (e.target.getAttribute('src') === "/anger/tgif.gif"){
-          e.target.setAttribute('src', "/anger/tv2.png")
+        } else if (e.target.getAttribute('src') === "/closing/balon1.png"){
+          e.target.setAttribute('src', "/closing/balon1-out.png")
+        } else if (e.target.getAttribute('src') === "/closing/cam1.png"){
+          e.target.setAttribute('src', "/closing/cam-out.png")
         }
       },
       handleObjChangeEnd(e){
         console.log(e)
-        if (e.target.getAttribute('src') === "/anger/kulopen.png"){
-          e.target.setAttribute('src', "/anger/kulklos.png")
-        } else if (e.target.getAttribute('src') === "/anger/meong.png"){
-          e.target.setAttribute('src', "/anger/meong2.png")
-        } else if (e.target.getAttribute('src') === "/anger/tv2.png"){
-          e.target.setAttribute('src', "/anger/tgif.gif")
+        if (e.target.getAttribute('src') === "/closing/gantungan-out.png"){
+          e.target.setAttribute('src', "/closing/1.png")
+        } else if (e.target.getAttribute('src') === "/closing/balon1-out.png"){
+          e.target.setAttribute('src', "/closing/balon1.png")
+        } else if (e.target.getAttribute('src') === "/closing/cam-out.png"){
+          e.target.setAttribute('src', "/closing/cam1.png")
         }
       },
 
@@ -416,6 +415,11 @@
   top: 6.5%;
 }
 .balon{
+  width: 17%;
+  left: 26.2%;
+  top: 3%;
+}
+.balon-out{
   width: 17%;
   left: 26.2%;
   top: 3%;
