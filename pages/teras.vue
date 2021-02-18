@@ -178,8 +178,19 @@
         // TODO: Add on enter animation here
         this.slide = 1
       }})
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
     },
     methods: {
+      preloadImages(){
+        new Image().src = '/teras/h3 1.png'
+        new Image().src = '/teras/F3 1.png'
+        new Image().src = '/teras/s3 1.png'
+        new Image().src = '/teras/A3 1.png'
+        new Image().src = '/teras/p2 1.png'
+        new Image().src = '/teras/meong1 1.png'
+      },
       goToEmosi(str){
         this.$router.push({path: "/ruangan/" + str})
       },
