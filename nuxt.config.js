@@ -23,6 +23,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
   ],
 
   router: {
@@ -68,7 +69,7 @@ export default {
       imports: [
         {
           set: '@fortawesome/free-solid-svg-icons',
-          icons: ['faChevronRight','faChevronLeft', 'faTimes', 'faBookOpen']
+          icons: ['faChevronRight','faChevronLeft', 'faTimes', 'faBookOpen', 'faSearchPlus']
         }
       ]
     }]

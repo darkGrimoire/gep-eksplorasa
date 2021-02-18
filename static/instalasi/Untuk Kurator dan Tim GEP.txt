@@ -1,0 +1,15 @@
+Penjelasan Instalasi:
+
+Tujuan dibuatnya instalasi ini adalah untuk mengajak orang untuk kembali mengingat atau meromantisasi Bandung, lewat media audio maupun
+visual yang interaktif.
+
+Alur Instalasi:
+Pertama-teama, pengunjung akan dianjurkan untuk memutar lagu yang disediakan yaitu, Bandung-LONE sembari melihat instalasi for best experience. bdg.gif merupakan title, ditempatkan sebagai pembuka instalasi.
+Pengunjung selanjutnya akan melihat teks narasi dengan mengeswipe keatas dan mybdgjurnal dengan kembali mengeswipe keatas. Pada Jurnal foto ini terdapat foto-foto dari tempat-tempat yang ada di Bandung yang memiliki halaman masing-masing (satu tiap foto). 
+Pengunjung dapat membolak-balik tiap halaman instalasi dengan mengeswipe ke atas atau ke bawah. Pengunjung dapat berinteraksi dengan jurnal dengan memberi semacam penanda bahwa mereka pernah berada atau melihat objek yang ada di jurnal foto tersebut. 
+Penanda yang ada pada tiap foto dalam jurnal bersifat permanen dan kumulatif yang jumlahnya akan terus bertambah seiring banyaknya pengunjung yang menandai foto tersebut. 
+Oleh karena itu, penanda yang diberikan harus seragam dan jelas. Pengunjung hanya bisa memberi tanda di area sekitar foto dan tidak pada fotonya. Untuk desain penandanya saya percayakan ke tim GEP. Di penghujung instalasi terdapat kata-kata penutup. 
+
+
+
+
