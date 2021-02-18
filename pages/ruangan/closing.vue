@@ -357,7 +357,7 @@
   width: 60vw;
   height: 200vh;
   top: -50%;
-  left: -5%;
+  left: -15%;
   z-index: 999;
 }
 .transitionfade-out {

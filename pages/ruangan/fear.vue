@@ -167,7 +167,7 @@
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
   const NEXT_ROOM = '/ruangan/sad'
-  const CLOSING = '/test/resetruangan'
+  const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
@@ -221,9 +221,9 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          if (this.isAllRoomVisited()){
-            this.$router.push({path: CLOSING})
-          } else {
+          // if (this.isAllRoomVisited()){
+          //   this.$router.push({path: CLOSING})
+          // } else {
             gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
             gsap.to('.transitionfade-out', {x: '40%', duration: .7})
             gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
@@ -236,7 +236,7 @@
                 this.$router.push({path: NEXT_ROOM})
               }
             }})
-          }
+          // }
         }
       }
     },
