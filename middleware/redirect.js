@@ -1,4 +1,9 @@
+const gepDate = new Date(2021, 1, 21, 20, 40)
 export default function(ctx) {
-  if(ctx.route.fullPath != '/')
-    ctx.redirect(301, '/')
+  const now = new Date()
+  if (gepDate - now > 0) {
+    if (ctx.route.fullPath != '/') {
+      ctx.redirect(301, '/')
+    }
+  }
 }

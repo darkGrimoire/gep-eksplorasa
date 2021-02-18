@@ -44,7 +44,7 @@
             <img src="/anger/lt.png" alt="floor">
           </div>
           <div class="cont kulkas">
-            <img src="/anger/kulklos.png" alt="kulkas1">
+            <img src="/anger/kulklos.png" alt="kulkas" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont lemari">
             <img src="/anger/lmari.png" alt="lemari">
@@ -78,6 +78,12 @@
           </div>
           <div class="cont oven">
             <img src="/anger/kgif.gif" alt="oven">
+          </div>
+          <div class="cont figura">
+            <img src="/anger/gep anger single photo-min.png" alt="figura">
+          </div>
+          <div class="cont koran">
+            <img src="/anger/gep anger article-min.png" alt="koran">
           </div>
         </div>
       </div>
@@ -121,7 +127,7 @@
             <img src="/anger/meja.png" alt="meja">
           </div>
           <div class="cont meong">
-            <img src="/anger/meong.png" alt="meong">
+            <img src="/anger/meong2.png" alt="meong" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont rak">
             <img src="/anger/rak.png" alt="rak">
@@ -130,10 +136,16 @@
             <img src="/anger/trolley.png" alt="trolley">
           </div>
           <div class="cont tv">
-            <img src="/anger/tv1.png" alt="tv">
+            <img src="/anger/tgif.gif" alt="tv">
           </div>
           <div class="cont kran">
             <img src="/anger/kran.gif" alt="kran">
+          </div>
+          <div class="cont gantungan">
+            <img src="/anger/gep anger photo series-min.png" alt="gantungan">
+          </div>
+          <div class="cont buku">
+            <img src="/anger/gep anger photobook-min.png" alt="buku">
           </div>
         </div>
       </div>
@@ -149,7 +161,7 @@
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
   const NEXT_ROOM = '/ruangan/joy'
-  const CLOSING = '/test/resetruangan'
+  const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
@@ -198,9 +210,9 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          if (this.isAllRoomVisited()){
-            this.$router.push({path: CLOSING})
-          } else {
+          // if (this.isAllRoomVisited()){
+          //   this.$router.push({path: CLOSING})
+          // } else {
             gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
             gsap.to('.transitionfade-out', {x: '40%', duration: .7})
             gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
@@ -213,7 +225,7 @@
                 this.$router.push({path: NEXT_ROOM})
               }
             }})
-          }
+          // }
         }
       }
     },
@@ -298,9 +310,33 @@
         } else if (this.slide === 1 && e.key === "ArrowRight"){
           this.switchSlide(1)
         }
-      }
-    },
-  }
+      },
+
+        
+      handleObjChange(e){
+        console.log(e)
+        if (e.target.getAttribute('src') === "/anger/kulklos.png"){
+          e.target.setAttribute('src', "/anger/kulopen.png")
+        } else if (e.target.getAttribute('src') === "/anger/meong2.png"){
+          e.target.setAttribute('src', "/anger/meong.png")
+        } else if (e.target.getAttribute('src') === "/anger/tgif.gif"){
+          e.target.setAttribute('src', "/anger/tv2.png")
+        }
+      },
+      handleObjChangeEnd(e){
+        console.log(e)
+        if (e.target.getAttribute('src') === "/anger/kulopen.png"){
+          e.target.setAttribute('src', "/anger/kulklos.png")
+        } else if (e.target.getAttribute('src') === "/anger/meong.png"){
+          e.target.setAttribute('src', "/anger/meong2.png")
+        } else if (e.target.getAttribute('src') === "/anger/tv2.png"){
+          e.target.setAttribute('src', "/anger/tgif.gif")
+        }
+      },
+
+      },
+    }
+  
 </script>
 
 <style lang="scss" scoped>
@@ -432,9 +468,9 @@
   top: 74.5%;
 }
 .kulkas{
-  width: 20%;
-  top: 16%;
-  left: 6%;
+  width: 23.4%;
+  top: 16.8%;
+  left: 3.5%;
 }
 .lemari{
   width: 22%;
@@ -491,6 +527,16 @@
   top: 34%;
   left: 54.5%;
 }
+.figura{
+  width: 16%;
+  top: 4%;
+  left: 54.5%; 
+}
+.koran{
+  width: 19.5%;
+  top: 75.5%;
+  left: 43%;
+}
 // Add Objects positions here
 .frame{
   width: 10.5%;
@@ -528,13 +574,23 @@
   left: 6.5%;
 }
 .tv{
-  width: 15%;
-  top: 31.5%;
-  left: 75.5%;
+  width: 12%;
+  top: 30.5%;
+  left: 77.5%;
 }
 .kran{
   width: 38.5%;
   top: 37%;
   left: 22.5%;
+}
+.gantungan{
+  width: 17%;
+  top: 1.9%;
+  left: 49.5%;
+}
+.buku{  
+  width: 17%;
+  top: 73%;
+  left: 30.5%;
 }
 </style>

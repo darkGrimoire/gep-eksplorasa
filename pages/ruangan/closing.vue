@@ -1,15 +1,10 @@
 <template>
   <div class="main">
-    <div class="slide-controls">
-      <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
-      <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
-    </div>
-
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
-    <div v-show="slide === 3" class="narasi">
+    <div v-show="slide === 2" class="narasi">
       {{ msg }}
     </div>
-
+    
     <div id="slide0" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
     >
@@ -32,126 +27,52 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div v-show="benda.saklar" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
+          <div class="cont guide">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-fear1.png" alt="guide" style="opacity: 0;">
+            <img src="/template-example/closing.png" alt="guide" style="opacity: .0;">
           </div>
+          <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
-            <img src="/fear/bg 1.png" alt="wall">
+            <img src="/closing/1-paper.png" alt="wall">
           </div>
-          <div class="cont mesin-cuci">
-            <img src="/fear/mesin-cuci.gif" alt="mesin cuci">
-          </div>
-          <div class="cont pel">
-            <img src="/fear/pelan 1.png" alt="pel">
-          </div>
-          <div class="cont pipa">
-            <img src="/fear/pipa 1.png" alt="pipa">
-          </div>
-          <div class="cont floor">
-            <img src="/fear/lantai 1.png" alt="floor">
-          </div>
-          <div class="cont tangga">
-            <img src="/fear/tangga 1.png" alt="tangga">
-          </div>
-          <div class="cont dinding-robek">
-            <img src="/fear/crack 1.png" alt="robekan">
-          </div>
-          <div class="cont rak-broken">
-            <img src="/fear/rak 1.png" alt="rak">
-          </div>
-          <div class="cont lemari">
-            <img src="/fear/lemari.gif" alt="lemari">
-          </div>
-          <div class="cont bochor">
-            <img src="/fear/bocor 1.png" alt="bocor">
-          </div>
-          <div class="cont web">
-            <img src="/fear/jaring 1.png" alt="jaring laba-laba">
-          </div>
-          <div class="cont saklar">
-            <img src="/fear/saklar 1.png" alt="saklar" @click="toggleSaklar">
-          </div>
-          <div class="cont lampu">
-            <img src="/fear/lampu 1.png" alt="lampu">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 2 -->
-    <div id="slide2" class="top-cont" 
-         :style="{'transform': 'translate(calc('+base.slide2+'% '+sign+' '+(Math.abs(computedDisplacement)-1)+'px), -50%)'}" 
-         @mousedown="startDrag($event)" 
-         @mousemove="dragContainer($event)" 
-         @mouseup="endDrag($event)"
-         @mouseleave="endDrag($event)"
-         @touchstart="startDrag($event)" 
-         @touchmove="dragContainer($event)" 
-         @touchend="endDrag($event)"
-    >
-      <div class="canvas">
-        <div class="canvas canvas-hover">
-          <div class="cont transitionfade-out" />
-          <div v-show="benda.saklar" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-fear3.png" alt="guide" style="opacity: 0;">
-          </div>
-          <div class="cont wall">
-            <img src="/fear/bg 1.png" alt="wall">
-          </div>
-          <div class="cont floor">
-            <img src="/fear/lantai 1.png" alt="floor">
-          </div>
-          <div class="cont pintu">
-            <img src="/fear/pintu 1.png" alt="pintu">
-          </div>
-          <div class="cont trap-door">
-            <img src="/fear/monster1 1.png" alt="trap door" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont tv">
-            <img src="/fear/tv.gif" alt="tv">
-          </div>
-          <div v-show="!benda.saklar" class="cont sadako">
-            <img src="/fear/sadako 1.png" alt="sadako" :style="`opacity: ${benda.sadako}`" @mouseenter="benda.sadako = 1" @mouseout="benda.sadako = 0">
-          </div>
-          <div v-show="benda.saklar" class="cont sadako">
-            <img src="/fear/sadako 1.png" alt="sadako">
+          <div class="cont lantai">
+            <img src="/closing/lt.png" alt="lantai">
           </div>
           <div class="cont sofa">
-            <img src="/fear/kursi 1.png" alt="sofa">
+            <img src="/closing/sofa.png" alt="sofa">
           </div>
-          <div class="cont ventilasi">
-            <img src="/fear/vent 1.png" alt="ventilasi">
+          <div class="cont tripod">
+            <img src="/closing/tripod.png" alt="tripod">
           </div>
-          <div v-show="!benda.saklar" class="cont foto">
-            <img src="/fear/fohepi 1.png" alt="foto" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          <div class="cont vas">
+            <img src="/closing/vas.png" alt="vas">
           </div>
-          <div v-show="benda.saklar" class="cont foto">
-            <img src="/fear/fokripi 1.png" alt="foto">
+          <div class="cont meja">
+            <img src="/closing/meja.png" alt="meja">
           </div>
-          <div class="cont tikus1">
-            <img src="/fear/rat 1 1.png" alt="tikus">
+          <div class="cont figura">
+            <img src="/closing/1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont tikus2">
-            <img src="/fear/rat 2 1.png" alt="tikus">
+          <div class="cont kamera">
+            <img src="/closing/cam1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div v-show="!benda.saklar" class="cont hantu1">
-            <img src="/fear/setanmini 1.png" alt="hantu" :style="`opacity: ${benda.setanmini}`" @mouseenter="benda.setanmini = 1" @mouseout="benda.setanmini = 0">
+          <div class="cont gantungan">
+            <img src="/closing/foto.png" alt="gantungan">
           </div>
-          <div v-show="benda.saklar" class="cont hantu1">
-            <img src="/fear/setanmini 1.png" alt="hantu">
+          <div class="cont balon">
+            <img src="/closing/balon1.png" alt="balon" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont box">
-            <img src="/fear/box 1.png" alt="box">
+          <div class="cont e1">
+            <img src="/closing/e1.png" alt="e1">
           </div>
-          <div class="cont bat">
-            <img src="/fear/bat 1.png" alt="bat">
+          <div class="cont e4">
+            <img src="/closing/e4.png" alt="e4">
           </div>
-          <div class="cont pipa-l">
-            <img src="/fear/pipaHAPE 1.png" alt="pipa">
+          <div class="cont e2">
+            <img src="/closing/e2.png" alt="e2">
+          </div>
+          <div class="cont e3">
+            <img src="/closing/e3.png" alt="e3">
           </div>
         </div>
       </div>
@@ -166,12 +87,11 @@
 // canvas: kalau mau ada tooltip, taro disini
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
-  const NEXT_ROOM = '/ruangan/sad'
-  const CLOSING = '/ruangan/closing'
+  const NEXT_ROOM = '/ruangan/template'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
-    name: "Fear",
+    name: "TemplateRuangan",
     components: {
       rcp,
     },
@@ -191,12 +111,7 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here',
-        benda: {
-          saklar: false,
-          sadako: 0,
-          setanmini: 0
-        }
+        msg: 'Pesan Kurator Here'
       }
     },
     computed: {
@@ -221,22 +136,22 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          // if (this.isAllRoomVisited()){
-          //   this.$router.push({path: CLOSING})
-          // } else {
+          if (this.isAllRoomVisited()){
+            this.$router.push({path: '/closing'})
+          } else {
             gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
             gsap.to('.transitionfade-out', {x: '40%', duration: .7})
             gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
             gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
             document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
+            gsap.to('.loading', {opacity: 1, duration: 2, delay: 5, onComplete: () => {
               if (this.isAllRoomVisited()){
-                this.$router.push({path: CLOSING})
+                this.$router.push({path: '/closing'})
                 } else {
                 this.$router.push({path: NEXT_ROOM})
               }
             }})
-          // }
+          }
         }
       }
     },
@@ -244,8 +159,8 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
-      localStorage.setItem('fear', true)
-      
+      localStorage.setItem('template', true)
+
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
@@ -309,39 +224,28 @@
           this.transformed = 0
         }
       },
-      handleKeyboard(e){
-        // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
 
-
-
-        if (this.slide === 2 && e.key === "ArrowLeft"){
-          this.switchSlide(-1)
-        } else if (this.slide === 1 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
-      },
       handleObjChange(e){
         console.log(e)
-        if (e.target.getAttribute('src') === "/fear/fohepi 1.png"){
-          e.target.setAttribute('src', "/fear/fokripi 1.png")
-        } else if (e.target.getAttribute('src') === "/fear/monster1 1.png"){
-          e.target.setAttribute('src', "/fear/monster2 1.png")
+        if (e.target.getAttribute('src') === "/closing/1.png"){
+          e.target.setAttribute('src', "/closing/gantungan-out.png")
+        } else if (e.target.getAttribute('src') === "/closing/balon1.png"){
+          e.target.setAttribute('src', "/closing/balon1-out.png")
+        } else if (e.target.getAttribute('src') === "/closing/cam1.png"){
+          e.target.setAttribute('src', "/closing/cam-out.png")
         }
       },
       handleObjChangeEnd(e){
         console.log(e)
-        if (e.target.getAttribute('src') === "/fear/fokripi 1.png"){
-          e.target.setAttribute('src', "/fear/fohepi 1.png")
-        } else if (e.target.getAttribute('src') === "/fear/monster2 1.png"){
-          e.target.setAttribute('src', "/fear/monster1 1.png")
+        if (e.target.getAttribute('src') === "/closing/gantungan-out.png"){
+          e.target.setAttribute('src', "/closing/1.png")
+        } else if (e.target.getAttribute('src') === "/closing/balon1-out.png"){
+          e.target.setAttribute('src', "/closing/balon1.png")
+        } else if (e.target.getAttribute('src') === "/closing/cam-out.png"){
+          e.target.setAttribute('src', "/closing/cam1.png")
         }
       },
-      toggleSaklar(){
-        this.benda.saklar = !this.benda.saklar
-      }
+
     },
   }
 </script>
@@ -453,7 +357,7 @@
   width: 60vw;
   height: 200vh;
   top: -50%;
-  left: -5%;
+  left: -15%;
   z-index: 999;
 }
 .transitionfade-out {
@@ -466,180 +370,84 @@
   transform: translate(100%, 0);
 }
 
+
 .center-anchor {
   transform: translate(-50%,-50%);
 }
 
-.wall {
+// Add Objects positions here
+.wall{
+  width: 110%;
+  right: -2%;
+}
+.lantai{
   width: 100%;
-  top: -67%;
-  left: 0;
+  top: 79.5%;
 }
-
-.floor {
-  width: 100%;
-  top: 70.5%;
-  left: 0;
+.sofa{
+  width: 51.5%;
+  left: 26%;
+  top: 40%;
 }
-
-.pintu {
-  width: 27%;
-  top: 14.4%;
-  left: 3.4%;
+.tripod{
+  width: 16.5%;
+  left: 77.2%;
+  top: 51%;
 }
-
-.trap-door {
-  width: 17.4%;
-  top: 74.7%;
-  left: 9.6%;
-  z-index: 71;
-}
-
-.tv {
-  width: 17.2%;
-  top: 32%;
-  left: 36.2%;
-}
-
-.sadako {
-  width: 15.8%;
-  top: 43.3%;
-  left: 35.5%;
-  z-index: 71;
-}
-
-.sofa {
-  width: 20%;
-  top: 35%;
-  left: 57.6%;
-}
-
-.ventilasi {
-  width: 18%;
-  top: 5.7%;
-  left: 49%;
-}
-
-.foto {
-  width: 12.2%;
+.gantungan{
+  width: 33.3%;
+  left: 47.4%;
   top: 13%;
-  left: 79.5%;
-  z-index: 71;
 }
-
-.tikus1 {
-  width: 14.1%;
-  top: 72.3%;
-  left: 65.2%;
+.meja{
+  width: 16.5%;
+  left: 6.5%;
+  top: 54.5%;
 }
-
-.tikus2 {
-  width: 13%;
-  top: 70.8%;
-  left: 87%;
-}
-
-.box {
-  width: 20.5%;
-  top: 43.7%;
-  left: 79%;
-}
-
-.bat {
-  width: 10.5%;
-  top: -7.2%;
-  left: 25.8%;
-}
-
-.pipa-l {
-  width: 55%;
-  top: -116%;
-  left: -4%;
-}
-
-.hantu1 {
-  width: 8.7%;
-  top: 39%;
-  left: 85%;
-  z-index: 71;
-}
-
-.tangga {
-  width: 31.5%;
-  top: 1.1%;
-  left: 0;
-}
-
-.dinding-robek {
-  width: 7.8%;
-  top: 6%;
-  left: 25%;
-}
-
-.mesin-cuci {
-  width: 18.7%;
-  top: 43.5%;
-  left: 29.5%;
-}
-
-.rak-broken {
-  width: 17.8%;
-  top: 27.7%;
-  left: 48.7%;
-}
-
-.lemari {
-  width: 17.2%;
-  top: 21.3%;
-  left: 68.5%;
-}
-
-.pel {
-  width: 12.4%;
-  top: 29.8%;
-  left: 87%;
-}
-
-.pipa {
-  width: 12%;
-  top: -71%;
-  left: 91.8%;
-}
-
-.bochor {
-  width: 35.5%;
-  top: 67%;
-  left: 64.5%;
-}
-
-.web {
-  width: 10%;
-  top: -14.5%;
-  left: 86.5%;
-}
-
-.saklar {
-  width: 4%;
-  top: 36%;
-  left: 86.5%;
-  z-index: 71;
-  &:hover{
-    cursor: pointer;
-  }
-}
-
-.lampu {
+.kamera{
   width: 16%;
-  top: -36.8%;
-  left: 41.2%;
+  left: 79.2%;
+  top: 32%;
+}
+.figura{
+  width: 15%;
+  left: 13%;
+  top: 6.5%;
+}
+.balon{
+  width: 17%;
+  left: 26.2%;
+  top: 3%;
+}
+.balon-out{
+  width: 17%;
+  left: 26.2%;
+  top: 3%;
+}
+.vas{
+  width: 6.3%;
+  left: 6%;
+  top: 30.5%;
+}
+.e1{
+  width: 11%;
+  left: 32%;
+  top: 41.5%;
+}
+.e2{
+  width: 12.3%;
+  left: 50%;
+  top: 46%;
+}
+.e3{
+  width: 17%;
+  left: 37.9%;
+  top: 41.4%;
+}
+.e4{
+  width: 16.5%;
+  left: 57%;
+  top: 39%;
 }
 
-.darkness {
-  background-color: black;
-  opacity: .8;
-  z-index: 70;
-  width: 150%;
-  height: 200%;
-  top: -50%;
-}
 </style>
