@@ -4,6 +4,11 @@
       <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
       <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
     </div>
+
+    <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
+    <div v-show="slide === 3" class="narasi">
+      {{ msg }}
+    </div>
     
     <div id="slide0" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
@@ -68,6 +73,7 @@
 // canvas: kalau mau ada tooltip, taro disini
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
+  const NEXT_ROOM = '/ruangan/template'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
@@ -103,8 +109,10 @@
       slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
-          if (oldVal > 2)
+          if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
+            gsap.to('.narasi', {opacity: 0, duration: .5})
+          }
         } else if (newVal === 1){
           gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
           if (oldVal === 0)
@@ -114,24 +122,45 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
-          gsap.to('.transitionfade-out', {x: '50%', duration: .5})
-          gsap.to('.transitionfade-out', {x: '0', duration: 1.5, ease: 'none', delay: .5})
+          if (this.isAllRoomVisited()){
+            this.$router.push({path: '/closing'})
+          } else {
+            gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+            gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+            gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
+            gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
+            document.getElementsByClassName('loading')[0].style.display = 'block'
+            gsap.to('.loading', {opacity: 1, duration: 2, delay: 5, onComplete: () => {
+              if (this.isAllRoomVisited()){
+                this.$router.push({path: '/closing'})
+                } else {
+                this.$router.push({path: NEXT_ROOM})
+              }
+            }})
+          }
         }
       }
     },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
+      document.onkeyup = this.handleKeyboard
+      localStorage.setItem('template', true)
 
-      // TODO: Add on enter animation here
-      this.slide = 1
+      // wait for loading to finish
+      gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
+        document.getElementsByClassName('loading')[0].style.display = 'none'
+        // TODO: Add on enter animation here
+        this.slide = 1
+      }})
     },
     methods: {
       switchSlide(val){
         this.slide += val
-        this.computedDisplacement = 0
-        this.transformed = 0
+        gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      isAllRoomVisited(){
+        return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
       },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
@@ -179,6 +208,13 @@
         if (window.matchMedia("(orientation: landscape)").matches){
           this.computedDisplacement = 0
           this.transformed = 0
+        }
+      },
+      handleKeyboard(e){
+        if (this.slide === 2 && e.key === "ArrowLeft"){
+          this.switchSlide(-1)
+        } else if (this.slide === 1 && e.key === "ArrowRight"){
+          this.switchSlide(1)
         }
       }
     },
@@ -251,6 +287,24 @@
   }
 }
 
+.narasi {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%,0);
+  z-index: 99;
+  font-family: 'Mechanical Pencil';
+  font-size: 75px;
+  color: rgba($color: white, $alpha: .9);
+  // background-image: linear-gradient(to right, rgba($color: white, $alpha: .1), transparent);
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent; 
+  // -moz-background-clip: text;
+  // -moz-text-fill-color: transparent;
+  opacity: 0;
+  text-align: center;
+}
+
 .cont {
   position: absolute;
   line-height: 0;
@@ -271,15 +325,18 @@
 
 .transitionfade-in {
   background: linear-gradient(to right, black, black, transparent);
-  width: 50vw;
-  height: 100vh;
+  width: 60vw;
+  height: 200vh;
+  top: -50%;
+  left: -5%;
   z-index: 999;
 }
 .transitionfade-out {
   background: linear-gradient(to left, black, black, transparent);
-  width: 50vw;
-  height: 100vh;
+  width: 60vw;
+  height: 200vh;
   z-index: 999;
+  top: -50%;
   right: 0;
   transform: translate(100%, 0);
 }
