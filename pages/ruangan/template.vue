@@ -122,9 +122,9 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          if (this.isAllRoomVisited()){
-            this.$router.push({path: '/closing'})
-          } else {
+          // if (this.isAllRoomVisited()){
+          //   this.$router.push({path: '/closing'})
+          // } else {
             gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
             gsap.to('.transitionfade-out', {x: '40%', duration: .7})
             gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
@@ -137,7 +137,7 @@
                 this.$router.push({path: NEXT_ROOM})
               }
             }})
-          }
+          // }
         }
       }
     },
@@ -148,7 +148,7 @@
       localStorage.setItem('template', true)
 
       // wait for loading to finish
-      gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
+      gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
         // TODO: Add on enter animation here
         this.slide = 1
