@@ -1,6 +1,6 @@
 <template>
   <div>
-    Jadi ini di dalam index. {{ this.emosi }}/{{ this.jenis }}/{{ this.id }}
+    Jadi ini di dalam index. {{ emosi }}/{{ jenis }}/{{ id }}
   </div>
 </template>
 

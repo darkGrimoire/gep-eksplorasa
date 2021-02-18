@@ -32,29 +32,28 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-            <div class="genteng">
-            </div>
-            <div class="meong"></div>
-            <div class="open"></div>
-            <div class="keset">
-                <img src="/teras/keset 1.png">
-            </div>
-            <div class="jen1">
-                <img src="/teras/jki 1.png">
-            </div>
-            <div class="jen2">
-                <img src="/teras/jka 1.png">
-            </div>
-            <div class="pintu">
-                <div class="imgpintu" @click="zoomIn();switchSlide(1)"></div>
-            </div>
+          <div class="genteng" />
+          <div class="meong" />
+          <div class="open" />
+          <div class="keset">
+            <img src="/teras/keset 1.png">
+          </div>
+          <div class="jen1">
+            <img src="/teras/jki 1.png">
+          </div>
+          <div class="jen2">
+            <img src="/teras/jka 1.png">
+          </div>
+          <div class="pintu">
+            <div class="imgpintu" @click="zoomIn();switchSlide(1)" />
+          </div>
 
-            <div class="bg">
-                <img src="/teras/bg 2.png">
-            </div>
-            <div class="lantai">
-                <img src="/teras/lt 2.png">
-            </div>
+          <div class="bg">
+            <img src="/teras/bg 2.png">
+          </div>
+          <div class="lantai">
+            <img src="/teras/lt 2.png">
+          </div>
           <!-- Tambahin Objek lainnya disini -->
         </div>
       </div>
@@ -74,16 +73,18 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <p class="text">APA RASAMU?</p>
-          <div class ="joy" @click="goToEmosi('joy')"></div>
-          <div class ="fear" @click="goToEmosi('fear')"></div>
-          <div class ="sadness" @click="goToEmosi('sad')"></div>
-          <div class ="anger" @click="goToEmosi('anger')"></div>
+          <p class="text">
+            APA RASAMU?
+          </p>
+          <div class="joy" @click="goToEmosi('joy')" />
+          <div class="fear" @click="goToEmosi('fear')" />
+          <div class="sadness" @click="goToEmosi('sad')" />
+          <div class="anger" @click="goToEmosi('anger')" />
           <div class="bg">
-              <img src="/teras/bg 2.png">
+            <img src="/teras/bg 2.png">
           </div>
           <div class="lantai">
-              <img src="/teras/lt 2.png">
+            <img src="/teras/lt 2.png">
           </div>
         </div>
       </div>
