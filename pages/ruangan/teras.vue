@@ -46,7 +46,7 @@
                 <img src="/teras/jka 1.png">
             </div>
             <div class="pintu">
-                <div class="imgpintu"></div>
+                <div class="imgpintu" @click="zoomIn();switchSlide(1)"></div>
             </div>
 
             <div class="bg">
@@ -74,11 +74,17 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <div class="cont guide">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/teras/guideteras.png" alt="guide" style="opacity: 1;">
+          <p class="text">APA RASAMU?</p>
+          <div class ="joy" @click="goToEmosi('joy')"></div>
+          <div class ="fear" @click="goToEmosi('fear')"></div>
+          <div class ="sadness" @click="goToEmosi('sad')"></div>
+          <div class ="anger" @click="goToEmosi('anger')"></div>
+          <div class="bg">
+              <img src="/teras/bg 2.png">
           </div>
-          <!-- Tambahin Objek lainnya disini -->
+          <div class="lantai">
+              <img src="/teras/lt 2.png">
+          </div>
         </div>
       </div>
     </div>
@@ -127,7 +133,7 @@
     watch: {
       slide(newVal, oldVal) {
         if (newVal === 2){
-          gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50,delay:1})
           if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
             gsap.to('.narasi', {opacity: 0, duration: .5})
@@ -173,10 +179,17 @@
       }})
     },
     methods: {
+      goToEmosi(str){
+        this.$router.push({path: "/ruangan/" + str})
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
       },
+      zoomIn(){
+        gsap.to("#slide1", {duration:1,scale:2})
+      }
+      ,
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
       },
@@ -389,6 +402,7 @@
     background-image:url("/teras/p2 1.png");
     background-size: 20% 61%;
     background-repeat:no-repeat;
+    cursor:pointer;
     position:absolute;
 }
 .jen1 img{
@@ -458,6 +472,128 @@
     left:11.5%;
     z-index:3;
     position:absolute;    
+}
+
+.cont-emotion{
+  display:flex;
+  flex-flow : row;
+  width:100%;
+  height:75%;
+  position:absolute;
+  justify-content:center;
+  align-content:center;
+  justify-items:center;
+  align-items:center;
+}
+
+.joy{
+  background-image:url("/teras/h0.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  padding-left:10%;
+  top : 25%;
+  left : 11.5%;
+  position:absolute; 
+}
+
+.fear{
+  background-image:url("/teras/f0.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  top : 25%;
+  left : 31.5%;
+  padding-left:10%;
+  position:absolute;   
+}
+
+.sadness{
+  background-image:url("/teras/s0.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  top : 25%;
+  left : 51.5%;
+  padding-left:10%;
+  position:absolute;   
+}
+
+.anger{
+  background-image:url("/teras/a0.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  top : 25%;
+  left : 71.5%;
+  padding-left:10%;
+  position:absolute;   
+}
+
+.joy:hover{
+  background-image:url("/teras/h3 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  padding-left:10%;
+  top : 25%;
+  left : 11.4%;
+  cursor:pointer;
+  position:absolute;   
+}
+
+.fear:hover{
+  background-image:url("/teras/F3 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  top : 25%;
+  left : 31.44%;
+  padding-left:10%;
+  cursor:pointer;
+  position:absolute;  
+}
+
+.sadness:hover{
+  background-image:url("/teras/s3 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  top : 25%;
+  left : 51.5%;
+  padding-left:10%;
+  cursor:pointer;
+  position:absolute;   
+}
+
+.anger:hover{
+  background-image:url("/teras/A3 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width :15.5%;
+  height:45%;
+  top : 25%;
+  left : 71.4%;
+  padding-left:10%;
+  cursor:pointer;
+  position:absolute;   
+}
+
+.text{
+  position:absolute;
+  font-family:'Mechanical Pencil';
+  text-align:center;
+  top:14%;
+  left:40%;
+  font-size:42px;
+
 }
 // Add Objects positions here
 </style>
