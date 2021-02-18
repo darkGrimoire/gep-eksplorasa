@@ -116,9 +116,7 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
         return text.replaceAll("$\\n", "\n\n")
       },
       handleNewLinesMany(texts){
-        console.log(texts)
         texts.forEach((text) => {
-          console.log(text)
           let caption = this.handleNewLines(text)
           this.dataKarya.captions.push(caption)
         })
@@ -162,13 +160,15 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
       },
       preloadImages(){
         setTimeout(() => {
-          this.dataKarya.photoMins.forEach((photoMin) => {
-            new Image().src = photoMin
+          this.dataKarya.photoMins.forEach(async (photoMin) => {
+            let src = await this.getLink(photoMin)
+            new Image().src = src
           })
         }, 1500)
         setTimeout(() => {
-          this.dataKarya.photos.forEach((photo) => {
-            new Image().src = photo
+          this.dataKarya.photos.forEach(async (photo) => {
+            let src = await this.getLink(photo)
+            new Image().src = src
           })
         }, 3000)
       },
@@ -183,6 +183,26 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
       //   gsap.to('left-side', {xPercent: -50, yPercent: -25 , duration: 1})
       //   gsap.to('.left-side', {xPercent: -50, yPercent: -25 , duration: 1})
       // }
+      async getLink(link) {
+        if (this.isFirebaseLink(link)){
+          let url = await this.getFromStorage(link)
+          return url
+        } else {
+          return link
+        }
+      },
+      isFirebaseLink(link){
+        return link.slice(0,5) === "gs://"
+      },
+      getFromStorage(link){
+        return this.$fire.storage.refFromURL(link).getDownloadURL()
+          .then(url => {
+            return url
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
     },
     head() {
       return {
