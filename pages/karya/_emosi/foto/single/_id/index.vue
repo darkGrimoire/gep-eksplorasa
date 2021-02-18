@@ -132,21 +132,26 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
 ::v-deep .poster-container {
-    margin-top: 5%;
-    width: 45%;
-    max-width: 90%;
-    max-height: 90%;
-    @media only screen and (max-width: 800px) {
-      width: 45%;
-      margin: 2% 0;
-    }
+  margin-top: 5%;
+  width: 700px;
+  max-width: 80%;
+  max-height: 80%;
+  @media only screen and (max-width: 800px) {
+    width: 550px;
+    margin: 2% 0;
+    max-width: 70%;
+    max-height: 70%;
   }
+  @media only screen and (max-width: 600px) {
+    width: 400px;
+  }
+}
 
 .back-button {
   position: fixed;
@@ -167,6 +172,9 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
     left: 5%;
     bottom: 5%;
     opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 35px;
   }
 }
 

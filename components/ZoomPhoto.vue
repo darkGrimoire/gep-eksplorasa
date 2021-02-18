@@ -1,6 +1,7 @@
 <template>
   <div :class="['container-component', containerClass]">
     <div class="bg-component" style="display: none;" @click="handleBgClick" />
+    <slot v-show="!isFull" class="photo-controls-component" name="photo-controls" />
     <img v-show="!isFull" :src="computedPoster" alt="Photo" :class="['poster-component', posterClass]"
          @click="handlePhotoClick"
     >
@@ -41,7 +42,8 @@ import gsap from 'gsap'
       return {
         computedSrc: '',
         computedPoster: '',
-        isFull: false
+        isFull: false,
+        isLoading: true
       }
     },
     watch: {
@@ -56,13 +58,17 @@ import gsap from 'gsap'
         }
       },
       full(newVal){
+        this.isLoading = true
         setTimeout(async () => {
           this.computedSrc = await this.getLink(newVal)
+          this.isLoading = false
         }, 200)
       },
       poster(newVal){
+        this.isLoading = true
         setTimeout(async () => {
           this.computedPoster = await this.getLink(newVal)
+          this.isLoading = false
         }, 200)
       }
     },
@@ -71,6 +77,7 @@ import gsap from 'gsap'
       setTimeout(async () => {
         this.computedSrc = await this.getLink(this.full)
       }, 1000)
+      this.isLoading = false
     },
     methods: {
       handleBgClick() {
@@ -146,7 +153,7 @@ import gsap from 'gsap'
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1em;
+  font-size: 40px;
   color: white;
   opacity: 0;
   transition: opacity 0.25s ease-in-out;

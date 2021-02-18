@@ -1,16 +1,15 @@
 <template>
   <div class="container">
-    <div class="slides-container">
-      <zoom-photo :poster="dataKarya.photoMin" 
-                  :full="dataKarya.photo" 
-                  :container-class="'poster-container left-side'"
-                  :poster-class="'poster-img'"
-      />
-      <!-- <div class="slide-controls">
+    <zoom-photo :poster="dataKarya.photoMin" 
+                :full="dataKarya.photo" 
+                :container-class="'poster-container left-side'"
+                :poster-class="'poster-img'"
+    >
+      <div slot="photo-controls" class="slide-controls">
         <fa :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchPhoto(-1)" />
         <fa :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchPhoto(1)" />
-      </div> -->
-    </div>
+      </div>
+    </zoom-photo>
     
     <div class="title-container left-side">
       <div class="title">
@@ -228,27 +227,32 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
 ::v-deep .poster-container {
-  width: 45%;
-  max-width: 90%;
-  max-height: 90%;
-  @media only screen and (max-width: 800px) {
-    width: 45%;
-    margin: 2% 0;
-  }
-}
-
-.slides-container {
-  position: relative;
   margin-top: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 700px;
+  max-width: 80%;
+  max-height: 80%;
+  @media only screen and (max-width: 800px) {
+    width: 550px;
+    margin: 2% 0;
+    max-width: 70%;
+    max-height: 70%;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 400px;
+  }
+  &:hover .slide-controls .arrow {
+    color: rgba($color: white, $alpha: 0.2);
+  }
+  &:hover .slide-controls .arrow:hover {
+    cursor: pointer;
+    color: rgba($color: white, $alpha: 0.8);
+  }
 }
 
 .slide-controls {
@@ -257,32 +261,47 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
   .arrow {
+    pointer-events: all;
     z-index: 99;
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
-    font-size: 100px;
-    color: rgba($color: white, $alpha: 0.2);
+    font-size: 60px;
+    color: rgba($color: white, $alpha: 0);
     transition: color 0.2s ease-in-out;
-    &:hover {
-      color: rgba($color: white, $alpha: 0.8);
-    }
     &:active {
       color: rgba($color: white, $alpha: 1.0);
     }
+    @media only screen and (max-width: 800px) {
+      color: rgba($color: white, $alpha: 0.4);
+      font-size: 75px;
+    }
     @media only screen and (max-width: 600px) {
-      font-size: 70px;
+      font-size: 50px;
     }
     @media only screen and (max-width: 450px) {
-      font-size: 50px;
+      font-size: 40px;
     }
   }
   .right-arrow {
     right: 20px;
+    @media only screen and (max-width: 800px) {
+      right: -50px;
+    }
+    @media only screen and (max-width: 600px) {
+      right: -40px;
+    }
   }
   .left-arrow {
     left: 20px;
+    @media only screen and (max-width: 800px) {
+      left: -50px;
+    }
+    @media only screen and (max-width: 600px) {
+      left: -40px;
+    }
   }
 }
 
@@ -305,6 +324,9 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
     left: 5%;
     bottom: 5%;
     opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 35px;
   }
 }
 
