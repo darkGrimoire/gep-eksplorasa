@@ -27,20 +27,20 @@
     <nuxt-link class="back-button" :to="'/ruangan/'+emosi">
       Back
     </nuxt-link>
+    <rcp />
   </div>
 </template>
 
 <script>
-// import gsap from 'gsap'
 import ZoomPhoto from '~/components/ZoomPhoto.vue'
-// import Loading from '~/components/Loading.vue'
+import rcp from '~/components/rcp.vue'
 
 // const CAPTION_TRESHOLD = 250
   export default {
     name: 'TemplateFoto',
     components: {
       ZoomPhoto,
-      // Loading
+      rcp
     },
     async asyncData({ params }) {
       const emosi = params.emosi
@@ -67,6 +67,9 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
       karyaRef.get()
         .then(doc => {
           let data = {id: doc.id, ...doc.data()}
+          if (data.type !== "single"){
+            this.$router.push({path: '/ruangan/' + this.emosi})
+          }
           this.dataKarya.judul = data.judul
           this.dataKarya.author = data.author
           this.dataKarya.caption = this.handleNewLines(data.caption)
@@ -81,7 +84,7 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
         })
         .catch((err) => {
           console.log(err)
-          // this.$router.push({path: '/ruangan/' + this.emosi})
+          this.$router.push({path: '/ruangan/' + this.emosi})
         })
     },
     methods: {
@@ -90,7 +93,7 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
         return text.slice(0, pos) + 'min-' + text.slice(pos)
       },
       handleNewLines(text){
-        return text.replaceAll("$\\n", "\n\n")
+        return text.replaceAll("$\\n", "\n")
       },
       setButtonLayer(idx){
         document.getElementsByClassName('back-button')[0].style.zIndex = idx
@@ -141,14 +144,14 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
   margin-top: 5%;
   width: 700px;
   max-width: 80%;
-  max-height: 80%;
+  max-height: 50%;
   @media only screen and (max-width: 800px) {
     width: 550px;
-    margin: 2% 0;
     max-width: 70%;
-    max-height: 70%;
+    max-height: 50%;
   }
   @media only screen and (max-width: 600px) {
+    margin-top: 10%;
     width: 400px;
   }
 }
@@ -174,7 +177,8 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
     opacity: 1;
   }
   @media only screen and (max-width: 600px) {
-    font-size: 35px;
+    bottom: 3%;
+    font-size: 30px;
   }
 }
 
@@ -184,13 +188,23 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
   color: white;
   margin: 25px 5% 10px 5%;
   .title {
-    font-size: 40px;
+    font-size: 35px;
     font-weight: bold;
     margin-bottom: 2px;
   }
   .author {
     font-style: italic;
     font-size: 20px;
+  }
+  @media only screen and (max-width: 600px) {
+    margin: 15px 2% 2px 2%;
+
+    .title {
+      font-size: 24px;
+    }
+    .author {
+      font-size: 16px;
+    }
   }
 }
 
@@ -206,11 +220,18 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
   text-align: left;
   color: white;
   margin: 0 5%;
-  margin-bottom: 2%;
+  margin-bottom: 4%;
+  padding-right: 8px;
   max-width: 40%;
+  min-width: 20%;
   overflow-y: auto;
   max-height: 40vh;
   z-index: 100;
+  line-height: 1.3;
+  // firefox
+  scrollbar-color: #f1f1f1 rgba($color: #888, $alpha: 0.6); 
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
   .title {
     font-size: 44px;
   }
@@ -219,8 +240,10 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
     white-space: pre-line;
   }
   @media only screen and (max-width: 800px) {
-    max-height: 35vh;
-    min-width: 60vw;
+    max-height: 30vh;
+    max-width: 75vw;
+    min-width: 40vw;
+    margin-bottom: 14%;
 
     .title {
       font-size: 30px;
@@ -230,8 +253,10 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
     }
   }
   @media only screen and (max-width: 600px) {
+    min-width: 45vw;
+    margin-bottom: 16%;
     .title {
-      font-size: 24px;
+      font-size: 18px;
     }
     .deskripsi {
       font-size: 12px;
@@ -246,17 +271,17 @@ import ZoomPhoto from '~/components/ZoomPhoto.vue'
 
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: rgba($color: #888, $alpha: 0.6); 
   }
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: rgba($color: #f1f1f1, $alpha: 0.8); 
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #fff; 
   }
 
 </style>
