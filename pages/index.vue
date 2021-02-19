@@ -40,7 +40,7 @@
 </template>
 
 <script>
-const gepDate = new Date(2021, 1, 21, 20, 40)
+const gepDate = new Date(2021, 1, 19, 19, 50)
 export default {
   name: 'UnderConstruction',
   data () {
@@ -58,6 +58,9 @@ export default {
       }
     },
     mounted () {
+      if (gepDate - new Date() <= 0){
+        this.$router.push({path: '/buku-tamu'})
+      } 
       this.setupCanvas()
       this.updateTimer()
       this.startCountdown()
