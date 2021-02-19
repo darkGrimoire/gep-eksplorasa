@@ -40,7 +40,7 @@
 </template>
 
 <script>
-const gepDate = new Date(2021, 1, 19, 19, 50)
+const gepDate = new Date(2021, 1, 19, 20, 0)
 export default {
   name: 'UnderConstruction',
   data () {
