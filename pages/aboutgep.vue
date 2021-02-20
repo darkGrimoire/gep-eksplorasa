@@ -14,12 +14,12 @@
         <div class="papertext">
           <h1>Apa itu GEP?</h1>
           <img src="boutgep/line.png" class="line">
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in</p>
+          <p>Ganesha Exhibition Programme (GEP) merupakan sebuah pameran serta pemutaran karya kru LFM ITB. Karya-karya yang ditampilkan berupa instalasi fotografi, videografi serta kineklub melalui proses submisi serta kurasi. Diadakan sejak tahun 2010, GEP selalu membawa perbedaan di setiap tahunnya. Membawakan pesan mengenai eksplorasi emosi, GEP 2021: Eksplorasa diadakan secara daring untuk pertama kalinya.</p>
           <img src="divider/fear.png" class="divider">
 
           <h1>Apa itu LFM?</h1>
           <img src="boutgep/line.png" class="line">
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in</p>
+          <p>Berdiri pada 21 April 1960, Liga Film Mahasiswa ITB (LFM ITB) merupakan Unit Kegiatan Mahasiswa yang bergerak di bidang perfilman dan fotografi. Terdapat 4 bidang yang menjadi pilar kekaryaan di LFM ITB yaitu Fotografi, Videografi, Kineklub serta Pertunjukan LFM ITB yang berusaha untuk terus mewadahi kru LFM ITB agar dapat memberikan karya-karya terbaik kepada khalayak umum. Salah satunya seperti Pertunjukan LFM ITB melalui pamerannya yang bernama Ganesha Exhibition Programme (GEP).</p>
           <img src="divider/anger.png" class="divider">
         </div>
       </div>
@@ -149,7 +149,7 @@ export default {
   .divider {
     height: 60px;
     margin-top: 15px;
-    margin-bottom: 75px;
+    margin-bottom: 30px;
   }
 
   .team {

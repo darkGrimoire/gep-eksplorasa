@@ -5,8 +5,11 @@
         <img src="kuro/paper.png" class="top">
         <img src="kuro/paper.png" class="top">
         <img src="kuro/paper.png" class="top2">
-        <img src="kuro/paper.png" class="top2">
         <img src="kuro/paper.png" class="top3">
+        <img src="kuro/paper.png" class="top4">
+        <img src="kuro/paper.png" class="top5">
+        <img src="kuro/paper.png" class="top6">
+        <img src="kuro/paper.png" class="top7">
       
         <div class="papertext">
           <div class="header">
@@ -15,11 +18,19 @@
           </div>
           <img src="kuro/garis.png" class="garis">
           <img src="kuro/catkur.png" class="catkur">
-          <p>What is Lorem Ipsum?
-            <br>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p>Perasaan manusia merupakan hal yang unik, sesederhana pencampuran hormon di dalam otak manusia dapat menghasilkan emosi yang menggerakan manusia setiap harinya. Rasa senang, takut, sedih, hingga marah kerap menjadi motivasi manusia terhadap aksinya. Emosi pun menjadi sangat krusial dalam kehidupan manusia.</p>
           <span class="br"></span>
-          <p>Why do we use it?
-            <br>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+          <p>Oleh karena itu, emosi manusia tanpa terasa menjadi suatu hal yang kompleks. Walaupun ada bersama kita setiap harinya, masih banyak aspek emosi yang bisa dieksplorasi. Apa emosi yang dirasakan, sebesar apa intensitas emosi tersebut, dari mana datangnya emosi itu, hingga bagaimana emosi ini dapat diluapkan, selalu menjadi pertanyaan yang muncul dalam benak saya. Bagaimana bisa sesuatu yang sangat dekat bisa menjadi sangat membingungkan?</p>
+          <span class="br"></span>
+          <p>Emosi seharusnya sudah menjadi hal yang kita kenal secara dekat. Emosi seharusnya menjadi rumah dimana, tiap ruangan, tiap perasaan dapat disinggahi dan ditinggali dengan rasa nyaman. Eksplorasi rasa perlu dilakukan untuk mengenali tiap ruang emosi.</p>
+          <span class="br"></span>
+          <p>Namun, bagaimana menjelajahi hal tersebut saat emosi adalah hal yang abstrak. Emosi bukanlah hal kuantitatif yang bisa diukur dengan suatu angka atau satuan ukur. Emosi hanya dapat dirasakan, meskipun perasaan dan pelampiasannya beragam.</p>
+          <span class="br"></span>
+          <p>Maka untuk menemani penjelajahan emosi itu, Ganesha Exhibition Programme 2021 mengambil tema Eksplorasa yang merupakan gabungan dari dua kata yaitu eksplorasi dan rasa. Eksplorasa menampilkan hasil eksplorasi emosi yang telah dituangkan oleh kru-kru LFM ke dalam bentuk karya. Harapannya, bersama karya-karya ini, tiap ruang emosi senang, takut, sedih, dan amarah, dapat disinggahi. Sehingga akhirnya, tiap ruang rasa dapat dijelajahi sehingga tiap ruang emosinya tidak lagi asing dan dapat diekspresikan dengan indah.</p>
+          <span class="br"></span>
+          <p>Akhir kata, selamat melakukan eksplorasi rasa dirimu sendiri! Semoga tetap aman dan dalam penjelajahannya. Selamat Menikmati!</p>
+          <span class="br"></span>
+          <p class="penutup">-Gilroy Jeremia, Kurator GEP! 2021 : Eksplorasa</p>
         </div>
 
         <div class="printilan">
@@ -107,11 +118,6 @@ export default {
     margin-bottom: -30px;
   }
 
-  .top2 {
-    width: 1050px;
-    margin-bottom: -30px;
-  }
-
   .papertext {
       width: 100%;
       top: 20px;
@@ -148,7 +154,7 @@ export default {
 
   .catkur {
     width: 725px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 
   .printilan {
@@ -182,15 +188,25 @@ export default {
 
   // amount of paper
 
-  @media only screen and (min-width: 800px) {
+  @media only screen and (min-width: 1294px) {
     .top2 {display: none;}
   }
 
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 1024px) {
+  }
+  
+  @media only screen and (min-width: 767px) {
     .top3 {display: none;}
-    .top2 {
-      margin-top: -75px;
-    }
+    .top4 {display: none;}
+    .top5 {display: none;}
+  }
+
+  @media only screen and (min-width: 500px) {
+    .top6 {display: none;}
+  }
+
+  @media only screen and (min-width: 330px) {
+    .top7 {display: none;}
   }
 
   // actual different css
@@ -211,6 +227,11 @@ export default {
 
     .top {
       width: 800px;
+    }
+
+    .top2 {
+      width: 800px;
+      margin-top: -400px;
     }
 
     .papertext {
@@ -266,7 +287,7 @@ export default {
 
     p {
       width: 550px;
-      margin: 20px 0;
+      margin: 15px 0;
     }
 
     .content {
@@ -274,7 +295,12 @@ export default {
     }
 
     .top {
-      width: 650px;
+      width: 620px;
+    }
+
+    .top2 {
+      width: 620px;
+      margin-top: -10px;
     }
 
     .papertext {
@@ -312,18 +338,18 @@ export default {
 
     .tape {
       width: 123px;
-      margin-left: 668px;
+      margin-left: 640px;
       margin-top: 52px;
     }
     
     .pensil {
       width: 110px;
-      margin-right: 677px;
+      margin-right: 660px;
       margin-top: 30px;
     }
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 767px) {
     div {
       font-size: 18px;
     }
@@ -337,9 +363,24 @@ export default {
       padding: 40px;
     }
 
-    .top {width: 400px;}
+    .top {width:400px;}
 
     .top2 {width:400px;}
+
+    .top3 {
+      width:400px;
+      margin-top: -10px;
+    }
+
+    .top4 {
+      width:400px;
+      margin-top: -10px;
+    }
+
+    .top5 {
+      width:400px;
+      margin-top: -150px;
+    }
 
     .papertext {
       top: 7px;
@@ -390,73 +431,6 @@ export default {
     }
   }
 
-  @media only screen and (min-width: 768px) and (max-width: 800px) {
-    div {
-      font-size: 18px;
-    }
-
-    p {
-      width: 450px;
-      margin: 12px 0;
-    }
-
-    .content {
-      padding: 40px;
-    }
-
-    .top {width: 600px;}
-
-    .top2 {display: none;}
-
-    .papertext {
-      top: 7px;
-    }
-
-    .header {
-      width: 581px;
-    }
-
-    .emo {
-      height: 35px;
-      margin-left: 25px;
-      margin-top: 10px;
-    }
-
-    .date {
-      width: 150px;
-    }
-
-    .garis {
-      width: 581px;
-      padding-top: 20px;
-    }
-
-    .catkur {
-      width: 450px;
-      margin-bottom: 10px;
-    }
-
-    .br {height:10px;}
-
-    .clip {
-      width: 30px;
-      margin-top: -6px;
-      margin-left: 153px;
-    }
-
-    .tape {
-      width: 126px;
-      margin-left: 619px;
-      margin-top: 60px;
-    }
-    
-    .pensil {
-      width: 100px;
-      margin-right: 600px;
-      margin-top: 70px;
-    }
-  }
-
   @media only screen and (max-width: 500px) {
     div {
       font-size: 15px;
@@ -472,11 +446,18 @@ export default {
     }
 
     .top  {width:290px;}
-
     .top2 {width:290px;}
-    .top3 {
+    .top3 {width:290px;}
+    .top4 {width:290px;}
+    
+    .top5 {
       width:290px;
-      margin-top: -100px;
+      margin-top: -5px;
+    }
+    
+    .top6 {
+      width:290px;
+      margin-top: -50px;
     }
 
     .papertext {
@@ -544,11 +525,12 @@ export default {
 
     .top  {width:224px;}
     .top2 {width:224px;}
+    .top3 {width:224px;}
+    .top4 {width:224px;}
+    .top5 {width:224px;}
+    .top6 {width:224px; margin-top: -5px;}
+    .top7 {width:224px; margin-top: -70px;}
 
-    .top3 {
-      width:224px;
-      margin-top: 0px;
-    }
 
     .papertext {
       top: 4px;
@@ -599,31 +581,14 @@ export default {
     }
   }
 
-  @media only screen and (max-width: 280px) {
+  // "custom" dimensions
+
+  @media only screen and (min-height: 1350px) {
     .container {
-      background-image: url("/IJO.png");
-      background-size: 1536px;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
     }
   }
 
-  // "custom" dimensions
-
-  @media only screen and (min-height: 750px) {
-    .container {
-      background-image: url("/IJO.png");
-      background-size: 1536px;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-    }
+  @media only screen and (device-width: 768px) {
   }
 </style>
