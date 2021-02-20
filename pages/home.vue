@@ -111,27 +111,31 @@ img {
     left: 65%;
     height: 19%;
     &:hover {
-      height: 23%;
+      height: 30%;
+      max-width: 15%;
     }
   }
   #sad {
     top: 25%;
     left: 30%;
     &:hover {
-      height: 19%;
+      height: 22%;
+      max-width: 15%;
     }
   }
   #fear {
     top: 72%;
     left: 25%;
     &:hover {
-      height: 20%;
+      height: 24%;
+      max-width: 15%;
     }
   }
   #joy {
     top: 78%;
     left: 70%;
     &:hover {
+      height: 22%;
       max-width: 35%;
     }
   }
@@ -139,33 +143,30 @@ img {
     #anger {
       top: 28%;
       &:hover {
-        height: 27%;
-        max-width: 23%;
+        height: 33%;
+        max-width: 26%;
       }
     }
     #sad {
       top: 30%;
+      &:hover {
+        height: 26%;
+        max-width: 21%;
+      }
     }
     #fear {
       top: 78%;
       left: 18%;
+      &:hover {
+        height: 26%;
+        max-width: 20%;
+      }
     }
     #joy {
       top: 84%;
       left: 78%;
       &:hover {
-        max-width: 27%;
-      }
-    }
-  }
-  @media only screen and (max-width: 450px) {
-    #anger {
-      top: 26%;
-      max-width: 22%;
-      height: 26%;
-      &:hover {
-        height: 29%;
-        max-width: 25%;
+        max-width: 35%;
       }
     }
   }
