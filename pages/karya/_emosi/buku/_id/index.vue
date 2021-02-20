@@ -102,31 +102,6 @@ const TARGET_ZOOM_WIDTH = 3000
           autoCenter: true,
           elevation: 50,
           pages: 12,
-          when: {
-            turning: (event, page) => {
-              var book = $(this.selector)
-              this.currentPage = book.turn('page')
-              book.turn('pages')
-              Hash.go('page/' + page).update()
-              this.disableControls(page)
-            },
-            turned: (event, page) => {
-              this.disableControls(page)
-              $(this.selector).turn('center')
-              if (!this.isPhone && $('#slider').slider('instance')){
-                $('#slider').slider('value', this.getViewNumber($(this.selector), page))
-              }
-              if (page==1) { 
-                $(this.selector).turn('peel', 'br')
-              }
-            },
-            missing: (event, pages) => {
-              this.isLoading = true
-              for (var i = 0; i < pages.length; i++)
-                this.addPage(pages[i], $(this.selector))
-              this.isLoading = false
-            },
-          }
         },
         selector: "#album",
         currentPage: undefined,
@@ -181,7 +156,7 @@ const TARGET_ZOOM_WIDTH = 3000
           this.initjQuery()
         })
         .catch(() => {
-          // console.log(err)
+          console.log(err)
           this.$router.push({path: '/ruangan/' + this.emosi})
         })
     },
@@ -196,6 +171,31 @@ const TARGET_ZOOM_WIDTH = 3000
         }
       },
       initialization(){
+        this.options.when = {
+          turning: (event, page) => {
+            var book = $(this.selector)
+            this.currentPage = book.turn('page')
+            book.turn('pages')
+            Hash.go('page/' + page).update()
+            this.disableControls(page)
+          },
+          turned: (event, page) => {
+            this.disableControls(page)
+            $(this.selector).turn('center')
+            if (!this.isPhone && $('#slider').slider('instance')){
+              $('#slider').slider('value', this.getViewNumber($(this.selector), page))
+            }
+            if (page==1) { 
+              $(this.selector).turn('peel', 'br')
+            }
+          },
+          missing: (event, pages) => {
+            this.isLoading = true
+            for (var i = 0; i < pages.length; i++)
+              this.addPage(pages[i], $(this.selector))
+            this.isLoading = false
+          },
+        }
         if (window.matchMedia("(orientation: portrait)").matches){
           this.isPhone = true
           this.defaultScale = this.dataKarya.display.orientation === 'portrait' ? 3 : 4
