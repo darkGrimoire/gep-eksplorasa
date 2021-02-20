@@ -687,8 +687,8 @@ const TARGET_ZOOM_WIDTH = 3000
           }
         ],
         script: [
-          { src: '/extras/jquery.min.1.7.js' },
-          { src: '/extras/jquery-ui-1.8.20.custom.min.js' },
+          { src: '/extras/jquery.min.1.7.js', defer: true },
+          { src: '/extras/jquery-ui-1.8.20.custom.min.js', defer: true },
           { src: '/extras/modernizr.2.5.3.min.js' },
         ],
         link: [
