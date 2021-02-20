@@ -59,19 +59,14 @@
 <script>
 // import gsap from 'gsap'
 import rcp from '~/components/rcp.vue'
-import Loading from '@/components/Loading.vue'
+import Loading from '~/components/Loading.vue'
 /* eslint no-undef: 0 */
-if (process.client){
-  require('~/assets/turnjs4/lib/turn')
-  require('~/assets/turnjs4/lib/zoom')
-  require('~/assets/turnjs4/lib/hash')
-}
 const PAGE_WIDTH = 500
 const PAGE_HEIGHT = 650
 const TARGET_ZOOM_WIDTH = 3000
 
   export default {
-    name: "TestBuku",
+    name: "TemplateBuku",
     components: {
       rcp,
       Loading
@@ -171,6 +166,11 @@ const TARGET_ZOOM_WIDTH = 3000
         }
       },
       initialization(){
+        if (process.client){
+          require('~/assets/turnjs4/lib/turn')
+          require('~/assets/turnjs4/lib/zoom')
+          require('~/assets/turnjs4/lib/hash')
+        }
         this.options.when = {
           turning: (event, page) => {
             var book = $(this.selector)
