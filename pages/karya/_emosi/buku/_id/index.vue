@@ -102,6 +102,8 @@ const TARGET_ZOOM_WIDTH = 3000
         currentPage: undefined,
         isPhone: false,
         fs: false,
+        isjQueryLoaded: false,
+        isUiLoaded: false
       }
     },
     beforeDestroy () {
@@ -150,19 +152,19 @@ const TARGET_ZOOM_WIDTH = 3000
           
           this.initjQuery()
         })
-        .catch(() => {
+        .catch((err) => {
           console.log(err)
           this.$router.push({path: '/ruangan/' + this.emosi})
         })
     },
     methods: {
       initjQuery(){
-        if (window.jQuery){
+        if (this.isjQueryLoaded && this.isUiLoaded){
           this.initialization()
         } else{
           setTimeout(() => {
             this.initjQuery()
-          }, 200)
+          }, 100)
         }
       },
       initialization(){
@@ -687,8 +689,16 @@ const TARGET_ZOOM_WIDTH = 3000
           }
         ],
         script: [
-          { src: '/extras/jquery.min.1.7.js', defer: true },
-          { src: '/extras/jquery-ui-1.8.20.custom.min.js', defer: true },
+          { 
+            vmid: 'extscript',
+            src: '/extras/jquery.min.1.7.js',
+            callback: () => (this.isjQueryLoaded = true)
+          },
+          {
+            skip: !this.isjQueryLoaded,
+            src: '/extras/jquery-ui-1.8.20.custom.min.js',
+            callback: () => (this.isUiLoaded = true)
+          },
           { src: '/extras/modernizr.2.5.3.min.js' },
         ],
         link: [
