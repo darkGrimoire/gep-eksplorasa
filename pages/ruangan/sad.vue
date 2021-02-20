@@ -48,8 +48,9 @@
             <img src="/sad/bed3.png" alt="bed">
           </div>
           <div class="cont window">
-            <img src="/sad/ezgif.png" alt="window">
+            <img src="/sad/jendelagif.gif" alt="window">
           </div>
+          
           <div v-show="!benda.lampu" class="cont meja-belajar">
             <img src="/sad/nightstand.png" alt="meja belajar" @click="benda.lampu = true">
           </div>
@@ -59,6 +60,10 @@
           <div class="cont poster">
             <img src="/sad/psotersad.png" alt="poster">
           </div>
+          <div class="book"></div>
+          <div class="podcast"></div>
+          <div class="single"></div>
+          
         </div>
       </div>
     </div>
@@ -89,8 +94,7 @@
           <div class="cont floor">
             <img src="/sad/lantaisad.png" alt="floor">
           </div>
-          <div class="cont lemari">
-            <img src="/sad/lemari3.png" alt="lemari">
+          <div class="lemari">
           </div>
           <div class="cont meja-pot">
             <img src="/sad/mejaa.png" alt="meja">
@@ -98,6 +102,10 @@
           <div class="cont tv">
             <img src="/sad/tv.png" alt="tv">
           </div>
+          <div class="zine"></div>
+          <div class="article"></div>
+          <div class="foot" v-show="benda.key"></div>
+          <div class="key" @click="benda.key = true;slide=3"></div>
         </div>
       </div>
     </div>
@@ -138,7 +146,8 @@
         },
         msg: 'Pesan Kurator Here',
         benda: {
-          lampu: true
+          lampu: true,
+          key:false
         }
       }
     },
@@ -200,6 +209,9 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      goToEmosi(str){
+        this.$router.push({path: "/ruangan/" + str})
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
@@ -436,10 +448,168 @@
   left: 0;
 }
 
+.podcast{
+  background-image:url("/sad/s-podcast-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:10%;
+  height:10%;
+  top:67.5%;
+  left:40%;
+  cursor:pointer;  
+}
+
+.podcast:hover{
+  background-image:url("/sad/s-podcast-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:9.1%;
+  height:13%;
+  top:65.9%;
+  left:40.3%;  
+}
+
+.book{
+  background-image:url("/sad/s-photobook-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:18%;
+  height:10%;
+  top:80%;
+  left:7%;
+  cursor:pointer;  
+}
+
+.book:hover{
+  background-image:url("/sad/s-photobook-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:18%;
+  height:18%;
+  top:73.7%;
+  left:6.9%;
+}
+
+.single{
+  background-image:url("/sad/s-single-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:5%;
+  height:9%;
+  top:51%;
+  left:76%;
+  z-index:71;
+  cursor:pointer;  
+}
+
+.single:hover{
+  background-image:url("/sad/s-single-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:5%;
+  height:9%;
+  top:51.2%;
+  left:76%;
+  z-index:71;
+  cursor:pointer;  
+}
+
+.zine{
+  background-image:url("/sad/s-zine-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:15%;
+  height:15%;
+  top:38.7%;
+  left:39%;
+  cursor:pointer;  
+}
+
+.zine:hover{
+  background-image:url("/sad/s-zine-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:15%;
+  height:20%;
+  top:34%;
+  left:38.8%;
+}
+
+.article{
+  background-image:url("/sad/s-artikel-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:14%;
+  height:14%;
+  top:78%;
+  left:39%;
+  cursor:pointer;  
+}
+
+.article:hover{
+  background-image:url("/sad/s-artikel-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:14%;
+  height:18%;
+  top:73%;
+  left:38.8%;
+}
+
+
+.foot{
+  background-image:url("/sad/sadf.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:10%;
+  height:10%;
+  top:81%;
+  left:87%;  
+}
+
+.key{
+  background-image:url("/sad/keysad.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:7%;
+  height:10%;
+  top:81%;
+  left:80%;    
+  cursor:pointer;
+}
+
 .lemari {
-  width: 43%;
-  top: 15.5%;
-  left: -2.5%;
+  background-image:url("/sad/lemari3.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 31.2%;
+  height:81.2%;
+  top: 12.7%;
+  left: 2.9%;
+}
+
+.lemari:hover{
+  background-image:url("/sad/lemaribfr.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 30%;
+  height:80%;
+  top: 13%;
+  left: 3%;  
 }
 
 .meja-pot {
