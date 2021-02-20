@@ -274,6 +274,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    //firefox
+    scrollbar-color: #f1f1f1 rgba($color: #d1bb10, $alpha: 0.6); 
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
   }
 
   .konten::-webkit-scrollbar-track {
