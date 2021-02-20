@@ -58,6 +58,9 @@ export default {
       }
     },
     mounted () {
+      if (gepDate - new Date() <= 0){
+        this.$router.push({path: '/home'})
+      }
       this.setupCanvas()
       this.updateTimer()
       this.startCountdown()
