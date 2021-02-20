@@ -149,8 +149,9 @@ const TARGET_ZOOM_WIDTH = 3000
           }
 
           this.fs = document.fullscreenElement
-          
-          this.initjQuery()
+          setTimeout(() => {
+            this.initjQuery()
+          }, 0)
         })
         .catch((err) => {
           console.log(err)
@@ -160,11 +161,11 @@ const TARGET_ZOOM_WIDTH = 3000
     methods: {
       initjQuery(){
         if (this.isjQueryLoaded && this.isUiLoaded){
-          this.initialization()
+            this.initialization()
         } else{
           setTimeout(() => {
             this.initjQuery()
-          }, 100)
+          }, 20)
         }
       },
       initialization(){
