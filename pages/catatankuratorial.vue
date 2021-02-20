@@ -20,7 +20,7 @@
           <img src="kuro/catkur.png" class="catkur">
           <p>Perasaan manusia merupakan hal yang unik, sesederhana pencampuran hormon di dalam otak manusia dapat menghasilkan emosi yang menggerakan manusia setiap harinya. Rasa senang, takut, sedih, hingga marah kerap menjadi motivasi manusia terhadap aksinya. Emosi pun menjadi sangat krusial dalam kehidupan manusia.</p>
           <span class="br"></span>
-          <p>Oleh karena itu, emosi manusia tanpa terasa menjadi suatu hal yang kompleks. Walaupun ada bersama kita setiap harinya, masih banyak aspek emosi yang bisa dieksplorasi. Apa emosi yang dirasakan, sebesar apa intensitas emosi tersebut, dari mana datangnya emosi itu, hingga bagaimana emosi ini dapat diluapkan, selalu menjadi pertanyaan yang muncul dalam benak saya. Bagaimana bisa sesuatu yang sangat dekat bisa menjadi sangat membingungkan?</p>
+          <p>Sehingga tanpa terasa emosi manusia menjadi suatu hal yang kompleks. Walaupun ada bersama kita setiap harinya, masih banyak aspek emosi yang bisa dieksplorasi. Apa emosi yang dirasakan, sebesar apa intensitas emosi tersebut, dari mana datangnya emosi itu, hingga bagaimana emosi ini dapat diluapkan, selalu menjadi pertanyaan yang muncul dalam benak saya. Bagaimana bisa sesuatu yang sangat dekat bisa menjadi sangat membingungkan?</p>
           <span class="br"></span>
           <p>Emosi seharusnya sudah menjadi hal yang kita kenal secara dekat. Emosi seharusnya menjadi rumah dimana, tiap ruangan, tiap perasaan dapat disinggahi dan ditinggali dengan rasa nyaman. Eksplorasi rasa perlu dilakukan untuk mengenali tiap ruang emosi.</p>
           <span class="br"></span>
@@ -587,8 +587,5 @@ export default {
     .container {
       height: 100vh;
     }
-  }
-
-  @media only screen and (device-width: 768px) {
   }
 </style>
