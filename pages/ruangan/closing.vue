@@ -53,6 +53,9 @@
           <div class="cont figura">
             <img src="/closing/1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
+          <div class="cont figura2">
+            <img src="/closing/gantungan-out2.png" alt="figura2" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
           <div class="cont kamera">
             <img src="/closing/cam1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
@@ -91,7 +94,7 @@
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
-    name: "TemplateRuangan",
+    name: "Closing",
     components: {
       rcp,
     },
@@ -227,7 +230,7 @@
 
       handleObjChange(e){
         console.log(e)
-        if (e.target.getAttribute('src') === "/closing/1.png"){
+        if (e.target.getAttribute('src') === "/closing/gantungan-out2.png"){
           e.target.setAttribute('src', "/closing/gantungan-out.png")
         } else if (e.target.getAttribute('src') === "/closing/balon1.png"){
           e.target.setAttribute('src', "/closing/balon1-out.png")
@@ -238,7 +241,7 @@
       handleObjChangeEnd(e){
         console.log(e)
         if (e.target.getAttribute('src') === "/closing/gantungan-out.png"){
-          e.target.setAttribute('src', "/closing/1.png")
+          e.target.setAttribute('src', "/closing/gantungan-out2.png")
         } else if (e.target.getAttribute('src') === "/closing/balon1-out.png"){
           e.target.setAttribute('src', "/closing/balon1.png")
         } else if (e.target.getAttribute('src') === "/closing/cam-out.png"){
@@ -357,7 +360,7 @@
   width: 60vw;
   height: 200vh;
   top: -50%;
-  left: -5%;
+  left: -15%;
   z-index: 999;
 }
 .transitionfade-out {
@@ -379,6 +382,7 @@
 .wall{
   width: 110%;
   right: -2%;
+  top : -40%;
 }
 .lantai{
   width: 100%;
@@ -410,6 +414,11 @@
   top: 32%;
 }
 .figura{
+  width: 15%;
+  left: 13%;
+  top: 6.5%;
+}
+.figura2{
   width: 15%;
   left: 13%;
   top: 6.5%;

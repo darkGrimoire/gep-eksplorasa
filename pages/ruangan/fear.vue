@@ -76,6 +76,15 @@
           <div class="cont lampu">
             <img src="/fear/lampu 1.png" alt="lampu">
           </div>
+          <div class="cont photoseries">
+            <img src="/fear/f-photoseries-1.png" alt="photoseries" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
+          <div class="cont kamera">
+            <img src="/fear/f-single-1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
+          <div class="cont radio">
+            <img src="/fear/f-radio-1.png" alt="radio" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
         </div>
       </div>
     </div>
@@ -153,6 +162,19 @@
           <div class="cont pipa-l">
             <img src="/fear/pipaHAPE 1.png" alt="pipa">
           </div>
+          <div class="cont artikel">
+            <img src="/fear/f-artikel-1.png" alt="artikel" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
+          <div class="cont photobook">
+            <img src="/fear/f-photobook-1.png" alt="photobook">
+          </div>
+          <div class="cont photobook1">
+            <img src="/fear/f-photobook-2.png" alt="photobook1" :style="`opacity: ${benda.ouija}`" @mouseenter="benda.ouija = 1" @mouseout="benda.ouija = 0">
+          </div>
+     
+          <!-- <div class="cont zine">
+            <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div> -->
         </div>
       </div>
     </div>
@@ -167,7 +189,7 @@
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
   const NEXT_ROOM = '/ruangan/sad'
-  const CLOSING = '/test/resetruangan'
+  const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
@@ -195,7 +217,8 @@
         benda: {
           saklar: false,
           sadako: 0,
-          setanmini: 0
+          setanmini: 0,
+          ouija: 0
         }
       }
     },
@@ -221,9 +244,9 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          if (this.isAllRoomVisited()){
-            this.$router.push({path: CLOSING})
-          } else {
+          // if (this.isAllRoomVisited()){
+          //   this.$router.push({path: CLOSING})
+          // } else {
             gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
             gsap.to('.transitionfade-out', {x: '40%', duration: .7})
             gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
@@ -236,7 +259,7 @@
                 this.$router.push({path: NEXT_ROOM})
               }
             }})
-          }
+          // }
         }
       }
     },
@@ -247,7 +270,7 @@
       localStorage.setItem('fear', true)
       
       // wait for loading to finish
-      gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
+      gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
         // TODO: Add on enter animation here
         this.slide = 1
@@ -329,6 +352,16 @@
           e.target.setAttribute('src', "/fear/fokripi 1.png")
         } else if (e.target.getAttribute('src') === "/fear/monster1 1.png"){
           e.target.setAttribute('src', "/fear/monster2 1.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-radio-1.png"){
+          e.target.setAttribute('src', "/fear/f-radio-2.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-single-1.png"){
+          e.target.setAttribute('src', "/fear/f-single-2.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-photoseries-1.png"){
+          e.target.setAttribute('src', "/fear/f-photoseries-2.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-artikel-1.png"){
+          e.target.setAttribute('src', "/fear/f-artikel-2.png")
+        }  else if (e.target.getAttribute('src') === "/fear/f-zine-1.png"){
+          e.target.setAttribute('src', "/fear/f-zine-2.png")
         }
       },
       handleObjChangeEnd(e){
@@ -337,6 +370,16 @@
           e.target.setAttribute('src', "/fear/fohepi 1.png")
         } else if (e.target.getAttribute('src') === "/fear/monster2 1.png"){
           e.target.setAttribute('src', "/fear/monster1 1.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-radio-2.png"){
+          e.target.setAttribute('src', "/fear/f-radio-1.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-single-2.png"){
+          e.target.setAttribute('src', "/fear/f-single-1.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-photoseries-2.png"){
+          e.target.setAttribute('src', "/fear/f-photoseries-1.png")
+        } else if (e.target.getAttribute('src') === "/fear/f-artikel-2.png"){
+          e.target.setAttribute('src', "/fear/f-artikel-1.png")
+        }  else if (e.target.getAttribute('src') === "/fear/f-zine-2.png"){
+          e.target.setAttribute('src', "/fear/f-zine-1.png")
         }
       },
       toggleSaklar(){
@@ -519,6 +562,21 @@
   top: 5.7%;
   left: 49%;
 }
+.photoseries{
+  width: 14%;
+  top: 12.7%;
+  left: 32%;
+}
+.kamera{
+  width: 10%;
+  top: 24.7%;
+  left: 53%;
+}
+.radio{
+  width: 16%;
+  top: 5%;
+  left: 69%;
+}
 
 .foto {
   width: 12.2%;
@@ -641,5 +699,25 @@
   width: 150%;
   height: 200%;
   top: -50%;
+}
+.artikel{
+  width: 7%;
+  top: 13.8%;
+  left: 38.2%;
+}
+.photobook{
+  width: 26%;
+  top: 76.8%;
+  left: 37.2%;
+}
+.photobook1{
+  width: 13%;
+  top: 53.8%;
+  left: 47.2%;
+}
+.zine{
+  width: 16%;
+  top: 36.8%;
+  left: 41.2%;
 }
 </style>

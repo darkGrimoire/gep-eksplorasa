@@ -80,11 +80,12 @@
             <img src="/anger/kgif.gif" alt="oven">
           </div>
           <div class="cont figura">
-            <img src="/anger/gep anger single photo-min.png" alt="figura">
+            <img src="/anger/a-single-1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont koran">
-            <img src="/anger/gep anger article-min.png" alt="koran">
+            <img src="/anger/a-artikel-1.png" alt="koran" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
+          
         </div>
       </div>
     </div>
@@ -142,10 +143,10 @@
             <img src="/anger/kran.gif" alt="kran">
           </div>
           <div class="cont gantungan">
-            <img src="/anger/gep anger photo series-min.png" alt="gantungan">
+            <img src="/anger/a-photo series-1.png" alt="gantungan" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont buku">
-            <img src="/anger/gep anger photobook-min.png" alt="buku">
+            <img src="/anger/a-photobook-1.png" alt="buku" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
         </div>
       </div>
@@ -161,7 +162,7 @@
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
   const SCALE = 2
   const NEXT_ROOM = '/ruangan/joy'
-  const CLOSING = '/test/resetruangan'
+  const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
@@ -210,9 +211,9 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          if (this.isAllRoomVisited()){
-            this.$router.push({path: CLOSING})
-          } else {
+          // if (this.isAllRoomVisited()){
+          //   this.$router.push({path: CLOSING})
+          // } else {
             gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
             gsap.to('.transitionfade-out', {x: '40%', duration: .7})
             gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
@@ -225,7 +226,7 @@
                 this.$router.push({path: NEXT_ROOM})
               }
             }})
-          }
+          // }
         }
       }
     },
@@ -236,7 +237,7 @@
       localStorage.setItem('anger', true)
 
       // wait for loading to finish
-      gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
+      gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
         // TODO: Add on enter animation here
         this.slide = 1
@@ -321,6 +322,14 @@
           e.target.setAttribute('src', "/anger/meong.png")
         } else if (e.target.getAttribute('src') === "/anger/tgif.gif"){
           e.target.setAttribute('src', "/anger/tv2.png")
+        } else if (e.target.getAttribute('src') === "/anger/a-artikel-1.png"){
+          e.target.setAttribute('src', "/anger/a-artikel-2.png")
+        } else if (e.target.getAttribute('src') === "/anger/a-single-1.png"){
+          e.target.setAttribute('src', "/anger/a-single-2.png")
+        } else if (e.target.getAttribute('src') === "/anger/a-photo series-1.png"){
+          e.target.setAttribute('src', "/anger/a-photo series-2.png")
+        } else if (e.target.getAttribute('src') === "/anger/a-photobook-1.png"){
+          e.target.setAttribute('src', "/anger/a-photobook-2.png")
         }
       },
       handleObjChangeEnd(e){
@@ -331,7 +340,15 @@
           e.target.setAttribute('src', "/anger/meong2.png")
         } else if (e.target.getAttribute('src') === "/anger/tv2.png"){
           e.target.setAttribute('src', "/anger/tgif.gif")
-        }
+        } else if (e.target.getAttribute('src') === "/anger/a-artikel-2.png"){
+          e.target.setAttribute('src', "/anger/a-artikel-1.png")
+        } else if (e.target.getAttribute('src') === "/anger/a-single-2.png"){
+          e.target.setAttribute('src', "/anger/a-single-1.png")
+        } else if (e.target.getAttribute('src') === "/anger/a-photo series-2.png"){
+          e.target.setAttribute('src', "/anger/a-photo series-1.png")
+        } else if (e.target.getAttribute('src') === "/anger/a-photobook-2.png"){
+          e.target.setAttribute('src', "/anger/a-photobook-1.png")
+        } 
       },
 
       },
@@ -528,13 +545,13 @@
   left: 54.5%;
 }
 .figura{
-  width: 16%;
-  top: 4%;
-  left: 54.5%; 
+  width: 8%;
+  top: 14%;
+  left: 55.5%; 
 }
 .koran{
-  width: 19.5%;
-  top: 75.5%;
+  width: 17.5%;
+  top: 76.5%;
   left: 43%;
 }
 // Add Objects positions here
@@ -584,9 +601,9 @@
   left: 22.5%;
 }
 .gantungan{
-  width: 17%;
-  top: 1.9%;
-  left: 49.5%;
+  width: 10.5%;
+  top: 9%;
+  left: 52.5%;
 }
 .buku{  
   width: 17%;

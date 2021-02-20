@@ -40,7 +40,7 @@
 </template>
 
 <script>
-const gepDate = new Date(2021, 1, 22)
+const gepDate = new Date(2021, 1, 21, 20, 40)
 export default {
   name: 'UnderConstruction',
   data () {
@@ -65,7 +65,7 @@ export default {
     },
     methods: {
       updateTimer () {
-        const now = new Date().setMinutes(0,0,0)
+        const now = new Date()
         const remainingTime = gepDate - now
         if (remainingTime > 0) {
           const remainingHour = Math.floor(remainingTime / 1000 / 60 / 60)
@@ -254,6 +254,22 @@ export default {
         .link {
           width: 70px;
           margin-left: 30px;
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .page-container {
+      .main-container {
+        .countdown-container{
+          .count-text{
+            .number {
+              font-size: 3.5rem;
+            }
+            .text {
+              font-size: 1.8rem;
+            }
+          }
         }
       }
     }
