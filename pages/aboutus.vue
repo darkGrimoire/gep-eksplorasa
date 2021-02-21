@@ -5,26 +5,26 @@
       
       <div class="menu">
         <div class="sub">
-          <div class="item">
+          <!-- <div class="item">
             <div class="katpng" />
             <a href="/">Katalog<br>Karya</a>
-          </div>
+          </div> -->
 
           <div class="item">
-            <div class="kurpng" />
+            <div class="kurpng" @click="gotocatkur" />
             <a href="/catatankuratorial">Catatan<br>Kuratorial</a>
           </div>
         </div>
         
         <div class="sub">
           <div class="item">
-            <div class="gepng" />
+            <div class="gepng" @click="gotoaboutgep" />
             <a href="/aboutgep">About GEP</a>
           </div>
 
           <div class="item">
-            <div class="merpng" />
-            <a href="/">Merch</a>
+            <div class="merpng" @click="gotomerch" />
+            <a href="https://bit.ly/AyoBeliMerchGEP2021">Merch</a>
           </div>
         </div>
       </div>
@@ -35,7 +35,18 @@
 <script>
 
 export default {
-  name: 'AboutUs'
+  name: 'AboutUs',
+  methods: {
+    gotocatkur() {
+      this.$router.push({path: '/catatankuratorial'})
+    },
+    gotoaboutgep(){
+      this.$router.push({path: '/aboutgep'})
+    },
+    gotomerch() {
+      window.open("https://bit.ly/AyoBeliMerchGEP2021", '_blank')
+    }
+  },
 }
 </script>
 
@@ -126,6 +137,7 @@ export default {
 
   .item:hover .kurpng {
     background-image: url("/bout/catkur_after.png");
+    cursor: pointer;
   }
 
   .gepng {
@@ -139,6 +151,7 @@ export default {
 
   .item:hover .gepng {
     background-image: url("/bout/gep_after.png");
+    cursor: pointer;
   }
 
   .merpng {
@@ -152,6 +165,7 @@ export default {
 
   .item:hover .merpng {
     background-image: url("/bout/merch_after.png");
+    cursor: pointer;
   }
 
   @media only screen and (max-width: 1155px) {

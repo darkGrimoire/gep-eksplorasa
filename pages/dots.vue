@@ -56,7 +56,9 @@ export default {
   },
   mounted() {
     this.setUpPic()
-    this.addAditionalGrass(false)
+    setTimeout(() => {
+      this.addAditionalGrass(false)
+    }, 500)
     this.setUpCanvas()
     this.setUpButton()
     this.addCoordinate()
@@ -156,7 +158,16 @@ export default {
         .offsetHeight)
       console.log(windowHeight)
       console.log(text_element_height + dots3Top + dots3Height)
-      if (windowHeight > text_element_height + dots3Top + dots3Height) {
+      let x = 0
+      if (this.additional_grass === 0){
+        x = text_element_height + dots3Top + dots3Height
+      } else {
+        const doc = parseFloat(document.getElementsByClassName(`additional-grass-${this.additional_grass - 1}`)[0].style.top)
+        const addGrassHeight = parseFloat(document.getElementsByClassName(`additional-grass-${this.additional_grass - 1}`)[0]
+          .offsetHeight)
+        x = text_element_height + doc + addGrassHeight
+      }
+      if (windowHeight > x) {
         /* Creating the element */
         console.log("yellow")
         let img = document.createElement("img")
@@ -176,6 +187,7 @@ export default {
           windowHeight - (text_element_height + imgTop + img.offsetHeight)
         if (temp > 0) {
           /* Add more grass if empty space still exist */
+          // alert('rekursiv')
           this.addAditionalGrass(false)
         }
       }
