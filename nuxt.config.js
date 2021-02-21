@@ -3,15 +3,15 @@ export default {
   target: 'server',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - GEP',
+    titleTemplate: '%s',
     title: 'GEP Eksplorasa',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'Ganesha Exhibition Programme adalah ekshibisi karya kru LFM ITB tahunan yang kali ini membawakan tema Eksplorasa.' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon/gep.ico' }
     ]
   },
 
@@ -23,7 +23,13 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
   ],
+
+  router: {
+    // ran before every route on both client and server
+    // middleware: 'redirect' // ONLY ENABLE IN MASTER BRANCH COMING SOON DEPLOYMENT
+  },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -54,11 +60,19 @@ export default {
         services: {
           firestore: true,
           storage: true,
-          analytics: true,
-          auth: true
+          analytics: true
         }
       }
-    ]
+    ],
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['faChevronRight','faChevronLeft', 'faTimes', 'faBookOpen', 'faSearchPlus', 'faCaretLeft', 'faCaretRight']
+        }
+      ]
+    }]
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
