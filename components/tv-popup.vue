@@ -9,12 +9,13 @@
           <div class="now-showing"></div>
           <div class="main-poster">
             <div class="left-arrow" @click="movePos(-1)"></div>
-            <div class="poster-area">
+            <div class="poster-area" @click="gotoKarya()">
               <img class="poster bordered" />
             </div>
             <div class="right-arrow" @click="movePos(1)"></div>
           </div>
-          <div class="title-movie"></div>
+          <div class="title-movie" @click="gotoKarya()">
+          </div>
         </div>
         <div class="right-area"></div>
       </div>
@@ -30,6 +31,7 @@ export default {
       pos: 0,
       poster: [],
       judul: [],
+      alamat: [],
       room: "",
       amount: 0
     }
@@ -60,8 +62,13 @@ export default {
       temp_path.forEach(item => {
         this.judul.push(item.judul)
         this.poster.push(item.poster)
+        this.alamat.push(item.route)
       })
       this.amount = this.poster.length
+      document.getElementsByClassName("poster")[0].src = (this.poster[0] || "/loading.svg")
+      document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
+        0
+      ] || "Loading")
     },
     initSetUp() {
       // SET UP THE COMPONENT BASED ON THE ROOM
@@ -134,11 +141,11 @@ export default {
         temp.appendChild(shelf_img_2)
       }
       /* Set up poster and title */
-      this.pos = 0
-      document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
-      document.getElementsByClassName("title-movie")[0].innerHTML = this.judul[
+      this.pos = -1
+      document.getElementsByClassName("poster")[0].src = (this.poster[this.pos] || "/loading.svg")
+      document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
         this.pos
-      ]
+      ] || "Loading")
     },
     initSetUpFear() {
       // FEAR IS SEPARATED BECAUSE IT DOESN'T HAVE VIDEO
@@ -180,6 +187,7 @@ export default {
         this.pos = this.amount - 1
       }
       document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
+      
       document.getElementsByClassName("title-movie")[0].innerHTML = ""
       document.getElementsByClassName("title-movie")[0].innerHTML = this.judul[
         this.pos
@@ -226,10 +234,14 @@ export default {
       // CHECK THE LOCATION OF THE CLICK
       // IF INSIDE POPUP, DO NOTHING
       // IF OUTSIDE POPUP, CLOSE POPUP
-      if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
+      if (this.isInsidePopUpWindow(event.clientX, event.clientY)) { 
         return
       }
       this.close()
+    },
+    gotoKarya() {
+      const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[this.pos]
+      this.$router.push({path: tujuan})
     }
   }
 }
@@ -289,6 +301,9 @@ export default {
   width: 250px;
   height: 250px;
 }
+.poster-area:hover {
+  cursor: pointer;
+}
 .poster {
   width: 100%;
   height: 100%;
@@ -302,6 +317,9 @@ export default {
   margin-bottom: 2.5vh;
   text-align: center;
 }
+.title-movie {
+  cursor: pointer;
+}
 .right-area {
   display: flex;
   align-items: center;
@@ -309,6 +327,7 @@ export default {
   flex-direction: column;
   flex-wrap: nowrap;
 }
+
 @media screen and (max-width: 800px) {
   .popupwindow {
     transform: translate(-50%, -45%);

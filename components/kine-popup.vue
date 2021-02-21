@@ -4,7 +4,11 @@
       <div class="kine-x-button">
         <img class="kine-exit-image" @click="close()" />
       </div>
-      <ol class="daftar-kine"></ol>
+      <ol class="daftar-kine">
+        <li v-for="(item,index) in judul" :key="index" @click="keKarya(index)">
+          {{item}}
+        </li>
+      </ol>
     </div>
   </div>
 </template>
@@ -14,7 +18,8 @@ export default {
   data() {
     return {
       room: "",
-      judul: []
+      judul: [],
+      alamat: []
     }
   },
   mounted() {
@@ -82,7 +87,9 @@ export default {
     getRoom() {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
-      this.room = link.match(/(Joy|Sadness|Anger|Fear|joy|sadness|anger|fear)/i)[0]
+      this.room = link.match(
+        /(Joy|Sadness|Anger|Fear|joy|sadness|anger|fear)/i
+      )[0]
     },
     async getData() {
       // GET THE FILM DATA FROM THE FIREBASE
@@ -95,17 +102,11 @@ export default {
       const temp_path = testing.data().routes
       temp_path.forEach(item => {
         this.judul.push(item.judul)
+        this.alamat.push(item.route)
       })
-      console.log(this.judul)
+      console.log(this.alamat)
       document.getElementsByClassName("kine-exit-image")[0].src =
         "/img/popup/exit-0.png"
-      const daftar = document.getElementsByClassName("daftar-kine")[0]
-      for (let i = 0; i < this.judul.length; i++) {
-        let temp = document.createElement("li")
-        temp.innerText = this.judul[i]
-        daftar.appendChild(temp)
-        daftar.appendChild(document.createElement("br"))
-      }
     },
     initSetUp() {
       document.getElementsByClassName("kine-exit-image")[0].src =
@@ -119,7 +120,8 @@ export default {
     },
     insertRibbon() {
       const ribbon1 = document.createElement("img")
-      const ribbon_path = "/img/popup/ribbon-" + this.room.toLowerCase()+ ".png"
+      const ribbon_path =
+        "/img/popup/ribbon-" + this.room.toLowerCase() + ".png"
       ribbon1.src = ribbon_path
       ribbon1.classList.add("ribbon1")
       ribbon1.style.position = "absolute"
@@ -138,7 +140,6 @@ export default {
           .getElementsByClassName("kinepopupwindow")[0]
           .getBoundingClientRect().left + "px"
 
-      document.getElementsByClassName("kinePopup")[0].appendChild(ribbon1)
       const ribbon2 = document.createElement("img")
       ribbon2.src = ribbon_path
       ribbon2.classList.add("ribbon2")
@@ -154,20 +155,8 @@ export default {
           .getBoundingClientRect().bottom * 0.97
       ribbon2.style.top = ribbon2_top + "px"
 
-      ribbon2.style.left =
-        document
-          .getElementsByClassName("kinepopupwindow")[0]
-          .getBoundingClientRect().left +
-        ((document
-          .getElementsByClassName("kinepopupwindow")[0]
-          .getBoundingClientRect().right -
-          document
-            .getElementsByClassName("kinepopupwindow")[0]
-            .getBoundingClientRect().left) *
-          3) /
-          4 +
-        "px"
-
+      ribbon2.style.left = /*?????*/ +"px"
+      document.getElementsByClassName("kinePopup")[0].appendChild(ribbon1)
       document.getElementsByClassName("kinePopup")[0].appendChild(ribbon2)
     },
     close() {
@@ -201,6 +190,10 @@ export default {
         return
       }
       this.close()
+    },
+    keKarya(id) {
+      const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[id]
+      this.$router.push({path: tujuan})
     }
   }
 }
@@ -228,9 +221,9 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
   font-family: "Mechanical Pencil";
-  font-size: 25px;
+  font-size: 1.5rem;
+  text-align: justify;
 }
 .kine-x-button {
   display: flex;
@@ -245,9 +238,26 @@ ol {
   padding-left: 5%;
   padding-right: 5%;
 }
-@media screen and (max-width: 750px) {
+li {
+  margin-bottom: 5%;
+}
+li:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+@media (max-width: 1020px) {
   .kinepopupwindow {
-    height: 75%;
+    font-size: 1.25rem;
+  }
+}
+@media (max-width: 600px) {
+  .kinepopupwindow {
+    width: 75%;
+  }
+}
+@media (max-width: 410px) {
+  .kinepopupwindow {
+    font-size: 1rem;
   }
 }
 </style>
