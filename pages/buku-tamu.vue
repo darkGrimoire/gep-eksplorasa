@@ -140,9 +140,13 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      max-height: 100vh;
+      overflow-y: hidden;
 
       .background {
         width: 40vw;
+        max-height: inherit;
+        object-fit: contain;
       }
 
       .form-container {
@@ -158,7 +162,7 @@ export default {
          .title {
           margin-top: 17%;
           margin-bottom: 7%;
-          width: 90%;
+          width: 85%;
           display: flex;
           justify-content: center;
           

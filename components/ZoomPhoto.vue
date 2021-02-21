@@ -2,19 +2,24 @@
   <div :class="['container-component', containerClass]">
     <div class="bg-component" style="display: none;" @click="handleBgClick" />
     <slot v-show="!isFull" class="photo-controls-component" name="photo-controls" />
-    <img v-show="!isFull" :src="computedPoster" alt="Photo" :class="['poster-component', posterClass]"
+    <img :src="computedPoster" alt="Photo" :class="['poster-component', posterClass]"
          @click="handlePhotoClick"
     >
     <fa v-show="!isFull" :icon="['fas', 'search-plus']" class="zoom-icon" @click="handlePhotoClick" />
     <img v-show="isFull" :src="computedSrc" alt="Photo-Full" :class="['full-component', fullClass]">
+    <Loading v-show="isLoading" class="loading" />
   </div>
 </template>
 
 <script>
 import gsap from 'gsap'
+import Loading from '~/components/Loading.vue'
 
   export default {
     name: 'ZoomablePhotos',
+    components: {
+      Loading,
+    },
     props: {
       full: {
         type: String,
@@ -40,8 +45,8 @@ import gsap from 'gsap'
     },
     data() {
       return {
-        computedSrc: '',
-        computedPoster: '',
+        computedSrc: '/placeholder.png',
+        computedPoster: '/placeholder.png',
         isFull: false,
         isLoading: true
       }
@@ -50,7 +55,7 @@ import gsap from 'gsap'
       isFull(newVal) {
         if (newVal){
           document.getElementsByClassName('bg-component')[0].style.display = 'block'
-          gsap.to('.bg-component', {opacity: .75, duration: .5})
+          gsap.to('.bg-component', {opacity: .85, duration: .5})
         } else {
           gsap.to('.bg-component', {opacity: 0, duration: .5, onComplete: () => {
             document.getElementsByClassName('bg-component')[0].style.display = 'none'
@@ -132,6 +137,8 @@ import gsap from 'gsap'
 .poster-component {
   cursor: pointer;
   width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .full-component {
@@ -145,6 +152,10 @@ import gsap from 'gsap'
   @media only screen and (max-width: 800px) {
     max-width: 80%;
     max-height: 80%;
+  }
+  @media only screen and (max-width: 600px) {
+    max-width: 75%;
+    max-height: 75%;
   }
 }
 
@@ -163,5 +174,15 @@ import gsap from 'gsap'
 .zoom-icon:hover {
   opacity: .6;
   cursor: pointer;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  height: 25%;
+  opacity: .7;
 }
 </style>
