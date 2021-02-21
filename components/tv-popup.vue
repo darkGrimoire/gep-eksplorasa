@@ -1,5 +1,5 @@
 <template>
-  <div class="tvPopup">
+  <div class="tvPopup" @click="bodyClick">
     <div class="popupwindow bordered">
       <div class="x-button bordered">
         <img class="exit-image" @click="close()" />
@@ -54,16 +54,6 @@ export default {
       if (this.room == "Fear") {
         return
       }
-      this.judul.push("Log Horizon")
-      this.poster.push("/testing/test-post-1.jpg")
-      this.judul.push("Treasure Planet")
-      this.poster.push("/testing/test-post-2.jpg")
-      this.judul.push("Godzilla")
-      this.poster.push("/testing/test-post-3.jpg")
-      
-      if (this.room != "Anger") {
-        return
-      }
       const testing = await this.$fire.firestore
         .collection("karya")
         .doc("routes")
@@ -74,10 +64,9 @@ export default {
         this.judul.push(item.judul)
         this.poster.push(item.poster)
       })
-      console.log(temp_path)
       this.amount = this.poster.length
     },
-    initSetUp() {
+    async initSetUp() {
       // SET UP THE COMPONENT BASED ON THE ROOM
       // JOY 1 SADNESS 2 ANGER 3
       
@@ -151,9 +140,7 @@ export default {
       this.insertExitButton(4)
       document.getElementsByClassName("left-area")[0].style.display = "none"
       const shelf_path = "/img/tv/rak-" + this.room + ".png"
-      console.log(shelf_path)
       let shelf_img = document.createElement("img")
-      console.log(shelf_img)
       shelf_img.src = shelf_path
       shelf_img.classList.add("shelf")
       shelf_img.style.width = "75%"
@@ -178,15 +165,12 @@ export default {
     movePos(int_pindah) {
       // CHANGE THE MOVIE POSTER SHOWN
       // 0 <= this.pos < this.amount
-      console.log("Masuk")
-      console.log(this.pos)
       this.pos += int_pindah
       if (this.pos < 0) {
         this.pos = 0
       } else if (this.pos == this.amount) {
         this.pos = this.amount - 1
       }
-      console.log(this.pos)
       document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
       document.getElementsByClassName("title-movie")[0].innerHTML = ""
       document.getElementsByClassName("title-movie")[0].innerHTML = this.judul[
@@ -210,6 +194,26 @@ export default {
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("tvPopup")[0].style.display = "none"
+    },
+    isInsidePopUpWindow(x,y) {
+      // CHECK IF CLICK IS INSIDE THE POPUP
+      const x1 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().left
+      const x2 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().right
+      const y1 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().top
+      const y2 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().bottom
+      if (((x > x1) && (x < x2)) && ((y> y1) && (y < y2))) {
+        return true
+      }
+      return false
+    },
+    bodyClick(event) {
+      // CHECK THE LOCATION OF THE CLICK
+      // IF INSIDE POPUP, DO NOTHING
+      // IF OUTSIDE POPUP, CLOSE POPUP
+      if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
+        return
+      }
+      this.close()
     }
   }
 }
@@ -271,12 +275,14 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border: 1px solid;
 }
 .title-movie {
   font-family: "Mechanical Pencil";
   font-size: 30px;
   margin-top: 2.5vh;
   margin-bottom: 2.5vh;
+  text-align: center;
 }
 .right-area {
   display: flex;
