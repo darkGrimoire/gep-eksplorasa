@@ -28,7 +28,7 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div class="genteng" />
-          <div class="meong" @click="catAudio.currentTime = 0.3;catAudio.play()" />
+          <div class="meong" @click="catAudio.currentTime = 0.2;catAudio.play()" />
           <div class="open" @click="toggleTeaser" />
           <div class="keset">
             <img src="/teras/keset 1.png">
@@ -39,8 +39,8 @@
           <div class="jen2">
             <img src="/teras/jka 1.png">
           </div>
-          <!-- <div v-show="close" class="imgpintu" @click="close=false;white=true;zoomIn();" /> -->
-          <div v-show="close" class="imgpintu" @click="showAlert()" />
+          <div v-show="close" class="imgpintu" @click="close=false;white=true;zoomIn();" />
+          <!-- <div v-show="close" class="imgpintu" @click="showAlert()" /> -->
           <div v-show="!close" class="gifpintu" />
           <div class="bg">
             <img src="/teras/bg 2.png">
@@ -127,7 +127,7 @@ import { Youtube } from 'vue-youtube'
         slide: 0,
         base: {
           slide0: -50,
-          slide1: -50,
+          slide1: 50,
           slide2: 150
         },
         msg: 'Pesan Kurator Here',
@@ -438,14 +438,14 @@ import { Youtube } from 'vue-youtube'
 }
 
 .imgpintu:hover{
-    // width:20%;
-    // height:60.9%;
-    // top : 19%;
-    // left : 40%;
-    // background-image:url("/teras/p2 1.png");
-    // background-repeat:no-repeat;
+    width:20%;
+    height:60.9%;
+    top : 19%;
+    left : 40%;
+    background-image:url("/teras/p2 1.png");
+    background-repeat:no-repeat;
     cursor:pointer;
-    // position:absolute;
+    position:absolute;
 }
 
 .gifpintu{

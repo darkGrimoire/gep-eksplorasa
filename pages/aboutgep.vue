@@ -1,122 +1,122 @@
 <template>
   <div class="container">
     <div class="content">
-      <img src="boutgep/aboutgep.gif" class="aboutgep">
+      <img src="/boutgep/aboutgep.gif" class="aboutgep">
 
       <div class="paper">
-        <img src="boutgep/top.png" class="top">
-        <img src="boutgep/mid.png" class="mid">
-        <img src="boutgep/mid.png" class="mid2">
-        <img src="boutgep/mid.png" class="mid3">
-        <img src="boutgep/mid.png" class="mid4">
-        <img src="boutgep/mid.png" class="mid5">
-        <img src="boutgep/bottom.png" class="bottom">
+        <img src="/boutgep/top.png" class="top">
+        <img src="/boutgep/mid.png" class="mid">
+        <img src="/boutgep/mid.png" class="mid2">
+        <img src="/boutgep/mid.png" class="mid3">
+        <img src="/boutgep/mid.png" class="mid4">
+        <img src="/boutgep/mid.png" class="mid5">
+        <img src="/boutgep/bottom.png" class="bottom">
       
         <div class="papertext">
           <h1>Apa itu GEP?</h1>
-          <img src="boutgep/line.png" class="line">
+          <img src="/boutgep/line.png" class="line">
           <p>Ganesha Exhibition Programme (GEP) merupakan sebuah pameran serta pemutaran karya kru LFM ITB. Karya-karya yang ditampilkan berupa instalasi fotografi, videografi serta kineklub melalui proses submisi serta kurasi. Diadakan sejak tahun 2010, GEP selalu membawa perbedaan di setiap tahunnya. Membawakan pesan mengenai eksplorasi emosi, GEP 2021: Eksplorasa diadakan secara daring untuk pertama kalinya.</p>
-          <img src="divider/fear.png" class="divider">
+          <img src="/divider/fear.png" class="divider">
 
           <h1>Apa itu LFM?</h1>
-          <img src="boutgep/line.png" class="line">
+          <img src="/boutgep/line.png" class="line">
           <p>Berdiri pada 21 April 1960, Liga Film Mahasiswa ITB (LFM ITB) merupakan Unit Kegiatan Mahasiswa yang bergerak di bidang perfilman dan fotografi. Terdapat 4 bidang yang menjadi pilar kekaryaan di LFM ITB yaitu Fotografi, Videografi, Kineklub serta Pertunjukan LFM ITB yang berusaha untuk terus mewadahi kru LFM ITB agar dapat memberikan karya-karya terbaik kepada khalayak umum. Salah satunya seperti Pertunjukan LFM ITB melalui pamerannya yang bernama Ganesha Exhibition Programme (GEP).</p>
-          <img src="divider/anger.png" class="divider">
+          <img src="/divider/anger.png" class="divider">
         </div>
       </div>
 
       <div class="team">
         <h2>Meet The Team</h2>
-        <img src="boutgep/line2.png" class="line2">
+        <img src="/boutgep/line2.png" class="line2">
         <br><br>
         <h3>PIMPINAN PROYEK</h3>
         <br>
-        <img src="team/c.png" class="fotorg">
+        <img src="/team/c.png" class="fotorg">
         <br><br>
         <div class="sekben">
           <div class="sek">
             <h3>SEKRETARIS</h3>
             <br>
-            <img src="team/a.png" class="fotorg">
+            <img src="/team/a.png" class="fotorg">
           </div>
           <div class="ben">
             <h3>BENDAHARA</h3>
             <br>
-            <img src="team/al.png" class="fotorg">
+            <img src="/team/al.png" class="fotorg">
           </div>
         </div>
         <br><br>
         <h3>DANUS</h3>
         <br>
-        <img src="team/da/il.png" class="fotorg">
+        <img src="/team/da/il.png" class="fotorg">
         <div class="divisi">
-          <img src="team/da/g.png" class="fotorg">
-          <img src="team/da/j.png" class="fotorg">
-          <img src="team/da/m.png" class="fotorg">
-          <img src="team/da/f.png" class="fotorg">
-          <img src="team/da/r.png" class="fotorg">
+          <img src="/team/da/g.png" class="fotorg">
+          <img src="/team/da/j.png" class="fotorg">
+          <img src="/team/da/m.png" class="fotorg">
+          <img src="/team/da/f.png" class="fotorg">
+          <img src="/team/da/r.png" class="fotorg">
         </div>
         <br><br>
         <h3>PUBDOK</h3>
         <br>
-        <img src="team/pu/i.png" class="fotorg">
+        <img src="/team/pu/i.png" class="fotorg">
         <div class="divisi">
-          <img src="team/pu/d.png" class="fotorg">
-          <img src="team/pu/dh.png" class="fotorg">
-          <img src="team/pu/s.png" class="fotorg">
-          <img src="team/pu/sa.png" class="fotorg">
-          <img src="team/pu/sh.png" class="fotorg">
+          <img src="/team/pu/d.png" class="fotorg">
+          <img src="/team/pu/dh.png" class="fotorg">
+          <img src="/team/pu/s.png" class="fotorg">
+          <img src="/team/pu/sa.png" class="fotorg">
+          <img src="/team/pu/sh.png" class="fotorg">
         </div>
         <br><br>
         <h3>TEKNIS</h3>
         <br>
-        <img src="team/te/f.png" class="fotorg">
+        <img src="/team/te/f.png" class="fotorg">
         <div class="divisi">
-          <img src="team/te/c.png" class="fotorg">
-          <img src="team/kr/h.png" class="fotorg">
-          <img src="team/te/t.png" class="fotorg">
-          <img src="team/te/sean.png" class="fotorg">
-          <img src="team/te/r.png" class="fotorg">
+          <img src="/team/te/c.png" class="fotorg">
+          <img src="/team/kr/h.png" class="fotorg">
+          <img src="/team/te/t.png" class="fotorg">
+          <img src="/team/te/sean.png" class="fotorg">
+          <img src="/team/te/r.png" class="fotorg">
         </div>
         <br><br>
         <h3>KREATIF</h3>
         <br>
-        <img src="team/kr/b.png" class="fotorg">
+        <img src="/team/kr/b.png" class="fotorg">
         <div class="divisi">
-          <img src="team/kr/f.png" class="fotorg">
-          <img src="team/kr/h.png" class="fotorg">
-          <img src="team/kr/iz.png" class="fotorg">
-          <img src="team/kr/aq.png" class="fotorg">
-          <img src="team/kr/ar.png" class="fotorg">
-          <img src="team/kr/ij.png" class="fotorg">
-          <img src="team/kr/r.png" class="fotorg">
-          <img src="team/kr/tk.png" class="fotorg">
+          <img src="/team/kr/f.png" class="fotorg">
+          <img src="/team/kr/h.png" class="fotorg">
+          <img src="/team/kr/iz.png" class="fotorg">
+          <img src="/team/kr/aq.png" class="fotorg">
+          <img src="/team/kr/ar.png" class="fotorg">
+          <img src="/team/kr/ij.png" class="fotorg">
+          <img src="/team/kr/r.png" class="fotorg">
+          <img src="/team/kr/tk.png" class="fotorg">
         </div>
         <br><br>
         <h3>ACARA</h3>
         <br>
-        <img src="team/ac/cl.png" class="fotorg">
+        <img src="/team/ac/cl.png" class="fotorg">
         <div class="divisi">
-          <img src="team/ac/g.png" class="fotorg">
-          <img src="team/ac/n.png" class="fotorg">
-          <img src="team/ac/p.png" class="fotorg">
-          <img src="team/ac/sha.png" class="fotorg">
-          <img src="team/ac/sh.png" class="fotorg">
-          <img src="team/ac/va.png" class="fotorg">
-          <img src="team/ac/v.png" class="fotorg">
-          <img src="team/ac/z.png" class="fotorg">
+          <img src="/team/ac/g.png" class="fotorg">
+          <img src="/team/ac/n.png" class="fotorg">
+          <img src="/team/ac/p.png" class="fotorg">
+          <img src="/team/ac/sha.png" class="fotorg">
+          <img src="/team/ac/sh.png" class="fotorg">
+          <img src="/team/ac/va.png" class="fotorg">
+          <img src="/team/ac/v.png" class="fotorg">
+          <img src="/team/ac/z.png" class="fotorg">
         </div>
         <br><br>
         <h3>KURATORIAL</h3>
         <br>
-        <img src="team/ku/r.png" class="fotorg">
+        <img src="/team/ku/r.png" class="fotorg">
         <div class="divisi">
-          <img src="team/ku/ald.png" class="fotorg">
-          <img src="team/ku/al.png" class="fotorg">
-          <img src="team/ku/dia.png" class="fotorg">
-          <img src="team/ku/ec.png" class="fotorg">
-          <img src="team/ku/shi.png" class="fotorg">
-          <img src="team/ku/hana.png" class="fotorg">
+          <img src="/team/ku/ald.png" class="fotorg">
+          <img src="/team/ku/al.png" class="fotorg">
+          <img src="/team/ku/dia.png" class="fotorg">
+          <img src="/team/ku/ec.png" class="fotorg">
+          <img src="/team/ku/shi.png" class="fotorg">
+          <img src="/team/ku/hana.png" class="fotorg">
         </div>
         <br>
       </div>
