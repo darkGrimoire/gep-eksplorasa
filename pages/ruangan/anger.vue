@@ -44,7 +44,7 @@
             <img src="/anger/lt.png" alt="floor">
           </div>
           <div class="cont kulkas">
-            <img src="/anger/kulklos.png" alt="kulkas" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+            <img src="/anger/kulklos.png" alt="kulkas" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)" >
           </div>
           <div class="cont lemari">
             <img src="/anger/lmari.png" alt="lemari">
@@ -92,7 +92,7 @@
             <img src="/anger/gep anger garpu.png" alt="garpu">
           </div>
           <div class="cont garpu1">
-            <img src="/anger/gep anger berserakan.png" alt="garpu1">
+            <img src="/anger/gep anger berserakan.png" alt="garpu1"  :style="`opacity: ${benda.garpu}`" @mouseenter="benda.garpu = 1" @mouseout="benda.garpu = 0">
           </div>
         </div>
       </div>
@@ -211,7 +211,8 @@
         },
         msg: 'Pesan Kurator Here',
         benda: {
-          cakar: 0
+          cakar: 0,
+          garpu: 0
         }
       }
     },
@@ -506,6 +507,20 @@
   transform: translate(100%, 0);
 }
 
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+}
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  10%  { transform: scale(1.1,.9)   translateY(0); }
+  30%  { transform: scale(.9,1.1)   translateY(-10px); }
+  50%  { transform: scale(1.05,.95) translateY(0); }
+  57%  { transform: scale(1,1)      translateY(-7px); }
+  64%  { transform: scale(1,1)      translateY(0); }
+  100% { transform: scale(1,1)      translateY(0); }
+}
+
 .center-anchor {
   transform: translate(-50%,-50%);
 }
@@ -522,6 +537,8 @@
   width: 23.4%;
   top: 16.8%;
   left: 3.5%;
+  animation: bounce-7 1s;
+  animation-iteration-count: infinite;
 }
 .lemari{
   width: 22%;
@@ -660,7 +677,7 @@
   left: 30.5%;
 }
 .pisau{
-  width: 22%;
+  width: 20%;
   top: 65%;
   left: 53.5%;
 }

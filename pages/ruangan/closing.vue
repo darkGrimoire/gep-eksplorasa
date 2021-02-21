@@ -51,13 +51,13 @@
             <img src="/closing/meja.png" alt="meja">
           </div>
           <div class="cont figura">
-            <img src="/closing/1.png" alt="figura">
+            <img src="/closing/1.png" alt="figura"  @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont figura2">
             <img src="/closing/gantungan-out.png" alt="figura2" :style="`opacity: ${benda.figura2}`" @mouseenter="benda.figura2 = 1" @mouseout="benda.figura2 = 0">
           </div>
           <div class="cont kamera">
-            <img src="/closing/cam1.png" alt="kamera">
+            <img src="/closing/cam1.png" alt="kamera"  @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont kamera2">
             <img src="/closing/cam-out.png" alt="kamera2" :style="`opacity: ${benda.kamera2}`" @mouseenter="benda.kamera2 = 1" @mouseout="benda.kamera2 = 0">

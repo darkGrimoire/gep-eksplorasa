@@ -181,7 +181,7 @@
             <img src="/fear/tropong fear.png" alt="teropong">
           </div>
           <div class="cont kunci">
-            <img src="/fear/fear1.png" alt="kunci">
+            <img src="/fear/fear1.png" alt="kunci" @click="toggleKunci">>
           </div>
           <div v-show="benda.kunci" class="cont kaki">
             <img src="/fear/fearf.gif" alt="kaki">
@@ -744,6 +744,7 @@
   width: 26%;
   top: 76.8%;
   left: 37.2%;
+  z-index: 71;
 }
 .photobook1{
   width: 13%;
@@ -757,7 +758,7 @@
   left: 41.2%;
 }
 .kunci{
-  width: 8%;
+  width: 7.5%;
   top: 81.7%;
   left: 79%;
   &:hover{
@@ -765,8 +766,8 @@
   }
 }
 .kaki{
-  width: 10%;
-  top: 24.7%;
-  left: 51%;
+  width: 12%;
+  top: 81.7%;
+  left: 85.5%;
 }
 </style>
