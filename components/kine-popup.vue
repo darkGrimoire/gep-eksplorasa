@@ -104,9 +104,6 @@ export default {
         this.judul.push(item.judul)
         this.alamat.push(item.route)
       })
-      console.log(this.alamat)
-      document.getElementsByClassName("kine-exit-image")[0].src =
-        "/img/popup/exit-0.png"
     },
     initSetUp() {
       document.getElementsByClassName("kine-exit-image")[0].src =

@@ -39,7 +39,7 @@ export default {
   mounted() {
     this.getRoom()
     this.getData()
-    this.initSetUp()
+    this.initSetUpTV()
   },
   methods: {
     getRoom() {
@@ -70,7 +70,7 @@ export default {
         0
       ] || "Loading")
     },
-    initSetUp() {
+    initSetUpTV() {
       // SET UP THE COMPONENT BASED ON THE ROOM
       // JOY 1 SADNESS 2 ANGER 3
 
