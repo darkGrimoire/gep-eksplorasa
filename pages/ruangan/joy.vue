@@ -63,6 +63,11 @@
           <div class="cont pohon">
             <img src="/joy/pohon 1.png" alt="pohon">
           </div>
+          <div class="teddy"/>
+          <div class="bbq"/>
+          <div class="ig"/>
+          <div class="photobook"/>
+          <div class="zine"/>
         </div>
       </div>
     </div>
@@ -106,6 +111,14 @@
           <div class="cont pasir">
             <img src="/joy/pasir 1.png" alt="pasir">
           </div>
+          <div class="bounce single"/>
+          <div class="bounce bola"/>
+          <div class="bounce teropong"/>
+          <div class="bounce keranjang"/>
+          <div class="bounce artikel"/>
+          <div class="bounce kamera"/>
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3"/>
+          <div class="foot" v-show="benda.kunci"/>
         </div>
       </div>
     </div>
@@ -144,7 +157,10 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here'
+        msg: 'Pesan Kurator Here',
+        benda: {
+          kunci:false
+        }
       }
     },
     computed: {
@@ -172,18 +188,20 @@
           // if (this.isAllRoomVisited()){
           //   this.$router.push({path: CLOSING})
           // } else {
-            gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
-            gsap.to('.transitionfade-out', {x: '40%', duration: .7})
-            gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
-            gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
-            document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
-              if (this.isAllRoomVisited()){
-                this.$router.push({path: CLOSING})
-                } else {
-                this.$router.push({path: NEXT_ROOM})
-              }
-            }})
+            setTimeout(()=>{
+              gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+              gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+              gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
+              gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
+              document.getElementsByClassName('loading')[0].style.display = 'block'
+              gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
+                if (this.isAllRoomVisited()){
+                  this.$router.push({path: CLOSING})
+                  } else {
+                  this.$router.push({path: NEXT_ROOM})
+                }
+              }})
+            },2100)
           // }
         }
       }
@@ -202,6 +220,13 @@
       }})
     },
     methods: {
+      // bounceInterval(){
+      //   setInterval(()=>{
+      //     document.getElementsByClassName('bounce').forEach(el=>{
+      //       el.classList.add()
+      //     })
+      //   }, 4000)
+      // },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
@@ -475,4 +500,353 @@
   top: 52%;
   left: 0;
 }
+
+.teddy{
+  background-image:url("/joy/tedi1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height:15%;
+  top: 70%;
+  left: 17%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.teddy:hover{
+  background-image:url("/joy/tedi2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height:15%;
+  top: 70%;
+  left: 17%;
+  animation:none;
+}
+
+.bbq{
+  background-image:url("/joy/bbq1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:30%;
+  top: 45%;
+  left: 27%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.bbq:hover{
+  background-image:url("/joy/bbq2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:30%;
+  top: 45%;
+  left: 27%;
+  cursor:pointer;
+  animation:none;
+}
+
+.ig{
+  background-image:url("/joy/IG_1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 7%;
+  height:12%;
+  top: 77%;
+  left: 80%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.ig:hover{
+  background-image:url("/joy/IG_2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 7%;
+  height:12%;
+  top: 77%;
+  left: 80%;
+  cursor:pointer;
+  animation:none;
+}
+
+.photobook{
+  background-image:url("/joy/PHOTOBOOK_1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 11%;
+  height:11%;
+  top: 66%;
+  left: 52%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.photobook:hover{
+  background-image:url("/joy/PHOTOBOOK_2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 12%;
+  height:12%;
+  top: 65%;
+  left: 52%;
+  cursor:pointer;
+  animation:none;
+}
+
+.zine{
+  background-image:url("/joy/ZINE.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 79%;
+  left: 55%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.zine:hover{
+  background-image:url("/joy/ZINE.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 79%;
+  left: 55%;
+  cursor:pointer;
+  animation:none;
+}
+
+.single{
+  background-image:url("/joy/SINGLEPHOTO_1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 75%;
+  left: 10%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.single:hover{
+  background-image:url("/joy/SINGLEPHOTO_2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 75%;
+  left: 10%;
+  cursor:pointer;
+  animation:none;
+}
+
+.bola{
+  background-image:url("/joy/bola1 3.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:13%;
+  top: 65%;
+  left: 20.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.bola:hover{
+  background-image:url("/joy/bola1 3.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:13%;
+  top: 65%;
+  left: 20.5%;
+  cursor:pointer;
+  animation:none;
+}
+
+.teropong{
+  background-image:url("/joy/tropong joy.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 15%;
+  height:15%;
+  top: 70%;
+  left: 31%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.teropong:hover{
+  background-image:url("/joy/tropong joy.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 15%;
+  height:15%;
+  top: 70%;
+  left: 31%;
+  cursor:pointer;
+  animation:none; 
+}
+
+.keranjang{
+  background-image:url("/joy/kranjang1 2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:14%;
+  top: 59%;
+  left: 49.7%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.keranjang:hover{
+  background-image:url("/joy/kranjang2 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:16%;
+  top: 58%;
+  left: 49.7%;
+  cursor:pointer;
+  animation:none;
+}
+
+.artikel{
+  background-image:url("/joy/ARTIKEL.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:14%;
+  top: 66%;
+  left: 68%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.artikel:hover{
+  background-image:url("/joy/ARTIKEL.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:14%;
+  top: 66%;
+  left: 68%;
+  cursor:pointer;
+  animation:none;
+}
+
+.kamera{
+  background-image:url("/joy/PHOTOSERIES_1 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 65%;
+  left: 88%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.kamera:hover{
+  background-image:url("/joy/PHOTOSERIES_2 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:14%;
+  top: 62%;
+  left: 88%;
+  cursor:pointer;
+  animation:none;
+}
+
+.foot{
+  background-image:url("/joy/fkg.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:10%;
+  height:10%;
+  top:79%;
+  left:87%;
+}
+
+.kunci{
+  background-image:url("/joy/f4.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 78%;
+  left: 83%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;    
+}
+
+.kunci:hover{
+  background-image:url("/joy/f4.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 78%;
+  left: 83%;
+  cursor:pointer;
+  animation:none;
+}
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
+}
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  5%  { transform: scale(1.1,.9)   translateY(0); }
+  15%  { transform: scale(.9,1.1)   translateY(-10px); }
+  25%  { transform: scale(1.05,.95) translateY(0); }
+  28.5%  { transform: scale(1,1)      translateY(-7px); }
+  32%  { transform: scale(1,1)      translateY(0); }
+  50% { transform: scale(1,1)      translateY(0); }
+  100% { transform:scale(1,1) translateY(0);}
+}
+
 </style>

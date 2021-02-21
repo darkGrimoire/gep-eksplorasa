@@ -4,7 +4,7 @@
       <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
       <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
     </div>
-
+    
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
     <div v-show="slide === 3" class="narasi">
       {{ msg }}
@@ -50,7 +50,6 @@
           <div class="cont window">
             <img src="/sad/jendelagif.gif" alt="window">
           </div>
-          
           <div v-show="!benda.lampu" class="cont meja-belajar">
             <img src="/sad/nightstand.png" alt="meja belajar" @click="benda.lampu = true">
           </div>
@@ -81,7 +80,7 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont transitionfade-out" />
+          <div class="cont transitionfade-out"/>
           <div v-show="!benda.lampu" class="cont darkness" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
@@ -106,6 +105,7 @@
           <div class="article"></div>
           <div class="foot" v-show="benda.key"></div>
           <div class="key" @click="benda.key = true;slide=3"></div>
+          <div class="teropong"></div>
         </div>
       </div>
     </div>
@@ -176,18 +176,20 @@
           // if (this.isAllRoomVisited()){
           //   this.$router.push({path: CLOSING})
           // } else {
-            gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
-            gsap.to('.transitionfade-out', {x: '40%', duration: .7})
-            gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
-            gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
-            document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
-              if (this.isAllRoomVisited()){
-                this.$router.push({path: CLOSING})
-                } else {
-                this.$router.push({path: NEXT_ROOM})
-              }
-            }})
+            setTimeout(()=>{
+              gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+              gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+              gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
+              gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
+              document.getElementsByClassName('loading')[0].style.display = 'block'
+              gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
+                if (this.isAllRoomVisited()){
+                  this.$router.push({path: CLOSING})
+                  } else {
+                  this.$router.push({path: NEXT_ROOM})
+                }
+              }})
+            },2100)
           // }
         }
       }
@@ -392,6 +394,7 @@
   left: -5%;
   z-index: 999;
 }
+
 .transitionfade-out {
   background: linear-gradient(to left, black, black, transparent);
   width: 60vw;
@@ -457,6 +460,8 @@
   height:10%;
   top:67.5%;
   left:40%;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
   cursor:pointer;  
 }
 
@@ -468,7 +473,8 @@
   width:9.1%;
   height:13%;
   top:65.9%;
-  left:40.3%;  
+  left:40.3%;
+  animation:none;  
 }
 
 .book{
@@ -480,8 +486,11 @@
   height:10%;
   top:80%;
   left:7%;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
   cursor:pointer;  
 }
+
 
 .book:hover{
   background-image:url("/sad/s-photobook-2.png");
@@ -492,6 +501,7 @@
   height:18%;
   top:73.7%;
   left:6.9%;
+  animation:none;
 }
 
 .single{
@@ -505,6 +515,8 @@
   left:76%;
   z-index:71;
   cursor:pointer;  
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
 
 .single:hover{
@@ -518,6 +530,7 @@
   left:76%;
   z-index:71;
   cursor:pointer;  
+  animation:none;
 }
 
 .zine{
@@ -530,6 +543,8 @@
   top:38.7%;
   left:39%;
   cursor:pointer;  
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
 
 .zine:hover{
@@ -541,6 +556,7 @@
   height:20%;
   top:34%;
   left:38.8%;
+  animation:none;
 }
 
 .article{
@@ -553,6 +569,8 @@
   top:78%;
   left:39%;
   cursor:pointer;  
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
 
 .article:hover{
@@ -564,6 +582,7 @@
   height:18%;
   top:73%;
   left:38.8%;
+  animation:none;
 }
 
 
@@ -588,6 +607,48 @@
   top:81%;
   left:80%;    
   cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.key:hover{
+  background-image:url("/sad/keysad.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:7%;
+  height:10%;
+  top:81%;
+  left:80%;    
+  cursor:pointer;
+  animation:none;
+}
+
+.teropong{
+  background-image:url("/sad/tropong sad.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:15%;
+  height:10%;
+  top:81%;
+  left:60%;    
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.teropong:hover{
+  background-image:url("/sad/tropong sad.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:15%;
+  height:10%;
+  top:81%;
+  left:60%;    
+  cursor:pointer;
+  animation:none;
 }
 
 .lemari {
@@ -631,5 +692,31 @@
   width: 150%;
   height: 200%;
   top: -50%;
+}
+
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
+}
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  5%  { transform: scale(1.1,.9)   translateY(0); }
+  15%  { transform: scale(.9,1.1)   translateY(-10px); }
+  25%  { transform: scale(1.05,.95) translateY(0); }
+  28.5%  { transform: scale(1,1)      translateY(-7px); }
+  32%  { transform: scale(1,1)      translateY(0); }
+  50% { transform: scale(1,1)      translateY(0); }
+  100% { transform:scale(1,1) translateY(0);}
+}
+
+
+.longfoot{
+  background-image:url("/sad/a220.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 100%;
+  height:15%;
+  top: 70%;
 }
 </style>
