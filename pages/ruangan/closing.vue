@@ -51,16 +51,25 @@
             <img src="/closing/meja.png" alt="meja">
           </div>
           <div class="cont figura">
-            <img src="/closing/1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+            <img src="/closing/1.png" alt="figura">
+          </div>
+          <div class="cont figura2">
+            <img src="/closing/gantungan-out.png" alt="figura2" :style="`opacity: ${benda.figura2}`" @mouseenter="benda.figura2 = 1" @mouseout="benda.figura2 = 0">
           </div>
           <div class="cont kamera">
-            <img src="/closing/cam1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+            <img src="/closing/cam1.png" alt="kamera">
+          </div>
+          <div class="cont kamera2">
+            <img src="/closing/cam-out.png" alt="kamera2" :style="`opacity: ${benda.kamera2}`" @mouseenter="benda.kamera2 = 1" @mouseout="benda.kamera2 = 0">
           </div>
           <div class="cont gantungan">
             <img src="/closing/foto.png" alt="gantungan">
           </div>
           <div class="cont balon">
             <img src="/closing/balon1.png" alt="balon" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
+          <div class="cont balon2">
+            <img src="/closing/balon1-out.png" alt="balon2" :style="`opacity: ${benda.balon2}`" @mouseenter="benda.balon2 = 1" @mouseout="benda.balon2 = 0">
           </div>
           <div class="cont e1">
             <img src="/closing/e1.png" alt="e1">
@@ -73,6 +82,15 @@
           </div>
           <div class="cont e3">
             <img src="/closing/e3.png" alt="e3">
+          </div>
+          <div class="cont tulisanbalon">
+            <img src="/closing/balon3.png" alt="tulisanbalon">
+          </div>
+          <div class="cont tulisankamera">
+            <img src="/closing/cam3.png" alt="tulisankamera">
+          </div>
+          <div class="cont tulisanfigura">
+            <img src="/closing/katalog3.png" alt="tulisanfigura">
           </div>
         </div>
       </div>
@@ -91,7 +109,7 @@
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
   export default {
-    name: "TemplateRuangan",
+    name: "Closing",
     components: {
       rcp,
     },
@@ -111,7 +129,12 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here'
+        msg: 'Pesan Kurator Here',
+        benda: {
+          kamera2: 0,
+          balon2: 0,
+          figura2: 0
+        }
       }
     },
     computed: {
@@ -159,12 +182,12 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
-      localStorage.setItem('template', true)
 
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
         // TODO: Add on enter animation here
+        localStorage.setItem('closing', true)
         this.slide = 1
       }})
     },
@@ -227,9 +250,9 @@
 
       handleObjChange(e){
         console.log(e)
-        if (e.target.getAttribute('src') === "/closing/1.png"){
+        if (e.target.getAttribute('src') === "/closing/gantungan-out2.png"){
           e.target.setAttribute('src', "/closing/gantungan-out.png")
-        } else if (e.target.getAttribute('src') === "/closing/balon1.png"){
+        } else if (e.target.getAttribute('src') === "/closing/balon.png"){
           e.target.setAttribute('src', "/closing/balon1-out.png")
         } else if (e.target.getAttribute('src') === "/closing/cam1.png"){
           e.target.setAttribute('src', "/closing/cam-out.png")
@@ -238,7 +261,7 @@
       handleObjChangeEnd(e){
         console.log(e)
         if (e.target.getAttribute('src') === "/closing/gantungan-out.png"){
-          e.target.setAttribute('src', "/closing/1.png")
+          e.target.setAttribute('src', "/closing/gantungan-out2.png")
         } else if (e.target.getAttribute('src') === "/closing/balon1-out.png"){
           e.target.setAttribute('src', "/closing/balon1.png")
         } else if (e.target.getAttribute('src') === "/closing/cam-out.png"){
@@ -379,6 +402,7 @@
 .wall{
   width: 110%;
   right: -2%;
+  top : -40%;
 }
 .lantai{
   width: 100%;
@@ -409,7 +433,17 @@
   left: 79.2%;
   top: 32%;
 }
+.kamera2{
+  width: 16%;
+  left: 79.2%;
+  top: 32%;
+}
 .figura{
+  width: 15%;
+  left: 13%;
+  top: 6.5%;
+}
+.figura2{
   width: 15%;
   left: 13%;
   top: 6.5%;
@@ -419,7 +453,7 @@
   left: 26.2%;
   top: 3%;
 }
-.balon-out{
+.balon2{
   width: 17%;
   left: 26.2%;
   top: 3%;
@@ -448,6 +482,21 @@
   width: 16.5%;
   left: 57%;
   top: 39%;
+}
+.tulisanbalon{
+  width: 8%;
+  left: 31.5%;
+  top: 11.5%;
+}
+.tulisankamera{
+  width: 16.5%;
+  left: 82%;
+  top: 24%;
+}
+.tulisanfigura{
+  width: 11.5%;
+  left: 13.1%;
+  top: 31%;
 }
 
 </style>
