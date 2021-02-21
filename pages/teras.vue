@@ -1,10 +1,5 @@
 <template>
   <div class="main">
-    <div class="slide-controls">
-      <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
-      <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
-    </div>
-
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
     <div v-show="slide === 3" class="narasi">
       {{ msg }}
@@ -50,7 +45,7 @@
             <img src="/teras/bg 2.png">
           </div>
           <div class="lantai">
-            <img src="/teras/lt 2.png">
+            <img src="/teras/lantai.png">
           </div>
           <!-- Tambahin Objek lainnya disini -->
         </div>
@@ -83,7 +78,7 @@
             <img src="/teras/bg 2.png">
           </div>
           <div class="lantai">
-            <img src="/teras/lt 2.png">
+            <img src="/teras/lantai.png">
           </div>
         </div>
       </div>
