@@ -2,41 +2,43 @@
   <div class="container">
     <div class="content">
       <div class="paper">
-        <img src="kuro/paper.png" class="top">
-        <img src="kuro/paper.png" class="top">
-        <img src="kuro/paper.png" class="top2">
-        <img src="kuro/paper.png" class="top3">
-        <img src="kuro/paper.png" class="top4">
-        <img src="kuro/paper.png" class="top5">
-        <img src="kuro/paper.png" class="top6">
-        <img src="kuro/paper.png" class="top7">
+        <img src="/kuro/paper.png" class="top">
+        <img src="/kuro/paper.png" class="top">
+        <img src="/kuro/paper.png" class="top2">
+        <img src="/kuro/paper.png" class="top3">
+        <img src="/kuro/paper.png" class="top4">
+        <img src="/kuro/paper.png" class="top5">
+        <img src="/kuro/paper.png" class="top6">
+        <img src="/kuro/paper.png" class="top7">
       
         <div class="papertext">
           <div class="header">
-            <img src="kuro/emo.png" class="emo">
-            <img src="kuro/date.png" class="date">
+            <img src="/kuro/emo.png" class="emo">
+            <img src="/kuro/date.png" class="date">
           </div>
-          <img src="kuro/garis.png" class="garis">
-          <img src="kuro/catkur.png" class="catkur">
+          <img src="/kuro/garis.png" class="garis">
+          <img src="/kuro/catkur.png" class="catkur">
           <p>Perasaan manusia merupakan hal yang unik, sesederhana pencampuran hormon di dalam otak manusia dapat menghasilkan emosi yang menggerakan manusia setiap harinya. Rasa senang, takut, sedih, hingga marah kerap menjadi motivasi manusia terhadap aksinya. Emosi pun menjadi sangat krusial dalam kehidupan manusia.</p>
-          <span class="br"></span>
+          <span class="br" />
           <p>Sehingga tanpa terasa emosi manusia menjadi suatu hal yang kompleks. Walaupun ada bersama kita setiap harinya, masih banyak aspek emosi yang bisa dieksplorasi. Apa emosi yang dirasakan, sebesar apa intensitas emosi tersebut, dari mana datangnya emosi itu, hingga bagaimana emosi ini dapat diluapkan, selalu menjadi pertanyaan yang muncul dalam benak saya. Bagaimana bisa sesuatu yang sangat dekat bisa menjadi sangat membingungkan?</p>
-          <span class="br"></span>
+          <span class="br" />
           <p>Emosi seharusnya sudah menjadi hal yang kita kenal secara dekat. Emosi seharusnya menjadi rumah dimana, tiap ruangan, tiap perasaan dapat disinggahi dan ditinggali dengan rasa nyaman. Eksplorasi rasa perlu dilakukan untuk mengenali tiap ruang emosi.</p>
-          <span class="br"></span>
+          <span class="br" />
           <p>Namun, bagaimana menjelajahi hal tersebut saat emosi adalah hal yang abstrak. Emosi bukanlah hal kuantitatif yang bisa diukur dengan suatu angka atau satuan ukur. Emosi hanya dapat dirasakan, meskipun perasaan dan pelampiasannya beragam.</p>
-          <span class="br"></span>
+          <span class="br" />
           <p>Maka untuk menemani penjelajahan emosi itu, Ganesha Exhibition Programme 2021 mengambil tema Eksplorasa yang merupakan gabungan dari dua kata yaitu eksplorasi dan rasa. Eksplorasa menampilkan hasil eksplorasi emosi yang telah dituangkan oleh kru-kru LFM ke dalam bentuk karya. Harapannya, bersama karya-karya ini, tiap ruang emosi senang, takut, sedih, dan amarah, dapat disinggahi. Sehingga akhirnya, tiap ruang rasa dapat dijelajahi sehingga tiap ruang emosinya tidak lagi asing dan dapat diekspresikan dengan indah.</p>
-          <span class="br"></span>
+          <span class="br" />
           <p>Akhir kata, selamat melakukan eksplorasi rasa dirimu sendiri! Semoga tetap aman dan dalam penjelajahannya. Selamat Menikmati!</p>
-          <span class="br"></span>
-          <p class="penutup">-Gilroy Jeremia, Kurator GEP! 2021 : Eksplorasa</p>
+          <span class="br" />
+          <p class="penutup">
+            -Gilroy Jeremia, Kurator GEP! 2021 : Eksplorasa
+          </p>
         </div>
 
         <div class="printilan">
-          <img src="kuro/clip.png" class="clip">
-          <img src="kuro/tape.png" class="tape">
-          <img src="kuro/pensil.png" class="pensil">
+          <img src="/kuro/clip.png" class="clip">
+          <img src="/kuro/tape.png" class="tape">
+          <img src="/kuro/pensil.png" class="pensil">
         </div>
       </div>
     </div>

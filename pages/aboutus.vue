@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <img src="bout/about us.png" class="aboutus">
+      <img src="/bout/about us.png" class="aboutus">
       
       <div class="menu">
         <div class="sub">
