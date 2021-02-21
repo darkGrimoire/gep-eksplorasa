@@ -8,7 +8,8 @@
         <img src="boutgep/mid.png" class="mid">
         <img src="boutgep/mid.png" class="mid2">
         <img src="boutgep/mid.png" class="mid3">
-        <img src="boutgep/mid.png" class="mid3">
+        <img src="boutgep/mid.png" class="mid4">
+        <img src="boutgep/mid.png" class="mid5">
         <img src="boutgep/bottom.png" class="bottom">
       
         <div class="papertext">
@@ -27,6 +28,95 @@
       <div class="team">
         <h2>Meet The Team</h2>
         <img src="boutgep/line2.png" class="line2">
+        <br><br>
+        <h3>PIMPINAN PROYEK</h3>
+        <br>
+        <img src="team/c.png" class="fotorg">
+        <br><br>
+        <div class="sekben">
+          <div class="sek">
+            <h3>SEKRETARIS</h3>
+            <br>
+            <img src="team/a.png" class="fotorg">
+          </div>
+          <div class="ben">
+            <h3>BENDAHARA</h3>
+            <br>
+            <img src="team/al.png" class="fotorg">
+          </div>
+        </div>
+        <br><br>
+        <h3>DANUS</h3>
+        <br>
+        <img src="team/da/il.png" class="fotorg">
+        <div class="divisi">
+          <img src="team/da/f.png" class="fotorg">
+          <img src="team/da/g.png" class="fotorg">
+          <img src="team/da/j.png" class="fotorg">
+          <img src="team/da/m.png" class="fotorg">
+          <img src="team/da/r.png" class="fotorg">
+        </div>
+        <br><br>
+        <h3>PUBDOK</h3>
+        <br>
+        <img src="team/pu/i.png" class="fotorg">
+        <div class="divisi">
+          <img src="team/pu/d.png" class="fotorg">
+          <img src="team/pu/dh.png" class="fotorg">
+          <img src="team/pu/s.png" class="fotorg">
+          <img src="team/pu/sa.png" class="fotorg">
+          <img src="team/pu/sh.png" class="fotorg">
+        </div>
+        <br><br>
+        <h3>TEKNIS</h3>
+        <br>
+        <img src="team/te/f.png" class="fotorg">
+        <div class="divisi">
+          <img src="team/te/c.png" class="fotorg">
+          <img src="team/kr/h.png" class="fotorg">
+          <img src="team/te/r.png" class="fotorg">
+          <img src="team/te/t.png" class="fotorg">
+        </div>
+        <br><br>
+        <h3>KREATIF</h3>
+        <br>
+        <img src="team/kr/b.png" class="fotorg">
+        <div class="divisi">
+          <img src="team/kr/aq.png" class="fotorg">
+          <img src="team/kr/ar.png" class="fotorg">
+          <img src="team/kr/f.png" class="fotorg">
+          <img src="team/kr/h.png" class="fotorg">
+          <img src="team/kr/ij.png" class="fotorg">
+          <img src="team/kr/iz.png" class="fotorg">
+          <img src="team/kr/r.png" class="fotorg">
+          <img src="team/kr/tk.png" class="fotorg">
+        </div>
+        <br><br>
+        <h3>ACARA</h3>
+        <br>
+        <img src="team/ac/cl.png" class="fotorg">
+        <div class="divisi">
+          <img src="team/ac/g.png" class="fotorg">
+          <img src="team/ac/n.png" class="fotorg">
+          <img src="team/ac/p.png" class="fotorg">
+          <img src="team/ac/sh.png" class="fotorg">
+          <img src="team/ac/sha.png" class="fotorg">
+          <img src="team/ac/v.png" class="fotorg">
+          <img src="team/ac/va.png" class="fotorg">
+          <img src="team/ac/z.png" class="fotorg">
+        </div>
+        <br><br>
+        <h3>KURATORIAL</h3>
+        <br>
+        <img src="team/ku/r.png" class="fotorg">
+        <div class="divisi">
+          <img src="team/ku/al.png" class="fotorg">
+          <img src="team/ku/ald.png" class="fotorg">
+          <img src="team/ku/dia.png" class="fotorg">
+          <img src="team/ku/ec.png" class="fotorg">
+          <img src="team/ku/shi.png" class="fotorg">
+        </div>
+        <br>
       </div>
     </div>
   </div>
@@ -59,6 +149,14 @@ export default {
     font-family: 'Quicksand';
     font-style: normal;
     font-size: 45px;
+    color: #ede5d1;
+    text-align: center;
+  }
+  
+  h3 {
+    font-family: 'KG Happy Solid';
+    font-style: normal;
+    font-size: 35px;
     color: #ede5d1;
     text-align: center;
   }
@@ -154,15 +252,33 @@ export default {
 
   .team {
     margin-top: 125px;
+    width: 1050px;
   }
 
-  @media only screen and (min-width: 1030px) {
+  .fotorg {
+    width: 350px;
+  }
+
+  .sekben {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .divisi {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media only screen and (min-width: 1070px) {
     .mid2 {
       display: none;
     }
   }
 
-  @media only screen and (max-width: 1030px) {
+  @media only screen and (max-width: 1070px) {
     div {
       font-size: 25px;
     }
@@ -233,6 +349,7 @@ export default {
 
     .team {
       margin-top: 125px;
+      width: 700px;
     }
   }
 
@@ -247,6 +364,10 @@ export default {
 
     h2 {
       font-size: 35px;
+    }
+
+    h3 {
+      font-size: 20px;
     }
 
     p {
@@ -286,6 +407,12 @@ export default {
       margin-bottom: -1px;
     }
 
+    .mid4 {
+      width: 447px;
+      margin-left: 6px;
+      margin-bottom: -1px;
+    }
+
     .bottom {
       width: 440px;
       margin-left: 1px;
@@ -312,6 +439,11 @@ export default {
 
     .team {
       margin-top: 125px;
+      width: 500px;
+    }
+
+    .fotorg {
+      width: 250px;
     }
   }
 
@@ -326,6 +458,10 @@ export default {
 
     h2 {
       font-size: 35px;
+    }
+
+    h3 {
+      font-size: 27px;
     }
 
     p {
@@ -362,7 +498,7 @@ export default {
     .mid3 {
       width: 610px;
       margin-left: 8px;
-      margin-bottom: -1px;
+      margin-bottom: -50px;
     }
 
     .bottom {
@@ -371,7 +507,7 @@ export default {
     }
 
     .papertext {
-      top: 75px;
+      top: 125px;
     }
 
     .line {
@@ -391,11 +527,24 @@ export default {
 
     .team {
       margin-top: 125px;
+      width: 600px;
+    }
+
+    .fotorg {
+      width: 280px;
     }
   }
 
   @media only screen and (min-width: 769px) {
     .mid3 {display: none;}
+  }
+
+  @media only screen and (min-width: 660px) {
+    .mid4 {display: none;}
+  }
+
+  @media only screen and (min-width: 470px) {
+    .mid5 {display: none;}
   }
 
   @media only screen and (max-width: 470px) {
@@ -409,6 +558,10 @@ export default {
 
     h2 {
       font-size: 25px;
+    }
+
+    h3 {
+      font-size: 18px;
     }
 
     p {
@@ -447,13 +600,23 @@ export default {
       margin-left: 4px;
     }
 
+    .mid4 {
+      width: 264px;
+      margin-left: 4px;
+    }
+
+    .mid5 {
+      width: 264px;
+      margin-left: 4px;
+    }
+
     .bottom {
       width: 260px;
       margin-left: 1px;
     }
 
     .papertext {
-      top: 27px;
+      top: 60px;
     }
 
     .line {
@@ -473,6 +636,15 @@ export default {
 
     .team {
       margin-top: 75px;
+      width: 270px;
+    }
+
+    .sekben {
+      flex-direction: column;
+    }
+    
+    .fotorg {
+      width: 200px;
     }
   }
 </style>
