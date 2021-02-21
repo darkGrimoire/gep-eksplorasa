@@ -1,10 +1,5 @@
 <template>
   <div class="main">
-    <div class="slide-controls">
-      <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
-      <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
-    </div>
-
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
     <div v-show="slide === 3" class="narasi">
       {{ msg }}
@@ -44,15 +39,13 @@
           <div class="jen2">
             <img src="/teras/jka 1.png">
           </div>
-          <div class="pintu">
-            <div class="imgpintu" @click="zoomIn();switchSlide(1)" />
-          </div>
-
+          <div v-show="close" class="imgpintu" @click="close=false;white=true;zoomIn();" />
+          <div v-show="!close" class="gifpintu" />
           <div class="bg">
             <img src="/teras/bg 2.png">
           </div>
           <div class="lantai">
-            <img src="/teras/lt 2.png">
+            <img src="/teras/lantai.png">
           </div>
           <!-- Tambahin Objek lainnya disini -->
         </div>
@@ -76,6 +69,7 @@
           <p class="text">
             APA RASAMU?
           </p>
+          <div class="genteng2" />
           <div class="joy" @click="goToEmosi('joy')" />
           <div class="fear" @click="goToEmosi('fear')" />
           <div class="sadness" @click="goToEmosi('sad')" />
@@ -84,7 +78,7 @@
             <img src="/teras/bg 2.png">
           </div>
           <div class="lantai">
-            <img src="/teras/lt 2.png">
+            <img src="/teras/lantai.png">
           </div>
         </div>
       </div>
@@ -123,7 +117,9 @@
           slide1: -50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here'
+        msg: 'Pesan Kurator Here',
+        close:true,
+        white:false
       }
     },
     computed: {
@@ -134,7 +130,6 @@
     watch: {
       slide(newVal, oldVal) {
         if (newVal === 2){
-          gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50,delay:1})
           if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
             gsap.to('.narasi', {opacity: 0, duration: .5})
@@ -170,8 +165,6 @@
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
-      document.onkeyup = this.handleKeyboard
-      localStorage.setItem('template', true)
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
@@ -199,7 +192,15 @@
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
       },
       zoomIn(){
-        gsap.to("#slide1", {duration:1,scale:2})
+        gsap.to("#slide1", {duration:3,scale:2})
+        gsap.to("#slide1", {duration:1,scale:25,delay:3, ease: 'power4.in', onComplete: () => {
+          this.switchSlide(1)
+        }})
+        gsap.to(this.base, {slide0: -150, slide1: -50, slide2: -50, duration: .1, delay: 3.6})
+        gsap.to('#slide2', {opacity: 1, duration: .5, delay: 3.9})
+        gsap.to('#slide1', {opacity: 0, duration: 1, delay: 3.9, onComplete: () => {
+          document.getElementById('slide1').style.display = 'none'
+        }})
       }
       ,
       isAllRoomVisited(){
@@ -251,13 +252,6 @@
         if (window.matchMedia("(orientation: landscape)").matches){
           this.computedDisplacement = 0
           this.transformed = 0
-        }
-      },
-      handleKeyboard(e){
-        if (this.slide === 2 && e.key === "ArrowLeft"){
-          this.switchSlide(-1)
-        } else if (this.slide === 1 && e.key === "ArrowRight"){
-          this.switchSlide(1)
         }
       }
     },
@@ -392,31 +386,39 @@
     z-index:0;
 }
 
-.pintu{
-    width:100%;
-    display:flex;
-    justify-content:center;
-}
 .imgpintu{
-    width:20%;
-    height:55%;
-    top : 20.9%;
-    background-image:url("/teras/p1 1.png");
-    background-size:contain;
-    position:absolute;
+  width:20%;
+  height:55%;
+  top : 20.9%;
+  left : 40%;
+  background-image:url("/teras/p1 1.png");
+  background-size:contain;
+  position:absolute;
 }
 
 .imgpintu:hover{
-    width:100%;
-    height:100%;
+    width:20%;
+    height:60.9%;
     top : 19%;
     left : 40%;
     background-image:url("/teras/p2 1.png");
-    background-size: 20% 61%;
     background-repeat:no-repeat;
     cursor:pointer;
     position:absolute;
 }
+
+.gifpintu{
+  width:30%;
+  height:65%;
+  top : 17.4%;
+  left : 37%;
+  background-image:url("/teras/activepintu.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+}
+
+
 .jen1 img{
     width:20%;
     top:23%;
@@ -467,23 +469,48 @@
 }
 
 .genteng{
-    background-image:url("/teras/genteng 1.png");
+    background-image:url("/teras/genteng.png");
     background-size:contain;
+    background-repeat:no-repeat;
     width:100%;
-    height:15%;
+    height:100%;
+    bottom:80%;
     position:absolute;
 }
 
-.open{
-    background-image:url("/teras/open 1.png");
+.genteng2{
+    background-image:url("/teras/genteng.png");
     background-size:contain;
     background-repeat:no-repeat;
-    width:13%;
-    height:13%;
-    top:41%;
-    left:11.5%;
-    z-index:3;
-    position:absolute;    
+    width:100%;
+    height:100%;
+    bottom:95%;
+    position:absolute;
+}
+
+
+.open{
+  background-image:url("/teras/open 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width:13%;
+  height:13%;
+  top:41%;
+  left:11.5%;
+  z-index:3;
+  position:absolute;    
+}
+
+.open:hover{
+  background-image:url("/teras/open me 2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  width:9%;
+  height:13%;
+  top:40.8%;
+  left:11.1%;
+  z-index:3;
+  position:absolute;    
 }
 
 .cont-emotion{
@@ -605,7 +632,20 @@
   top:14%;
   left:40%;
   font-size:42px;
+}
 
+.white{
+  width:100%;
+  height:100%;
+  background-color:#ffffff;
+  z-index:99;
+  position:absolute;
+  transition:ease-in 2s;
+  transition-delay:1s; 
 }
 // Add Objects positions here
+
+#slide2 {
+  opacity: 0;
+}
 </style>

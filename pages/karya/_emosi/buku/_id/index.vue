@@ -686,7 +686,7 @@ const TARGET_ZOOM_WIDTH = 3000
           {
             hid: 'description',
             name: 'description',
-            description: 'Foto "'+this.dataKarya.judul+'" oleh '+this.dataKarya.author
+            description: 'Karya "'+this.dataKarya.judul+'" oleh '+this.dataKarya.author
           }
         ],
         script: [

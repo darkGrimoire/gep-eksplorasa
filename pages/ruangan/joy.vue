@@ -6,9 +6,15 @@
     </div>
 
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
-    <div v-show="slide === 3" class="narasi">
-      {{ msg }}
+    <div class="narasi narasi-masuk" style="display: none;">
+      {{ msg.masuk }}
     </div>
+    <div class="narasi narasi-keluar" style="display: none;">
+      {{ msg.keluar }}
+    </div>
+    <div class="narasi narasi-closing" style="display: none;">
+      {{ msg.closing }}
+    </div>    
     
     <div id="slide0" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
@@ -63,6 +69,11 @@
           <div class="cont pohon">
             <img src="/joy/pohon 1.png" alt="pohon">
           </div>
+          <div class="teddy"/>
+          <div class="bbq"/>
+          <div class="ig"/>
+          <div class="photobook"/>
+          <div class="zine"/>
         </div>
       </div>
     </div>
@@ -106,6 +117,14 @@
           <div class="cont pasir">
             <img src="/joy/pasir 1.png" alt="pasir">
           </div>
+          <div class="bounce single"/>
+          <div class="bounce bola"/>
+          <div class="bounce teropong"/>
+          <div class="bounce keranjang"/>
+          <div class="bounce artikel"/>
+          <div class="bounce kamera"/>
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3"/>
+          <div class="foot" v-show="benda.kunci"/>
         </div>
       </div>
     </div>
@@ -144,7 +163,19 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here'
+        msg: {
+          masuk: 'Ngobrol bersama teman, kumpul bareng keluarga, atau hanya menghabiskan waktu dengan diri sendiri. Rasa senang bisa muncul dari hal-hal yang tak diduga.',
+          keluar: 'Sayangnya tak ada yang abadi. Perlahan timbul pertanyaan, apakah bahagia ini akan berakhir? Kalau iya, kapan? Kalau besok bagaimana? Apa yang terjadi kalau besok aku tak bahagia? Dan tanpa disadari, pertanyaan-pertanyaan ini menjelma menjadi rasa takut.',
+          closings: [
+            'Akhirnya, saat ini waktunya berbahagia sebentar. Hal-hal dan momen-momen kecil dapat dinikmati dengan tenang.',
+            'Ruang-ruang rasa telah dikunjungi. Tiap emosi telah dikenali. Rasa sudah dieksplorasi. Melalui eksplorasi rasa ini tiap perasaan tertuangkan menjadi suatu bentuk karya. Rasa-rasa ini pastinya tidak asing, tapi selalu ada ruang untuk eksplorasi. Rasa dapat berkembang, berubah, dan dibentuk menjadi suatu yang indah.',
+            'Akhir kata, semoga melalui ini, perasaan yang biasa kamu lalui dapat menjadi temanmu untuk berkarya. Dan semoga yang kamu takutkan hari ini tak terjadi ya! (Terima kasih.)'
+          ],
+          closing: ''
+        },
+        benda: {
+          kunci:false
+        }
       }
     },
     computed: {
@@ -169,22 +200,40 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          // if (this.isAllRoomVisited()){
-          //   this.$router.push({path: CLOSING})
-          // } else {
+          setTimeout(()=>{
             gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
             gsap.to('.transitionfade-out', {x: '40%', duration: .7})
             gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
-            gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
-            document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
-              if (this.isAllRoomVisited()){
+            if (this.isClosingVisited()){
+              this.$router.push({path: CLOSING})
+            }
+            if (this.isAllRoomVisited()){
+              // animasi closing
+              document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
+              this.msg.closing = this.msg.closings[0]
+              gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
+              gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 7, onComplete: () =>{
+                this.msg.closing = this.msg.closings[1]
+              }})
+              gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 7.5})
+              gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 14.5, onComplete: () => {
+                this.msg.closing = this.msg.closings[2]
+              }})
+              gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 15})
+              gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 20, onComplete: () => {
                 this.$router.push({path: CLOSING})
-                } else {
+              }})
+            } else {
+              // animasi keluar
+              document.getElementsByClassName('narasi-keluar')[0].style.display = 'block'
+              gsap.to('.narasi-keluar', {opacity: 1, duration: 2, delay: 2})
+              document.getElementsByClassName('loading')[0].style.display = 'block'
+              gsap.to('.loading', {opacity: 1, duration: 1, delay: 7, onComplete: () => {
                 this.$router.push({path: NEXT_ROOM})
-              }
-            }})
-          // }
+              }})
+            } 
+          },2100)
+
         }
       }
     },
@@ -192,22 +241,45 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
-      localStorage.setItem('joy', true)
-
       // wait for loading to finish
-      gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
-        document.getElementsByClassName('loading')[0].style.display = 'none'
-        // TODO: Add on enter animation here
-        this.slide = 1
-      }})
+      //animasi masuk
+      if (this.isAllRoomVisited()){
+        gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
+          document.getElementsByClassName('loading')[0].style.display = 'none'
+          // TODO: Add on enter animation here
+          localStorage.setItem('joy', true)
+          this.slide = 1
+        }})
+      } else {
+        document.getElementsByClassName('narasi-masuk')[0].style.display = 'block'
+        gsap.to('.narasi-masuk', {opacity: 1,  duration: .5})
+        gsap.to('.narasi-masuk', {opacity: 0, delay: 3, duration: .5})
+        gsap.to('.loading', {opacity: 0, delay: 3, duration: .2, onComplete: () => {
+          document.getElementsByClassName('loading')[0].style.display = 'none'
+          document.getElementsByClassName('narasi-masuk')[0].style.display = 'none'
+          // TODO: Add on enter animation here
+          localStorage.setItem('joy', true)
+          this.slide = 1
+        }})
+      }
     },
     methods: {
+      // bounceInterval(){
+      //   setInterval(()=>{
+      //     document.getElementsByClassName('bounce').forEach(el=>{
+      //       el.classList.add()
+      //     })
+      //   }, 4000)
+      // },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isClosingVisited(){
+        return localStorage.getItem('closing')
       },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
@@ -345,10 +417,11 @@
   position: absolute;
   top: 20%;
   left: 50%;
+  width: 80vw;
   transform: translate(-50%,0);
   z-index: 99;
   font-family: 'Mechanical Pencil';
-  font-size: 75px;
+  font-size: 50px;
   color: rgba($color: white, $alpha: .9);
   // background-image: linear-gradient(to right, rgba($color: white, $alpha: .1), transparent);
   // -webkit-background-clip: text;
@@ -357,6 +430,19 @@
   // -moz-text-fill-color: transparent;
   opacity: 0;
   text-align: center;
+}
+
+.narasi-masuk {
+  z-index: 10000;
+}
+
+.narasi-closing {
+  font-size: 40px;
+  z-index: 10000;
+}
+
+.narasi-keluar {
+  font-size: 40px;
 }
 
 .cont {
@@ -475,4 +561,353 @@
   top: 52%;
   left: 0;
 }
+
+.teddy{
+  background-image:url("/joy/tedi1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height:15%;
+  top: 70%;
+  left: 17%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.teddy:hover{
+  background-image:url("/joy/tedi2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height:15%;
+  top: 70%;
+  left: 17%;
+  animation:none;
+}
+
+.bbq{
+  background-image:url("/joy/bbq1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:30%;
+  top: 45%;
+  left: 27%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.bbq:hover{
+  background-image:url("/joy/bbq2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:30%;
+  top: 45%;
+  left: 27%;
+  cursor:pointer;
+  animation:none;
+}
+
+.ig{
+  background-image:url("/joy/IG_1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 7%;
+  height:12%;
+  top: 77%;
+  left: 80%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.ig:hover{
+  background-image:url("/joy/IG_2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 7%;
+  height:12%;
+  top: 77%;
+  left: 80%;
+  cursor:pointer;
+  animation:none;
+}
+
+.photobook{
+  background-image:url("/joy/PHOTOBOOK_1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 11%;
+  height:11%;
+  top: 66%;
+  left: 52%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.photobook:hover{
+  background-image:url("/joy/PHOTOBOOK_2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 12%;
+  height:12%;
+  top: 65%;
+  left: 52%;
+  cursor:pointer;
+  animation:none;
+}
+
+.zine{
+  background-image:url("/joy/ZINE.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 79%;
+  left: 55%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.zine:hover{
+  background-image:url("/joy/ZINE.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 79%;
+  left: 55%;
+  cursor:pointer;
+  animation:none;
+}
+
+.single{
+  background-image:url("/joy/SINGLEPHOTO_1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 75%;
+  left: 10%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.single:hover{
+  background-image:url("/joy/SINGLEPHOTO_2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 75%;
+  left: 10%;
+  cursor:pointer;
+  animation:none;
+}
+
+.bola{
+  background-image:url("/joy/bola1 3.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:13%;
+  top: 65%;
+  left: 20.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.bola:hover{
+  background-image:url("/joy/bola1 3.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:13%;
+  top: 65%;
+  left: 20.5%;
+  cursor:pointer;
+  animation:none;
+}
+
+.teropong{
+  background-image:url("/joy/tropong joy.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 15%;
+  height:15%;
+  top: 70%;
+  left: 31%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.teropong:hover{
+  background-image:url("/joy/tropong joy.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 15%;
+  height:15%;
+  top: 70%;
+  left: 31%;
+  cursor:pointer;
+  animation:none; 
+}
+
+.keranjang{
+  background-image:url("/joy/kranjang1 2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:14%;
+  top: 59%;
+  left: 49.7%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.keranjang:hover{
+  background-image:url("/joy/kranjang2 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:16%;
+  top: 58%;
+  left: 49.7%;
+  cursor:pointer;
+  animation:none;
+}
+
+.artikel{
+  background-image:url("/joy/ARTIKEL.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:14%;
+  top: 66%;
+  left: 68%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.artikel:hover{
+  background-image:url("/joy/ARTIKEL.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 13%;
+  height:14%;
+  top: 66%;
+  left: 68%;
+  cursor:pointer;
+  animation:none;
+}
+
+.kamera{
+  background-image:url("/joy/PHOTOSERIES_1 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 65%;
+  left: 88%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.kamera:hover{
+  background-image:url("/joy/PHOTOSERIES_2 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:14%;
+  top: 62%;
+  left: 88%;
+  cursor:pointer;
+  animation:none;
+}
+
+.foot{
+  background-image:url("/joy/fkg.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:10%;
+  height:10%;
+  top:79%;
+  left:87%;
+}
+
+.kunci{
+  background-image:url("/joy/f4.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 78%;
+  left: 83%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;    
+}
+
+.kunci:hover{
+  background-image:url("/joy/f4.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 78%;
+  left: 83%;
+  cursor:pointer;
+  animation:none;
+}
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
+}
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  5%  { transform: scale(1.1,.9)   translateY(0); }
+  15%  { transform: scale(.9,1.1)   translateY(-10px); }
+  25%  { transform: scale(1.05,.95) translateY(0); }
+  28.5%  { transform: scale(1,1)      translateY(-7px); }
+  32%  { transform: scale(1,1)      translateY(0); }
+  50% { transform: scale(1,1)      translateY(0); }
+  100% { transform:scale(1,1) translateY(0);}
+}
+
 </style>
