@@ -480,7 +480,6 @@ export default {
   position: absolute;
   top: 10px;
   left: 0px;
-  // background-color: yellow;
   z-index: 4;
 }
 .button-area {
