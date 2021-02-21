@@ -50,27 +50,14 @@
           <div class="cont meja">
             <img src="/closing/meja.png" alt="meja">
           </div>
-          <div class="cont figura">
-            <img src="/closing/1.png" alt="figura"  @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont figura2">
-            <img src="/closing/gantungan-out.png" alt="figura2" :style="`opacity: ${benda.figura2}`" @mouseenter="benda.figura2 = 1" @mouseout="benda.figura2 = 0">
-          </div>
-          <div class="cont kamera">
-            <img src="/closing/cam1.png" alt="kamera"  @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont kamera2">
-            <img src="/closing/cam-out.png" alt="kamera2" :style="`opacity: ${benda.kamera2}`" @mouseenter="benda.kamera2 = 1" @mouseout="benda.kamera2 = 0">
-          </div>
+          <div class="figura"/>
+          <div class="kamera"/>
+          <div class="balon"/>
+         
           <div class="cont gantungan">
             <img src="/closing/foto.png" alt="gantungan">
           </div>
-          <div class="cont balon">
-            <img src="/closing/balon1.png" alt="balon" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont balon2">
-            <img src="/closing/balon1-out.png" alt="balon2" :style="`opacity: ${benda.balon2}`" @mouseenter="benda.balon2 = 1" @mouseout="benda.balon2 = 0">
-          </div>
+         
           <div class="cont e1">
             <img src="/closing/e1.png" alt="e1">
           </div>
@@ -83,15 +70,15 @@
           <div class="cont e3">
             <img src="/closing/e3.png" alt="e3">
           </div>
-          <div class="cont tulisanbalon">
-            <img src="/closing/balon3.png" alt="tulisanbalon">
-          </div>
           <div class="cont tulisankamera">
             <img src="/closing/cam3.png" alt="tulisankamera">
           </div>
+          <!-- <div class="cont tulisanbalon">
+            <img src="/closing/balon3.png" alt="tulisanbalon">
+          </div>
           <div class="cont tulisanfigura">
             <img src="/closing/katalog3.png" alt="tulisanfigura">
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -393,7 +380,6 @@
   transform: translate(100%, 0);
 }
 
-
 .center-anchor {
   transform: translate(-50%,-50%);
 }
@@ -428,36 +414,85 @@
   left: 6.5%;
   top: 54.5%;
 }
-.kamera{
-  width: 16%;
-  left: 79.2%;
-  top: 32%;
-}
-.kamera2{
-  width: 16%;
-  left: 79.2%;
-  top: 32%;
-}
+
 .figura{
+  background-image:url("/closing/1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
   width: 15%;
   left: 13%;
   top: 6.5%;
+  z-index: 71;
+  cursor:pointer;
 }
-.figura2{
+
+.figura:hover{
+  background-image:url("/closing/gantungan-out.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
   width: 15%;
   left: 13%;
   top: 6.5%;
+  z-index: 71;
+  cursor:pointer;
 }
+
+.kamera{
+  background-image:url("/closing/cam1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
+  width: 16%;
+  left: 79.2%;
+  top: 32%;
+  z-index: 71;
+  cursor:pointer;
+}
+
+.kamera:hover{
+  background-image:url("/closing/cam-out.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
+  width: 16%;
+  left: 79.2%;
+  top: 32%;
+  z-index: 71;
+  cursor:pointer;
+}
+
 .balon{
+  background-image:url("/closing/balon1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:50%;
   width: 17%;
   left: 26.2%;
   top: 3%;
+  z-index: 71;
+  cursor:pointer;
 }
-.balon2{
+
+.balon:hover{
+  background-image:url("/closing/balon1-out.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:50%;
   width: 17%;
   left: 26.2%;
   top: 3%;
+  z-index: 71;
+  cursor:pointer;
 }
+
 .vas{
   width: 6.3%;
   left: 6%;
