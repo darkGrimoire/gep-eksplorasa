@@ -88,12 +88,13 @@
           <div class="cont kamera">
             <img src="/fear/f-single-1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont radio">
+          <div class="cont radio" @click="popups = 'kine';tipeKarya = 'video'">
             <img src="/fear/f-radio-1.png" alt="radio" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont kucing">
             <img src="/fear/KUCING.png" alt="kucing" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -129,7 +130,7 @@
           <div class="cont trap-door">
             <img src="/fear/monster1 1.png" alt="trap door" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont tv">
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/fear/tv.gif" alt="tv">
           </div>
           <div v-show="!benda.saklar" class="cont sadako">
@@ -171,7 +172,7 @@
           <div class="cont pipa-l">
             <img src="/fear/pipaHAPE 1.png" alt="pipa">
           </div>
-          <div class="cont artikel">
+          <div class="cont artikel" @click="popups = 'kine';tipeKarya = 'artikel'">
             <img src="/fear/f-artikel-1.png" alt="artikel" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont photobook">
@@ -192,6 +193,10 @@
           <div v-show="benda.kunci" class="cont kaki">
             <img src="/fear/fearf.gif" alt="kaki">
           </div>
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -212,10 +217,14 @@
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
   export default {
     name: "Fear",
     components: {
       rcp,
+      tvPopup,
+      kinePopup
     },
     data() {
       return {
@@ -250,7 +259,9 @@
           photobook1: 0,
           kunci: false,
           ouija: 0
-        }
+        },
+        popups: '',
+        tipeKarya: ''
       }
     },
     computed: {
@@ -513,6 +524,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -633,7 +645,10 @@
 .tv {
   width: 17.2%;
   top: 32%;
-  left: 36.2%;
+  left: 36.2%; 
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .sadako {
@@ -837,5 +852,12 @@
   width: 10%;
   top: 24.7%;
   left: 51%;
+}
+
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
 }
 </style>

@@ -71,12 +71,13 @@
           </div>
           <div class="teddy" />
           <div class="bbq" />
-          <div class="ig" />
+          <div class="ig" @click="popups = 'kine';tipeKarya = 'instagram'" />
           <div class="photobook" />
-          <div class="zine" />
+          <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
           <div class="tv-popup">
             <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
           </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -124,11 +125,11 @@
           <div class="bounce bola" />
           <div class="bounce teropong" />
           <div class="bounce keranjang" />
-          <div class="bounce artikel" @click="popups = 'artikel'" />
+          <div class="bounce artikel" @click="popups = 'kine';tipeKarya = 'artikel'" />
           <div class="bounce kamera" />
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="foot" />
-          <KinePopup v-if="popups === 'artikel' && slide === 1" @closePopup="popups = ''" />
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -184,7 +185,8 @@
         benda: {
           kunci:false
         },
-        popups: ''
+        popups: '',
+        tipeKarya: ''
       }
     },
     computed: {
@@ -410,6 +412,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {

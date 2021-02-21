@@ -8,11 +8,11 @@
         <div class="left-area">
           <div class="now-showing" />
           <div class="main-poster">
-            <div class="left-arrow" @click="movePos(-1)" />
+            <div class="left-arrow-tv-popup" @click="movePos(-1)" />
             <div class="poster-area" @click="gotoKarya()">
               <img class="poster bordered">
             </div>
-            <div class="right-arrow" @click="movePos(1)" />
+            <div class="right-arrow-tv-popup" @click="movePos(1)" />
           </div>
           <div class="title-movie" @click="gotoKarya()" />
         </div>
@@ -44,7 +44,10 @@ export default {
     getRoom() {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
-      this.room = link.match(/(Joy|Sadness|`Anger`|Fear|joy|sadness|anger|fear)/i)[0]
+      this.room = link.match(/(Joy|Sad|`Anger`|Fear|joy|sad|anger|fear)/i)[0]
+      if (this.room.toLowerCase() === 'sad'){
+        this.room = 'sadness'
+      }
     },
     async getData() {
       // GET THE FILM DATA FROM THE FIREBASE
@@ -111,10 +114,10 @@ export default {
       let rArrowImg = document.createElement("img")
       lArrowImg.src = leftArrowPath
       rArrowImg.src = rightArrowPath
-      temp = document.getElementsByClassName("left-arrow")[0]
+      temp = document.getElementsByClassName("left-arrow-tv-popup")[0]
       temp.style.visibility = "hidden"
       temp.appendChild(lArrowImg)
-      temp = document.getElementsByClassName("right-arrow")[0]
+      temp = document.getElementsByClassName("right-arrow-tv-popup")[0]
       temp.appendChild(rArrowImg)
       /* Choose the bookshelf */
       if (this.room.toLowerCase() == "anger") {
@@ -193,17 +196,17 @@ export default {
         this.pos
       ]
       if (this.pos == 0) {
-        document.getElementsByClassName("left-arrow")[0].style.visibility =
+        document.getElementsByClassName("left-arrow-tv-popup")[0].style.visibility =
           "hidden"
       } else {
-        document.getElementsByClassName("left-arrow")[0].style.visibility =
+        document.getElementsByClassName("left-arrow-tv-popup")[0].style.visibility =
           "visible"
       }
       if (this.pos == this.amount - 1) {
-        document.getElementsByClassName("right-arrow")[0].style.visibility =
+        document.getElementsByClassName("right-arrow-tv-popup")[0].style.visibility =
           "hidden"
       } else {
-        document.getElementsByClassName("right-arrow")[0].style.visibility =
+        document.getElementsByClassName("right-arrow-tv-popup")[0].style.visibility =
           "visible"
       }
     },
@@ -241,7 +244,12 @@ export default {
       this.close()
     },
     gotoKarya() {
-      const tujuan = "/karya/" + this.room.toLowerCase() + this.alamat[this.pos]
+      let targetRoom = this.room
+      if (this.room.toLowerCase() === 'sadness'){
+        targetRoom = 'sad'
+      }
+      let targetUrl = this.alamat[this.pos].charAt(0) === '/' ? this.alamat[this.pos] : '/' + this.alamat[this.pos]
+      const tujuan = "/karya/" + targetRoom + targetUrl
       console.log(`|${tujuan}|`)
       this.$router.push({path: tujuan})
     }
@@ -249,7 +257,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .tvPopUp {
   position: absolute;
   width: 100vw;
@@ -328,6 +336,16 @@ export default {
   justify-content: center;
   flex-direction: column;
   flex-wrap: nowrap;
+}
+
+.left-arrow-tv-popup,
+.right-arrow-tv-popup {
+  transform: scale(1);
+  transition: transform 0.2s ease;
+  &:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
 }
 
 @media screen and (max-width: 800px) {

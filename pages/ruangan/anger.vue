@@ -88,7 +88,7 @@
           <div class="cont figura">
             <img src="/anger/a-single-1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont koran">
+          <div class="cont koran" @click="popups = 'kine';tipeKarya = 'artikel'">
             <img src="/anger/a-artikel-1.png" alt="koran" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont sampah">
@@ -100,6 +100,7 @@
           <div class="cont garpu1">
             <img src="/anger/gep anger berserakan.png" alt="garpu1">
           </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -150,7 +151,7 @@
           <div class="cont trolley">
             <img src="/anger/trolley.png" alt="trolley">
           </div>
-          <div class="cont tv">
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/anger/tgif.gif" alt="tv">
           </div>
           <div class="cont kran">
@@ -177,6 +178,10 @@
           <div class="cont kunci">
             <img src="/anger/anger1.png" alt="kunci">
           </div>
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -194,10 +199,14 @@
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
   export default {
     name: "Anger",
     components: {
       rcp,
+      tvPopup,
+      kinePopup
     },
     data() {
       return {
@@ -227,7 +236,9 @@
         },
         benda: {
           cakar: 0
-        }
+        },
+        popups: '',
+        tipeKarya: ''
       }
     },
     computed: {
@@ -488,6 +499,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -656,6 +668,9 @@
   width: 17.5%;
   top: 76.5%;
   left: 43%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .garpu{
   width: 8.5%;
@@ -712,6 +727,9 @@
   width: 12%;
   top: 30.5%;
   left: 77.5%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .kran{
   width: 38.5%;
@@ -752,5 +770,11 @@
   width: 13%;
   top: 79%;
   left: 10.5%;
+}
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
 }
 </style>

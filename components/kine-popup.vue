@@ -94,8 +94,11 @@ export default {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
       this.room = link.match(
-        /(Joy|Sadness|Anger|Fear|joy|sadness|anger|fear)/i
+        /(Joy|Sad|Anger|Fear|joy|sadness|anger|fear)/i
       )[0]
+      if (this.room.toLowerCase() === 'sad'){
+        this.room = 'sadness'
+      }
     },
     async getData() {
       // GET THE FILM DATA FROM THE FIREBASE
@@ -116,12 +119,12 @@ export default {
     initSetUp() {
       document.getElementsByClassName("kine-exit-image")[0].src =
         "/img/popup/exit-0.png"
-      const daftar = document.getElementsByClassName("daftar-kine")[0]
-      for (let i = 0; i < this.judul.length; i++) {
-        let temp = document.createElement("li")
-        temp.innerText = this.judul[i]
-        daftar.appendChild(temp)
-      }
+      // const daftar = document.getElementsByClassName("daftar-kine")[0]
+      // for (let i = 0; i < this.judul.length; i++) {
+      //   let temp = document.createElement("li")
+      //   temp.innerText = this.judul[i]
+      //   daftar.appendChild(temp)
+      // }
     },
     insertRibbon() {
       const ribbon1 = document.createElement("img")
@@ -167,6 +170,7 @@ export default {
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("kinePopup")[0].style.display = "none"
+      this.$emit('closePopup')
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
@@ -200,7 +204,12 @@ export default {
       if (this.alamat[id].includes('instagram')){
         window.open(this.alamat[id], '_blank')
       } else {
-        const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[id]
+        let targetRoom = this.room
+        if (this.room.toLowerCase() === 'sadness'){
+          targetRoom = 'sad'
+        }
+        let targetUrl = this.alamat[this.pos].charAt(0) === '/' ? this.alamat[this.pos] : '/' + this.alamat[this.pos]
+        const tujuan = "/karya/" + targetRoom + targetUrl
         this.$router.push({path: tujuan})
       }
     }

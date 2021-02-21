@@ -66,8 +66,9 @@
             <img src="/sad/psotersad.png" alt="poster">
           </div>
           <div class="book" />
-          <div class="podcast" />
+          <div class="podcast" @click="popups = 'kine';tipeKarya = 'video'" />
           <div class="single" />
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -102,14 +103,18 @@
           <div class="cont meja-pot">
             <img src="/sad/mejaa.png" alt="meja">
           </div>
-          <div class="cont tv">
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/sad/tv.png" alt="tv">
           </div>
-          <div class="zine" />
-          <div class="article" />
+          <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
+          <div class="article" @click="popups = 'kine';tipeKarya = 'artikel'" />
           <div v-show="benda.key" class="foot" />
           <div class="key" @click="benda.key = true;slide=3" />
           <div class="teropong" />
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -127,10 +132,14 @@
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
   export default {
     name: "Sad",
     components: {
       rcp,
+      tvPopup,
+      kinePopup
     },
     data() {
       return {
@@ -161,7 +170,9 @@
         benda: {
           lampu: true,
           key:false
-        }
+        },
+        popups: '',
+        tipeKarya: ''
       }
     },
     computed: {
@@ -383,6 +394,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -750,6 +762,9 @@
   width: 35%;
   top: 28.8%;
   left: 64.9%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .darkness {
@@ -785,5 +800,11 @@
   width: 100%;
   height:15%;
   top: 70%;
+}
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
 }
 </style>
