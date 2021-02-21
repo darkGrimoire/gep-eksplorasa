@@ -23,7 +23,7 @@
         <button class="skip-button" @click="skipCanvas">
           Skip
         </button>
-        <button class="next-button">
+        <button class="next-button" @click="goToTeras">
           Next
         </button>
       </div>
@@ -296,6 +296,7 @@ export default {
       ctx.stroke()
     },
     endSetup() {
+      this.resetGif()
       // FUNCTION CALLED AFTER DOTS FINISHED
       document.getElementsByClassName("dots-gif")[0].style.visibility =
         "visible"
@@ -377,6 +378,15 @@ export default {
       for (const cap_item of cap_items) {
         cap_item.style.visibility = "visible"
       }
+    },
+    goToTeras() {
+      this.$router.push({path: '/teras'})
+    },
+    resetGif(){
+      var img = document.getElementsByClassName('dots-gif')[0]
+      var imageUrl = img.getAttribute('src')
+      img.setAttribute('src', '#')
+      img.setAttribute('src', imageUrl)
     }
   }
 }
