@@ -66,7 +66,7 @@
             <img src="/closing/foto.png" alt="gantungan">
           </div>
           <div class="cont balon">
-            <img src="/closing/balon1.png" alt="balon"  @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+            <img src="/closing/balon1.png" alt="balon" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont balon2">
             <img src="/closing/balon1-out.png" alt="balon2" :style="`opacity: ${benda.balon2}`" @mouseenter="benda.balon2 = 1" @mouseout="benda.balon2 = 0">
@@ -86,7 +86,7 @@
           <div class="cont tulisanbalon">
             <img src="/closing/balon3.png" alt="tulisanbalon">
           </div>
-         <div class="cont tulisankamera">
+          <div class="cont tulisankamera">
             <img src="/closing/cam3.png" alt="tulisankamera">
           </div>
           <div class="cont tulisanfigura">
@@ -188,6 +188,7 @@
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
         // TODO: Add on enter animation here
+        localStorage.setItem('closing', true)
         this.slide = 1
       }})
     },

@@ -6,9 +6,15 @@
     </div>
 
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
-    <div v-show="slide === 3" class="narasi">
-      {{ msg }}
+    <div class="narasi narasi-masuk" style="display: none;">
+      {{ msg.masuk }}
     </div>
+    <div class="narasi narasi-keluar" style="display: none;">
+      {{ msg.keluar }}
+    </div>
+    <div class="narasi narasi-closing" style="display: none;">
+      {{ msg.closing }}
+    </div>    
 
     <div id="slide0" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide0+'% '+sign+' '+Math.abs(computedDisplacement)+'px), -50%)'}" 
@@ -209,7 +215,16 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here',
+        msg: {
+          masuk: 'Kesal, jengkel, tidak terima, tak adil rasanya, tidak seharusnya seperti ini. Ingin meledak, ingin marah. ',
+          keluar: 'Marah telah diluapkan. Keluh kesah sudah dibuang. Sedikit kelegaan muncul. Semangat yang baru pun timbul. Hal-hal kecil yang menyenangkan kembali terlihat setelah tertutup amarah dan hal pahit lainnya.',
+          closings: [
+            'Akhirnya amarah pun dilepaskan. Tapi tak apa, setidaknya sekarang sedikit lebih lega.',
+            'Ruang-ruang rasa telah dikunjungi. Tiap emosi telah dikenali. Rasa sudah dieksplorasi. Melalui eksplorasi rasa ini tiap perasaan tertuangkan menjadi suatu bentuk karya. Rasa-rasa ini pastinya tidak asing, tapi selalu ada ruang untuk eksplorasi. Rasa dapat berkembang, berubah, dan dibentuk menjadi suatu yang indah. ',
+            'Akhir kata, semoga melalui ini, perasaan yang biasa kamu lalui dapat menjadi temanmu untuk berkarya. Dan semoga kesenangan kamu di hari ini bertahan lama ya! (Terima kasih.)'
+          ],
+          closing: ''
+        },
         benda: {
           cakar: 0
         }
@@ -237,22 +252,37 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          // if (this.isAllRoomVisited()){
-          //   this.$router.push({path: CLOSING})
-          // } else {
-            gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
-            gsap.to('.transitionfade-out', {x: '40%', duration: .7})
-            gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
-            gsap.to('.narasi', {opacity: 1, duration: 2, delay: 2})
-            document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 5, onComplete: () => {
-              if (this.isAllRoomVisited()){
-                this.$router.push({path: CLOSING})
-                } else {
-                this.$router.push({path: NEXT_ROOM})
-              }
+          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+          gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+          gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
+          if (this.isClosingVisited()){
+            this.$router.push({path: CLOSING})
+          }
+          if (this.isAllRoomVisited()){
+            // animasi closing
+            document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
+            this.msg.closing = this.msg.closings[0]
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 7, onComplete: () =>{
+              this.msg.closing = this.msg.closings[1]
             }})
-          // }
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 7.5})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 14.5, onComplete: () => {
+              this.msg.closing = this.msg.closings[2]
+            }})
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 15})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 20, onComplete: () => {
+              this.$router.push({path: CLOSING})
+            }})
+          } else {
+            // animasi keluar
+            document.getElementsByClassName('narasi-keluar')[0].style.display = 'block'
+            gsap.to('.narasi-keluar', {opacity: 1, duration: 2, delay: 2})
+            document.getElementsByClassName('loading')[0].style.display = 'block'
+            gsap.to('.loading', {opacity: 1, duration: 1, delay: 7, onComplete: () => {
+              this.$router.push({path: NEXT_ROOM})
+            }})
+          }
         }
       }
     },
@@ -260,14 +290,28 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
-      localStorage.setItem('anger', true)
 
       // wait for loading to finish
-      gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
-        document.getElementsByClassName('loading')[0].style.display = 'none'
-        // TODO: Add on enter animation here
-        this.slide = 1
-      }})
+      //animasi masuk
+      if (this.isAllRoomVisited()){
+        gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
+          document.getElementsByClassName('loading')[0].style.display = 'none'
+          // TODO: Add on enter animation here
+          localStorage.setItem('anger', true)
+          this.slide = 1
+        }})
+      } else {
+        document.getElementsByClassName('narasi-masuk')[0].style.display = 'block'
+        gsap.to('.narasi-masuk', {opacity: 1,  duration: .5})
+        gsap.to('.narasi-masuk', {opacity: 0, delay: 3, duration: .5})
+        gsap.to('.loading', {opacity: 0, delay: 3, duration: .2, onComplete: () => {
+          document.getElementsByClassName('loading')[0].style.display = 'none'
+          document.getElementsByClassName('narasi-masuk')[0].style.display = 'none'
+          localStorage.setItem('anger', true)
+          // TODO: Add on enter animation here
+          this.slide = 1
+        }})
+      }
     },
     methods: {
       switchSlide(val){
@@ -276,6 +320,9 @@
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isClosingVisited(){
+        return localStorage.getItem('closing')
       },
       startDrag(e) {
         if (window.matchMedia("(orientation: portrait)").matches){
@@ -341,7 +388,7 @@
 
         
       handleObjChange(e){
-        console.log(e)
+        // console.log(e)
         if (e.target.getAttribute('src') === "/anger/kulklos.png"){
           e.target.setAttribute('src', "/anger/kulopen.png")
         } else if (e.target.getAttribute('src') === "/anger/meong2.png"){
@@ -363,7 +410,7 @@
         } 
       },
       handleObjChangeEnd(e){
-        console.log(e)
+        // console.log(e)
         if (e.target.getAttribute('src') === "/anger/kulopen.png"){
           e.target.setAttribute('src', "/anger/kulklos.png")
         } else if (e.target.getAttribute('src') === "/anger/meong.png"){
@@ -457,10 +504,11 @@
   position: absolute;
   top: 20%;
   left: 50%;
+  width: 80vw;
   transform: translate(-50%,0);
   z-index: 99;
   font-family: 'Mechanical Pencil';
-  font-size: 75px;
+  font-size: 50px;
   color: rgba($color: white, $alpha: .9);
   // background-image: linear-gradient(to right, rgba($color: white, $alpha: .1), transparent);
   // -webkit-background-clip: text;
@@ -469,6 +517,19 @@
   // -moz-text-fill-color: transparent;
   opacity: 0;
   text-align: center;
+}
+
+.narasi-masuk {
+  z-index: 10000;
+}
+
+.narasi-closing {
+  font-size: 40px;
+  z-index: 10000;
+}
+
+.narasi-keluar {
+  font-size: 40px;
 }
 
 .cont {
