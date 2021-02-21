@@ -1,5 +1,5 @@
 <template>
-  <div class="tvPopup" @click="bodyClick">
+  <div class="tvPopUp" @click="bodyClick">
     <div class="popupwindow bordered">
       <div class="x-button">
         <img class="exit-image" @click="close()" />
@@ -36,22 +36,18 @@ export default {
   },
   mounted() {
     this.getRoom()
-    this.getFilmData()
+    this.getData()
     this.initSetUp()
-    window.addEventListener("resize", this.windowChange)
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.windowChange)
   },
   methods: {
     getRoom() {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
-      this.room = link.match(/(Joy|Sadness|Anger|Fear)/i)[0]
+      this.room = link.match(/(Joy|Sadness|`Anger`|Fear|joy|sadness|anger|fear)/i)[0]
     },
-    async getFilmData() {
+    async getData() {
       // GET THE FILM DATA FROM THE FIREBASE
-      if (this.room == "Fear") {
+      if (this.room.toLowerCase() == "fear") {
         return
       }
       const testing = await this.$fire.firestore
@@ -67,24 +63,24 @@ export default {
       })
       this.amount = this.poster.length
     },
-    async initSetUp() {
+    initSetUp() {
       // SET UP THE COMPONENT BASED ON THE ROOM
       // JOY 1 SADNESS 2 ANGER 3
 
-      if (this.room == "Fear") {
+      if (this.room.toLowerCase() == "fear") {
         this.initSetUpFear()
         return
       }
       let id_room = 0
       /* Color based on the room */
       let color = ""
-      if (this.room == "Joy") {
+      if (this.room.toLowerCase() == "joy") {
         color = "#D1BB10"
         id_room = 1
-      } else if (this.room == "Sadness") {
+      } else if (this.room.toLowerCase() == "sadness") {
         color = "#305FE9"
         id_room = 2
-      } else if (this.room == "Anger") {
+      } else if (this.room.toLowerCase() == "anger") {
         color = "#E14423"
         id_room = 3
       } else {
@@ -95,15 +91,15 @@ export default {
       /* Choose the x button and insert it */
       this.insertExitButton(id_room)
       /* Choose the now showing and insert it */
-      const ns_path = "/img/tv/ns-" + id_room + ".png"
+      const ns_path = "/img/popup/ns-" + id_room + ".png"
       let ns_img = document.createElement("img")
       ns_img.src = ns_path
       ns_img.style.width = "60%"
       let temp = document.getElementsByClassName("now-showing")[0]
       temp.appendChild(ns_img)
       /* Choose the arrow and insert it*/
-      const leftArrowPath = "/img/tv/LPolygon-" + id_room + ".png"
-      const rightArrowPath = "/img/tv/RPolygon-" + id_room + ".png"
+      const leftArrowPath = "/img/popup/LPolygon-" + id_room + ".png"
+      const rightArrowPath = "/img/popup/RPolygon-" + id_room + ".png"
       let lArrowImg = document.createElement("img")
       let rArrowImg = document.createElement("img")
       lArrowImg.src = leftArrowPath
@@ -114,21 +110,21 @@ export default {
       temp = document.getElementsByClassName("right-arrow")[0]
       temp.appendChild(rArrowImg)
       /* Choose the bookshelf */
-      if (this.room == "Anger") {
-        const shelf_path = "/img/tv/rak-" + this.room + ".png"
+      if (this.room.toLowerCase() == "anger") {
+        const shelf_path = "/img/popup/rak-" + this.room.toLowerCase()+ ".png"
         let shelf_img = document.createElement("img")
         shelf_img.src = shelf_path
         shelf_img.classList.add("shelf")
         shelf_img.style.width = "75%"
         temp = document.getElementsByClassName("right-area")[0]
         temp.appendChild(shelf_img)
-      } else if (this.room == "Joy" || this.room == "Sadness") {
-        const shelf_path_1 = "/img/tv/rak-" + this.room + "-1.png"
+      } else if (this.room.toLowerCase()== "joy" || this.room.toLowerCase()== "sadness") {
+        const shelf_path_1 = "/img/popup/rak-" + this.room.toLowerCase()+ "-1.png"
         let shelf_img_1 = document.createElement("img")
         shelf_img_1.src = shelf_path_1
         shelf_img_1.classList.add("shelf")
         shelf_img_1.style.width = "60%"
-        const shelf_path_2 = "/img/tv/rak-" + this.room + "-2.png"
+        const shelf_path_2 = "/img/popup/rak-" + this.room.toLowerCase()+ "-2.png"
         let shelf_img_2 = document.createElement("img")
         shelf_img_2.src = shelf_path_2
         shelf_img_2.classList.add("shelf")
@@ -151,7 +147,7 @@ export default {
       this.setUpBorderColor(color)
       this.insertExitButton(4)
       document.getElementsByClassName("left-area")[0].style.display = "none"
-      const shelf_path = "/img/tv/rak-" + this.room + ".png"
+      const shelf_path = "/img/popup/rak-" + this.room.toLowerCase()+ ".png"
       let shelf_img = document.createElement("img")
       shelf_img.src = shelf_path
       shelf_img.classList.add("shelf")
@@ -170,7 +166,7 @@ export default {
     },
     insertExitButton(id_room) {
       // INSERT THE X BUTTON BASED ON THE id_room
-      const exit_path = "/img/tv/exit-" + id_room + ".png"
+      const exit_path = "/img/popup/exit-" + id_room + ".png"
       let temp_x = document.getElementsByClassName("exit-image")[0]
       temp_x.src = exit_path
     },
@@ -205,7 +201,7 @@ export default {
     },
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
-      document.getElementsByClassName("tvPopup")[0].style.display = "none"
+      document.getElementsByClassName("tvPopUp")[0].style.display = "none"
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
@@ -240,7 +236,7 @@ export default {
 </script>
 
 <style>
-.tvPopup {
+.tvPopUp {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -261,6 +257,7 @@ export default {
   background-color: rgb(0, 0, 0);
   border: 2px solid;
   padding: 1vw 1vh;
+  z-index: 1001
 }
 .x-button {
   display: flex;
