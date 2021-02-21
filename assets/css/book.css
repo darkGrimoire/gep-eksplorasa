@@ -124,7 +124,7 @@
 	left:219px;
 }
 
-.book-viewport .shadow{
+/* .book-viewport .shadow{
 	-webkit-transition: -webkit-box-shadow 0.5s;
 	-moz-transition: -moz-box-shadow 0.5s;
 	-o-transition: -webkit-box-shadow 0.5s;
@@ -135,12 +135,12 @@
 	-o-box-shadow:0 0 20px #ccc;
 	-ms-box-shadow:0 0 20px #ccc;
 	box-shadow:0 0 20px #ccc;
-}
+} */
 
 .book-viewport .next-button,
 .book-viewport .previous-button{
 	width:22px;
-	height:650px;
+	height:100%;
 	position:absolute;
 	top:0;
 }
@@ -171,7 +171,7 @@
 .book-viewport .previous-button-hover,
 .book-viewport .previous-button-down{
 	background-image:url("/book/pics/arrows.png");
-	background-position:-4px 284px;
+	background-position:-4px 50%;
 	background-repeat:no-repeat;
 }
 
@@ -183,7 +183,7 @@
 .book-viewport .next-button-hover,
 .book-viewport .next-button-down{
 	background-image:url("/book/pics/arrows.png");
-	background-position:-38px 284px;
+	background-position:-38px 50%;
 	background-repeat:no-repeat;
 }
 
