@@ -23,11 +23,12 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    { src: '@/plugins/vue-awesome-swiper', mode: 'client' },
   ],
 
   router: {
     // ran before every route on both client and server
-    middleware: 'redirect'
+    middleware: 'redirect' // ONLY ENABLE IN MASTER BRANCH COMING SOON DEPLOYMENT
   },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -62,7 +63,16 @@ export default {
           analytics: true
         }
       }
-    ]
+    ],
+    ['nuxt-fontawesome', {
+      component: 'fa',
+      imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['faChevronRight','faChevronLeft', 'faTimes', 'faBookOpen', 'faSearchPlus', 'faCaretLeft', 'faCaretRight']
+        }
+      ]
+    }]
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
