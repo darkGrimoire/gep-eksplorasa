@@ -23,5 +23,6 @@ export default {
   background-color: white;
   background-size: 100% auto;
   color: aquamarine;
+  z-index: 999;
 }
 </style>

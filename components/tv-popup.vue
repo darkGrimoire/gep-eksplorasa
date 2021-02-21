@@ -1,22 +1,22 @@
 <template>
   <div class="tvPopup" @click="bodyClick">
     <div class="popupwindow bordered">
-      <div class="x-button bordered">
+      <div class="x-button">
         <img class="exit-image" @click="close()" />
       </div>
-      <div class="main-popup bordered">
-        <div class="left-area bordered">
-          <div class="now-showing bordered"></div>
-          <div class="main-poster bordered">
-            <div class="left-arrow bordered" @click="movePos(-1)"></div>
-            <div class="poster-area bordered">
+      <div class="main-popup">
+        <div class="left-area">
+          <div class="now-showing"></div>
+          <div class="main-poster">
+            <div class="left-arrow" @click="movePos(-1)"></div>
+            <div class="poster-area">
               <img class="poster bordered" />
             </div>
-            <div class="right-arrow bordered" @click="movePos(1)"></div>
+            <div class="right-arrow" @click="movePos(1)"></div>
           </div>
-          <div class="title-movie bordered"></div>
+          <div class="title-movie"></div>
         </div>
-        <div class="right-area bordered"></div>
+        <div class="right-area"></div>
       </div>
     </div>
   </div>
@@ -58,7 +58,8 @@ export default {
         .collection("karya")
         .doc("routes")
         .collection(this.room.toLowerCase())
-        .doc("video").get()
+        .doc("video")
+        .get()
       const temp_path = testing.data().routes
       temp_path.forEach(item => {
         this.judul.push(item.judul)
@@ -69,7 +70,7 @@ export default {
     async initSetUp() {
       // SET UP THE COMPONENT BASED ON THE ROOM
       // JOY 1 SADNESS 2 ANGER 3
-      
+
       if (this.room == "Fear") {
         this.initSetUpFear()
         return
@@ -113,18 +114,29 @@ export default {
       temp = document.getElementsByClassName("right-arrow")[0]
       temp.appendChild(rArrowImg)
       /* Choose the bookshelf */
-      const shelf_path = "/img/tv/rak-" + this.room + ".png"
-      let shelf_img = document.createElement("img")
-      shelf_img.src = shelf_path
-      shelf_img.classList.add("shelf")
       if (this.room == "Anger") {
+        const shelf_path = "/img/tv/rak-" + this.room + ".png"
+        let shelf_img = document.createElement("img")
+        shelf_img.src = shelf_path
+        shelf_img.classList.add("shelf")
         shelf_img.style.width = "75%"
+        temp = document.getElementsByClassName("right-area")[0]
+        temp.appendChild(shelf_img)
       } else if (this.room == "Joy" || this.room == "Sadness") {
-        shelf_img.style.width = "60%"
+        const shelf_path_1 = "/img/tv/rak-" + this.room + "-1.png"
+        let shelf_img_1 = document.createElement("img")
+        shelf_img_1.src = shelf_path_1
+        shelf_img_1.classList.add("shelf")
+        shelf_img_1.style.width = "60%"
+        const shelf_path_2 = "/img/tv/rak-" + this.room + "-2.png"
+        let shelf_img_2 = document.createElement("img")
+        shelf_img_2.src = shelf_path_2
+        shelf_img_2.classList.add("shelf")
+        shelf_img_2.style.width = "60%"
+        temp = document.getElementsByClassName("right-area")[0]
+        temp.appendChild(shelf_img_1)
+        temp.appendChild(shelf_img_2)
       }
-      temp = document.getElementsByClassName("right-area")[0]
-      temp.appendChild(shelf_img)
-
       /* Set up poster and title */
       this.pos = 0
       document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
@@ -156,9 +168,9 @@ export default {
       })
       document.getElementsByClassName("popupwindow")[0].style.color = color
     },
-    insertExitButton (id_room) {
+    insertExitButton(id_room) {
       // INSERT THE X BUTTON BASED ON THE id_room
-      const exit_path = "/img/tv/exit-"+id_room+".png"
+      const exit_path = "/img/tv/exit-" + id_room + ".png"
       let temp_x = document.getElementsByClassName("exit-image")[0]
       temp_x.src = exit_path
     },
@@ -195,13 +207,21 @@ export default {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("tvPopup")[0].style.display = "none"
     },
-    isInsidePopUpWindow(x,y) {
+    isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
-      const x1 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().left
-      const x2 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().right
-      const y1 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().top
-      const y2 = document.getElementsByClassName("popupwindow")[0].getBoundingClientRect().bottom
-      if (((x > x1) && (x < x2)) && ((y> y1) && (y < y2))) {
+      const x1 = document
+        .getElementsByClassName("popupwindow")[0]
+        .getBoundingClientRect().left
+      const x2 = document
+        .getElementsByClassName("popupwindow")[0]
+        .getBoundingClientRect().right
+      const y1 = document
+        .getElementsByClassName("popupwindow")[0]
+        .getBoundingClientRect().top
+      const y2 = document
+        .getElementsByClassName("popupwindow")[0]
+        .getBoundingClientRect().bottom
+      if (x > x1 && x < x2 && y > y1 && y < y2) {
         return true
       }
       return false
@@ -230,7 +250,8 @@ export default {
   background-size: 100% auto;
   background-repeat: repeat-y;
   background-position: center top;
-  overflow: auto
+  overflow: auto;
+  z-index: 1000;
 }
 .popupwindow {
   position: absolute;
@@ -288,6 +309,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 @media screen and (max-width: 800px) {
   .popupwindow {
@@ -299,10 +322,7 @@ export default {
     justify-content: center;
   }
   .right-area {
-    height: 15%;
-  }
-  .shelf {
-    height: 10%;
+    flex-wrap:wrap;
   }
 }
 </style>
