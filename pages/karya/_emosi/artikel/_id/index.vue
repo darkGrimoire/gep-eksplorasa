@@ -5,7 +5,7 @@
       <img src="/templatekine/g2 kuning.png" class="g2">
 
       <div class="layer2">
-        <div class="fotoo">
+        <div v-if="dataKarya.photos" class="fotoo">
           <fa :icon="['fas', 'caret-left']" class="leftarrow arrow" @click="switchPhoto(-1)" />
           <zoom-photo :poster="dataKarya.photoMin" 
                       :full="dataKarya.photo" 
@@ -81,7 +81,8 @@ export default {
           this.dataKarya.author = data.author
           this.dataKarya.paragraphs = data.paragraphs
           this.dataKarya.photos = data.photos
-          this.handleMins(data.photos)
+          if (data.photos)
+            this.handleMins(data.photos)
           this.dataKarya.next = data.next
           this.dataKarya.prev = data.prev
           this.dataKarya.par_space = (data.par_space || '      ') 
@@ -90,9 +91,13 @@ export default {
 
           this.processParagraphs()
           this.computedJudul = this.handlePipeline(this.dataKarya.judul)
-          this.dataKarya.photo = this.dataKarya.photos[0]
-          this.dataKarya.photoMin = this.dataKarya.photoMins[0]
-          this.preloadImages()
+          if (data.photos) {
+            this.dataKarya.photo = this.dataKarya.photos[0]
+            this.dataKarya.photoMin = this.dataKarya.photoMins[0]
+            this.preloadImages()
+          } else {
+            document.getElementsByClassName('layer2')[0].style.justifyContent = 'center'
+          }
         })
         .catch((err) => {
           console.log(err)
@@ -342,7 +347,6 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 80vh;
-    margin-top: 50px;
   }
 
   .paperr {

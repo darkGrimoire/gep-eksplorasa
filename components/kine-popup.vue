@@ -2,11 +2,11 @@
   <div class="kinePopup" @click="bodyClick">
     <div class="kinepopupwindow">
       <div class="kine-x-button">
-        <img class="kine-exit-image" @click="close()" />
+        <img class="kine-exit-image" @click="close()">
       </div>
       <ol class="daftar-kine">
         <li v-for="(item,index) in judul" :key="index" @click="keKarya(index)">
-          {{item}}
+          {{ item }}
         </li>
       </ol>
     </div>
@@ -15,6 +15,12 @@
 
 <script setup>
 export default {
+  props: {
+    tipeKarya: {
+      type: String,
+      default: undefined
+    },
+  },
   data() {
     return {
       room: "",
@@ -22,9 +28,9 @@ export default {
       alamat: []
     }
   },
-  mounted() {
+  async mounted() {
     this.getRoom()
-    this.getData()
+    await this.getData()
     this.initSetUp()
     // this.insertRibbon()
     // window.addEventListener("resize", this.windowChange)
@@ -101,8 +107,10 @@ export default {
         .get()
       const temp_path = testing.data().routes
       temp_path.forEach(item => {
-        this.judul.push(item.judul)
-        this.alamat.push(item.route)
+        if (item.route.includes(this.tipeKarya)){
+          this.judul.push(item.judul)
+          this.alamat.push(item.route)
+        }
       })
     },
     initSetUp() {
@@ -189,8 +197,12 @@ export default {
       this.close()
     },
     keKarya(id) {
-      const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[id]
-      this.$router.push({path: tujuan})
+      if (this.alamat[id].includes('instagram')){
+        window.open(this.alamat[id], '_blank')
+      } else {
+        const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[id]
+        this.$router.push({path: tujuan})
+      }
     }
   }
 }

@@ -1,15 +1,15 @@
 <template>
   <div class="testing-kine-popup">
     <p>Heihihefiep</p>
-    <kine-popup></kine-popup>
+    <kine-popup :tipe-karya="'artikel'" />
   </div>
 </template>
 
 <script>
 import kinePopup from "~/components/kine-popup.vue"
 export default {
-  components: { kinePopup },
   name: "TestPopUp",
+  components: { kinePopup },
   data() {
     return {
       test: true

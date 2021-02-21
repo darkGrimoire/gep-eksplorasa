@@ -2,22 +2,21 @@
   <div class="tvPopUp" @click="bodyClick">
     <div class="popupwindow bordered">
       <div class="x-button">
-        <img class="exit-image" @click="close()" />
+        <img class="exit-image" @click="close()">
       </div>
       <div class="main-popup">
         <div class="left-area">
-          <div class="now-showing"></div>
+          <div class="now-showing" />
           <div class="main-poster">
-            <div class="left-arrow" @click="movePos(-1)"></div>
+            <div class="left-arrow" @click="movePos(-1)" />
             <div class="poster-area" @click="gotoKarya()">
-              <img class="poster bordered" />
+              <img class="poster bordered">
             </div>
-            <div class="right-arrow" @click="movePos(1)"></div>
+            <div class="right-arrow" @click="movePos(1)" />
           </div>
-          <div class="title-movie" @click="gotoKarya()">
-          </div>
+          <div class="title-movie" @click="gotoKarya()" />
         </div>
-        <div class="right-area"></div>
+        <div class="right-area" />
       </div>
     </div>
   </div>
@@ -36,9 +35,9 @@ export default {
       amount: 0
     }
   },
-  mounted() {
+  async mounted() {
     this.getRoom()
-    this.getData()
+    await this.getData()
     this.initSetUpTV()
   },
   methods: {
@@ -65,10 +64,11 @@ export default {
         this.alamat.push(item.route)
       })
       this.amount = this.poster.length
-      document.getElementsByClassName("poster")[0].src = (this.poster[0] || "/loading.svg")
-      document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
-        0
-      ] || "Loading")
+      // this.pos = 0
+      // document.getElementsByClassName("poster")[0].src = (this.poster[0] || "/loading.svg")
+      // document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
+      //   0
+      // ] || "Loading")
     },
     initSetUpTV() {
       // SET UP THE COMPONENT BASED ON THE ROOM
@@ -141,7 +141,7 @@ export default {
         temp.appendChild(shelf_img_2)
       }
       /* Set up poster and title */
-      this.pos = -1
+      this.pos = 0
       document.getElementsByClassName("poster")[0].src = (this.poster[this.pos] || "/loading.svg")
       document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
         this.pos
@@ -210,6 +210,7 @@ export default {
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("tvPopUp")[0].style.display = "none"
+      this.$emit('closePopup')
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
@@ -240,7 +241,8 @@ export default {
       this.close()
     },
     gotoKarya() {
-      const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[this.pos]
+      const tujuan = "/karya/" + this.room.toLowerCase() + this.alamat[this.pos]
+      console.log(`|${tujuan}|`)
       this.$router.push({path: tujuan})
     }
   }

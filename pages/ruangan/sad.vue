@@ -65,10 +65,9 @@
           <div class="cont poster">
             <img src="/sad/psotersad.png" alt="poster">
           </div>
-          <div class="book"></div>
-          <div class="podcast"></div>
-          <div class="single"></div>
-          
+          <div class="book" />
+          <div class="podcast" />
+          <div class="single" />
         </div>
       </div>
     </div>
@@ -86,7 +85,7 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont transitionfade-out"/>
+          <div class="cont transitionfade-out" />
           <div v-show="!benda.lampu" class="cont darkness" />
           <div class="cont guide" style="display: none;">
             <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
@@ -99,19 +98,18 @@
           <div class="cont floor">
             <img src="/sad/lantaisad.png" alt="floor">
           </div>
-          <div class="lemari">
-          </div>
+          <div class="lemari" />
           <div class="cont meja-pot">
             <img src="/sad/mejaa.png" alt="meja">
           </div>
           <div class="cont tv">
             <img src="/sad/tv.png" alt="tv">
           </div>
-          <div class="zine"></div>
-          <div class="article"></div>
-          <div class="foot" v-show="benda.key"></div>
-          <div class="key" @click="benda.key = true;slide=3"></div>
-          <div class="teropong"></div>
+          <div class="zine" />
+          <div class="article" />
+          <div v-show="benda.key" class="foot" />
+          <div class="key" @click="benda.key = true;slide=3" />
+          <div class="teropong" />
         </div>
       </div>
     </div>
@@ -224,6 +222,9 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -231,7 +232,7 @@
 
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           // TODO: Add on enter animation here
@@ -261,6 +262,9 @@
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('sad')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -307,17 +311,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
 

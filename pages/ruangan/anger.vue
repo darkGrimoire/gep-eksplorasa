@@ -286,6 +286,9 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -293,7 +296,7 @@
 
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           // TODO: Add on enter animation here
@@ -320,6 +323,9 @@
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('anger')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -366,17 +372,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
         if (this.slide === 2 && e.key === "ArrowLeft"){

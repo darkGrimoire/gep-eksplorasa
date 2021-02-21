@@ -63,17 +63,20 @@
           <div class="cont karpet">
             <img src="/joy/karpet 1.png" alt="karpet">
           </div>
-          <div class="cont tv">
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/joy/tv 1.png" alt="tv">
           </div>
           <div class="cont pohon">
             <img src="/joy/pohon 1.png" alt="pohon">
           </div>
-          <div class="teddy"/>
-          <div class="bbq"/>
-          <div class="ig"/>
-          <div class="photobook"/>
-          <div class="zine"/>
+          <div class="teddy" />
+          <div class="bbq" />
+          <div class="ig" />
+          <div class="photobook" />
+          <div class="zine" />
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
+          </div>
         </div>
       </div>
     </div>
@@ -117,14 +120,15 @@
           <div class="cont pasir">
             <img src="/joy/pasir 1.png" alt="pasir">
           </div>
-          <div class="bounce single"/>
-          <div class="bounce bola"/>
-          <div class="bounce teropong"/>
-          <div class="bounce keranjang"/>
-          <div class="bounce artikel"/>
-          <div class="bounce kamera"/>
-          <div class="bounce kunci" @click="benda.kunci = true;slide=3"/>
-          <div class="foot" v-show="benda.kunci"/>
+          <div class="bounce single" />
+          <div class="bounce bola" />
+          <div class="bounce teropong" />
+          <div class="bounce keranjang" />
+          <div class="bounce artikel" @click="popups = 'artikel'" />
+          <div class="bounce kamera" />
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div v-show="benda.kunci" class="foot" />
+          <KinePopup v-if="popups === 'artikel' && slide === 1" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -141,11 +145,15 @@
   const NEXT_ROOM = '/ruangan/fear'
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
   import rcp from '~/components/rcp.vue'
   export default {
     name: "Joy",
     components: {
       rcp,
+      tvPopup,
+      kinePopup
     },
     data() {
       return {
@@ -175,7 +183,8 @@
         },
         benda: {
           kunci:false
-        }
+        },
+        popups: ''
       }
     },
     computed: {
@@ -237,13 +246,16 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           // TODO: Add on enter animation here
@@ -277,6 +289,9 @@
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('joy')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -323,17 +338,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
 
@@ -489,6 +506,9 @@
   width: 25%;
   top: 37.5%;
   left: 62.9%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .pohon {
   width: 41.2%;
@@ -910,4 +930,10 @@
   100% { transform:scale(1,1) translateY(0);}
 }
 
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
+}
 </style>
