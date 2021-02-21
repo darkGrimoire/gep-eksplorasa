@@ -1,227 +1,61 @@
 <template>
   <div class="container">
     <div class="content">
-      <img src="/templatekine/g1 kuning.png" class="g1">
-      <img src="/templatekine/g2 kuning.png" class="g2">
+        <img src="/templatekine/g1 kuning.png" class="g1">
+        <img src="/templatekine/g2 kuning.png" class="g2">
 
-      <div class="layer2">
-        <div class="fotoo">
-          <fa :icon="['fas', 'caret-left']" class="leftarrow arrow" @click="switchPhoto(-1)" />
-          <zoom-photo :poster="dataKarya.photoMin" 
-                      :full="dataKarya.photo" 
-                      :container-class="'poster-container left-side'"
-                      :poster-class="'poster-img'"
-          />
-          <fa :icon="['fas', 'caret-right']" class="rightarrow arrow" @click="switchPhoto(1)" />
-        </div>
+        <div class="layer2">
+            <div class="fotoo">
+                <fa :icon="['fas', 'caret-left']" class="leftarrow arrow"/>
+                <img src="/guide-fear1.png">
+                <fa :icon="['fas', 'caret-right']" class="rightarrow arrow"/>
+            </div>
             
-        <div class="paper">
-          <img src="/templatekine/paper.png" class="paperr">
-          <img src="/templatekine/paper.png" class="paperr">
-          <img src="/templatekine/paper.png" class="paperrr">
-          <img src="/templatekine/paper.png" class="paperrrr">
+            <div class="paper">
+                <img src="/templatekine/paper.png" class="paperr">
+                <img src="/templatekine/paper.png" class="paperr">
+                <img src="/templatekine/paper.png" class="paperrr">
+                <img src="/templatekine/paper.png" class="paperrrr">
         
-          <div class="papertext">
-            <img src="/templatekine/joy.png" class="header">
-            <div class="judul" v-html="computedJudul" />
-            <div class="author">
-              {{ dataKarya.author }}
-            </div>
-            <div class="isi">
-              <p v-for="(paragraph, idx) in computedParagraphs" :key="idx" class="para" v-html="paragraph" />
-            </div>
-          </div>
+                <div class="papertext">
+                    <img src="/templatekine/joy.png" class="header">
+                    <div class="judul">
+                        The Misconceptions of Us
+                    </div>
+                    <div class="author">
+                        Unknown
+                    </div>
+                    <div class="isi">
+                        <p>You are my word, my sentence, my entire language. I may have other thoughts, I may dream other dreams. But in the end, I’m only speaking of you. Even if I endlessly count the stars and not try to dream, there remain countless reasons of why I think of you all night.</p>
+                        <br>
+                        <p>You are my word, my sentence, my entire language. I may have other thoughts, I may dream other dreams. But in the end, I’m only speaking of you. Even if I endlessly count the stars and not try to dream, there remain countless reasons of why I think of you all night.</p>
+                        <br>
+                        <p>You are my word, my sentence, my entire language. I may have other thoughts, I may dream other dreams. But in the end, I’m only speaking of you. Even if I endlessly count the stars and not try to dream, there remain countless reasons of why I think of you all night.</p>
+                        <br>
+                        <p>You are my word, my sentence, my entire language. I may have other thoughts, I may dream other dreams. But in the end, I’m only speaking of you. Even if I endlessly count the stars and not try to dream, there remain countless reasons of why I think of you all night.</p>
+                        <br>
+                        <p>You are my word, my sentence, my entire language. I may have other thoughts, I may dream other dreams. But in the end, I’m only speaking of you. Even if I endlessly count the stars and not try to dream, there remain countless reasons of why I think of you all night.</p>
+                        <br>
+                        <p>You are my word, my sentence, my entire language. I may have other thoughts, I may dream other dreams. But in the end, I’m only speaking of you. Even if I endlessly count the stars and not try to dream, there remain countless reasons of why I think of you all night.</p>
+                        <br>
+                        <p>You are my word, my sentence, my entire language. I may have other thoughts, I may dream other dreams. But in the end, I’m only speaking of you. Even if I endlessly count the stars and not try to dream, there remain countless reasons of why I think of you all night.</p>
+                    </div>
+                </div>
 
-          <div class="printilan">
-            <img src="/templatekine/tape kuning.png" class="tape">
-          </div>
+                <div class="printilan">
+                  <img src="/templatekine/tape kuning.png" class="tape">
+                </div>
+
+            </div>
         </div>
-      </div>
     </div>
-    <rcp />
   </div>
 </template>
 
 <script>
-import rcp from '~/components/rcp.vue'
-import ZoomPhoto from '~/components/ZoomPhoto.vue'
+
 export default {
-  name: 'TemplateArtikel',
-  components: {
-    rcp,
-    ZoomPhoto
-  },
-  async asyncData({ params }) {
-      const emosi = params.emosi
-      const id = params.id
-      return { emosi, id }
-    },
-  data() {
-    return {
-      dataKarya: {
-        judul: '',
-        author: '',
-        photo: '',
-        photoMin: '',
-        photos: [],
-        photoMins: [],
-        paragraphs: [],
-      },
-      dbLoading: true,
-      computedParagraphs: [],
-      computedJudul: ''
-    }
-  },
-  mounted () {
-    const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('artikel').doc(this.id)
-      karyaRef.get()
-        .then(doc => {
-          let data = {id: doc.id, ...doc.data()}
-          this.dataKarya.judul = data.judul
-          this.dataKarya.author = data.author
-          this.dataKarya.paragraphs = data.paragraphs
-          this.dataKarya.photos = data.photos
-          this.handleMins(data.photos)
-          this.dataKarya.next = data.next
-          this.dataKarya.prev = data.prev
-          this.dataKarya.par_space = (data.par_space || '      ') 
-          this.dataKarya.par_end = (data.par_end || '<br>') 
-          this.dbLoading = false
-
-          this.processParagraphs()
-          this.computedJudul = this.handlePipeline(this.dataKarya.judul)
-          this.dataKarya.photo = this.dataKarya.photos[0]
-          this.dataKarya.photoMin = this.dataKarya.photoMins[0]
-          this.preloadImages()
-        })
-        .catch((err) => {
-          console.log(err)
-          // this.$router.push({path: '/ruangan/' + this.emosi})
-        })
-  },
-  methods: {
-    switchPhoto(n) {
-      // Switch photo
-      let now_showing = this.dataKarya.photos.findIndex(x => x === this.dataKarya.photo)
-      let photolist_len = this.dataKarya.photos.length
-      if (now_showing+n === -1) {
-        now_showing+=photolist_len
-      }
-      this.dataKarya.photo = this.dataKarya.photos[(now_showing+n) % photolist_len]
-
-      // switch photoMin
-      now_showing = this.dataKarya.photoMins.findIndex(x => x === this.dataKarya.photoMin)
-      photolist_len = this.dataKarya.photoMins.length
-      if (now_showing+n === -1) {
-        now_showing+=photolist_len
-      }
-      this.dataKarya.photoMin = this.dataKarya.photoMins[(now_showing+n) % photolist_len]
-    },
-    handleMin(text){
-      let pos = text.lastIndexOf('/')+'/'.length
-      return text.slice(0, pos) + 'min-' + text.slice(pos)
-    },
-    handleMins(photos){
-      photos.forEach(photo => {
-        let photoMin = this.handleMin(photo)
-        this.dataKarya.photoMins.push(photoMin)
-      })
-    },
-    handleNewLines(text){
-      return text.replaceAll("$\\n", "<br>")
-    },
-    handleItalicStart(text){
-      return text.replaceAll("$\\i", "<i>")
-    },
-    handleItalicEnd(text){
-      return text.replaceAll("$\\I^", "</i>")
-    },
-    handleBoldStart(text){
-      return text.replaceAll("$\\b", "<b>")
-    },
-    handleBoldEnd(text){
-      return text.replaceAll("$\\B^", "</b>")
-    },
-    handleUrl(text) {
-      let urlRegex = /((https|http)?:\/\/[^\s]+)/g
-      return text.replace(urlRegex, function(url) {
-        return '<a href="' + url + '" target="_blank">' + url + '</a>'
-      })
-    },
-    handleParagraphStart(text){
-      return this.dataKarya.par_space + text
-    },
-    handleParagraphEnd(text){
-      return text + this.dataKarya.par_end
-    },
-    processParagraphs(){
-      this.dataKarya.paragraphs.forEach((par, idx) => {
-        let text = this.handleParagraphStart(this.handlePipeline(par))
-        if (idx === this.dataKarya.paragraphs.length-1)
-          text = this.handleParagraphEnd(text)
-        this.computedParagraphs.push(text)
-      }) 
-    },
-    handlePipeline(text) {
-      return this.handleNewLines(
-        this.handleItalicStart(
-          this.handleItalicEnd(
-            this.handleBoldStart(
-              this.handleBoldEnd(
-                this.handleUrl(text)
-              )
-            )
-          )
-        )
-      )
-    },
-    preloadImages(){
-      setTimeout(() => {
-        this.dataKarya.photoMins.forEach(async (photoMin) => {
-          let src = await this.getLink(photoMin)
-          new Image().src = src
-        })
-      }, 1500)
-      setTimeout(() => {
-        this.dataKarya.photos.forEach(async (photo) => {
-          let src = await this.getLink(photo)
-          new Image().src = src
-        })
-      }, 3000)
-    },
-    async getLink(link) {
-      if (this.isFirebaseLink(link)){
-        let url = await this.getFromStorage(link)
-        return url
-      } else {
-        return link
-      }
-    },
-    isFirebaseLink(link){
-      return link.slice(0,5) === "gs://"
-    },
-    getFromStorage(link){
-      return this.$fire.storage.refFromURL(link).getDownloadURL()
-        .then(url => {
-          return url
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-  },
-  head() {
-      return {
-        title: this.dataKarya.judul,
-        meta: [
-          {
-            hid: 'description',
-            name: 'description',
-            description: 'Artikel "'+this.dataKarya.judul+'" oleh '+this.dataKarya.author
-          }
-        ]
-      }
-    }
+  name: 'Landing'
 }
 </script>
 
@@ -242,7 +76,6 @@ export default {
     flex-direction: column;
     text-align: center;
   }
-  
 
   .content {
     position: relative;
@@ -253,24 +86,6 @@ export default {
     width: 100vw;
     overflow: hidden;
   }
-
-  .para {
-    margin-bottom: 10px;
-    line-height: 1.4;
-  }
-
-  ::v-deep .poster-container {
-  width: 350px;
-  @media only screen and (max-width: 800px) {
-    width: 550px;
-    max-width: 70%;
-    max-height: 50%;
-  }
-  @media only screen and (max-width: 600px) {
-    margin-top: 10%;
-    width: 400px;
-  }
-}
 
   a {
     color: #d1bb10;
@@ -314,9 +129,6 @@ export default {
     transform: translate(0, -50%);
     font-size: 100px;
     color: #ede5d1;
-    &:hover {
-      cursor: pointer;
-    }
   }
 
   .fotoo {
