@@ -50,10 +50,10 @@
         <br>
         <img src="team/da/il.png" class="fotorg">
         <div class="divisi">
-          <img src="team/da/f.png" class="fotorg">
           <img src="team/da/g.png" class="fotorg">
           <img src="team/da/j.png" class="fotorg">
           <img src="team/da/m.png" class="fotorg">
+          <img src="team/da/f.png" class="fotorg">
           <img src="team/da/r.png" class="fotorg">
         </div>
         <br><br>
@@ -74,20 +74,21 @@
         <div class="divisi">
           <img src="team/te/c.png" class="fotorg">
           <img src="team/kr/h.png" class="fotorg">
-          <img src="team/te/r.png" class="fotorg">
           <img src="team/te/t.png" class="fotorg">
+          <img src="team/te/sean.png" class="fotorg">
+          <img src="team/te/r.png" class="fotorg">
         </div>
         <br><br>
         <h3>KREATIF</h3>
         <br>
         <img src="team/kr/b.png" class="fotorg">
         <div class="divisi">
-          <img src="team/kr/aq.png" class="fotorg">
-          <img src="team/kr/ar.png" class="fotorg">
           <img src="team/kr/f.png" class="fotorg">
           <img src="team/kr/h.png" class="fotorg">
-          <img src="team/kr/ij.png" class="fotorg">
           <img src="team/kr/iz.png" class="fotorg">
+          <img src="team/kr/aq.png" class="fotorg">
+          <img src="team/kr/ar.png" class="fotorg">
+          <img src="team/kr/ij.png" class="fotorg">
           <img src="team/kr/r.png" class="fotorg">
           <img src="team/kr/tk.png" class="fotorg">
         </div>
@@ -99,10 +100,10 @@
           <img src="team/ac/g.png" class="fotorg">
           <img src="team/ac/n.png" class="fotorg">
           <img src="team/ac/p.png" class="fotorg">
-          <img src="team/ac/sh.png" class="fotorg">
           <img src="team/ac/sha.png" class="fotorg">
-          <img src="team/ac/v.png" class="fotorg">
+          <img src="team/ac/sh.png" class="fotorg">
           <img src="team/ac/va.png" class="fotorg">
+          <img src="team/ac/v.png" class="fotorg">
           <img src="team/ac/z.png" class="fotorg">
         </div>
         <br><br>
@@ -110,11 +111,12 @@
         <br>
         <img src="team/ku/r.png" class="fotorg">
         <div class="divisi">
-          <img src="team/ku/al.png" class="fotorg">
           <img src="team/ku/ald.png" class="fotorg">
+          <img src="team/ku/al.png" class="fotorg">
           <img src="team/ku/dia.png" class="fotorg">
           <img src="team/ku/ec.png" class="fotorg">
           <img src="team/ku/shi.png" class="fotorg">
+          <img src="team/ku/hana.png" class="fotorg">
         </div>
         <br>
       </div>
