@@ -44,9 +44,8 @@
           <div class="jen2">
             <img src="/teras/jka 1.png">
           </div>
-          <div v-show="white" class="white"/>
-          <div v-show="close" @click="close=false;white=true;zoomIn();switchSlide(1)" class="imgpintu"/>
-          <div v-show="!close" class="gifpintu"/>
+          <div v-show="close" class="imgpintu" @click="close=false;white=true;zoomIn();" />
+          <div v-show="!close" class="gifpintu" />
           <div class="bg">
             <img src="/teras/bg 2.png">
           </div>
@@ -75,7 +74,7 @@
           <p class="text">
             APA RASAMU?
           </p>
-          <div class="genteng2"/>
+          <div class="genteng2" />
           <div class="joy" @click="goToEmosi('joy')" />
           <div class="fear" @click="goToEmosi('fear')" />
           <div class="sadness" @click="goToEmosi('sad')" />
@@ -136,7 +135,6 @@
     watch: {
       slide(newVal, oldVal) {
         if (newVal === 2){
-          gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50,delay:3})
           if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
             gsap.to('.narasi', {opacity: 0, duration: .5})
@@ -172,8 +170,6 @@
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
-      document.onkeyup = this.handleKeyboard
-      localStorage.setItem('template', true)
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
         document.getElementsByClassName('loading')[0].style.display = 'none'
@@ -202,6 +198,14 @@
       },
       zoomIn(){
         gsap.to("#slide1", {duration:3,scale:2})
+        gsap.to("#slide1", {duration:1,scale:25,delay:3, ease: 'power4.in', onComplete: () => {
+          this.switchSlide(1)
+        }})
+        gsap.to(this.base, {slide0: -150, slide1: -50, slide2: -50, duration: .1, delay: 3.6})
+        gsap.to('#slide2', {opacity: 1, duration: .5, delay: 3.9})
+        gsap.to('#slide1', {opacity: 0, duration: 1, delay: 3.9, onComplete: () => {
+          document.getElementById('slide1').style.display = 'none'
+        }})
       }
       ,
       isAllRoomVisited(){
@@ -253,13 +257,6 @@
         if (window.matchMedia("(orientation: landscape)").matches){
           this.computedDisplacement = 0
           this.transformed = 0
-        }
-      },
-      handleKeyboard(e){
-        if (this.slide === 2 && e.key === "ArrowLeft"){
-          this.switchSlide(-1)
-        } else if (this.slide === 1 && e.key === "ArrowRight"){
-          this.switchSlide(1)
         }
       }
     },
@@ -652,4 +649,8 @@
   transition-delay:1s; 
 }
 // Add Objects positions here
+
+#slide2 {
+  opacity: 0;
+}
 </style>

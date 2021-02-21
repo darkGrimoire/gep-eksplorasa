@@ -182,7 +182,6 @@
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
-      localStorage.setItem('template', true)
 
       // wait for loading to finish
       gsap.to('.loading', {opacity: 0, duration: .2, onComplete: () => {
