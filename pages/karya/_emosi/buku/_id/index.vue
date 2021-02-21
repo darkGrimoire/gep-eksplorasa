@@ -3,14 +3,16 @@
     <div v-if="!isPhone" class="zoom-icon zoom-icon-in" />
 
     <div v-if="isPhone" v-show="fs" class="reader-bg" />
+    <div v-show="!isPhone" class="blackbg" />
 
-    <div :class="['book-viewport', {blurred: (!fs && isPhone)}]">
+    <div class="book-viewport">
       <div class="book-container">
         <div id="album" class="book">
           <div v-if="!isPhone" ignore="1" class="next-button" @click="turnNext" />
           <div v-if="!isPhone" ignore="1" class="previous-button" @click="turnPrevious" />
         </div>
       </div>
+      <Loading v-show="isLoading" ignore="1" class="loading" />
     </div>
 
     <div v-if="isPhone" v-show="fs" ignore="1" class="next-button-mobile button" @click="turnNext">
@@ -31,26 +33,62 @@
         <div id="slider" />
       </div>
     </div>
+    <div class="title-container">
+      <div class="title">
+        {{ dataKarya.judul }}
+      </div>
+      <div class="author">
+        {{ dataKarya.author }}
+      </div>
+    </div>
+    <div v-show="dataKarya.caption !== ''" class="caption-container">
+      <div class="title">
+        {{ dataKarya.captionTitle }}
+      </div>
+      <p class="deskripsi">
+        {{ dataKarya.caption }}
+      </p>
+    </div>
+    <nuxt-link v-show="!fs" class="back-button" :to="'/ruangan/'+emosi">
+      Back
+    </nuxt-link>
+    <rcp />
   </div>
 </template>
 
 <script>
+// import gsap from 'gsap'
+import rcp from '~/components/rcp.vue'
+import Loading from '~/components/Loading.vue'
 /* eslint no-undef: 0 */
-if (process.client){
-  require('~/assets/turnjs4/lib/turn')
-  require('~/assets/turnjs4/lib/zoom')
-  require('~/assets/turnjs4/lib/hash')
-}
 const PAGE_WIDTH = 500
 const PAGE_HEIGHT = 650
-const TARGET_ZOOM_WIDTH = 2214
-const STORAGE_LOCATION = ''
-const IMG_EXT = ''
+const TARGET_ZOOM_WIDTH = 3000
 
   export default {
-    name: "TestBuku",
+    name: "TemplateBuku",
+    components: {
+      rcp,
+      Loading
+    },
+    async asyncData({ params }) {
+      const emosi = params.emosi
+      const id = params.id
+      return { emosi, id }
+    },
     data() {
       return {
+        dataKarya: {
+          judul: '',
+          photos: [],
+          caption: '',
+          author: '',
+          metadata: {},
+          preview: {},
+          is_scissor: false,
+          display: {}
+        },
+        isLoading: true,
         options: {
           width: 500*2,
           height: 500/(PAGE_WIDTH/PAGE_HEIGHT),
@@ -59,34 +97,13 @@ const IMG_EXT = ''
           autoCenter: true,
           elevation: 50,
           pages: 12,
-          when: {
-            turning: (event, page) => {
-              var book = $(this.selector)
-              this.currentPage = book.turn('page')
-              book.turn('pages')
-              Hash.go('page/' + page).update()
-              this.disableControls(page)
-            },
-            turned: (event, page) => {
-              this.disableControls(page)
-              $(this.selector).turn('center')
-              if (!this.isPhone && $('#slider').slider('instance')){
-                $('#slider').slider('value', this.getViewNumber($(this.selector), page))
-              }
-              if (page==1) { 
-                $(this.selector).turn('peel', 'br')
-              }
-            },
-            missing: (event, pages) => {
-              for (var i = 0; i < pages.length; i++)
-                this.addPage(pages[i], $(this.selector))
-            }
-          }
         },
         selector: "#album",
         currentPage: undefined,
         isPhone: false,
         fs: false,
+        isjQueryLoaded: false,
+        isUiLoaded: false
       }
     },
     beforeDestroy () {
@@ -95,34 +112,137 @@ const IMG_EXT = ''
       }
     },
     mounted () {
-      if (window.matchMedia("(orientation: portrait)").matches){
-        this.isPhone = true
-        this.options.width = 300
-        this.options.height = 300/(PAGE_WIDTH/PAGE_HEIGHT)
-        this.options.display = "single"
+      const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('buku').doc(this.id)
+      karyaRef.get()
+        .then(doc => {
+          let data = {id: doc.id, ...doc.data()}
+          this.dataKarya.judul = data.judul
+          this.dataKarya.author = data.author
+          this.dataKarya.caption = this.handleNewLines(data.caption)
+          this.dataKarya.photos = (data.photos || data.photo)
+          this.dataKarya.metadata = data.metadata
+          this.dataKarya.preview = data.preview
+          this.dataKarya.is_scissor = data.is_scissor
+          this.dataKarya.disable_min = data.disable_min
+          this.dataKarya.display = data.display
+          this.dataKarya.next = data.next
+          this.dataKarya.prev = data.prev
+          this.isLoading = false
+          
+          // if (this.dataKarya.caption !== ""){
+          //   this.options.autoCenter = false
+          // }
+          this.options.display = (this.dataKarya.display.page || "double")
+          this.defaultWidth = this.dataKarya.display.orientation === 'portrait' ? 500 : 700
+          this.options.pages = this.dataKarya.photos.length
+          this.dataKarya.metadata.zoomed_width = (this.dataKarya.metadata.zoomed_width || TARGET_ZOOM_WIDTH)
+          this.defaultScale = this.dataKarya.display.orientation === 'portrait' ? 3 : 2.5
+          if (this.options.display === "double"){
+            this.options.width = (this.dataKarya.metadata.target_width || this.defaultWidth)*2
+            this.options.height = (this.options.width/2)/(this.dataKarya.metadata.ori_width/this.dataKarya.metadata.ori_height)
+          } else {
+            // pasti ini karya rasyid .-.
+            this.defaultScale = 1.5
+            this.defaultWidth = 1000
+            this.options.width = (this.dataKarya.metadata.target_width || this.defaultWidth)
+            this.options.height = (this.options.width)/(this.dataKarya.metadata.ori_width/this.dataKarya.metadata.ori_height)
+          }
 
-        this.initializePhoneHandler()
-      }
-      let flipbook = $(this.selector)
-      flipbook.turn(this.options)
-      
-      this.initializeZoom()
-      if (!this.isPhone){
-        this.initializeBinding()
-        this.initializeSlider()
-      }
-      this.initializeHash()
-
-      if (this.isPhone && !this.fs){
-        $('.previous-button-mobile').hide()
-        $('.next-button-mobile').hide()
-      }
-
-      this.resizeViewport()
-      $(this.selector).addClass('animated')
-      
+          this.fs = document.fullscreenElement
+          setTimeout(() => {
+            this.initjQuery()
+          }, 0)
+        })
+        .catch((err) => {
+          console.log(err)
+          this.$router.push({path: '/ruangan/' + this.emosi})
+        })
     },
     methods: {
+      initjQuery(){
+        if (this.isjQueryLoaded && this.isUiLoaded){
+            this.initialization()
+        } else{
+          setTimeout(() => {
+            this.initjQuery()
+          }, 20)
+        }
+      },
+      initialization(){
+        if (process.client){
+          require('~/assets/turnjs4/lib/turn')
+          require('~/assets/turnjs4/lib/zoom')
+          require('~/assets/turnjs4/lib/hash')
+        }
+        this.options.when = {
+          turning: (event, page) => {
+            var book = $(this.selector)
+            this.currentPage = book.turn('page')
+            book.turn('pages')
+            Hash.go('page/' + page).update()
+            this.disableControls(page)
+          },
+          turned: (event, page) => {
+            this.disableControls(page)
+            $(this.selector).turn('center')
+            if (!this.isPhone && $('#slider').slider('instance')){
+              $('#slider').slider('value', this.getViewNumber($(this.selector), page))
+            }
+            if (page==1) { 
+              $(this.selector).turn('peel', 'br')
+            }
+          },
+          missing: (event, pages) => {
+            this.isLoading = true
+            for (var i = 0; i < pages.length; i++)
+              this.addPage(pages[i], $(this.selector))
+            this.isLoading = false
+          },
+        }
+        if (window.matchMedia("(orientation: portrait)").matches){
+          this.isPhone = true
+          this.defaultScale = this.dataKarya.display.orientation === 'portrait' ? 3 : 4
+          this.defaultWidth = this.dataKarya.display.orientation === 'portrait' ? screen.width * 0.8 : screen.width * 0.9
+          this.options.width = this.defaultWidth
+          this.options.height = (this.options.width)/(this.dataKarya.metadata.ori_width/this.dataKarya.metadata.ori_height)
+          this.options.display = "single"
+
+          this.initializePhoneHandler()
+        }
+        let flipbook = $(this.selector)
+        flipbook.turn(this.options)
+        
+        this.initializeZoom()
+        if (!this.isPhone){
+          this.initializeBinding()
+          this.initializeSlider()
+        }
+        this.initializeHash()
+
+        if (this.isPhone && !this.fs){
+          $('.previous-button-mobile').hide()
+          $('.next-button-mobile').hide()
+        }
+
+        this.resizeViewport()
+        $(this.selector).addClass('animated')
+        $('.blackbg').fadeOut()
+        if (this.dataKarya.display.orientation === "landscape"){
+          if (this.isPhone){
+            if (screen.width > 600){
+              document.getElementsByClassName('title-container')[0].style.marginTop = '-30%'
+            }else{
+              document.getElementsByClassName('title-container')[0].style.marginTop = '-40%'
+            }
+          }else{
+            document.getElementsByClassName('bottom')[0].style.bottom = '13%'
+            document.getElementsByClassName('title-container')[0].style.marginTop = '-7%'
+          }
+        }
+        if (this.dataKarya.caption === ""){
+          document.getElementsByClassName('title-container')[0].style.marginBottom = '5%'
+        }
+      },
       initializePhoneHandler(){
         document.addEventListener("fullscreenchange", this.changefs)
         document.addEventListener("mozfullscreenchange", this.changefs)
@@ -152,16 +272,22 @@ const IMG_EXT = ''
                 elem = window.top.document.body //To break out of frame in IE
                 elem.msRequestFullscreen()
             }
+            $('.title-container').fadeOut()
+            $('.caption-container').fadeOut()
+            document.getElementsByClassName('container')[0].style.overflowY = 'hidden'
           } else {
             if (document.exitFullscreen) {
-                document.exitFullscreen()
-              } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen()
-              } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen()
-              } else if (document.msExitFullscreen) {
-                window.top.document.msExitFullscreen()
-              }
+              document.exitFullscreen()
+            } else if (document.mozCancelFullScreen) {
+              document.mozCancelFullScreen()
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen()
+            } else if (document.msExitFullscreen) {
+              window.top.document.msExitFullscreen()
+            }
+            $('.title-container').fadeIn()
+            $('.caption-container').fadeIn()
+            document.getElementsByClassName('container')[0].style.overflowY = 'auto'
           }
       },
       initializeZoom(){
@@ -185,7 +311,9 @@ const IMG_EXT = ''
           },
           zoomIn: () => {
             this.toggleControls(false)
-            $('#slider-bar').hide()
+            $('#slider-bar').fadeOut()
+            $('.back-button').fadeOut()
+            $('.blackbg').fadeIn()
             $('.made').hide()
             $(this.selector).removeClass('animated').addClass('zoom-in')
             $('.zoom-icon').removeClass('zoom-icon-in').addClass('zoom-icon-out')
@@ -202,6 +330,8 @@ const IMG_EXT = ''
           zoomOut: () => {
             this.toggleControls(true)
             $('#slider-bar').fadeIn()
+            $('.back-button').fadeOut()
+            $('.blackbg').fadeOut()
             $('.exit-message').hide()
             $('.made').fadeIn()
             $('.zoom-icon').removeClass('zoom-icon-out').addClass('zoom-icon-in')
@@ -304,7 +434,7 @@ const IMG_EXT = ''
           min: 1,
           max: this.numberOfViews($(this.selector)),
           start: (event, ui) => {
-            console.log(window._thumbPreview)
+            // console.log(window._thumbPreview)
             if (!window._thumbPreview) {
               window._thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>')
               this.setPreview(ui.value)
@@ -317,14 +447,19 @@ const IMG_EXT = ''
             this.setPreview(ui.value)
           },
           stop: function() {
-            console.log(window._thumbPreview)
+            // console.log(window._thumbPreview)
             if (window._thumbPreview)
               window._thumbPreview.removeClass('show')
-            $(vm.selector).turn('page', Math.max(1, $(this).slider('value')*2 - 2))
+            if ($(vm.selector).turn('display') === "double"){
+              $(vm.selector).turn('page', Math.max(1, $(this).slider('value')*2 - 2))
+            } else {
+              $(vm.selector).turn('page', Math.max(1, $(this).slider('value')))
+            }
           }
         })
       },
       addPage(page, book) {
+        // console.log(`width: ${this.options.width}px; height: ${this.options.height}`)
         var element = $('<div />', {})
         if (book.turn('addPage', element, page)) {
           element.html('<div class="gradient"></div><div class="loader"></div>')
@@ -342,7 +477,11 @@ const IMG_EXT = ''
           pageElement.find('.loader').remove()
         })
         // src = this.getFirebaseURL(page)
-        img.attr('src', '/book/pages/' +  page + '.jpg') // img.attr('src', src)
+        if (this.dataKarya.disable_min){
+          img.attr('src', this.dataKarya.photos[page-1]) // img.attr('src', src)
+        }else {
+          img.attr('src', this.getMin(this.dataKarya.photos[page-1])) // img.attr('src', src)
+        }
       },
       zoomTo(event) {
         setTimeout(() => {
@@ -430,21 +569,33 @@ const IMG_EXT = ''
         $(this.selector).addClass('animated')
       },
       largeMagazineWidth() {
-        return this.isPhone ? TARGET_ZOOM_WIDTH/3 : TARGET_ZOOM_WIDTH
+        return this.isPhone ?  this.dataKarya.metadata.zoomed_width/this.defaultScale : this.dataKarya.metadata.zoomed_width
       },
       numberOfViews(book) {
-        return book.turn('pages') / 2 + 1
+        return book.turn('display') === "double" ? book.turn('pages') / 2 + 1 : book.turn('pages')
       },
       getViewNumber(book, page) {
-        return parseInt((page || book.turn('page'))/2 + 1, 10)
+        return book.turn('display') === "double" ? parseInt((page || book.turn('page'))/2 + 1, 10) : parseInt((page || book.turn('page')), 10)
+      },
+      getPreview(text){
+        let pos = text.lastIndexOf('/')+'/'.length
+        return text.slice(0, pos) + 'preview.png'
+      },
+      getMin(text){
+        let pos = text.lastIndexOf('/')+'/'.length
+        let posDot = text.lastIndexOf('.')+'.'.length
+        return text.slice(0, pos) + 'min-' + text.slice(pos, posDot) + 'png'
+      },
+      handleNewLines(text){
+        return text.replaceAll("$\\n", "\n")
       },
       setPreview(view) {
-        var previewWidth = 112,
-          previewHeight = 73,
-          previewSrc = '/book/pages/preview.jpg', // previewSrc = this.getFirebaseURL('preview')
+        var previewWidth = (this.dataKarya.preview.width || 112),
+          previewHeight = (this.dataKarya.preview.height || 73),
+          previewSrc = this.getPreview(this.dataKarya.photos[0]), //'/book/pages/preview.jpg'
           preview = $(window._thumbPreview.children(':first')),
           numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2,
-          width = (numPages==1) ? previewWidth/2 : previewWidth
+          width = (numPages==1 && this.options.display === "double") ? previewWidth/2 : previewWidth
         window._thumbPreview.
           addClass('no-transition').
           css({width: width + 15,
@@ -502,15 +653,18 @@ const IMG_EXT = ''
           $(this).appendTo(pageElement)
           prevImg.remove()
         })
-        // src = this.getFirebaseURL(page + '-large')
-        img.attr('src', '/book/pages/' +  page + '-large.jpg') // img.attr('src', src)
+        img.attr('src', this.dataKarya.photos[page-1]) // img.attr('src', src)
       },
       loadSmallPage(page, pageElement) {
         var img = pageElement.find('img')
         img.css({width: '100%', height: '100%'})
         img.unbind('load')
         // src = this.getFirebaseURL(page)
-        img.attr('src', '/book/pages/' +  page + '.jpg') // img.attr('src', src)
+        if (this.dataKarya.disable_min){
+          img.attr('src', this.dataKarya.photos[page-1]) // img.attr('src', src)
+        }else {
+          img.attr('src', this.getMin(this.dataKarya.photos[page-1])) // img.attr('src', src)
+        }
       },
       isChrome() {
         return navigator.userAgent.indexOf('Chrome')!=-1
@@ -521,22 +675,37 @@ const IMG_EXT = ''
       turnPrevious() {
         $(this.selector).turn('previous')
       },
-      getFirebaseURL(name){
-        let storageRef = this.$fire.storage.ref().child(STORAGE_LOCATION + name + IMG_EXT)
-        storageRef.getDownloadURL().then((url) => {
-          return url
-        })
-      }
+      // showCaption(){
+      //   gsap.to('.book')
+      // }
     },
-    head: {
-      script: [
-        { src: '/extras/jquery.min.1.7.js' },
-        { src: '/extras/jquery-ui-1.8.20.custom.min.js' },
-        { src: '/extras/modernizr.2.5.3.min.js' },
-      ],
-      link: [
-        { rel: 'stylesheet',  href: '/extras/jquery.ui.css' }
-      ]
+    head() {
+      return {
+        title: this.dataKarya.judul,
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            description: 'Foto "'+this.dataKarya.judul+'" oleh '+this.dataKarya.author
+          }
+        ],
+        script: [
+          { 
+            vmid: 'extscript',
+            src: '/extras/jquery.min.1.7.js',
+            callback: () => (this.isjQueryLoaded = true)
+          },
+          {
+            skip: !this.isjQueryLoaded,
+            src: '/extras/jquery-ui-1.8.20.custom.min.js',
+            callback: () => (this.isUiLoaded = true)
+          },
+          { src: '/extras/modernizr.2.5.3.min.js' },
+        ],
+        link: [
+          { rel: 'stylesheet',  href: '/extras/jquery.ui.css' }
+        ]
+      }
     },
   }
 </script>
@@ -545,7 +714,11 @@ const IMG_EXT = ''
 @import '~/assets/css/book.css';
 
 .container {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: #f1f1f1 rgba($color: #888, $alpha: 0.6); 
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
   background-image: url("/img/uc-bg.png");
   background-size: 100% auto;
   background-repeat: repeat-y;
@@ -559,13 +732,22 @@ const IMG_EXT = ''
   //backgroundImage: `url(/img/uc-bg.png)`
   background-color: rgba(0,0,0,0.7);
   position: absolute;
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
+  width: 100vw; /* Full width (cover the whole page) */
+  height: 200vh; /* Full height (cover the whole page) */
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   z-index: 0;
+}
+
+.blackbg {
+  position: absolute;
+  background-color: black;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 200vh;
+  z-index: 1;
+  opacity: .9;
 }
 
 .book-viewport {
@@ -585,24 +767,47 @@ const IMG_EXT = ''
 }
 
 .next-button-mobile{
-  top: 50%;
+  top: 80%;
   transform: translate(0, -50%);
-  right: -5px;
-  font-size: 30px; /* Set a font size */
+  right: 0;
+  font-size: 30px;
+  @media only screen and (max-width: 800px) {
+    font-size: 90px;
+    right: 5%;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 50px;
+    right: 0;
+  }
 }
 .previous-button-mobile{
-  top: 50%;
-  left: -5px;
+  top: 80%;
+  left: 0;
   transform: translate(0, -50%);
-  font-size: 30px; /* Set a font size */
+  font-size: 30px;
+  @media only screen and (max-width: 800px) {
+    font-size: 90px;
+    left: 5%;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 50px;
+    left: 0;
+  }
 }
 .exit-button-mobile{
-  bottom: 50px;
+  left: 5%;
+  bottom: 2%;
   font-size: 20px; /* Set a font size */
+  @media only screen and (max-width: 800px) {
+    font-size: 35px;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 25px;
+  }
 }
 .read-button-mobile{
   position: absolute;
-  top: 50%;
+  bottom: -2%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 30px; /* Set a font size */
@@ -610,6 +815,13 @@ const IMG_EXT = ''
   display: flex;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 800px) {
+    font-size: 50px;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: -3%;
+    font-size: 25px;
+  }
 }
 
 .blurred {
@@ -619,5 +831,144 @@ const IMG_EXT = ''
 
 .bottom {
   z-index: 2;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  height: 25%;
+  opacity: .7;
+}
+
+.title-container {
+  font-family: 'Karla';
+  text-align: center;
+  color: white;
+  margin: 0 5%;
+  // position: absolute;
+  // top: 2%;
+  // left: 50%;
+  // transform: translate(-50%,0);
+  .title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .author {
+    font-style: italic;
+    font-size: 20px;
+  }
+  @media only screen and (max-width: 800px) {
+    margin-top: 0;
+  }
+  @media only screen and (max-width: 600px) {
+    margin-top: -30%;
+    margin-bottom: 10%;
+
+    .title {
+      font-size: 24px;
+    }
+    .author {
+      font-size: 16px;
+    }
+  }
+}
+
+.caption-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Karla';
+  text-align: center;
+  color: white;
+  margin: 0 5%;
+  margin-bottom: 5%;
+  overflow-y: auto;
+  z-index: 100;
+  line-height: 1.3;
+  // firefox
+  scrollbar-color: #f1f1f1 rgba($color: #888, $alpha: 0.6); 
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  // position: absolute;
+  // top: 50%;
+  // left: 30%;
+  // transform: translate(-50%, -50%);
+  z-index: 0;
+  .title {
+    font-size: 44px;
+  }
+  .deskripsi {
+    font-size: 16px;
+    white-space: pre-line;
+  }
+  @media only screen and (max-width: 800px) {
+    margin-bottom: 5%;
+
+    .title {
+      font-size: 30px;
+    }
+    .deskripsi {
+      font-size: 16px;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 5%;
+    .title {
+      font-size: 18px;
+    }
+    .deskripsi {
+      font-size: 12px;
+    }
+  }
+}
+
+/* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgba($color: #888, $alpha: 0.6); 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba($color: #f1f1f1, $alpha: 0.8); 
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #fff; 
+  }
+
+.back-button {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  color: white;
+  font-size: 50px;
+  font-family: 'Mechanical Pencil';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
 }
 </style>
