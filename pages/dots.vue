@@ -91,14 +91,14 @@ export default {
         dots3_top = dotsPic1.clientHeight * 1.5 + dotsPic2.clientHeight * 0.5
       } else if (window.innerWidth <= 1024) {
         /* FOR MEDIUM SIZE WINDOWS */
-        dots2_top = dotsPic1.clientHeight
-        dots3_top = dotsPic1.clientHeight + dotsPic2.clientHeight * 0.5
+        dots2_top = dotsPic1.clientHeight * 0.2
+        dots3_top = dotsPic1.clientHeight * 0.4 + dotsPic2.clientHeight * 0.5
       } else {
         /* FOR COMPUTER */
         const windowHeight = window.innerHeight
         const dots3_height = dotsPic3.offsetHeight
         const text_element_height =
-          document.getElementsByClassName("judul")[0].clientHeight +
+          (windowHeight * 2.5 / 100) + document.getElementsByClassName("judul")[0].clientHeight +
           document.getElementsByClassName("caption")[0].clientHeight
         const dotsHeight = windowHeight - text_element_height
         dots3_top = dotsHeight - dots3_height
@@ -106,7 +106,7 @@ export default {
       }
       dotsGif.style.width = dotsPic2.style.width
       let bunga_top = parseInt(dots3_top) + dotsPic3.offsetHeight * 0.21
-      if (window.innerWidth < 800) {
+      if (window.innerWidth <= 800) {
         bunga_top -= dotsPic3.offsetHeight * 0.61
       }
       const gif_top =
@@ -129,9 +129,13 @@ export default {
       if (window.innerWidth > 800) {
         dotsPic5.style.visibility = "visible"
       }
+      else {
+        dotsPic5.style.visibility = "hidden"
+      }
     },
     addAditionalGrass(isResize) {
       // ADD ADITIONAL GRASS WHEN THERE'S EMPTY SPACE BELOW INITIAL GRASS
+      
       if (isResize) {
         /* Create clean state for adding grass after resize */
         for (let i = 0; i < this.additional_grass; i++) {
@@ -141,15 +145,15 @@ export default {
         this.additional_grass = 0
       }
       /* Calculation */
-      const windowHeight = window.innerHeight
+      const windowHeight = parseFloat(window.innerHeight)
       const text_element_height =
         document.getElementsByClassName("judul")[0].clientHeight +
         document.getElementsByClassName("caption")[0].clientHeight
-      const dots3Top = parseInt(
+      const dots3Top = parseFloat(
         document.getElementsByClassName("dots-3")[0].style.top
       )
-      const dots3Height = document.getElementsByClassName("dots-3")[0]
-        .offsetHeight
+      const dots3Height = parseFloat(document.getElementsByClassName("dots-3")[0]
+        .offsetHeight)
       console.log(windowHeight)
       console.log(text_element_height + dots3Top + dots3Height)
       if (windowHeight > text_element_height + dots3Top + dots3Height) {
@@ -189,8 +193,14 @@ export default {
       // SET THE TOP MARGIN OF THE BUTTON AREA
       let div_button = document.getElementsByClassName("button-area")[0]
       const dotsPic2 = document.getElementsByClassName("dots-2")[0]
-      const skip_top =
-        parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight * 0.9
+      let skip_top = 0
+        
+      if (window.innerWidth < 800) {
+        skip_top = parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight * 0.85
+      }
+      else {
+        skip_top = parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight * 0.9
+      }
       div_button.style.top = skip_top + "px"
       if (this.pos == 0) {
         document.getElementsByClassName("skip-button")[0].style.visibility =
@@ -474,13 +484,12 @@ export default {
   left: 7%;
 }
 .dots-5 {
-  left: 60%;
+  left: 63%;
 }
 .dots-canvas {
   position: absolute;
   top: 10px;
   left: 0px;
-  // background-color: yellow;
   z-index: 4;
 }
 .button-area {
@@ -554,11 +563,11 @@ a {
   }
   .dots-2 {
     left: 50.6%;
-    width: 80vw;
+    width: 70vw;
   }
   .dots-gif {
     left: 50.6%;
-    width: 64vw;
+    width: 56vw;
   }
   .dots-4 {
     left: 0%;
@@ -567,74 +576,13 @@ a {
   .judul {
     top: 1.5%;
   }
+  .button-area {
+    left: 75%;
+  }
 }
 @media only screen and (max-width: 600px) {
   button {
     font-size: 30px;
   }
 }
-// .dots-3 {
-//   width: 90vw;
-//   left: 50%;
-//   transform: translateX(-50%);
-// }
-
-// .judul {
-//   font-family: "Mechanical Pencil";
-//   font-size: 40px;
-//   text-align: center;
-//   padding: 10px 0px 0px 0px;
-// }
-// .main_content {
-//   position: relative;
-// }
-// .pic {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-// }
-// .sky_pic {
-//   visibility: hidden;
-//   // height: 9vw;
-//   z-index: 1;
-//   // max-height: 15vh;
-// }
-// .dots_pic {
-//   height: 30vw;
-//   z-index: 0;
-// }
-// .dots_board {
-//   position: absolute;
-//   top: 0px;
-//   left: 0px;
-//   z-index: 1;
-// }
-// // canvas {
-// //   background-color: yellow;
-// // }
-// .dots_teks {
-//   // visibility: hidden;
-//   font-family: "Mechanical Pencil";
-//   font-size: 40px;
-//   text-align: center;
-// }
-// button {
-//   border: solid 5px #41403e;
-//   transition: 0.5s;
-//   background: transparent;
-//   padding: 0.5rem 0.5rem;
-//   margin: 0 0.5rem;
-//   font-family: "Mechanical Pencil";
-//   font-size: 1rem;
-
-//   border-top-left-radius: 15px 50px;
-//   border-top-right-radius: 50px 15px;
-//   border-bottom-right-radius: 15px 50px;
-//   border-bottom-left-radius: 50px 15px;
-// }
-// button:hover {
-//   background-color: #41403e;
-//   color: whitesmoke;
-// }
 </style>
