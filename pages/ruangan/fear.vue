@@ -85,6 +85,9 @@
           <div class="cont radio">
             <img src="/fear/f-radio-1.png" alt="radio" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
+          <div class="cont kucing">
+            <img src="/fear/KUCING.png" alt="kucing" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
         </div>
       </div>
     </div>
@@ -168,10 +171,21 @@
           <div class="cont photobook">
             <img src="/fear/f-photobook-1.png" alt="photobook">
           </div>
-          <div class="cont photobook1">
+          <div v-show="!benda.saklar" class="cont photobook1">
             <img src="/fear/f-photobook-2.png" alt="photobook1" :style="`opacity: ${benda.ouija}`" @mouseenter="benda.ouija = 1" @mouseout="benda.ouija = 0">
           </div>
-     
+          <div v-show="benda.saklar" class="cont photobook1">
+            <img src="/fear/f-photobook-2.png" alt="photobook1">
+          </div>
+          <div class="cont teropong">
+            <img src="/fear/tropong fear.png" alt="teropong">
+          </div>
+          <div class="cont kunci">
+            <img src="/fear/fear1.png" alt="kunci">
+          </div>
+          <div v-show="benda.kunci" class="cont kaki">
+            <img src="/fear/fearf.gif" alt="kaki">
+          </div>
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -218,6 +232,8 @@
           saklar: false,
           sadako: 0,
           setanmini: 0,
+          photobook1: 0,
+          kunci: false,
           ouija: 0
         }
       }
@@ -362,6 +378,8 @@
           e.target.setAttribute('src', "/fear/f-artikel-2.png")
         }  else if (e.target.getAttribute('src') === "/fear/f-zine-1.png"){
           e.target.setAttribute('src', "/fear/f-zine-2.png")
+        } else if (e.target.getAttribute('src') === "/fear/KUCING.png"){
+          e.target.setAttribute('src', "/fear/kucing 2.png")
         }
       },
       handleObjChangeEnd(e){
@@ -380,10 +398,15 @@
           e.target.setAttribute('src', "/fear/f-artikel-1.png")
         }  else if (e.target.getAttribute('src') === "/fear/f-zine-2.png"){
           e.target.setAttribute('src', "/fear/f-zine-1.png")
+        } else if (e.target.getAttribute('src') === "/fear/kucing 2.png"){
+          e.target.setAttribute('src', "/fear/KUCING.png")
         }
       },
       toggleSaklar(){
         this.benda.saklar = !this.benda.saklar
+      },
+      toggleKunci(){
+        this.benda.kunci = !this.benda.kunci
       }
     },
   }
@@ -570,7 +593,13 @@
 .kamera{
   width: 10%;
   top: 24.7%;
-  left: 53%;
+  left: 51%;
+}
+
+.teropong{
+  width: 13.5%;
+  top: 51%;
+  left: 73.8%;
 }
 .radio{
   width: 16%;
@@ -646,6 +675,12 @@
   left: 48.7%;
 }
 
+.kucing{
+  width: 6.8%;
+  top: 37.7%;
+  left: 57.7%;
+}
+
 .lemari {
   width: 17.2%;
   top: 21.3%;
@@ -714,10 +749,24 @@
   width: 13%;
   top: 53.8%;
   left: 47.2%;
+  z-index: 71;
 }
 .zine{
   width: 16%;
   top: 36.8%;
   left: 41.2%;
+}
+.kunci{
+  width: 8%;
+  top: 81.7%;
+  left: 79%;
+  &:hover{
+    cursor: pointer;
+  }
+}
+.kaki{
+  width: 10%;
+  top: 24.7%;
+  left: 51%;
 }
 </style>

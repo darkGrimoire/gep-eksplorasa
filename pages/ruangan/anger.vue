@@ -85,7 +85,15 @@
           <div class="cont koran">
             <img src="/anger/a-artikel-1.png" alt="koran" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          
+          <div class="cont sampah">
+            <img src="/anger/gep anger sampah.png" alt="sampah" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
+          <div class="cont garpu">
+            <img src="/anger/gep anger garpu.png" alt="garpu">
+          </div>
+          <div class="cont garpu1">
+            <img src="/anger/gep anger berserakan.png" alt="garpu1">
+          </div>
         </div>
       </div>
     </div>
@@ -148,6 +156,21 @@
           <div class="cont buku">
             <img src="/anger/a-photobook-1.png" alt="buku" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
+          <div class="cont cakar">
+            <img src="/anger/gep anger scar.png" alt="cakar" :style="`opacity: ${benda.cakar}`" @mouseenter="benda.cakar = 1" @mouseout="benda.cakar = 0">
+          </div>
+          <div class="cont teropong">
+            <img src="/anger/tropong anger.png" alt="teropong">
+          </div>
+          <div class="cont pisau">
+            <img src="/anger/gep anger piso bersih.png" alt="pisau" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div>
+          <div class="cont kaki">
+            <img src="/anger/angerf.gif" alt="kaki">
+          </div>
+          <div class="cont kunci">
+            <img src="/anger/anger1.png" alt="kunci">
+          </div>
         </div>
       </div>
     </div>
@@ -186,7 +209,10 @@
           slide1: 50,
           slide2: 150
         },
-        msg: 'Pesan Kurator Here'
+        msg: 'Pesan Kurator Here',
+        benda: {
+          cakar: 0
+        }
       }
     },
     computed: {
@@ -330,7 +356,11 @@
           e.target.setAttribute('src', "/anger/a-photo series-2.png")
         } else if (e.target.getAttribute('src') === "/anger/a-photobook-1.png"){
           e.target.setAttribute('src', "/anger/a-photobook-2.png")
-        }
+        } else if (e.target.getAttribute('src') === "/anger/gep anger sampah.png"){
+          e.target.setAttribute('src', "/anger/gep anger meledak.png")
+        } else if (e.target.getAttribute('src') === "/anger/gep anger piso bersih.png"){
+          e.target.setAttribute('src', "/anger/gep pisau.png")
+        } 
       },
       handleObjChangeEnd(e){
         console.log(e)
@@ -348,6 +378,10 @@
           e.target.setAttribute('src', "/anger/a-photo series-1.png")
         } else if (e.target.getAttribute('src') === "/anger/a-photobook-2.png"){
           e.target.setAttribute('src', "/anger/a-photobook-1.png")
+        }  else if (e.target.getAttribute('src') === "/anger/gep anger meledak.png"){
+          e.target.setAttribute('src', "/anger/gep anger sampah.png")
+        } else if (e.target.getAttribute('src') === "/anger/gep pisau.png"){
+          e.target.setAttribute('src', "/anger/gep anger piso bersih.png")
         } 
       },
 
@@ -554,6 +588,21 @@
   top: 76.5%;
   left: 43%;
 }
+.garpu{
+  width: 8.5%;
+  top: 13.5%;
+  left: 83.5%;
+}
+.garpu1{ 
+  width: 17.5%;
+  top: 76.5%;
+  left: 81%;
+}
+.sampah{
+  width: 12%;
+  top: 35.9%;
+  left: 83.9%;
+}
 // Add Objects positions here
 .frame{
   width: 10.5%;
@@ -609,5 +658,30 @@
   width: 17%;
   top: 73%;
   left: 30.5%;
+}
+.pisau{
+  width: 22%;
+  top: 65%;
+  left: 53.5%;
+}
+.kaki{
+  width: 13%;
+  top: 78%;
+  left: 85.5%;
+}
+.kunci{
+  width: 7%;
+  top: 78%;
+  left: 80.5%;
+}
+.cakar{
+  width: 11%;
+  top: 25.8%;
+  left: 2.5%;
+}
+.teropong{
+  width: 13%;
+  top: 79%;
+  left: 10.5%;
 }
 </style>
