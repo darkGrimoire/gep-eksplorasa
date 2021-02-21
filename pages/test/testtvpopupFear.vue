@@ -1,8 +1,6 @@
 <template>
   <div class="testing-popup">
-      <p>
-          Random Judul
-      </p>
+     <p>Heihihefiep</p>
       <tv-popup></tv-popup>
   </div>
 </template>
@@ -24,5 +22,6 @@ export default {
 .testing-popup {
     background-color: white;
     background-size: 100% auto;
+    color: aquamarine;
 }
 </style>
