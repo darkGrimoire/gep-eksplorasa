@@ -27,10 +27,10 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/closing.png" alt="guide" style="opacity: .0;">
-          </div>
+          <!-- <div class="cont guide"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/template-example/closing.png" alt="guide" style="opacity: .0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/closing/1-paper.png" alt="wall">
