@@ -64,7 +64,6 @@ export default {
       this.setupCanvas()
       this.updateTimer()
       this.startCountdown()
-      setTimeout(() => this.canvasLogger(), 2000)
     },
     methods: {
       updateTimer () {
