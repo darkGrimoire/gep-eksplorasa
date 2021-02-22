@@ -67,10 +67,11 @@
             <img src="/sad/psotersad.png" alt="poster">
           </div>
           <div class="book" @click="popups = 'foto';tipeKarya = 'buku'" />
-          <div class="podcast" @click="popups = 'kine';tipeKarya = 'video'" />
+          <div class="podcast" @click="popups = 'podcast'" />
           <div class="single" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
         </div>
       </div>
     </div>
@@ -139,13 +140,15 @@
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
+  import PodcastPopup from '~/components/podcast-popup.vue'
   export default {
     name: "Sad",
     components: {
       rcp,
       tvPopup,
       kinePopup,
-      NewfotoPopup
+      NewfotoPopup,
+      PodcastPopup
     },
     layout: 'ruangan',
     data() {

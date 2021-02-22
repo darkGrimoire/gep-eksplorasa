@@ -89,18 +89,20 @@ import 'swiper/swiper-bundle.css'
         })
       },
       computeUrl(alamat){
+        let targetRoom = this.room
+        if (this.room.toLowerCase() === 'sadness'){
+          targetRoom = 'sad'
+        }
         if (alamat.charAt(0) === '/'){
-          return '/karya/'+this.room+alamat
+          return '/karya/'+targetRoom+alamat
         } else {
-          return '/karya/'+this.room+'/'+alamat
+          return '/karya/'+targetRoom+'/'+alamat
         }
       },
       enableOverlay(e){
-        console.log(e)
         e.target.getElementsByClassName('mini-overlay')[0].classList.add('mini-overlay-hover')
       },
       disableOverlay(e){
-        console.log(e)
         e.target.getElementsByClassName('mini-overlay')[0].classList.remove('mini-overlay-hover')
       }
     },

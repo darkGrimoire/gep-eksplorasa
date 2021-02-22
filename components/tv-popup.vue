@@ -10,7 +10,7 @@
           <div class="main-poster">
             <div class="left-arrow-tv-popup" @click="movePos(-1)" />
             <div class="poster-area" @click="gotoKarya()">
-              <img class="poster bordered">
+              <img class="poster-tv bordered">
             </div>
             <div class="right-arrow-tv-popup" @click="movePos(1)" />
           </div>
@@ -145,7 +145,7 @@ export default {
       }
       /* Set up poster and title */
       this.pos = 0
-      document.getElementsByClassName("poster")[0].src = (this.poster[this.pos] || "/loading.svg")
+      document.getElementsByClassName("poster-tv")[0].src = (this.poster[this.pos] || "/loading.svg")
       document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
         this.pos
       ] || "Loading")
@@ -189,7 +189,7 @@ export default {
       } else if (this.pos == this.amount) {
         this.pos = this.amount - 1
       }
-      document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
+      document.getElementsByClassName("poster-tv")[0].src = this.poster[this.pos]
       
       document.getElementsByClassName("title-movie")[0].innerHTML = ""
       document.getElementsByClassName("title-movie")[0].innerHTML = this.judul[
@@ -314,7 +314,7 @@ export default {
 .poster-area:hover {
   cursor: pointer;
 }
-.poster {
+.poster-tv {
   width: 100%;
   height: 100%;
   object-fit: contain;

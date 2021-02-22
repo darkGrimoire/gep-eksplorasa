@@ -85,11 +85,12 @@
           </div>
           <div class="photoseries" @click="popups = 'foto';tipeKarya = 'series'" />
           <div class="kamera" @click="popups = 'foto';tipeKarya = 'single'" />
-          <div class="radio" @click="popups = 'kine';tipeKarya = 'video'" />
+          <div class="radio" @click="popups = 'podcast'" />
           <div class="kucing" />
           <div class="zine" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -212,13 +213,15 @@
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
+  import PodcastPopup from '~/components/podcast-popup.vue'
   export default {
     name: "Fear",
     components: {
       rcp,
       tvPopup,
       kinePopup,
-      NewfotoPopup
+      NewfotoPopup,
+      PodcastPopup
     },
     layout: 'ruangan',
     data() {

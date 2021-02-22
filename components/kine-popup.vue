@@ -208,7 +208,7 @@ export default {
         if (this.room.toLowerCase() === 'sadness'){
           targetRoom = 'sad'
         }
-        let targetUrl = this.alamat[this.pos].charAt(0) === '/' ? this.alamat[this.pos] : '/' + this.alamat[this.pos]
+        let targetUrl = this.alamat[id].charAt(0) === '/' ? this.alamat[id] : '/' + this.alamat[id]
         const tujuan = "/karya/" + targetRoom + targetUrl
         this.$router.push({path: tujuan})
       }

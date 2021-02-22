@@ -187,7 +187,8 @@
       rcp,
       tvPopup,
       kinePopup,
-      NewfotoPopup
+      NewfotoPopup,
+      
     },
     layout: 'ruangan',
     data() {
