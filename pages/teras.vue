@@ -240,11 +240,13 @@ import { Youtube } from 'vue-youtube'
       fadeInstruksi(){
         gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName('instruksi1')[0].style.display = 'none'
-          document.getElementsByClassName('instruksi2')[0].style.display = 'block'
-          gsap.to('.instruksi2', {opacity: 1, duration: 1})
-          gsap.to('.instruksi2', {opacity: 0, duration: 1, delay: 3.5, onComplete: () => {
-            document.getElementsByClassName('instruksi2')[0].style.display = 'none'
-          }})
+          if (window.matchMedia("(orientation: portrait)").matches){
+            document.getElementsByClassName('instruksi2')[0].style.display = 'block'
+            gsap.to('.instruksi2', {opacity: 1, duration: 1})
+            gsap.to('.instruksi2', {opacity: 0, duration: 1, delay: 3.5, onComplete: () => {
+              document.getElementsByClassName('instruksi2')[0].style.display = 'none'
+            }})
+          }
         }})
       },
       reverseAnimation(){
