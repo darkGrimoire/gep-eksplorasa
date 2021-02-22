@@ -186,7 +186,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   background-image: url("/img/bg_beige-min.png");
-  min-width: 30%;
+  min-width: 35%;
 }
 .podcast-x-button {
   display: flex;
@@ -219,6 +219,8 @@ li:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-left: 3px solid black;
+  padding-left: 5%;
 }
 .poster-area {
   width: 200px;
@@ -269,12 +271,14 @@ li:hover {
   .podcastPopup {
     font-size: 1.25rem;
   }
-}
-@media screen and (max-width: 300px) {
   .poster-area {
     width: 100px;
     height: 100px;
     border: 1px solid black;
+  }
+  .pod-area {
+    padding-left: 0;
+    border-left: 0px;
   }
 }
 </style>
