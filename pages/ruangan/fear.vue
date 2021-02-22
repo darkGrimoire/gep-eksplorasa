@@ -257,7 +257,8 @@
           ouija: 0
         },
         popups: '',
-        tipeKarya: ''
+        tipeKarya: '',
+        audio: undefined
       }
     },
     computed: {
@@ -318,6 +319,8 @@
     },
     beforeDestroy() {
       window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
     },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
@@ -346,6 +349,8 @@
         }})
       }
       localStorage.setItem('last', this.$route.path)
+      this.audio = new Audio('/songs/fear.mp3')
+      this.audio.play()
     },
     methods: {
       switchSlide(val){

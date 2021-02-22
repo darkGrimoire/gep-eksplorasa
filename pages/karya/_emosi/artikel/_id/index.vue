@@ -39,7 +39,7 @@
       </div>
     </div>
     <rcp />
-    <nuxt-link v-show="!fs" class="back-button" :to="'/ruangan/'+emosi">
+    <nuxt-link class="back-button" :to="'/ruangan/'+emosi">
       Back
     </nuxt-link>
   </div>

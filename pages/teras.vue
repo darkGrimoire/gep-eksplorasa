@@ -142,7 +142,8 @@ import { Youtube } from 'vue-youtube'
           rel: 0
         },
         showTeaser: false,
-        catAudio: undefined
+        catAudio: undefined,
+        audio: undefined
       }
     },
     computed: {
@@ -197,6 +198,11 @@ import { Youtube } from 'vue-youtube'
         }
       },
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -212,6 +218,8 @@ import { Youtube } from 'vue-youtube'
       }, 1000)
 
       localStorage.setItem('last', this.$route.path)
+      this.audio = new Audio('/songs/teras.mp3')
+      this.audio.play()
     },
     methods: {
       reverseAnimation(){
