@@ -1,15 +1,15 @@
 <template>
   <div class="testing-kine-popup">
     <p>Heihihefiep</p>
-    <foto-popup></foto-popup>
+    <foto-popup />
   </div>
 </template>
 
 <script>
 import fotoPopup from "~/components/foto-popup.vue"
 export default {
-  components: { fotoPopup },
   name: "TestPopUp",
+  components: { fotoPopup },
   data() {
     return {
       test: true

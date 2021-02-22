@@ -1,15 +1,15 @@
 <template>
   <div class="testing-popup">
-     <p>Heihihefiep</p>
-      <tv-popup></tv-popup>
+    <p>Heihihefiep</p>
+    <tv-popup />
   </div>
 </template>
 
 <script>
 import tvPopup from '~/components/tv-popup.vue'
 export default {
-  components: { tvPopup },
     name:'TestPopUp',
+  components: { tvPopup },
     data() {
         return {
             test: true

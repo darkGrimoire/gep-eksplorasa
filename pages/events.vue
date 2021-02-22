@@ -14,21 +14,35 @@
 
         <div class="isibox">
           <!-- nyomot dari w3 hehe ^-^ -->
-            <div class="tanggal">
-              <button class="tablink" :class="{active: date==22}" v-on:click="getevent(22)">22</button>
-              <button class="tablink" :class="{active: date==23}" v-on:click="getevent(23)">23</button>
-              <button class="tablink" :class="{active: date==24}" v-on:click="getevent(24)">24</button>
-              <button class="tablink" :class="{active: date==25}" v-on:click="getevent(25)">25</button>
-              <button class="tablink" :class="{active: date==26}" v-on:click="getevent(26)">26</button>
-              <button class="tablink" :class="{active: date==27}" v-on:click="getevent(27)">27</button>
-              <button class="tablink" :class="{active: date==28}" v-on:click="getevent(28)">28</button>
-            </div>
+          <div class="tanggal">
+            <button class="tablink" :class="{active: date==22}" @click="getevent(22)">
+              22
+            </button>
+            <button class="tablink" :class="{active: date==23}" @click="getevent(23)">
+              23
+            </button>
+            <button class="tablink" :class="{active: date==24}" @click="getevent(24)">
+              24
+            </button>
+            <button class="tablink" :class="{active: date==25}" @click="getevent(25)">
+              25
+            </button>
+            <button class="tablink" :class="{active: date==26}" @click="getevent(26)">
+              26
+            </button>
+            <button class="tablink" :class="{active: date==27}" @click="getevent(27)">
+              27
+            </button>
+            <button class="tablink" :class="{active: date==28}" @click="getevent(28)">
+              28
+            </button>
+          </div>
 
-            <img src="/events/garis.png" class="garis">
-            <img src="/events/garis.png" class="garisx">
-            <div class="konten">
-              <div v-html="eventout"></div>
-            </div>
+          <img src="/events/garis.png" class="garis">
+          <img src="/events/garis.png" class="garisx">
+          <div class="konten">
+            <div v-html="eventout" />
+          </div>
         </div>
       </div>
     </div>
@@ -148,7 +162,7 @@ export default {
 <!-- sblmnya ada "scoped" tp w apus biar bisa pake v-html -->
 <style lang="scss">
 /* ini kode cal yaaa gue ga berani hapus yang di bawah wkwk */
-  * {
+  div {
     font-family: 'KG Happy Solid';
     font-size: 25px;
     color: #1f1f1f;

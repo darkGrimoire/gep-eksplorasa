@@ -53,11 +53,8 @@
           <div class="cont youtube-container" style="display:none;">
             <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :player-vars="playerVars" @ended="restart" />
           </div>
-          <nuxt-link class="cont events-button" tag="div" to="/events">
+          <nuxt-link class="cont events-button" tag="div" to="/events" :no-prefetch="true">
             Events
-          </nuxt-link>
-          <nuxt-link class="cont aboutus-button" tag="div" to="/aboutus">
-            About Us
           </nuxt-link>
         </div>
       </div>
@@ -114,6 +111,7 @@ import { Youtube } from 'vue-youtube'
       rcp,
       Youtube
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -712,6 +710,7 @@ import { Youtube } from 'vue-youtube'
 }
 
 .events-button {
+  font-family: 'KG Happy Solid';
   right: 5%;
   bottom: 13%;
   font-size: 40px;
@@ -725,17 +724,4 @@ import { Youtube } from 'vue-youtube'
   }
 }
 
-.aboutus-button {
-  left: 5%;
-  bottom: 13%;
-  font-size: 40px;
-  z-index: 5;
-  color: #ede5d1;
-  opacity: .4;
-  transition: opacity 0.25s ease;
-  &:hover {
-    opacity: .9;
-    cursor: pointer;
-  }
-}
 </style>
