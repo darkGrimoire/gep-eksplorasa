@@ -275,7 +275,7 @@ import { Youtube } from 'vue-youtube'
         new Image().src = '/teras/A3 1.png'
         new Image().src = '/teras/p2 1.png'
         new Image().src = '/teras/meong1 1.png'
-        new Image().src = 'open me 2.png'
+        new Image().src = '/teras/open me 2.png'
       },
       goToEmosi(str){
         this.$router.push({path: "/ruangan/" + str})

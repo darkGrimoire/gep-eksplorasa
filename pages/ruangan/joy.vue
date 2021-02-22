@@ -76,7 +76,7 @@
           <div class="photobook" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
           <div v-if="!isInstruksi1" class="instruksi instruksi1">
-            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('.instruksi1')">
+            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
           </div>
           <div class="tv-popup">
             <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
@@ -136,7 +136,7 @@
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="foot" />
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
-            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('.instruksi2')">
+            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
@@ -326,7 +326,7 @@
       //   }, 4000)
       // },
       fadeInstruksi(classname){
-        gsap.to(classname, {opacity: 0, duration: 1, onComplete: () => {
+        gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName(classname)[0].style.display = 'none'
         }})
       },

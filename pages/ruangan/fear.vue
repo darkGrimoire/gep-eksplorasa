@@ -89,7 +89,7 @@
           <div class="kucing" />
           <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
           <div v-if="!isInstruksi1" class="instruksi instruksi1">
-            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('.instruksi1')">
+            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
@@ -187,7 +187,7 @@
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="kaki" />
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
-            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('.instruksi2')">
+            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
           <div class="tv-popup">
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
@@ -381,7 +381,7 @@
     },
     methods: {
       fadeInstruksi(classname){
-        gsap.to(classname, {opacity: 0, duration: 1, onComplete: () => {
+        gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName(classname)[0].style.display = 'none'
         }})
       },
