@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <nuxt-link class="back-button" :to="'/teras'">
+    <nuxt-link class="back-button" :to="lastRoute">
       Back
     </nuxt-link>
   </div>
@@ -110,7 +110,8 @@ import 'swiper/swiper-bundle.css'
             replaceState: true,
             watchState: true
           },
-        }
+        },
+        lastRoute: '/teras'
       }
     },
     async mounted () {
@@ -120,8 +121,16 @@ import 'swiper/swiper-bundle.css'
       await this.initializeDatabase()
       
       this.preloadImages()
+      this.lastRoute = this.checkLastRoute()
     },
     methods: {
+      checkLastRoute(){
+        if (localStorage.getItem('before_instalasi')){
+          return localStorage.getItem('before_instalasi')
+        } else {
+          return '/teras'
+        }
+      },
       initializeLocalStorage(){
         if (localStorage.getItem('instalasi')){
           try{
@@ -538,7 +547,7 @@ import 'swiper/swiper-bundle.css'
   position: fixed;
   bottom: 2%;
   left: 2%;
-  color: white;
+  color: #1f1f1f;
   font-size: 40px;
   font-family: 'KG Happy Solid';
   z-index: 1;

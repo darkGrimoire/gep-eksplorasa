@@ -167,7 +167,8 @@ export default {
         targetRoom = 'sad'
       }
       let targetUrl = this.alamat[id].charAt(0) === '/' ? this.alamat[id] : '/' + this.alamat[id]
-      const tujuan = "/karya/" + targetRoom.toLowerCase() + "/" + targetUrl
+      const tujuan = "/karya/" + targetRoom.toLowerCase() + targetUrl
+      console.log(tujuan)
       this.$router.push({ path: tujuan })
     }
   }

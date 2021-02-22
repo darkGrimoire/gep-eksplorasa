@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <img src="/templatekine/g1 kuning.png" class="g1">
+      <img :src="'/templatekine/g1 kuning.png'" class="g1">
       <img src="/templatekine/g2 kuning.png" class="g2">
 
       <div class="layer2">
@@ -390,7 +390,7 @@ export default {
 
   .isi {
     text-align: left;
-    max-height: 400px;
+    max-height: 340px;
     overflow-y: scroll;
     padding: 0 30px;
     //firefox
@@ -436,7 +436,7 @@ export default {
     .paperrrr {display: none;}
   }
 
-  @media only screen and (max-width: 1530px) {
+  @media only screen and (max-width: 1400px) {
     .content {
       position: relative;
       display: flex;
@@ -548,7 +548,7 @@ export default {
 
     .isi {
       text-align: left;
-      max-height: 700px;
+      max-height: 550px;
       overflow-y: scroll;
       padding: 0 30px;
     }
@@ -572,6 +572,17 @@ export default {
       width: 175px;
       margin-left: 660px;
       margin-top: 75px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .fotoo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .paper {
+      max-width: 90vw;
     }
   }
 
@@ -726,7 +737,7 @@ export default {
     }
 
     .arrow {
-      font-size: 50px;
+      font-size: 80px;
     }
 
     .fotoo {
@@ -737,30 +748,34 @@ export default {
         width: 200px;
       }
     }
+    ::v-deep .poster-container {
+      width: 320px;
+    }
 
     .leftarrow {
-      left: -30px;
+      left: 5px;
     }
 
     .rightarrow {
-      right: -30px;
+      right: 5px;
     }
 
     .paper {
       height: 80vh;
+      width: 90vw;
       margin-top: 50px;
     }
 
     .paperr {
-      width: 250px;
+      width: 90vw;
       margin-top: -10px;
     }
     .paperrr {
-      width: 250px;
+      width: 90vw;
       margin-top: -10px;
     }
     .paperrrr {
-      width: 250px;
+      width: 90vw;
       margin-top: -10px;
     }
 
@@ -794,7 +809,7 @@ export default {
 
     .isi {
       text-align: left;
-      max-height: 400px;
+      max-height: 500px;
       overflow-y: scroll;
       padding: 0 10px;
     }

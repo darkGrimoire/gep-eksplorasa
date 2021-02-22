@@ -126,10 +126,10 @@
           </div>
           <div class="bounce single" @click="popups = 'foto';tipeKarya = 'single'" />
           <div class="bounce bola" />
-          <div class="bounce teropong" />
+          <div class="bounce teropong" @click="handleRasyid" />
           <div class="bounce keranjang" />
           <div class="bounce artikel" @click="popups = 'kine';tipeKarya = 'artikel'" />
-          <div class="bounce kamera" />
+          <div class="bounce kamera" @click="popups = 'foto';tipeKarya = 'series'" />
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="foot" />
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
@@ -301,6 +301,10 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')

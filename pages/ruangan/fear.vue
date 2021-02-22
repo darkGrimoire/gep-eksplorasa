@@ -87,7 +87,7 @@
           <div class="kamera" @click="popups = 'foto';tipeKarya = 'single'" />
           <div class="radio" @click="popups = 'podcast'" />
           <div class="kucing" />
-          <div class="zine" />
+          <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
           <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
@@ -178,7 +178,7 @@
           <div v-show="benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-2.png" alt="photobook1">
           </div>
-          <div class="cont teropong">
+          <div class="cont teropong" @click="handleRasyid">
             <img src="/fear/tropong fear.png" alt="teropong">
           </div>
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
@@ -356,6 +356,10 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
@@ -783,6 +787,9 @@
   width: 13.5%;
   top: 51%;
   left: 73.8%;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .radio{
@@ -1015,12 +1022,18 @@
   top: 76.8%;
   left: 37.2%;
   z-index: 71;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .photobook1{
   width: 13%;
   top: 53.8%;
   left: 47.2%;
   z-index: 71;
+  &:hover {
+    cursor: pointer;
+  }
 }
 // .zine{
 //   width: 16%;

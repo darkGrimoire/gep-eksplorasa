@@ -68,7 +68,7 @@
           </div>
           <div class="book" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="podcast" @click="popups = 'podcast'" />
-          <div class="single" />
+          <div class="single" @click="popups = 'foto';tipeKarya = 'single'" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
           <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
@@ -114,7 +114,7 @@
           <div class="article" @click="popups = 'kine';tipeKarya = 'artikel'" />
           <div v-show="benda.key" class="foot" />
           <div class="key" @click="benda.key = true;slide=3" />
-          <div class="teropong" />
+          <div class="teropong" @click="handleRasyid" />
           <div class="tv-popup">
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
@@ -282,6 +282,10 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
       },
       goToEmosi(str){
         this.$router.push({path: "/ruangan/" + str})

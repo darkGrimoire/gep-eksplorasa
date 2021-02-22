@@ -148,12 +148,12 @@
           <div class="cont cakar">
             <img src="/anger/gep anger scar.png" alt="cakar" :style="`opacity: ${benda.cakar}`" @mouseenter="benda.cakar = 1" @mouseout="benda.cakar = 0">
           </div>
-          <div class="cont teropong">
+          <div class="cont teropong" @click="handleRasyid">
             <img src="/anger/tropong anger.png" alt="teropong">
           </div>
           <div class="pisau" />
-          <div class="buku" />
-          <div class="gantungan" />
+          <div class="buku" @click="popups = 'foto';tipeKarya = 'buku'" />
+          <div class="gantungan" @click="popups = 'foto';tipeKarya = 'series'" />
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="foot" />
           <div class="tv-popup">
@@ -321,6 +321,10 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
@@ -979,6 +983,9 @@
   width: 13%;
   top: 79%;
   left: 10.5%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .tv-popup {
   position: absolute;

@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <nuxt-link class="back-button" :to="'/aboutus'">
+    <nuxt-link class="back-button" :to="'/teras'">
       Back
     </nuxt-link>
   </div>
