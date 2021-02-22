@@ -9,9 +9,15 @@
       <img id="sad" class="emosi" src="/homepage/s0.gif" alt="sad" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
       <img id="joy" class="emosi" src="/homepage/j0.gif" alt="joy" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
     </div>
+<<<<<<< HEAD
     <div class="button" @click="pergi()">
       start explore
     </div>
+=======
+    <nuxt-link class="button" to="/dots" :no-prefetch="true">
+      start exploring
+    </nuxt-link>
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
     <rcp />
   </div>
 </template>
@@ -175,7 +181,8 @@ img {
   }
 }
 .button {
-  width: 350px;
+  width: 450px;
+  height: 90px;
   position: absolute;
   top: 68%;
   left: 50%;
@@ -200,7 +207,8 @@ img {
     margin: 0 0 0 0;
   }
   @media only screen and (max-width: 600px) {
-    width: 250px;
+    height: 70px;
+    width: 280px;
     font-size: 1.9rem;
     margin: 0 0 0 0;
   }

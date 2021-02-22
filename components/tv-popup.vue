@@ -10,7 +10,11 @@
           <div class="main-poster">
             <div class="left-arrow-tv-popup" @click="movePos(-1)" />
             <div class="poster-area" @click="gotoKarya()">
+<<<<<<< HEAD
               <img class="poster bordered" />
+=======
+              <img class="poster-tv bordered">
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
             </div>
             <div class="right-arrow-tv-popup" @click="movePos(1)" />
           </div>
@@ -150,10 +154,17 @@ export default {
       }
       /* Set up poster and title */
       this.pos = 0
+<<<<<<< HEAD
       document.getElementsByClassName("poster")[0].src =
         this.poster[this.pos] || "/loading.svg"
       document.getElementsByClassName("title-movie")[0].innerHTML =
         this.judul[this.pos] || "Loading"
+=======
+      document.getElementsByClassName("poster-tv")[0].src = (this.poster[this.pos] || "/loading.svg")
+      document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
+        this.pos
+      ] || "Loading")
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
     },
     initSetUpFear() {
       // FEAR IS SEPARATED BECAUSE IT DOESN'T HAVE VIDEO
@@ -194,8 +205,13 @@ export default {
       } else if (this.pos == this.amount) {
         this.pos = this.amount - 1
       }
+<<<<<<< HEAD
       document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
 
+=======
+      document.getElementsByClassName("poster-tv")[0].src = this.poster[this.pos]
+      
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
       document.getElementsByClassName("title-movie")[0].innerHTML = ""
       document.getElementsByClassName("title-movie")[0].innerHTML = this.judul[
         this.pos
@@ -332,7 +348,7 @@ export default {
 .poster-area:hover {
   cursor: pointer;
 }
-.poster {
+.poster-tv {
   width: 100%;
   height: 100%;
   object-fit: contain;

@@ -38,10 +38,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
@@ -72,12 +73,13 @@
           <div class="teddy" />
           <div class="bbq" />
           <div class="ig" @click="popups = 'kine';tipeKarya = 'instagram'" />
-          <div class="photobook" />
+          <div class="photobook" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
           <div class="tv-popup">
             <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -96,10 +98,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide2.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide2.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
@@ -121,7 +124,7 @@
           <div class="cont pasir">
             <img src="/joy/pasir 1.png" alt="pasir">
           </div>
-          <div class="bounce single" />
+          <div class="bounce single" @click="popups = 'foto';tipeKarya = 'single'" />
           <div class="bounce bola" />
           <div class="bounce teropong" />
           <div class="bounce keranjang" />
@@ -130,6 +133,7 @@
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="foot" />
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -148,14 +152,17 @@
   import gsap from 'gsap'
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
   import rcp from '~/components/rcp.vue'
   export default {
     name: "Joy",
     components: {
       rcp,
       tvPopup,
-      kinePopup
+      kinePopup,
+      NewfotoPopup
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -276,6 +283,7 @@
           this.slide = 1
         }})
       }
+      localStorage.setItem('last', this.$route.path)
     },
     methods: {
       // bounceInterval(){
@@ -454,15 +462,18 @@
 
 .narasi-masuk {
   z-index: 10000;
+  color: #d1bb10;
 }
 
 .narasi-closing {
   font-size: 40px;
   z-index: 10000;
+  color: #ede5d1;
 }
 
 .narasi-keluar {
   font-size: 40px;
+  color: #009562;
 }
 
 .cont {
@@ -938,5 +949,17 @@
   top: 4%;
   left: 0;
   height: 150vh;
+}
+.darkness {
+  background-color: black;
+  opacity: .8;
+  z-index: 70;
+  width: 150%;
+  height: 200%;
+  top: -50%;
+}
+
+.foto-popup{
+  z-index: 71;
 }
 </style>

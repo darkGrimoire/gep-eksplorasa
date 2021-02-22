@@ -39,10 +39,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div v-show="!benda.lampu" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-sad1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-sad1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/sad/bgsad.png" alt="wall">
@@ -65,10 +66,12 @@
           <div class="cont poster">
             <img src="/sad/psotersad.png" alt="poster">
           </div>
-          <div class="book" />
-          <div class="podcast" @click="popups = 'kine';tipeKarya = 'video'" />
+          <div class="book" @click="popups = 'foto';tipeKarya = 'buku'" />
+          <div class="podcast" @click="popups = 'podcast'" />
           <div class="single" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
         </div>
       </div>
     </div>
@@ -88,10 +91,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
           <div v-show="!benda.lampu" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-sad2.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-sad2.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/sad/bgsad.png" alt="wall">
@@ -115,6 +119,7 @@
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -134,13 +139,18 @@
   import rcp from '~/components/rcp.vue'
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
+  import PodcastPopup from '~/components/podcast-popup.vue'
   export default {
     name: "Sad",
     components: {
       rcp,
       tvPopup,
-      kinePopup
+      kinePopup,
+      NewfotoPopup,
+      PodcastPopup
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -262,6 +272,7 @@
           this.slide = 1
         }})
       }
+      localStorage.setItem('last', this.$route.path)
     },
     methods: {
       switchSlide(val){
@@ -436,15 +447,18 @@
 
 .narasi-masuk {
   z-index: 10000;
+  color: #305fe9;
 }
 
 .narasi-closing {
   font-size: 40px;
   z-index: 10000;
+  color: #ede5d1;
 }
 
 .narasi-keluar {
   font-size: 40px;
+  color: #e14423;
 }
 
 .cont {
@@ -806,5 +820,8 @@
   top: 4%;
   left: 0;
   height: 150vh;
+}
+.foto-popup {
+  z-index: 71;
 }
 </style>

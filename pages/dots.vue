@@ -94,12 +94,20 @@ export default {
         /* FOR COMPUTER */
         const windowHeight = window.innerHeight
         const dots3_height = dotsPic3.offsetHeight
+<<<<<<< HEAD
         const dotsHeight = windowHeight - document.getElementsByClassName("dots")[0].getBoundingClientRect().top
         console.log("Hitung")
         console.log(windowHeight)
         console.log(document.getElementsByClassName("caption")[0].getBoundingClientRect().bottom)
         console.log(dotsHeight)
         console.log(dots3_height)
+=======
+        const text_element_height =
+          (windowHeight * 2.5) / 100 +
+          document.getElementsByClassName("judul")[0].clientHeight +
+          document.getElementsByClassName("caption")[0].clientHeight
+        const dotsHeight = windowHeight - text_element_height
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
         dots3_top = dotsHeight - dots3_height
         dots2_top = dots3_top + dots3_height * 0.8 - dotsPic2.offsetHeight
       }
@@ -134,7 +142,10 @@ export default {
     addAditionalGrass(isResize) {
       // ADD ADITIONAL GRASS WHEN THERE'S EMPTY SPACE BELOW INITIAL GRASS
       console.log("Start function")
+<<<<<<< HEAD
       console.log(this.additional_grass)
+=======
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
       if (isResize) {
         /* Create clean state for adding grass after resize */
         for (let i = 0; i < this.additional_grass; i++) {
@@ -157,6 +168,7 @@ export default {
       )
       let x = 0
       if (this.additional_grass === 0) {
+<<<<<<< HEAD
         console.log("yes")
         x = document.getElementsByClassName("dots-3")[0].getBoundingClientRect().bottom
       } else {
@@ -165,6 +177,21 @@ export default {
       if ((x == document.getElementsByClassName("dots-3")[0].getBoundingClientRect().bottom) && (this.additional_grass != 0)) {
         this.placeholder = false
         return
+=======
+        x = text_element_height + dots3Top + dots3Height
+      } else {
+        const doc = parseFloat(
+          document.getElementsByClassName(
+            `additional-grass-${this.additional_grass - 1}`
+          )[0].style.top
+        )
+        const addGrassHeight = parseFloat(
+          document.getElementsByClassName(
+            `additional-grass-${this.additional_grass - 1}`
+          )[0].offsetHeight
+        )
+        x = text_element_height + doc + addGrassHeight
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
       }
       console.log(windowHeight)
       console.log(x)

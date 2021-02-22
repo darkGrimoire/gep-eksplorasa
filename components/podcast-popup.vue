@@ -2,7 +2,7 @@
   <div class="podcastPopup" @click="bodyClick">
     <div class="podcastpopupwindow">
       <div class="podcast-x-button">
-        <img class="podcast-exit-image" @click="close()" />
+        <img class="podcast-exit-image" @click="close()">
       </div>
       <div class="main-podcast">
         <div class="list-area">
@@ -18,12 +18,18 @@
         </div>
         <div class="pod-area">
           <div class="poster-area" @click="gotoKarya(this.pos)">
-            <img class="poster bordered" />
+            <img class="poster bordered">
           </div>
           <div class="arrow-area">
+<<<<<<< HEAD
             <img class="left-arrow" @click="movePos(-1)" />
             <img class="center-ghost" @click="gotoKarya(this.pos)"/>
             <img class="right-arrow" @click="movePos(1)" />
+=======
+            <img class="left-arrow" @click="movePos(-1)">
+            <img class="center-ghost" @click="gotoKarya(this.pos)">
+            <img class="right-arrow" @click="movePos(1)">
+>>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
           </div>
         </div>
       </div>
@@ -53,8 +59,11 @@ export default {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
       this.room = link.match(
-        /(Joy|Sadness|Anger|Fear|joy|sadness|anger|fear)/i
+        /(Joy|Sad|Anger|Fear|joy|sad|anger|fear)/i
       )[0]
+      if (this.room.toLowerCase() === 'sad'){
+          this.room = 'sadness'
+        }
     },
     async getPodcastData() {
       const testing = await this.$fire.firestore
@@ -159,7 +168,12 @@ export default {
       }
     },
     goToKarya(id) {
-      const tujuan = "/karya/" + this.room.toLowerCase() + "/" + this.alamat[id]
+      let targetRoom = this.room
+      if (this.room.toLowerCase() === 'sadness'){
+        targetRoom = 'sad'
+      }
+      let targetUrl = this.alamat[id].charAt(0) === '/' ? this.alamat[id] : '/' + this.alamat[id]
+      const tujuan = "/karya/" + targetRoom.toLowerCase() + "/" + targetUrl
       this.$router.push({ path: tujuan })
     }
   }
