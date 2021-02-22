@@ -91,16 +91,16 @@ export default {
           this.eventout += '<div class="tabcontent">'
           this.eventout += '<div class="jam">'+this.datetojam(this.convertToWIB( new Date(1000*event.tanggal.seconds)) )+'</div>'
           this.eventout += '<div class="acara">'
-          this.eventout += event.nama + "<br>"
+          this.eventout += '<div class="judulacara">'+event.nama + '</div><div class="deskripsi">'
           if (event.deskripsi) {
-            this.eventout += event.deskripsi +"<br>"
+            this.eventout += event.deskripsi
           }
           if(Array.isArray(event.link) && event.link.length>0){
             for (let j in event.link){
-              this.eventout += '<a href="' + event.link[j] + '" target="_blank">' + event.link[j] + '</a><br>'
+              this.eventout += '<div class="link"><a href="' + event.link[j] + '" target="_blank">' + event.link[j] + '</a></div>'
             }
           }
-          this.eventout += '</div></div>'
+          this.eventout += '</div></div></div>'
         }
         if(this.eventout==""){
           this.eventout = "Nothing found :("
@@ -220,7 +220,7 @@ export default {
     color: #1f1f1f;
     text-decoration: none;
     font-family: 'Mechanical Pencil';
-    font-size: 30px;
+    font-size: 25px;
   }
 
   a:hover {
@@ -370,7 +370,7 @@ export default {
     }
 
     a {
-      font-size: 20px;
+      font-size: 15px;
     }
 
     button {
@@ -456,7 +456,7 @@ export default {
     }
 
     a {
-      font-size: 20px;
+      font-size: 15px;
     }
 
     button {
@@ -534,7 +534,7 @@ export default {
     }
 
     a {
-      font-size: 15px;
+      font-size: 10px;
     }
 
     button {
