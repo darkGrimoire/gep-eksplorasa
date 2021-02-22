@@ -122,7 +122,8 @@
           kamera2: 0,
           balon2: 0,
           figura2: 0
-        }
+        },
+        audio: undefined
       }
     },
     computed: {
@@ -166,6 +167,11 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -179,8 +185,8 @@
         this.slide = 1
       }})
       localStorage.setItem('last', this.$route.path)
-      var audio = new Audio('/songs/closing.mp3')
-      audio.play()
+      this.audio = new Audio('/songs/closing.mp3')
+      this.audio.play()
     },
     methods: {
       switchSlide(val){

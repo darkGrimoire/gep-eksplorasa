@@ -193,7 +193,8 @@
           kunci:false
         },
         popups: '',
-        tipeKarya: ''
+        tipeKarya: '',
+        audio: undefined
       }
     },
     computed: {
@@ -257,6 +258,8 @@
     },
     beforeDestroy() {
       window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
     },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
@@ -284,8 +287,8 @@
         }})
       }
       localStorage.setItem('last', this.$route.path)
-      var audio = new Audio('/songs/joy.mp3')
-      audio.play()
+      this.audio = new Audio('/songs/joy.mp3')
+      this.audio.play()
     },
     methods: {
       // bounceInterval(){
