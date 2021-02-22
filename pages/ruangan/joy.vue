@@ -283,6 +283,7 @@
           this.slide = 1
         }})
       }
+      localStorage.setItem('last', this.$route.path)
     },
     methods: {
       // bounceInterval(){

@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <nuxt-link class="back-button" :to="'/ruangan/'+emosi">
+    <nuxt-link class="back-button" :to="'/teras'">
       Back
     </nuxt-link>
   </div>

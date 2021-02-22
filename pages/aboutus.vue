@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <nuxt-link class="back-button" :to="'/teras'">
+    <nuxt-link class="back-button" :to="last">
       Back
     </nuxt-link>
   </div>
@@ -39,6 +39,14 @@
 
 export default {
   name: 'AboutUs',
+  data() {
+    return {
+      last: '/teras'
+    }
+  },
+  mounted () {
+    this.last = this.checkBefore()
+  },
   methods: {
     gotocatkur() {
       this.$router.push({path: '/catatankuratorial'})
@@ -48,6 +56,13 @@ export default {
     },
     gotomerch() {
       window.open("https://bit.ly/AyoBeliMerchGEP2021", '_blank')
+    },
+    checkBefore() {
+      if (localStorage.getItem('last')){
+        return `${localStorage.getItem('last')}`
+      } else {
+        return '/teras'
+      }
     }
   },
 }

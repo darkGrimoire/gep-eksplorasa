@@ -210,6 +210,8 @@ import { Youtube } from 'vue-youtube'
       setTimeout(() => {
         this.preloadImages()
       }, 1000)
+
+      localStorage.setItem('last', this.$route.path)
     },
     methods: {
       reverseAnimation(){

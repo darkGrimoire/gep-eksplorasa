@@ -50,9 +50,9 @@
           <div class="cont meja">
             <img src="/closing/meja.png" alt="meja">
           </div>
-          <div class="figura"/>
-          <div class="kamera"/>
-          <div class="balon"/>
+          <div class="figura" />
+          <div class="kamera" />
+          <div class="balon" />
          
           <div class="cont gantungan">
             <img src="/closing/foto.png" alt="gantungan">
@@ -178,6 +178,7 @@
         localStorage.setItem('closing', true)
         this.slide = 1
       }})
+      localStorage.setItem('last', this.$route.path)
     },
     methods: {
       switchSlide(val){
