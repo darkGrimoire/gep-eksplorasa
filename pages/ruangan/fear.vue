@@ -365,6 +365,9 @@
           this.slide = 1
         }})
       }
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/fear.mp3')
       this.audio.play()
@@ -385,6 +388,17 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      preloadImages(){
+        new Image().src = '/fear/fear1.png'
+        new Image().src = '/fear/f-artikel-2.png'
+        new Image().src = '/fear/kucing 2.png'
+        new Image().src = '/fear/fokripi 1.png'
+        new Image().src = '/fear/f-radio-2.png'
+        new Image().src = '/fear/f-single-2.png'
+        new Image().src = '/fear/f-photoseries-2.png'
+        new Image().src = '/fear/f-zine-2.png'
+        new Image().src = '/fear/monster2 1.png'
       },
       handleRasyid(){
         localStorage.setItem('before_instalasi', this.$route.path)

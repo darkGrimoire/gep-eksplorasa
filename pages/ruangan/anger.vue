@@ -330,6 +330,9 @@
           this.slide = 1
         }})
       }
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/anger.mp3')
       this.audio.play()
@@ -350,6 +353,18 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      preloadImages(){
+        new Image().src = '/anger/anger1.png'
+        new Image().src = '/anger/a-photo series-2.png'
+        new Image().src = '/anger/a-photobook-2.png'
+        new Image().src = '/anger/gep pisau.png'
+        new Image().src = '/anger/tv2.png'
+        new Image().src = '/anger/a-single-2.png'
+        new Image().src = '/anger/a-artikel-2.png'
+        new Image().src = '/anger/gep anger berserakan.png'
+        new Image().src = '/anger/gep anger meledak.png'
+        new Image().src = '/anger/kulopen.png'
       },
       handleRasyid(){
         localStorage.setItem('before_instalasi', this.$route.path)

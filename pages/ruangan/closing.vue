@@ -189,6 +189,9 @@
         localStorage.setItem('closing', true)
         this.slide = 1
       }})
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/closing.mp3')
       this.audio.play()
@@ -205,6 +208,11 @@
         gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName('instruksi1')[0].style.display = 'none'
         }})
+      },
+      preloadImages(){
+        new Image().src = '/closing/balon1-out.png'
+        new Image().src = '/closing/cam-out.png'
+        new Image().src = '/closing/gantungan-out.png'
       },
       switchSlide(val){
         this.slide += val

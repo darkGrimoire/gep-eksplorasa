@@ -292,6 +292,9 @@
           this.slide = 1
         }})
       }
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/sad.mp3')
       this.audio.play()
@@ -312,6 +315,16 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      preloadImages(){
+        new Image().src = '/sad/lemaribfr.png'
+        new Image().src = '/sad/tropong sad.png'
+        new Image().src = '/sad/keysad.png'
+        new Image().src = '/sad/s-artikel-2.png'
+        new Image().src = '/sad/s-zine-2.png'
+        new Image().src = '/sad/s-single-2.png'
+        new Image().src = '/sad/s-photobook-2.png'
+        new Image().src = '/sad/s-podcast-2.png'
       },
       handleRasyid(){
         localStorage.setItem('before_instalasi', this.$route.path)

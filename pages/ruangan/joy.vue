@@ -303,6 +303,9 @@
           this.slide = 1
         }})
       }
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/joy.mp3')
       this.audio.play()
@@ -330,6 +333,20 @@
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      preloadImages(){
+        new Image().src = '/joy/f4.png'
+        new Image().src = '/joy/PHOTOSERIES_2 1.png'
+        new Image().src = '/joy/ARTIKEL.png'
+        new Image().src = '/joy/kranjang2 1.png'
+        new Image().src = '/joy/tropong joy.png'
+        new Image().src = '/joy/bola1 3.png'
+        new Image().src = '/joy/SINGLEPHOTO_2.png'
+        new Image().src = '/joy/ZINE.png'
+        new Image().src = '/joy/PHOTOBOOK_2.png'
+        new Image().src = '/joy/IG_2.png'
+        new Image().src = '/joy/bbq2.png'
+        new Image().src = '/joy/tedi2.png'
       },
       handleRasyid(){
         localStorage.setItem('before_instalasi', this.$route.path)
