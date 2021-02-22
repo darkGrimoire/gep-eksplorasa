@@ -97,6 +97,7 @@
         </div>
       </div>
     </div>
+    <div class="sound-controller" @click="changeMute()">SOUND</div>
     <rcp />
   </div>
 </template>
@@ -319,7 +320,19 @@ import { Youtube } from 'vue-youtube'
           this.computedDisplacement = 0
           this.transformed = 0
         }
+      },
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
       }
+    }
     },
   }
 </script>
@@ -774,6 +787,22 @@ import { Youtube } from 'vue-youtube'
     opacity: .9;
     cursor: pointer;
   }
+}
+
+.sound-controller {
+  position: absolute;
+  top: 20px;
+  left: 50vw;
+  transform: translate(-50%);
+  font-family: "KG Happy Solid";
+  font-size: 40px;
+  color: black;
+  opacity: 0.2;
+  transition: opacity .4s;
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 </style>
