@@ -105,7 +105,7 @@ export default {
             localStorage.setItem("nama", this.form.nama)
             localStorage.setItem("visited", true)
             this.$router.push({
-              path: '/dots'
+              path: '/teras'
             })
           }
         }).catch(() => {
