@@ -284,6 +284,8 @@
         }})
       }
       localStorage.setItem('last', this.$route.path)
+      var audio = new Audio('/songs/joy.mp3')
+      audio.play()
     },
     methods: {
       // bounceInterval(){

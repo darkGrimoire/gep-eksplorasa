@@ -212,6 +212,8 @@ import { Youtube } from 'vue-youtube'
       }, 1000)
 
       localStorage.setItem('last', this.$route.path)
+      var audio = new Audio('/songs/teras.mp3')
+      audio.play()
     },
     methods: {
       reverseAnimation(){

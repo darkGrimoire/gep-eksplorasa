@@ -311,6 +311,8 @@
         }})
       }
       localStorage.setItem('last', this.$route.path)
+      var audio = new Audio('/songs/anger.mp3')
+      audio.play()
     },
     methods: {
       switchSlide(val){

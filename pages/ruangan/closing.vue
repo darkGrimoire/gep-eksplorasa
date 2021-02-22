@@ -179,6 +179,8 @@
         this.slide = 1
       }})
       localStorage.setItem('last', this.$route.path)
+      var audio = new Audio('/songs/closing.mp3')
+      audio.play()
     },
     methods: {
       switchSlide(val){
