@@ -2,7 +2,7 @@
   <div class="podcastPopup" @click="bodyClick">
     <div class="podcastpopupwindow">
       <div class="podcast-x-button">
-        <img class="podcast-exit-image" @click="close()">
+        <img class="podcast-exit-image" @click="close()" />
       </div>
       <div class="main-podcast">
         <div class="list-area">
@@ -18,12 +18,12 @@
         </div>
         <div class="pod-area">
           <div class="poster-area" @click="gotoKarya(this.pos)">
-            <img class="poster bordered">
+            <img class="poster bordered" />
           </div>
           <div class="arrow-area">
-            <img class="left-arrow" @click="movePos(-1)">
-            <img class="center-ghost" @click="gotoKarya(this.pos)">
-            <img class="right-arrow" @click="movePos(1)">
+            <img class="leftpod-arrow" @click="movePos(-1)" />
+            <img class="center-ghost" @click="gotoKarya(this.pos)" />
+            <img class="rightpod-arrow" @click="movePos(1)" />
           </div>
         </div>
       </div>
@@ -52,12 +52,10 @@ export default {
     getRoom() {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
-      this.room = link.match(
-        /(Joy|Sad|Anger|Fear|joy|sad|anger|fear)/i
-      )[0]
-      if (this.room.toLowerCase() === 'sad'){
-          this.room = 'sadness'
-        }
+      this.room = link.match(/(Joy|Sad|Anger|Fear|joy|sad|anger|fear)/i)[0]
+      if (this.room.toLowerCase() === "sad") {
+        this.room = "sadness"
+      }
     },
     async getPodcastData() {
       const testing = await this.$fire.firestore
@@ -69,16 +67,17 @@ export default {
       const temp_path = testing.data().routes
       temp_path.forEach(item => {
         this.judul.push(item.judul)
-        this.poster.push(item.poster)
+        // this.poster.push(item.poster)
         this.alamat.push(item.route)
       })
       this.amount = this.judul.length
-      document.getElementsByClassName("poster")[0].src =
-        this.poster[0] || "/loading.svg"
-      console.log(this.judul)
-      console.log(this.poster)
-      console.log(this.alamat)
-      console.log(this.amount)
+      for (let i = 0; i < this.amount; i++) {
+        let temp = "fear"
+        if (this.room.toLowerCase() == "sadness") {
+          temp = "sad"
+        }
+        this.poster.push("/img/emo-" + temp + "-min.png")
+      } 
     },
     initSetUpPodcast() {
       document.getElementsByClassName("podcast-exit-image")[0].src =
@@ -93,12 +92,14 @@ export default {
       } else if (this.room.toLowerCase() == "fear") {
         id_room = 4
       }
-      document.getElementsByClassName("left-arrow")[0].src =
+      document.getElementsByClassName("leftpod-arrow")[0].src =
         "/img/popup/LPolygon-" + id_room + ".png"
       document.getElementsByClassName("center-ghost")[0].src =
         "/img/popup/ghost.png"
-      document.getElementsByClassName("right-arrow")[0].src =
+      document.getElementsByClassName("rightpod-arrow")[0].src =
         "/img/popup/RPolygon-" + id_room + ".png"
+      this.pos = 0
+      document.getElementsByClassName("poster")[0].src = this.poster[0]
     },
     movePos(id_pindah) {
       // CHANGE THE MOVIE POSTER SHOWN
@@ -124,7 +125,6 @@ export default {
         document.getElementsByClassName("right-arrow")[0].style.visibility =
           "visible"
       }
-      console.log(this.pos)
     },
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
@@ -153,20 +153,24 @@ export default {
       // CHECK THE LOCATION OF THE CLICK
       // IF INSIDE POPUP, DO NOTHING
       // IF OUTSIDE POPUP, CLOSE POPUP
-      try {if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
-        return
-      }
-      this.close()}
-      catch(e) {
+      try {
+        if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
+          return
+        }
+        this.close()
+      } catch (e) {
         return
       }
     },
     goToKarya(id) {
       let targetRoom = this.room
-      if (this.room.toLowerCase() === 'sadness'){
-        targetRoom = 'sad'
+      if (this.room.toLowerCase() === "sadness") {
+        targetRoom = "sad"
       }
-      let targetUrl = this.alamat[id].charAt(0) === '/' ? this.alamat[id] : '/' + this.alamat[id]
+      let targetUrl =
+        this.alamat[id].charAt(0) === "/"
+          ? this.alamat[id]
+          : "/" + this.alamat[id]
       const tujuan = "/karya/" + targetRoom.toLowerCase() + "/" + targetUrl
       this.$router.push({ path: tujuan })
     }
