@@ -73,6 +73,9 @@
           <div class="cont tulisankamera">
             <img src="/closing/cam3.png" alt="tulisankamera">
           </div>
+          <div v-if="!isInstruksi1" class="instruksi1">
+            <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
+          </div>
           <!-- <div class="cont tulisanbalon">
             <img src="/closing/balon3.png" alt="tulisanbalon">
           </div>
@@ -123,7 +126,9 @@
           balon2: 0,
           figura2: 0
         },
-        audio: undefined
+        audio: undefined,
+        isInstruksi1: false,
+        instruksiImg: '/instruksi/4.png'
       }
     },
     computed: {
@@ -187,8 +192,20 @@
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/closing.mp3')
       this.audio.play()
+      this.isInstruksi1 = (localStorage.getItem('instruksi_4') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg = '/instruksi/4 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_4', true)
+      }
     },
     methods: {
+      fadeInstruksi(){
+        gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName('instruksi1')[0].style.display = 'none'
+        }})
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
@@ -543,5 +560,20 @@
   left: 13.1%;
   top: 31%;
 }
-
+.instruksi1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(.5);
+    object-fit: contain;
+  }
+}
 </style>

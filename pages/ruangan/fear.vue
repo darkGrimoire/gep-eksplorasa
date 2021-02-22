@@ -88,6 +88,9 @@
           <div class="radio" @click="popups = 'podcast'" />
           <div class="kucing" />
           <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
+          <div v-if="!isInstruksi1" class="instruksi instruksi1">
+            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('.instruksi1')">
+          </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
           <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
@@ -183,6 +186,9 @@
           </div>
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="kaki" />
+          <div v-if="!isInstruksi2" class="instruksi instruksi2">
+            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('.instruksi2')">
+          </div>
           <div class="tv-popup">
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
@@ -258,7 +264,11 @@
         },
         popups: '',
         tipeKarya: '',
-        audio: undefined
+        audio: undefined,
+        isInstruksi1: false,
+        isInstruksi2: true,
+        instruksiImg1: '/instruksi/2.png',
+        instruksiImg2: '/instruksi/3.png'
       }
     },
     computed: {
@@ -270,6 +280,13 @@
       slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          this.isInstruksi2 = (localStorage.getItem('instruksi_3') || false)
+          if (window.matchMedia("(orientation: portrait)").matches){
+            this.instruksiImg2 = '/instruksi/3 hp.png'
+          }
+          if (!this.isInstruksi2){
+            localStorage.setItem('instruksi_3', true)
+          }
           if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
             gsap.to('.narasi', {opacity: 0, duration: .5})
@@ -351,8 +368,20 @@
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/fear.mp3')
       this.audio.play()
+      this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg1 = '/instruksi/2 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_2', true)
+      }
     },
     methods: {
+      fadeInstruksi(classname){
+        gsap.to(classname, {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName(classname)[0].style.display = 'none'
+        }})
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
@@ -1101,5 +1130,21 @@
 
 .foto-popup {
   z-index: 71;
+}
+.instruksi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.4);
+    object-fit: contain;
+  }
 }
 </style>
