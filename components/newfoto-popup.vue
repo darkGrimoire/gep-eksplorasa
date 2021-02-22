@@ -126,6 +126,7 @@ import 'swiper/swiper-bundle.css'
   left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
+  font-family: 'KG Happy Solid';
 }
 
 .film {
@@ -184,10 +185,13 @@ import 'swiper/swiper-bundle.css'
   height: 100%;
   z-index: 1006;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   opacity: 0;
   .title, .author {
     z-index: 1007;
+  }
+  .title {
+    margin-bottom: 15px;
   }
 }
 .mini-overlay.mini-overlay-hover {
