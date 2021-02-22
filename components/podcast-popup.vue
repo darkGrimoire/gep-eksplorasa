@@ -21,9 +21,9 @@
             <img class="poster bordered" />
           </div>
           <div class="arrow-area">
-            <img class="left-arrow" />
-            <img class="center-ghost" />
-            <img class="right-arrow" />
+            <img class="left-arrow" @click="movePos(-1)" />
+            <img class="center-ghost" @click="gotoKarya(this.pos)"/>
+            <img class="right-arrow" @click="movePos(1)" />
           </div>
         </div>
       </div>
@@ -69,6 +69,13 @@ export default {
         this.poster.push(item.poster)
         this.alamat.push(item.route)
       })
+      this.amount = this.judul.length
+      document.getElementsByClassName("poster")[0].src =
+        this.poster[0] || "/loading.svg"
+      console.log(this.judul)
+      console.log(this.poster)
+      console.log(this.alamat)
+      console.log(this.amount)
     },
     initSetUpPodcast() {
       document.getElementsByClassName("podcast-exit-image")[0].src =
@@ -90,7 +97,32 @@ export default {
       document.getElementsByClassName("right-arrow")[0].src =
         "/img/popup/RPolygon-" + id_room + ".png"
     },
-
+    movePos(id_pindah) {
+      // CHANGE THE MOVIE POSTER SHOWN
+      // 0 <= this.pos < this.amount
+      this.pos += id_pindah
+      if (this.pos < 0) {
+        this.pos = 0
+      } else if (this.pos == this.amount) {
+        this.pos = this.amount - 1
+      }
+      document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
+      if (this.pos == 0) {
+        document.getElementsByClassName("left-arrow")[0].style.visibility =
+          "hidden"
+      } else {
+        document.getElementsByClassName("left-arrow")[0].style.visibility =
+          "visible"
+      }
+      if (this.pos == this.amount - 1) {
+        document.getElementsByClassName("right-arrow")[0].style.visibility =
+          "hidden"
+      } else {
+        document.getElementsByClassName("right-arrow")[0].style.visibility =
+          "visible"
+      }
+      console.log(this.pos)
+    },
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("podcastPopup")[0].style.display = "none"
@@ -198,6 +230,9 @@ li:hover {
   height: 100%;
   object-fit: contain;
 }
+.poster:hover {
+  cursor: pointer;
+}
 .arrow-area {
   display: flex;
   flex-direction: row;
@@ -213,9 +248,33 @@ li:hover {
 .right-arrow:hover {
   cursor: pointer;
 }
-@media (max-width: 1020px) {
+@media screen and (max-width: 1020px) {
   .podcastPopup {
     font-size: 1.5rem;
+  }
+}
+@media screen and (max-width: 700px) {
+  .podcastpopupwindow {
+    min-width: 75%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .poster-area {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+  }
+}
+@media screen and (max-width: 400px) {
+  .podcastPopup {
+    font-size: 1.25rem;
+  }
+}
+@media screen and (max-width: 300px) {
+  .poster-area {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
   }
 }
 </style>
