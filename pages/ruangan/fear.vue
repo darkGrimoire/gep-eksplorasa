@@ -82,20 +82,16 @@
           <div class="cont lampu">
             <img src="/fear/lampu 1.png" alt="lampu">
           </div>
-          <div class="cont photoseries" @click="popups = 'foto';tipeKarya = 'series'">
-            <img src="/fear/f-photoseries-1.png" alt="photoseries" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont kamera" @click="popups = 'foto';tipeKarya = 'single'">
-            <img src="/fear/f-single-1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont radio" @click="popups = 'kine';tipeKarya = 'video'">
-            <img src="/fear/f-radio-1.png" alt="radio" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont kucing">
-            <img src="/fear/KUCING.png" alt="kucing" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          <div class="photoseries" @click="popups = 'foto';tipeKarya = 'series'" />
+          <div class="kamera" @click="popups = 'foto';tipeKarya = 'single'" />
+          <div class="radio" @click="popups = 'kine';tipeKarya = 'video'" />
+          <div class="kucing" />
+          <div class="zine" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <!-- <div class="cont zine">
+            <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div> -->
         </div>
       </div>
     </div>
@@ -128,9 +124,7 @@
           <div class="cont pintu">
             <img src="/fear/pintu 1.png" alt="pintu">
           </div>
-          <div class="cont trap-door">
-            <img src="/fear/monster1 1.png" alt="trap door" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          <div class="trap-door" />
           <div class="cont tv" @click="popups = 'tv'">
             <img src="/fear/tv.gif" alt="tv">
           </div>
@@ -146,9 +140,7 @@
           <div class="cont ventilasi">
             <img src="/fear/vent 1.png" alt="ventilasi">
           </div>
-          <div v-show="!benda.saklar" class="cont foto">
-            <img src="/fear/fohepi 1.png" alt="foto" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          <div v-show="!benda.saklar" class="foto" />
           <div v-show="benda.saklar" class="cont foto">
             <img src="/fear/fokripi 1.png" alt="foto">
           </div>
@@ -173,7 +165,7 @@
           <div class="cont pipa-l">
             <img src="/fear/pipaHAPE 1.png" alt="pipa">
           </div>
-          <div class="cont artikel" @click="popups = 'kine';tipeKarya = 'artikel'">
+          <div class="artikel" @click="popups = 'kine';tipeKarya = 'artikel'">
             <img src="/fear/f-artikel-1.png" alt="artikel" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'">
@@ -188,12 +180,8 @@
           <div class="cont teropong">
             <img src="/fear/tropong fear.png" alt="teropong">
           </div>
-          <div class="cont kunci">
-            <img src="/fear/fear1.png" alt="kunci">
-          </div>
-          <div v-show="benda.kunci" class="cont kaki">
-            <img src="/fear/fearf.gif" alt="kaki">
-          </div>
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div v-show="benda.kunci" class="kaki" />
           <div class="tv-popup">
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
@@ -639,11 +627,33 @@
   left: 3.4%;
 }
 
-.trap-door {
+.trap-door{
+  background-image:url("/fear/monster1 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
   width: 17.4%;
   top: 74.7%;
   left: 9.6%;
   z-index: 71;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.trap-door:hover{
+  background-image:url("/fear/monster2 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 17.4%;
+  top: 74.7%;
+  left: 9.6%;
+  z-index: 71;
+  cursor:pointer;
+  animation: none;
 }
 
 .tv {
@@ -673,15 +683,87 @@
   top: 5.7%;
   left: 49%;
 }
+
+
+.zine{
+  background-image:url("/fear/f-zine-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 10%;
+  top: 40.7%;
+  left: 54%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.zine:hover{
+  background-image:url("/fear/f-zine-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 10%;
+  top: 40.7%;
+  left: 54%;
+  cursor:pointer;
+  animation: none;
+}
+
 .photoseries{
+  background-image:url("/fear/f-photoseries-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 14%;
   top: 12.7%;
   left: 32%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.photoseries:hover{
+  background-image:url("/fear/f-photoseries-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
+  width: 14%;
+  top: 12.7%;
+  left: 32%;
+  cursor:pointer;
+  animation: none;
+}
+
 .kamera{
+  background-image:url("/fear/f-single-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
   width: 10%;
   top: 24.7%;
   left: 51%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.kamera:hover{
+  background-image:url("/fear/f-single-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
+  width: 10%;
+  top: 24.7%;
+  left: 51%;
+  cursor:pointer;
+  animation: none;
 }
 
 .teropong{
@@ -689,17 +771,60 @@
   top: 51%;
   left: 73.8%;
 }
+
 .radio{
-  width: 16%;
-  top: 5%;
+  background-image:url("/fear/f-radio-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
+  width: 18%;
+  top: 9%;
   left: 69%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.radio:hover{
+  background-image:url("/fear/f-radio-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
+  width: 18%;
+  top: 9%;
+  left: 69%;
+  cursor:pointer;
+  animation: none;
 }
 
 .foto {
+  background-image:url("/fear/fohepi 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:19%;
+  width: 13.2%;
+  top: 13%;
+  left: 79.5%;
+  z-index: 71;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.foto:hover {
+  background-image:url("/fear/fokripi 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:17%;
   width: 12.2%;
   top: 13%;
   left: 79.5%;
   z-index: 71;
+  cursor:pointer;
+  animation: none;
 }
 
 .tikus1 {
@@ -764,9 +889,30 @@
 }
 
 .kucing{
-  width: 6.8%;
-  top: 37.7%;
-  left: 57.7%;
+  background-image:url("/fear/KUCING.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 8.8%;
+  top: 63.7%;
+  left: 52.7%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.kucing:hover{
+  background-image:url("/fear/kucing 2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 8.8%;
+  top: 63.7%;
+  left: 52.7%;
+  cursor:pointer;
+  animation: none;
 }
 
 .lemari {
@@ -823,15 +969,39 @@
   height: 200%;
   top: -50%;
 }
+
 .artikel{
+  background-image:url("/fear/f-artikel-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
   width: 7%;
   top: 13.8%;
   left: 38.2%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.artikel:hover{
+  background-image:url("/fear/f-artikel-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 7%;
+  top: 13.8%;
+  left: 38.2%;
+  cursor:pointer;
+  animation: none;
+}
+
 .photobook{
   width: 26%;
   top: 76.8%;
   left: 37.2%;
+  z-index: 71;
 }
 .photobook1{
   width: 13%;
@@ -844,18 +1014,56 @@
   top: 36.8%;
   left: 41.2%;
 }
-.kunci{
-  width: 8%;
-  top: 81.7%;
-  left: 79%;
-  &:hover{
-    cursor: pointer;
-  }
-}
 .kaki{
-  width: 10%;
-  top: 24.7%;
-  left: 51%;
+  background-image:url("/fear/fearf.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:10%;
+  height:10%;
+  top:83%;
+  left:89%;
+}
+
+.kunci{
+  background-image:url("/fear/fear1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height: 8%;
+  top: 81%;
+  left: 83%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;    
+}
+
+.kunci:hover{
+  background-image:url("/fear/fear1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height:8%;
+  top: 81%;
+  left: 83%;
+  cursor:pointer;
+  animation:none;
+}
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
+}
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  5%  { transform: scale(1.1,.9)   translateY(0); }
+  15%  { transform: scale(.9,1.1)   translateY(-10px); }
+  25%  { transform: scale(1.05,.95) translateY(0); }
+  28.5%  { transform: scale(1,1)      translateY(-7px); }
+  32%  { transform: scale(1,1)      translateY(0); }
+  50% { transform: scale(1,1)      translateY(0); }
+  100% { transform:scale(1,1) translateY(0);}
 }
 
 .tv-popup {
