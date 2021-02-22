@@ -110,6 +110,17 @@ import 'swiper/swiper-bundle.css'
             replaceState: true,
             watchState: true
           },
+          on: {
+            slideChange: (sw) => {
+              if (sw.activeIndex === 3 && sw.previousIndex === 2) {
+                setTimeout(() => {
+                  sw.slideNext()
+                }, 2500)
+              } else if (sw.activeIndex === 3 && sw.previousIndex === 4){
+                sw.slidePrev(1500)
+              }
+            }
+          }
         },
         lastRoute: '/teras'
       }
