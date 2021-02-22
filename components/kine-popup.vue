@@ -242,6 +242,7 @@ export default {
   font-family: "Mechanical Pencil";
   font-size: 1.5rem;
   text-align: justify;
+  min-height: 50%;
 }
 .kine-x-button {
   display: flex;
