@@ -39,6 +39,7 @@
             <br>
             <img src="/team/a.png" class="fotorg">
           </div>
+          <div class="brbr"> <br><br> </div>
           <div class="ben">
             <h3>BENDAHARA</h3>
             <br>
@@ -576,6 +577,11 @@ export default {
 
   @media only screen and (min-width: 470px) {
     .mid5 {display: none;}
+    .sekben {
+      .brbr {
+        display: none;
+      }
+    }
   }
 
   @media only screen and (max-width: 470px) {
