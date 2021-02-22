@@ -175,7 +175,6 @@ export default {
       if (windowHeight > x) {
         console.log("Nambah elemen")
         /* Creating the element */
-        console.log("yellow")
         let img = document.createElement("img")
         img.src = "/img/dots_3_grass.png"
         const className = "additional-grass-" + this.additional_grass
