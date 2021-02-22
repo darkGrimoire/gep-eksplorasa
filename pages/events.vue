@@ -163,7 +163,7 @@ export default {
 </script>
 
 <!-- sblmnya ada "scoped" tp w apus biar bisa pake v-html -->
-<style lang="scss">
+<style lang="scss" scoped>
 /* ini kode cal yaaa gue ga berani hapus yang di bawah wkwk */
 .back-button {
   position: fixed;
@@ -215,14 +215,14 @@ export default {
     align-items: center;
   }
 
-  a {
+  ::v-deep a {
     color: #1f1f1f;
     text-decoration: none;
     font-family: 'Mechanical Pencil';
     font-size: 25px;
   }
 
-  a:hover {
+  ::v-deep a:hover {
     text-decoration: underline;
   }
 
@@ -257,14 +257,14 @@ export default {
     text-align: center;
   }
 
-  .tabcontent {
+  ::v-deep .tabcontent {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
     margin-bottom: 50px;
   }
 
-  .acara {
+  ::v-deep .acara {
     padding-left: 50px;
     text-align: left;
   }
@@ -378,7 +378,7 @@ export default {
       font-size: 20px;
     }
 
-    a {
+    ::v-deep a {
       font-size: 15px;
     }
 
@@ -397,12 +397,12 @@ export default {
       font-size: 27px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 50px;
     }
 
@@ -464,7 +464,7 @@ export default {
       font-size: 15px;
     }
 
-    a {
+    ::v-deep a {
       font-size: 15px;
     }
 
@@ -483,12 +483,12 @@ export default {
       font-size: 22px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 20px;
     }
 
@@ -542,7 +542,7 @@ export default {
       font-size: 10px;
     }
 
-    a {
+    ::v-deep a {
       font-size: 10px;
     }
 
@@ -561,12 +561,12 @@ export default {
       font-size: 15px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 20px;
     }
 
