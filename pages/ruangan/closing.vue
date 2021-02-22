@@ -82,6 +82,7 @@
         </div>
       </div>
     </div>
+    <div class="sound-controller" @click="changeMute()">SOUND</div>
     <rcp />
   </div>
 </template>
@@ -266,7 +267,18 @@
           e.target.setAttribute('src', "/closing/cam1.png")
         }
       },
-
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
+      }
+      }
     },
   }
 </script>
@@ -544,5 +556,19 @@
   left: 13.1%;
   top: 31%;
 }
-
+.sound-controller {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: "KG Happy Solid";
+  font-size: 40px;
+  color: whitesmoke;
+  opacity: 0.2;
+  transition: opacity .4s;
+  
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
 </style>

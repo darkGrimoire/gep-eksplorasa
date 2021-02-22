@@ -137,6 +137,7 @@
         </div>
       </div>
     </div>
+    <div class="sound-controller" @click="changeMute()">SOUND</div>
     <rcp />
   </div>
 </template>
@@ -375,7 +376,19 @@
         } else if (this.slide === 1 && e.key === "ArrowRight"){
           this.switchSlide(1)
         }
+      },
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
       }
+    }
     },
   }
 </script>
@@ -967,5 +980,21 @@
 
 .foto-popup{
   z-index: 71;
+}
+
+.sound-controller {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: "KG Happy Solid";
+  font-size: 40px;
+  color: black;
+  opacity: 0.2;
+  transition: opacity .4s;
+  
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 </style>

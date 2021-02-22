@@ -1204,8 +1204,8 @@ export default {
   font-family: "KG Happy Solid";
   font-size: 40px;
   color: whitesmoke;
-  opacity: 0.4;
-  transition: opacity .2s;
+  opacity: 0.2;
+  transition: opacity .4s;
 }
 .sound-controller:hover {
   cursor: pointer;
