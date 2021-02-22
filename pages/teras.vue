@@ -28,8 +28,8 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div class="genteng" />
-          <div class="meong" />
-          <div class="open" />
+          <div class="meong" @click="catAudio.currentTime = 0.2;catAudio.play()" />
+          <div class="open" @click="toggleTeaser" />
           <div class="keset">
             <img src="/teras/keset 1.png">
           </div>
@@ -40,6 +40,7 @@
             <img src="/teras/jka 1.png">
           </div>
           <div v-show="close" class="imgpintu" @click="close=false;white=true;zoomIn();" />
+          <!-- <div v-show="close" class="imgpintu" @click="showAlert()" /> -->
           <div v-show="!close" class="gifpintu" />
           <div class="bg">
             <img src="/teras/bg 2.png">
@@ -48,6 +49,16 @@
             <img src="/teras/lantai.png">
           </div>
           <!-- Tambahin Objek lainnya disini -->
+          <div class="youtube-backdrop" style="display:none;" @click="toggleTeaser" />
+          <div class="cont youtube-container" style="display:none;">
+            <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :player-vars="playerVars" @ended="restart" />
+          </div>
+          <nuxt-link class="cont events-button" tag="div" to="/events">
+            Events
+          </nuxt-link>
+          <nuxt-link class="cont aboutus-button" tag="div" to="/aboutus">
+            About Us
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -88,6 +99,7 @@
 </template>
 
 <script>
+import { Youtube } from 'vue-youtube'
 // --- keterangan tiap class
 // top-cont: tempat perhitungan rasio
 // canvas: kalau mau ada tooltip, taro disini
@@ -100,6 +112,7 @@
     name: "TemplateRuangan",
     components: {
       rcp,
+      Youtube
     },
     data() {
       return {
@@ -114,12 +127,18 @@
         slide: 0,
         base: {
           slide0: -50,
-          slide1: -50,
+          slide1: 50,
           slide2: 150
         },
         msg: 'Pesan Kurator Here',
         close:true,
-        white:false
+        white:false,
+        playerVars: {
+          autoplay: 0,
+          rel: 0
+        },
+        showTeaser: false,
+        catAudio: undefined
       }
     },
     computed: {
@@ -160,7 +179,19 @@
             }})
           }
         }
-      }
+      },
+      showTeaser(newVal) {
+        if (newVal){
+          document.getElementsByClassName('youtube-backdrop')[0].style.display = 'block'
+          document.getElementsByClassName('youtube-container')[0].style.display = 'block'
+          gsap.to('.youtube-backdrop', {opacity: .85, duration: .5})
+        } else {
+          gsap.to('.youtube-backdrop', {opacity: 0, duration: .5, onComplete: () => {
+            document.getElementsByClassName('youtube-backdrop')[0].style.display = 'none'
+            document.getElementsByClassName('youtube-container')[0].style.display = 'none'
+          }})
+        }
+      },
     },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
@@ -170,12 +201,22 @@
         document.getElementsByClassName('loading')[0].style.display = 'none'
         // TODO: Add on enter animation here
         this.slide = 1
+        this.catAudio = new Audio('/cat.mp3')
       }})
       setTimeout(() => {
         this.preloadImages()
       }, 1000)
     },
     methods: {
+      toggleTeaser(){
+        this.showTeaser = !this.showTeaser
+      },
+      restart(){
+        this.player.cueVideoById(this.dataKarya.videoId)
+      },
+      showAlert(){
+        alert("Sayangnya, pintu masih belum bisa dibuka :(\nCoba lagi ya tanggal 22 Februari 2021!")
+      },
       preloadImages(){
         new Image().src = '/teras/h3 1.png'
         new Image().src = '/teras/F3 1.png'
@@ -503,6 +544,7 @@
 
 .open:hover{
   background-image:url("/teras/open me 2.png");
+  cursor: pointer;
   background-size:contain;
   background-repeat:no-repeat;
   width:9%;
@@ -647,5 +689,53 @@
 
 #slide2 {
   opacity: 0;
+}
+
+.youtube-container {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  z-index: 100;
+}
+.youtube-backdrop{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 400vh;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  background-color: black;
+  opacity: 0;
+}
+
+.events-button {
+  right: 5%;
+  bottom: 13%;
+  font-size: 40px;
+  z-index: 5;
+  color: #ede5d1;
+  opacity: .4;
+  transition: opacity 0.25s ease;
+  &:hover {
+    opacity: .9;
+    cursor: pointer;
+  }
+}
+
+.aboutus-button {
+  left: 5%;
+  bottom: 13%;
+  font-size: 40px;
+  z-index: 5;
+  color: #ede5d1;
+  opacity: .4;
+  transition: opacity 0.25s ease;
+  &:hover {
+    opacity: .9;
+    cursor: pointer;
+  }
 }
 </style>

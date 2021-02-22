@@ -52,7 +52,9 @@ export default {
   },
   mounted() {
     this.setUpPic()
-    this.addAditionalGrass(false)
+    setTimeout(() => {
+      this.addAditionalGrass(false)
+    }, 500)
     this.setUpCanvas()
     this.setUpButton()
     this.addCoordinate()
@@ -191,6 +193,7 @@ export default {
           windowHeight - (text_element_height + imgTop + img.offsetHeight)
         if (temp > 0) {
           /* Add more grass if empty space still exist */
+          // alert('rekursiv')
           this.addAditionalGrass(false)
         }
       }

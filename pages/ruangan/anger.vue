@@ -88,7 +88,7 @@
           <div class="cont figura">
             <img src="/anger/a-single-1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont koran">
+          <div class="cont koran" @click="popups = 'kine';tipeKarya = 'artikel'">
             <img src="/anger/a-artikel-1.png" alt="koran" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont sampah">
@@ -100,6 +100,7 @@
           <div class="cont garpu1">
             <img src="/anger/gep anger berserakan.png" alt="garpu1">
           </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -150,7 +151,7 @@
           <div class="cont trolley">
             <img src="/anger/trolley.png" alt="trolley">
           </div>
-          <div class="cont tv">
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/anger/tgif.gif" alt="tv">
           </div>
           <div class="cont kran">
@@ -177,6 +178,10 @@
           <div class="cont kunci">
             <img src="/anger/anger1.png" alt="kunci">
           </div>
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -194,10 +199,14 @@
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
   export default {
     name: "Anger",
     components: {
       rcp,
+      tvPopup,
+      kinePopup
     },
     data() {
       return {
@@ -227,7 +236,9 @@
         },
         benda: {
           cakar: 0
-        }
+        },
+        popups: '',
+        tipeKarya: ''
       }
     },
     computed: {
@@ -286,6 +297,9 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -293,7 +307,7 @@
 
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           // TODO: Add on enter animation here
@@ -320,6 +334,9 @@
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('anger')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -366,17 +383,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
         if (this.slide === 2 && e.key === "ArrowLeft"){
@@ -480,6 +499,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -648,6 +668,9 @@
   width: 17.5%;
   top: 76.5%;
   left: 43%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .garpu{
   width: 8.5%;
@@ -704,6 +727,9 @@
   width: 12%;
   top: 30.5%;
   left: 77.5%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .kran{
   width: 38.5%;
@@ -744,5 +770,11 @@
   width: 13%;
   top: 79%;
   left: 10.5%;
+}
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
 }
 </style>

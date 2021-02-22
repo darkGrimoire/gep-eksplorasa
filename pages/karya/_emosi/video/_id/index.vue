@@ -115,7 +115,7 @@ import loading from '~/components/Loading.vue'
           this.dataKarya.ph = data.ph
           this.dataKarya.caption = this.handleNewLines(data.caption)
           this.dataKarya.captionTitle = data.caption_title ? data.caption_title : ''
-          this.dataKarya.videoId = data.videoId
+          this.dataKarya.videoId = (data.videoId || data.videoid)
           this.dataKarya.poster = data.poster
           this.dataKarya.posterMin = this.handleMin(data.poster)
           this.dataKarya.next = data.next
