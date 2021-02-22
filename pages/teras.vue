@@ -797,7 +797,7 @@ import { Youtube } from 'vue-youtube'
   font-family: "KG Happy Solid";
   font-size: 40px;
   color: black;
-  opacity: 0.2;
+  opacity: 0.5;
   transition: opacity .4s;
 }
 .sound-controller:hover {
