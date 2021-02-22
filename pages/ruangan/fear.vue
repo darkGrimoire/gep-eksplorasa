@@ -168,9 +168,7 @@
           <div class="cont pipa-l">
             <img src="/fear/pipaHAPE 1.png" alt="pipa">
           </div>
-          <div class="artikel" @click="popups = 'kine';tipeKarya = 'artikel'">
-            <img src="/fear/f-artikel-1.png" alt="artikel" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          <div class="artikel" @click="popups = 'kine';tipeKarya = 'artikel'" />
           <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-1.png" alt="photobook">
           </div>
@@ -1019,11 +1017,11 @@
   left: 47.2%;
   z-index: 71;
 }
-.zine{
-  width: 16%;
-  top: 36.8%;
-  left: 41.2%;
-}
+// .zine{
+//   width: 16%;
+//   top: 36.8%;
+//   left: 41.2%;
+// }
 .kaki{
   background-image:url("/fear/fearf.gif");
   background-size:contain;
