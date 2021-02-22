@@ -23,6 +23,7 @@
           </div>
         </div>
       </div>
+      <div slot="scrollbar" class="swiper-scrollbar" />
     </div>
   </div>
 </template>
@@ -46,12 +47,19 @@ import 'swiper/swiper-bundle.css'
         alamats: [],
         authors: [],
         swiperOptions: {
-          slidesPerView: 4,
+          slidesPerView: 3.5,
           direction: 'horizontal',
           mousewheel: true,
-          freeMode: true,
           grabCursor: true,
-          spaceBetween: 5
+          spaceBetween: 5,
+          observer: true,
+          observeParents: true,
+          freeMode: true,
+          scrollbar: {
+            el: '.swiper-scrollbar',
+            hide: false,
+            draggable: true,
+          }
         }
       }
     },
@@ -160,6 +168,16 @@ import 'swiper/swiper-bundle.css'
   align-items: center;
 }
 
+::v-deep .swiper-scrollbar {
+  z-index: 1010;
+  bottom: 20px;
+  background: rgba($color: #ede5d1, $alpha: .4);
+}
+
+::v-deep .swiper-scrollbar-drag {
+  background: rgba($color: #ede5d1, $alpha: .9);
+}
+
 .swiper-slide {
   position: relative;
 
@@ -197,7 +215,7 @@ import 'swiper/swiper-bundle.css'
   }
 }
 .mini-overlay.mini-overlay-hover {
-  cursor: pointer;
+  // cursor: pointer;
   opacity: .9;
 }
 </style>
