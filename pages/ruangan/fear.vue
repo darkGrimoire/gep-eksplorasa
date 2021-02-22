@@ -564,7 +564,7 @@
 
 .narasi-masuk {
   z-index: 10000;
-  color: #305fe9;
+  color: #009562;
 }
 
 .narasi-closing {
@@ -575,7 +575,7 @@
 
 .narasi-keluar {
   font-size: 40px;
-  color: #009562;
+  color: #305fe9;
 }
 
 .cont {

@@ -137,8 +137,8 @@ export default {
 <style lang="scss" scoped>
 .back-button {
   position: fixed;
-  left: 5%;
-  bottom: 13%;
+  bottom: 2%;
+  left: 2%;
   color: #ede5d1;
   font-size: 40px;
   font-family: 'KG Happy Solid';
