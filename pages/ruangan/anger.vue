@@ -85,7 +85,7 @@
           <div class="cont oven">
             <img src="/anger/kgif.gif" alt="oven">
           </div>
-          <div class="cont figura">
+          <div class="cont figura" @click="popups = 'foto';tipeKarya = 'single'">
             <img src="/anger/a-single-1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont koran" @click="popups = 'kine';tipeKarya = 'artikel'">
@@ -101,6 +101,7 @@
             <img src="/anger/gep anger berserakan.png" alt="garpu1">
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -157,10 +158,10 @@
           <div class="cont kran">
             <img src="/anger/kran.gif" alt="kran">
           </div>
-          <div class="cont gantungan">
+          <div class="cont gantungan" @click="popups = 'foto';tipeKarya = 'series'">
             <img src="/anger/a-photo series-1.png" alt="gantungan" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont buku">
+          <div class="cont buku" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/anger/a-photobook-1.png" alt="buku" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont cakar">
@@ -182,6 +183,7 @@
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -201,12 +203,14 @@
   import rcp from '~/components/rcp.vue'
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
   export default {
     name: "Anger",
     components: {
       rcp,
       tvPopup,
-      kinePopup
+      kinePopup,
+      NewfotoPopup
     },
     data() {
       return {

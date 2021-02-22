@@ -135,9 +135,10 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-size: 100%;
+  transform: translateY(-50%);
   height: 50%;
+  background-attachment:scroll;
+  /* background-color:white; */
 }
 .foto-x-button {
   display: flex;
@@ -148,11 +149,12 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
   overflow-x: auto;
+  justify-content: center;
 }
-.fotoarea {
+.foto-area {
     position: relative;
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
 }
 .foto {
     width: 100%;
@@ -163,5 +165,7 @@ export default {
     position: absolute;
     top: 0%;
     left: 0%;
+    width: 100%;
+    height: 100%;
 }
 </style>

@@ -82,10 +82,10 @@
           <div class="cont lampu">
             <img src="/fear/lampu 1.png" alt="lampu">
           </div>
-          <div class="cont photoseries">
+          <div class="cont photoseries" @click="popups = 'foto';tipeKarya = 'series'">
             <img src="/fear/f-photoseries-1.png" alt="photoseries" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont kamera">
+          <div class="cont kamera" @click="popups = 'foto';tipeKarya = 'single'">
             <img src="/fear/f-single-1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <div class="cont radio" @click="popups = 'kine';tipeKarya = 'video'">
@@ -95,6 +95,7 @@
             <img src="/fear/KUCING.png" alt="kucing" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -175,13 +176,13 @@
           <div class="cont artikel" @click="popups = 'kine';tipeKarya = 'artikel'">
             <img src="/fear/f-artikel-1.png" alt="artikel" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div>
-          <div class="cont photobook">
+          <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-1.png" alt="photobook">
           </div>
-          <div v-show="!benda.saklar" class="cont photobook1">
+          <div v-show="!benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-2.png" alt="photobook1" :style="`opacity: ${benda.ouija}`" @mouseenter="benda.ouija = 1" @mouseout="benda.ouija = 0">
           </div>
-          <div v-show="benda.saklar" class="cont photobook1">
+          <div v-show="benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-2.png" alt="photobook1">
           </div>
           <div class="cont teropong">
@@ -197,6 +198,7 @@
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -219,12 +221,14 @@
   import rcp from '~/components/rcp.vue'
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
   export default {
     name: "Fear",
     components: {
       rcp,
       tvPopup,
-      kinePopup
+      kinePopup,
+      NewfotoPopup
     },
     data() {
       return {
