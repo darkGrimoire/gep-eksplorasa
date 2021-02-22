@@ -38,10 +38,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj1.png" alt="guide" style="opacity: .0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/template-example/kitj1.png" alt="guide" style="opacity: .0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/anger/wall.png" alt="wall">
@@ -49,9 +50,7 @@
           <div class="cont floor">
             <img src="/anger/lt.png" alt="floor">
           </div>
-          <div class="cont kulkas">
-            <img src="/anger/kulklos.png" alt="kulkas" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          <div class="kulkas" />
           <div class="cont lemari">
             <img src="/anger/lmari.png" alt="lemari">
           </div>
@@ -85,21 +84,12 @@
           <div class="cont oven">
             <img src="/anger/kgif.gif" alt="oven">
           </div>
-          <div class="cont figura">
-            <img src="/anger/a-single-1.png" alt="figura" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont koran">
-            <img src="/anger/a-artikel-1.png" alt="koran" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont sampah">
-            <img src="/anger/gep anger sampah.png" alt="sampah" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont garpu">
-            <img src="/anger/gep anger garpu.png" alt="garpu">
-          </div>
-          <div class="cont garpu1">
-            <img src="/anger/gep anger berserakan.png" alt="garpu1">
-          </div>
+          <div class="figura" @click="popups = 'foto';tipeKarya = 'single'" />
+          <div class="koran" @click="popups = 'kine';tipeKarya = 'artikel'" />
+          <div class="sampah" />
+          <div class="garpu" />
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -118,10 +108,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj2.png" alt="guide" style="opacity: .0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/template-example/kitj2.png" alt="guide" style="opacity: .0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/anger/wall.png" alt="wall">
@@ -150,33 +141,26 @@
           <div class="cont trolley">
             <img src="/anger/trolley.png" alt="trolley">
           </div>
-          <div class="cont tv">
-            <img src="/anger/tgif.gif" alt="tv">
-          </div>
+          <div class="tv" @click="popups = 'tv'" />
           <div class="cont kran">
             <img src="/anger/kran.gif" alt="kran">
-          </div>
-          <div class="cont gantungan">
-            <img src="/anger/a-photo series-1.png" alt="gantungan" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont buku">
-            <img src="/anger/a-photobook-1.png" alt="buku" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          </div>        
           <div class="cont cakar">
             <img src="/anger/gep anger scar.png" alt="cakar" :style="`opacity: ${benda.cakar}`" @mouseenter="benda.cakar = 1" @mouseout="benda.cakar = 0">
           </div>
           <div class="cont teropong">
             <img src="/anger/tropong anger.png" alt="teropong">
           </div>
-          <div class="cont pisau">
-            <img src="/anger/gep anger piso bersih.png" alt="pisau" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          <div class="pisau" />
+          <div class="buku" />
+          <div class="gantungan" />
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div v-show="benda.kunci" class="foot" />
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
-          <div class="cont kaki">
-            <img src="/anger/angerf.gif" alt="kaki">
-          </div>
-          <div class="cont kunci">
-            <img src="/anger/anger1.png" alt="kunci">
-          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -194,11 +178,19 @@
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
   export default {
     name: "Anger",
     components: {
       rcp,
+      tvPopup,
+      kinePopup,
+      NewfotoPopup,
+      
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -226,8 +218,11 @@
           closing: ''
         },
         benda: {
-          cakar: 0
-        }
+          cakar: 0,
+          garpu: 0
+        },
+        popups: '',
+        tipeKarya: ''
       }
     },
     computed: {
@@ -286,6 +281,9 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -293,7 +291,7 @@
 
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           // TODO: Add on enter animation here
@@ -312,6 +310,7 @@
           this.slide = 1
         }})
       }
+      localStorage.setItem('last', this.$route.path)
     },
     methods: {
       switchSlide(val){
@@ -320,6 +319,9 @@
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('anger')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -366,17 +368,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
         if (this.slide === 2 && e.key === "ArrowLeft"){
@@ -480,6 +484,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -521,15 +526,18 @@
 
 .narasi-masuk {
   z-index: 10000;
+  color: #e14423;
 }
 
 .narasi-closing {
   font-size: 40px;
   z-index: 10000;
+  color: #ede5d1;
 }
 
 .narasi-keluar {
   font-size: 40px;
+  color: #d1bb10;
 }
 
 .cont {
@@ -579,10 +587,32 @@
   width: 100%;
   top: 74.5%;
 }
+
 .kulkas{
+  background-image:url("/anger/kulklos.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
   width: 23.4%;
   top: 16.8%;
   left: 3.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.kulkas:hover{
+  background-image:url("/anger/kulopen.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 23.4%;
+  top: 16.8%;
+  left: 3.5%;
+  cursor:pointer;
+  animation: none;
 }
 .lemari{
   width: 22%;
@@ -639,30 +669,113 @@
   top: 34%;
   left: 54.5%;
 }
-.figura{
-  width: 8%;
-  top: 14%;
-  left: 55.5%; 
-}
-.koran{
-  width: 17.5%;
-  top: 76.5%;
-  left: 43%;
-}
-.garpu{
-  width: 8.5%;
-  top: 13.5%;
-  left: 83.5%;
-}
-.garpu1{ 
-  width: 17.5%;
-  top: 76.5%;
-  left: 81%;
-}
+
 .sampah{
+  background-image:url("/anger/gep anger sampah.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 12%;
   top: 35.9%;
   left: 83.9%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.sampah:hover{
+  background-image:url("/anger/gep anger meledak.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
+  width: 12%;
+  top: 35.9%;
+  left: 83.9%;
+  cursor:pointer;
+  animation: none;
+}
+
+.garpu{
+  background-image:url("/anger/gep anger garpu.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
+  width: 8.5%;
+  top: 13.5%;
+  left: 83.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.garpu:hover{
+  background-image:url("/anger/gep anger berserakan.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 17.5%;
+  top: 76.5%;
+  left: 81%;
+  height: 35%;
+  cursor:pointer;
+  animation: none;
+}
+
+.koran{
+  background-image:url("/anger/a-artikel-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 17.5%;
+  top: 77.5%;
+  left: 43%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.koran:hover{
+  background-image:url("/anger/a-artikel-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 17.5%;
+  top: 77.5%;
+  left: 43%;
+  cursor:pointer;
+  animation: none;
+}
+
+.figura{
+  background-image:url("/anger/a-single-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 8%;
+  top: 14%;
+  left: 55.5%; 
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.figura:hover{
+  background-image:url("/anger/a-single-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 8%;
+  top: 14%;
+  left: 55.5%; 
+  cursor:pointer;
+  animation: none;
 }
 // Add Objects positions here
 .frame{
@@ -700,40 +813,157 @@
   top: 45%;
   left: 6.5%;
 }
+
 .tv{
+  background-image:url("/anger/tgif.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
   width: 12%;
   top: 30.5%;
   left: 77.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.tv:hover{
+  background-image:url("/anger/tv2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 15%;
+  top: 30.5%;
+  left: 76.5%;
+  cursor:pointer;
+  animation: none;
+}
+
 .kran{
   width: 38.5%;
   top: 37%;
   left: 22.5%;
 }
-.gantungan{
-  width: 10.5%;
-  top: 9%;
-  left: 52.5%;
+
+.pisau{
+  background-image:url("/anger/gep anger piso bersih.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 20%;
+  top: 65%;
+  left: 53.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
-.buku{  
+
+.pisau:hover{
+  background-image:url("/anger/gep pisau.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 20%;
+  top: 65%;
+  left: 53.5%;
+  cursor:pointer;
+  animation: none;
+}
+
+.buku{
+  background-image:url("/anger/a-photobook-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
   width: 17%;
   top: 73%;
   left: 30.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
-.pisau{
-  width: 22%;
-  top: 65%;
-  left: 53.5%;
+
+.buku:hover{
+  background-image:url("/anger/a-photobook-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 17%;
+  top: 73%;
+  left: 30.5%;
+  cursor:pointer;
+  animation: none;
 }
-.kaki{
-  width: 13%;
-  top: 78%;
-  left: 85.5%;
+
+.gantungan{
+  background-image:url("/anger/a-photo series-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 10.5%;
+  top: 9%;
+  left: 52.5%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.gantungan:hover{
+  background-image:url("/anger/a-photo series-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:65%;
+  width: 10.5%;
+  top: 9%;
+  left: 52.5%;
+  cursor:pointer;
+  animation: none;
+}
+
+.foot{
+  background-image:url("/anger/angerf.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:10%;
+  height:10%;
+  top:79%;
+  left:87%;
+}
+
 .kunci{
-  width: 7%;
+  background-image:url("/anger/anger1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
   top: 78%;
-  left: 80.5%;
+  left: 83%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;    
+}
+
+.kunci:hover{
+  background-image:url("/anger/anger1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:10%;
+  top: 78%;
+  left: 83%;
+  cursor:pointer;
+  animation:none;
 }
 .cakar{
   width: 11%;
@@ -744,5 +974,37 @@
   width: 13%;
   top: 79%;
   left: 10.5%;
+}
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
+}
+.darkness {
+  background-color: black;
+  opacity: .8;
+  z-index: 70;
+  width: 150%;
+  height: 200%;
+  top: -50%;
+}
+
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
+}
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  5%  { transform: scale(1.1,.9)   translateY(0); }
+  15%  { transform: scale(.9,1.1)   translateY(-10px); }
+  25%  { transform: scale(1.05,.95) translateY(0); }
+  28.5%  { transform: scale(1,1)      translateY(-7px); }
+  32%  { transform: scale(1,1)      translateY(0); }
+  50% { transform: scale(1,1)      translateY(0); }
+  100% { transform:scale(1,1) translateY(0);}
+}
+.foto-popup {
+  z-index: 71;
 }
 </style>

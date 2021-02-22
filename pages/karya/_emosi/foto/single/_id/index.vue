@@ -161,8 +161,8 @@ import rcp from '~/components/rcp.vue'
   bottom: 2%;
   left: 2%;
   color: white;
-  font-size: 50px;
-  font-family: 'Mechanical Pencil';
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
   z-index: 1;
   text-decoration: none;
   opacity: 0.7;

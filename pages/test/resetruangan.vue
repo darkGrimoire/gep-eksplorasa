@@ -11,6 +11,7 @@
       localStorage.removeItem('sad')
       localStorage.removeItem('fear')
       localStorage.removeItem('anger')
+      localStorage.removeItem('closing')
 
       localStorage.removeItem('nama')
       localStorage.removeItem('institusi')

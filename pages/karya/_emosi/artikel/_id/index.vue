@@ -5,7 +5,7 @@
       <img src="/templatekine/g2 kuning.png" class="g2">
 
       <div class="layer2">
-        <div class="fotoo">
+        <div v-if="dataKarya.photos" class="fotoo">
           <fa :icon="['fas', 'caret-left']" class="leftarrow arrow" @click="switchPhoto(-1)" />
           <zoom-photo :poster="dataKarya.photoMin" 
                       :full="dataKarya.photo" 
@@ -39,6 +39,9 @@
       </div>
     </div>
     <rcp />
+    <nuxt-link v-show="!fs" class="back-button" :to="'/ruangan/'+emosi">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -81,7 +84,8 @@ export default {
           this.dataKarya.author = data.author
           this.dataKarya.paragraphs = data.paragraphs
           this.dataKarya.photos = data.photos
-          this.handleMins(data.photos)
+          if (data.photos)
+            this.handleMins(data.photos)
           this.dataKarya.next = data.next
           this.dataKarya.prev = data.prev
           this.dataKarya.par_space = (data.par_space || '      ') 
@@ -90,9 +94,13 @@ export default {
 
           this.processParagraphs()
           this.computedJudul = this.handlePipeline(this.dataKarya.judul)
-          this.dataKarya.photo = this.dataKarya.photos[0]
-          this.dataKarya.photoMin = this.dataKarya.photoMins[0]
-          this.preloadImages()
+          if (data.photos) {
+            this.dataKarya.photo = this.dataKarya.photos[0]
+            this.dataKarya.photoMin = this.dataKarya.photoMins[0]
+            this.preloadImages()
+          } else {
+            document.getElementsByClassName('layer2')[0].style.justifyContent = 'center'
+          }
         })
         .catch((err) => {
           console.log(err)
@@ -342,7 +350,6 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 80vh;
-    margin-top: 50px;
   }
 
   .paperr {
@@ -813,4 +820,30 @@ export default {
       margin-top: -5px;
     }
   }
+
+  .back-button {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
+}
 </style>
