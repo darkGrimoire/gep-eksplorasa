@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <div class="content">
-      <img :src="'/templatekine/g1 kuning.png'" class="g1">
-      <img src="/templatekine/g2 kuning.png" class="g2">
+      <img :src="'/templatekine/g1 '+emosi+'.png'" class="g1">
+      <img :src="'/templatekine/g2 '+emosi+'.png'" class="g2">
 
       <div class="layer2">
         <div v-if="dataKarya.photos" class="fotoo">
-          <fa :icon="['fas', 'caret-left']" class="leftarrow arrow" @click="switchPhoto(-1)" />
+          <fa v-show="dataKarya.photos.length > 1" :icon="['fas', 'caret-left']" :style="'color: '+copal+';'" class="leftarrow arrow" @click="switchPhoto(-1)" />
           <zoom-photo :poster="dataKarya.photoMin" 
                       :full="dataKarya.photo" 
                       :container-class="'poster-container left-side'"
                       :poster-class="'poster-img'"
           />
-          <fa :icon="['fas', 'caret-right']" class="rightarrow arrow" @click="switchPhoto(1)" />
+          <fa v-show="dataKarya.photos.length > 1" :icon="['fas', 'caret-right']" :style="'color: '+copal+';'" class="rightarrow arrow" @click="switchPhoto(1)" />
         </div>
             
         <div class="paper">
@@ -22,8 +22,8 @@
           <img src="/templatekine/paper.png" class="paperrrr">
         
           <div class="papertext">
-            <img src="/templatekine/joy.png" class="header">
-            <div class="judul" v-html="computedJudul" />
+            <img :src="'/templatekine/'+emosi+'.png'" class="header">
+            <div class="judul" :style="'color: '+copal+';'" v-html="computedJudul" />
             <div class="author">
               {{ dataKarya.author }}
             </div>
@@ -33,7 +33,7 @@
           </div>
 
           <div class="printilan">
-            <img src="/templatekine/tape kuning.png" class="tape">
+            <img :src="'/templatekine/orn-'+emosi+'.png'" :style="calculateOrnament" class="tape">
           </div>
         </div>
       </div>
@@ -72,7 +72,29 @@ export default {
       },
       dbLoading: true,
       computedParagraphs: [],
-      computedJudul: ''
+      computedJudul: '',
+    }
+  },
+  computed: {
+    copal() {
+      if (this.emosi === 'joy'){
+        return '#d1bb10'
+      } else if (this.emosi === 'sad'){
+        return '#305fe9'
+      } else if (this.emosi === 'fear'){
+        return '#009562'
+      } else if (this.emosi === 'anger'){
+        return '#e14423'
+      } else {
+        return '#ede5d1'
+      }
+    },
+    calculateOrnament(){
+      if (this.emosi === 'sad' || this.emosi === 'joy'){
+        return ''
+      } else {
+        return 'width: 150px;margin-top: -10px;margin-left: 620px;'
+      }
     }
   },
   mounted () {
@@ -390,7 +412,7 @@ export default {
 
   .isi {
     text-align: left;
-    max-height: 340px;
+    max-height: 350px;
     overflow-y: scroll;
     padding: 0 30px;
     //firefox
@@ -424,7 +446,7 @@ export default {
 
   .tape {
     width: 175px;
-    margin-left: 660px;
+    margin-left: 677px;
     margin-top: 75px;
   }
 
@@ -537,6 +559,7 @@ export default {
         font-size: 28px;
         color: #d1bb10;
         padding: 5px 0;
+        max-width: 80%;
     }
 
     .author {
@@ -849,6 +872,7 @@ export default {
   transition: opacity 0.25s ease-in-out;
   &:hover{
     cursor: pointer;
+    text-decoration: none;
     opacity: 1;
   }
   @media only screen and (max-width: 800px) {
