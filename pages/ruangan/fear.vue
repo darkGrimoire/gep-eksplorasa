@@ -1104,6 +1104,7 @@
   top: 81%;
   left: 83%;
   cursor:pointer;
+  z-index: 15001;
   animation:bounce-7 2s;
   animation-iteration-count: infinite;    
 }
