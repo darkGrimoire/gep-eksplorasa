@@ -242,6 +242,7 @@ export default {
   font-size: 1.5rem;
   text-align: justify;
   min-height: 50%;
+  min-width: 30%;
 }
 .kine-x-button {
   display: flex;
