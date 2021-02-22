@@ -2,7 +2,7 @@
   <div class="tvPopUp" @click="bodyClick">
     <div class="popupwindow bordered">
       <div class="x-button">
-        <img class="exit-image" @click="close()">
+        <img class="exit-image" @click="close()" />
       </div>
       <div class="main-popup">
         <div class="left-area">
@@ -10,7 +10,7 @@
           <div class="main-poster">
             <div class="left-arrow-tv-popup" @click="movePos(-1)" />
             <div class="poster-area" @click="gotoKarya()">
-              <img class="poster bordered">
+              <img class="poster bordered" />
             </div>
             <div class="right-arrow-tv-popup" @click="movePos(1)" />
           </div>
@@ -45,8 +45,8 @@ export default {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
       this.room = link.match(/(Joy|Sad|`Anger`|Fear|joy|sad|anger|fear)/i)[0]
-      if (this.room.toLowerCase() === 'sad'){
-        this.room = 'sadness'
+      if (this.room.toLowerCase() === "sad") {
+        this.room = "sadness"
       }
     },
     async getData() {
@@ -121,20 +121,25 @@ export default {
       temp.appendChild(rArrowImg)
       /* Choose the bookshelf */
       if (this.room.toLowerCase() == "anger") {
-        const shelf_path = "/img/popup/rak-" + this.room.toLowerCase()+ ".png"
+        const shelf_path = "/img/popup/rak-" + this.room.toLowerCase() + ".png"
         let shelf_img = document.createElement("img")
         shelf_img.src = shelf_path
         shelf_img.classList.add("shelf")
         shelf_img.style.width = "75%"
         temp = document.getElementsByClassName("right-area")[0]
         temp.appendChild(shelf_img)
-      } else if (this.room.toLowerCase()== "joy" || this.room.toLowerCase()== "sadness") {
-        const shelf_path_1 = "/img/popup/rak-" + this.room.toLowerCase()+ "-1.png"
+      } else if (
+        this.room.toLowerCase() == "joy" ||
+        this.room.toLowerCase() == "sadness"
+      ) {
+        const shelf_path_1 =
+          "/img/popup/rak-" + this.room.toLowerCase() + "-1.png"
         let shelf_img_1 = document.createElement("img")
         shelf_img_1.src = shelf_path_1
         shelf_img_1.classList.add("shelf")
         shelf_img_1.style.width = "60%"
-        const shelf_path_2 = "/img/popup/rak-" + this.room.toLowerCase()+ "-2.png"
+        const shelf_path_2 =
+          "/img/popup/rak-" + this.room.toLowerCase() + "-2.png"
         let shelf_img_2 = document.createElement("img")
         shelf_img_2.src = shelf_path_2
         shelf_img_2.classList.add("shelf")
@@ -145,10 +150,10 @@ export default {
       }
       /* Set up poster and title */
       this.pos = 0
-      document.getElementsByClassName("poster")[0].src = (this.poster[this.pos] || "/loading.svg")
-      document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
-        this.pos
-      ] || "Loading")
+      document.getElementsByClassName("poster")[0].src =
+        this.poster[this.pos] || "/loading.svg"
+      document.getElementsByClassName("title-movie")[0].innerHTML =
+        this.judul[this.pos] || "Loading"
     },
     initSetUpFear() {
       // FEAR IS SEPARATED BECAUSE IT DOESN'T HAVE VIDEO
@@ -157,7 +162,7 @@ export default {
       this.setUpBorderColor(color)
       this.insertExitButton(4)
       document.getElementsByClassName("left-area")[0].style.display = "none"
-      const shelf_path = "/img/popup/rak-" + this.room.toLowerCase()+ ".png"
+      const shelf_path = "/img/popup/rak-" + this.room.toLowerCase() + ".png"
       let shelf_img = document.createElement("img")
       shelf_img.src = shelf_path
       shelf_img.classList.add("shelf")
@@ -190,30 +195,34 @@ export default {
         this.pos = this.amount - 1
       }
       document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
-      
+
       document.getElementsByClassName("title-movie")[0].innerHTML = ""
       document.getElementsByClassName("title-movie")[0].innerHTML = this.judul[
         this.pos
       ]
       if (this.pos == 0) {
-        document.getElementsByClassName("left-arrow-tv-popup")[0].style.visibility =
-          "hidden"
+        document.getElementsByClassName(
+          "left-arrow-tv-popup"
+        )[0].style.visibility = "hidden"
       } else {
-        document.getElementsByClassName("left-arrow-tv-popup")[0].style.visibility =
-          "visible"
+        document.getElementsByClassName(
+          "left-arrow-tv-popup"
+        )[0].style.visibility = "visible"
       }
       if (this.pos == this.amount - 1) {
-        document.getElementsByClassName("right-arrow-tv-popup")[0].style.visibility =
-          "hidden"
+        document.getElementsByClassName(
+          "right-arrow-tv-popup"
+        )[0].style.visibility = "hidden"
       } else {
-        document.getElementsByClassName("right-arrow-tv-popup")[0].style.visibility =
-          "visible"
+        document.getElementsByClassName(
+          "right-arrow-tv-popup"
+        )[0].style.visibility = "visible"
       }
     },
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("tvPopUp")[0].style.display = "none"
-      this.$emit('closePopup')
+      this.$emit("closePopup")
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
@@ -238,20 +247,27 @@ export default {
       // CHECK THE LOCATION OF THE CLICK
       // IF INSIDE POPUP, DO NOTHING
       // IF OUTSIDE POPUP, CLOSE POPUP
-      if (this.isInsidePopUpWindow(event.clientX, event.clientY)) { 
+      try {
+        if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
+          return
+        }
+        this.close()
+      } catch (e) {
         return
       }
-      this.close()
     },
     gotoKarya() {
       let targetRoom = this.room
-      if (this.room.toLowerCase() === 'sadness'){
-        targetRoom = 'sad'
+      if (this.room.toLowerCase() === "sadness") {
+        targetRoom = "sad"
       }
-      let targetUrl = this.alamat[this.pos].charAt(0) === '/' ? this.alamat[this.pos] : '/' + this.alamat[this.pos]
+      let targetUrl =
+        this.alamat[this.pos].charAt(0) === "/"
+          ? this.alamat[this.pos]
+          : "/" + this.alamat[this.pos]
       const tujuan = "/karya/" + targetRoom + targetUrl
       console.log(`|${tujuan}|`)
-      this.$router.push({path: tujuan})
+      this.$router.push({ path: tujuan })
     }
   }
 }
@@ -279,7 +295,9 @@ export default {
   background-color: rgb(0, 0, 0);
   border: 2px solid;
   padding: 1vw 1vh;
-  z-index: 1001
+  z-index: 1001;
+  min-height: 80%;
+  min-width: 50%;
 }
 .x-button {
   display: flex;
@@ -358,7 +376,7 @@ export default {
     justify-content: center;
   }
   .right-area {
-    flex-wrap:wrap;
+    flex-wrap: wrap;
   }
 }
 </style>

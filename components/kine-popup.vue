@@ -119,12 +119,6 @@ export default {
     initSetUp() {
       document.getElementsByClassName("kine-exit-image")[0].src =
         "/img/popup/exit-0.png"
-      // const daftar = document.getElementsByClassName("daftar-kine")[0]
-      // for (let i = 0; i < this.judul.length; i++) {
-      //   let temp = document.createElement("li")
-      //   temp.innerText = this.judul[i]
-      //   daftar.appendChild(temp)
-      // }
     },
     insertRibbon() {
       const ribbon1 = document.createElement("img")
@@ -195,10 +189,15 @@ export default {
       // CHECK THE LOCATION OF THE CLICK
       // IF INSIDE POPUP, DO NOTHING
       // IF OUTSIDE POPUP, CLOSE POPUP
+      try {
       if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
         return
       }
       this.close()
+      }
+      catch(e) {
+        return
+      }
     },
     keKarya(id) {
       if (this.alamat[id].includes('instagram')){

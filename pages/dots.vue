@@ -47,14 +47,13 @@ export default {
       pos: 0,
       additional_grass: 0,
       mouseHoverInPos: false,
-      mouseClickInPos: false
+      mouseClickInPos: false,
+      placeholder: true
     }
   },
   mounted() {
     this.setUpPic()
-    setTimeout(() => {
-      this.addAditionalGrass(false)
-    }, 500)
+    this.addAditionalGrass(false)
     this.setUpCanvas()
     this.setUpButton()
     this.addCoordinate()
@@ -95,11 +94,12 @@ export default {
         /* FOR COMPUTER */
         const windowHeight = window.innerHeight
         const dots3_height = dotsPic3.offsetHeight
-        const text_element_height =
-          (windowHeight * 2.5) / 100 +
-          document.getElementsByClassName("judul")[0].clientHeight +
-          document.getElementsByClassName("caption")[0].clientHeight
-        const dotsHeight = windowHeight - text_element_height
+        const dotsHeight = windowHeight - document.getElementsByClassName("dots")[0].getBoundingClientRect().top
+        console.log("Hitung")
+        console.log(windowHeight)
+        console.log(document.getElementsByClassName("caption")[0].getBoundingClientRect().bottom)
+        console.log(dotsHeight)
+        console.log(dots3_height)
         dots3_top = dotsHeight - dots3_height
         dots2_top = dots3_top + dots3_height * 0.8 - dotsPic2.offsetHeight
       }
@@ -134,6 +134,7 @@ export default {
     addAditionalGrass(isResize) {
       // ADD ADITIONAL GRASS WHEN THERE'S EMPTY SPACE BELOW INITIAL GRASS
       console.log("Start function")
+      console.log(this.additional_grass)
       if (isResize) {
         /* Create clean state for adding grass after resize */
         for (let i = 0; i < this.additional_grass; i++) {
@@ -156,19 +157,14 @@ export default {
       )
       let x = 0
       if (this.additional_grass === 0) {
-        x = text_element_height + dots3Top + dots3Height
+        console.log("yes")
+        x = document.getElementsByClassName("dots-3")[0].getBoundingClientRect().bottom
       } else {
-        const doc = parseFloat(
-          document.getElementsByClassName(
-            `additional-grass-${this.additional_grass - 1}`
-          )[0].style.top
-        )
-        const addGrassHeight = parseFloat(
-          document.getElementsByClassName(
-            `additional-grass-${this.additional_grass - 1}`
-          )[0].offsetHeight
-        )
-        x = text_element_height + doc + addGrassHeight
+        x = document.getElementsByClassName("additional-grass-" + (this.additional_grass - 1))[0].getBoundingClientRect().bottom
+      }
+      if ((x == document.getElementsByClassName("dots-3")[0].getBoundingClientRect().bottom) && (this.additional_grass != 0)) {
+        this.placeholder = false
+        return
       }
       console.log(windowHeight)
       console.log(x)
@@ -462,7 +458,7 @@ export default {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 50vw;
+  width: 5vw;
   visibility: hidden;
 }
 .dots-2 {
@@ -476,7 +472,7 @@ export default {
 }
 .dots-gif {
   visibility: hidden;
-  width: 24vw;
+  width: 24%;
   position: absolute;
   left: 50.3%;
   transform: translateX(-50%);

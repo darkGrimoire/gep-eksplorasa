@@ -9,9 +9,9 @@
       <img id="sad" class="emosi" src="/homepage/s0.gif" alt="sad" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
       <img id="joy" class="emosi" src="/homepage/j0.gif" alt="joy" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
     </div>
-    <nuxt-link class="button" to="/teras">
+    <div class="button" @click="pergi()">
       start explore
-    </nuxt-link>
+    </div>
     <rcp />
   </div>
 </template>
@@ -29,6 +29,9 @@ export default {
     }, 500)
   },
   methods: {
+    pergi() {
+      this.$router.push({ path: '/dots' })
+    },
     handleHover(e, type) {
       if (type === 'enter'){
         if (e.target.id === 'anger'){

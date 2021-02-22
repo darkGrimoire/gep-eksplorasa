@@ -150,10 +150,13 @@ export default {
       // CHECK THE LOCATION OF THE CLICK
       // IF INSIDE POPUP, DO NOTHING
       // IF OUTSIDE POPUP, CLOSE POPUP
-      if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
+      try {if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
         return
       }
-      this.close()
+      this.close()}
+      catch(e) {
+        return
+      }
     },
     goToKarya(id) {
       const tujuan = "/karya/" + this.room.toLowerCase() + "/" + this.alamat[id]
