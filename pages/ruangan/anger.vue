@@ -38,10 +38,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj1.png" alt="guide" style="opacity: .0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/template-example/kitj1.png" alt="guide" style="opacity: .0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/anger/wall.png" alt="wall">
@@ -88,7 +89,7 @@
           <div class="sampah" />
           <div class="garpu" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -107,10 +108,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/kitj2.png" alt="guide" style="opacity: .0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/template-example/kitj2.png" alt="guide" style="opacity: .0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/anger/wall.png" alt="wall">
@@ -158,7 +160,7 @@
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -973,6 +975,15 @@
   left: 0;
   height: 150vh;
 }
+.darkness {
+  background-color: black;
+  opacity: .8;
+  z-index: 70;
+  width: 150%;
+  height: 200%;
+  top: -50%;
+}
+
 .bounce-7 {
   animation-name: bounce-7;
   animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
@@ -986,5 +997,8 @@
   32%  { transform: scale(1,1)      translateY(0); }
   50% { transform: scale(1,1)      translateY(0); }
   100% { transform:scale(1,1) translateY(0);}
+}
+.foto-popup {
+  z-index: 71;
 }
 </style>

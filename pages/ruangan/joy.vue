@@ -38,10 +38,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
@@ -78,7 +79,7 @@
             <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -97,10 +98,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide2.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide2.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
@@ -131,7 +133,7 @@
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="foot" />
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -942,5 +944,17 @@
   top: 4%;
   left: 0;
   height: 150vh;
+}
+.darkness {
+  background-color: black;
+  opacity: .8;
+  z-index: 70;
+  width: 150%;
+  height: 200%;
+  top: -50%;
+}
+
+.foto-popup{
+  z-index: 71;
 }
 </style>

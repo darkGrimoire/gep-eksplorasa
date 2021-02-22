@@ -39,10 +39,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div v-show="benda.saklar" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-fear1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-fear1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont wall">
             <img src="/fear/bg 1.png" alt="wall">
           </div>
@@ -88,7 +89,7 @@
           <div class="kucing" />
           <div class="zine" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -111,10 +112,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
           <div v-show="benda.saklar" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-fear3.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-fear3.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont wall">
             <img src="/fear/bg 1.png" alt="wall">
           </div>
@@ -186,7 +188,7 @@
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -1071,5 +1073,9 @@
   top: 4%;
   left: 0;
   height: 150vh;
+}
+
+.foto-popup {
+  z-index: 71;
 }
 </style>

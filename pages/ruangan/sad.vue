@@ -39,10 +39,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div v-show="!benda.lampu" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-sad1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-sad1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/sad/bgsad.png" alt="wall">
@@ -69,7 +70,7 @@
           <div class="podcast" @click="popups = 'kine';tipeKarya = 'video'" />
           <div class="single" />
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -89,10 +90,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
           <div v-show="!benda.lampu" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-sad2.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-sad2.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/sad/bgsad.png" alt="wall">
@@ -116,7 +118,7 @@
             <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -810,5 +812,8 @@
   top: 4%;
   left: 0;
   height: 150vh;
+}
+.foto-popup {
+  z-index: 71;
 }
 </style>
