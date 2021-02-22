@@ -21,15 +21,9 @@
             <img class="poster bordered">
           </div>
           <div class="arrow-area">
-<<<<<<< HEAD
-            <img class="left-arrow" @click="movePos(-1)" />
-            <img class="center-ghost" @click="gotoKarya(this.pos)"/>
-            <img class="right-arrow" @click="movePos(1)" />
-=======
             <img class="left-arrow" @click="movePos(-1)">
             <img class="center-ghost" @click="gotoKarya(this.pos)">
             <img class="right-arrow" @click="movePos(1)">
->>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
           </div>
         </div>
       </div>

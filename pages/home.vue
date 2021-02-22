@@ -9,15 +9,9 @@
       <img id="sad" class="emosi" src="/homepage/s0.gif" alt="sad" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
       <img id="joy" class="emosi" src="/homepage/j0.gif" alt="joy" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
     </div>
-<<<<<<< HEAD
-    <div class="button" @click="pergi()">
-      start explore
-    </div>
-=======
     <nuxt-link class="button" to="/dots" :no-prefetch="true">
       start exploring
     </nuxt-link>
->>>>>>> 9e713ecbe8507b8defe41a23512b8567803ffab8
     <rcp />
   </div>
 </template>
