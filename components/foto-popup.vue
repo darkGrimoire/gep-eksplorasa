@@ -2,17 +2,19 @@
   <div class="fotoPopup" @click="bodyClick">
     <div class="fotopopupwindow">
       <div class="foto-x-button">
-        <img class="foto-exit-image" @click="close()" />
+        <img class="foto-exit-image" @click="close()">
       </div>
       <div class="fotoscroll">
         <div
-          class="foto-area"
           v-for="(item, index) in judul"
           :key="index"
+          class="foto-area"
           @click="keKarya(index)"
         >
-          <img class="foto" :src="poster_foto[index]" />
-          <div class="layout">{{ judul[index] }}</div>
+          <img class="foto" :src="poster_foto[index]">
+          <div class="layout">
+            {{ judul[index] }}
+          </div>
         </div>
       </div>
     </div>
@@ -51,7 +53,7 @@ export default {
         .collection(this.room.toLowerCase())
         .doc("foto")
         .get()
-      const temp_path = testing.data().routes
+      const temp_path = (testing.data().routes || testing.data().route)
       temp_path.forEach(item => {
         this.judul.push(item.judul)
         this.poster_foto.push(item.poster)

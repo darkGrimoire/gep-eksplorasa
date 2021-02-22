@@ -78,7 +78,7 @@ import 'swiper/swiper-bundle.css'
           .collection(this.room.toLowerCase())
           .doc("foto")
           .get()
-        const temp_path = testing.data().routes
+        const temp_path = (testing.data().routes || testing.data().route)
         temp_path.forEach(item => {
           if (item.route.includes(this.tipeKarya)){
             this.juduls.push(item.judul)
