@@ -195,7 +195,6 @@ export default {
     font-family: 'KG Happy Solid';
     font-size: 25px;
     color: #1f1f1f;
-    text-align: center;
   }
 
   .container {
@@ -253,6 +252,9 @@ export default {
     outline: none;
     cursor: pointer;
     font-size: 37px;
+    font-family: 'KG Happy Solid';
+    color: #1f1f1f;
+    text-align: center;
   }
 
   .tabcontent {
@@ -270,6 +272,13 @@ export default {
   .judul {
     margin-top: -30px;
     width: 525px;
+  }
+
+  .deskripsi {
+    font-family: 'Karla';
+    font-style: bold;
+    font-size: 23px;
+    list-style-position: outside;
   }
 
   .box {
