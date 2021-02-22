@@ -154,7 +154,7 @@ export default {
         x = document.getElementsByClassName("additional-grass-" + (this.additional_grass - 1))[0].getBoundingClientRect().bottom
       }
       if ((x == document.getElementsByClassName("dots-3")[0].getBoundingClientRect().bottom) && (this.additional_grass != 0)) {
-        this.placeholder = false
+        alert("Please reload the page if the layout is broken")
         return
       }
       if (windowHeight > x) {

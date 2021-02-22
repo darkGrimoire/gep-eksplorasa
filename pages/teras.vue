@@ -219,6 +219,7 @@ import { Youtube } from 'vue-youtube'
 
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/teras.mp3')
+      this.audio.volume = 0.4
       this.audio.play()
     },
     methods: {

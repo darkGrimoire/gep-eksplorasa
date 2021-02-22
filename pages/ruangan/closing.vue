@@ -186,6 +186,7 @@
       }})
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/closing.mp3')
+      this.audio.volume = 0.3
       this.audio.play()
     },
     methods: {
