@@ -53,11 +53,11 @@
           <div class="cont youtube-container" style="display:none;">
             <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :player-vars="playerVars" @ended="restart" />
           </div>
-          <nuxt-link class="cont events-button" tag="div" to="/events">
+          <nuxt-link class="cont events-button" tag="div" to="/events" :no-prefetch="true">
             Events
           </nuxt-link>
-          <nuxt-link class="cont aboutus-button" tag="div" to="/aboutus">
-            About Us
+          <nuxt-link class="cont back-button" :to="'/home'">
+            Back
           </nuxt-link>
         </div>
       </div>
@@ -91,6 +91,9 @@
           <div class="lantai">
             <img src="/teras/lantai.png">
           </div>
+          <div class="back-button back-button-second" @click="reverseAnimation">
+            BACK
+          </div>
         </div>
       </div>
     </div>
@@ -114,6 +117,7 @@ import { Youtube } from 'vue-youtube'
       rcp,
       Youtube
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -208,6 +212,16 @@ import { Youtube } from 'vue-youtube'
       }, 1000)
     },
     methods: {
+      reverseAnimation(){
+        document.getElementById('slide1').style.display = 'block'
+        gsap.to('#slide1', {opacity: 1, duration: .5, delay: .3})
+        gsap.to('#slide2', {opacity: 0, duration: 1, delay: .3})
+        gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50, duration: .1, delay: 1.1})
+        gsap.to("#slide1", {duration:3,scale:1, ease: 'power4.out', onComplete: () => {
+          this.close = !this.close
+          this.switchSlide(-1)
+        }})
+      },
       toggleTeaser(){
         this.showTeaser = !this.showTeaser
       },
@@ -300,6 +314,33 @@ import { Youtube } from 'vue-youtube'
 </script>
 
 <style lang="scss" scoped>
+.back-button {
+  position: absolute;
+  left: 5%;
+  bottom: 13%;
+  color: #ede5d1;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 5;
+  text-decoration: none;
+  opacity: 0.4;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    text-decoration: none;
+    opacity: .9;
+  }
+  @media only screen and (max-width: 800px) {
+    position: fixed;
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
+}
 .main {
   background-color: black;
   width: 100vw;
@@ -695,8 +736,6 @@ import { Youtube } from 'vue-youtube'
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: 50%;
   z-index: 100;
 }
 .youtube-backdrop{
@@ -712,6 +751,7 @@ import { Youtube } from 'vue-youtube'
 }
 
 .events-button {
+  font-family: 'KG Happy Solid';
   right: 5%;
   bottom: 13%;
   font-size: 40px;
@@ -725,17 +765,4 @@ import { Youtube } from 'vue-youtube'
   }
 }
 
-.aboutus-button {
-  left: 5%;
-  bottom: 13%;
-  font-size: 40px;
-  z-index: 5;
-  color: #ede5d1;
-  opacity: .4;
-  transition: opacity 0.25s ease;
-  &:hover {
-    opacity: .9;
-    cursor: pointer;
-  }
-}
 </style>

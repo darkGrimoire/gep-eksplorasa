@@ -189,6 +189,7 @@
       kinePopup,
       NewfotoPopup
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -523,15 +524,18 @@
 
 .narasi-masuk {
   z-index: 10000;
+  color: #e14423;
 }
 
 .narasi-closing {
   font-size: 40px;
   z-index: 10000;
+  color: #ede5d1;
 }
 
 .narasi-keluar {
   font-size: 40px;
+  color: #d1bb10;
 }
 
 .cont {

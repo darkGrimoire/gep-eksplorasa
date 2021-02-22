@@ -100,6 +100,7 @@
     components: {
       rcp,
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
