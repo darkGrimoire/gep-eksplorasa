@@ -118,7 +118,7 @@ const TARGET_ZOOM_WIDTH = 3000
       Hash.stop()
     },
     mounted () {
-      const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('foto').doc(this.id)
+      const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('buku').doc(this.id)
       karyaRef.get()
         .then(doc => {
           let data = {id: doc.id, ...doc.data()}
