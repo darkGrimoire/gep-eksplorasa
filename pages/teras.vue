@@ -92,7 +92,7 @@
             <img src="/teras/lantai.png">
           </div>
           <div class="back-button back-button-second" @click="reverseAnimation">
-            BACK
+            BACK 
           </div>
         </div>
       </div>
@@ -104,7 +104,7 @@
     <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
       Events
     </nuxt-link>
-    <nuxt-link class="back-button" :to="'/'">
+    <nuxt-link v-if="slide === 1" class="back-button" :to="'/'">
       Back
     </nuxt-link>
   </div>
