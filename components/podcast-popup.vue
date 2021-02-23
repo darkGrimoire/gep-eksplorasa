@@ -17,12 +17,12 @@
           </ol>
         </div>
         <div class="pod-area">
-          <div class="poster-area" @click="gotoKarya(this.pos)">
-            <img class="poster bordered">
+          <div class="poster-area" @click="goToKarya(pos)">
+            <img class="podposter bordered">
           </div>
           <div class="arrow-area">
             <img class="leftpod-arrow" @click="movePos(-1)">
-            <img class="center-ghost" @click="gotoKarya(this.pos)">
+            <img class="center-ghost" @click="goToKarya(pos)">
             <img class="rightpod-arrow" @click="movePos(1)">
           </div>
         </div>
@@ -43,9 +43,9 @@ export default {
       amount: 0
     }
   },
-  mounted() {
+  async mounted() {
     this.getRoom()
-    this.getPodcastData()
+    await this.getPodcastData()
     this.initSetUpPodcast()
   },
   methods: {
@@ -67,17 +67,11 @@ export default {
       const temp_path = testing.data().routes
       temp_path.forEach(item => {
         this.judul.push(item.judul)
-        // this.poster.push(item.poster)
+        this.poster.push(item.poster)
         this.alamat.push(item.route)
       })
       this.amount = this.judul.length
-      for (let i = 0; i < this.amount; i++) {
-        let temp = "fear"
-        if (this.room.toLowerCase() == "sadness") {
-          temp = "sad"
-        }
-        this.poster.push("/img/emo-" + temp + "-min.png")
-      } 
+      console.log(this.poster)
     },
     initSetUpPodcast() {
       document.getElementsByClassName("podcast-exit-image")[0].src =
@@ -99,7 +93,21 @@ export default {
       document.getElementsByClassName("rightpod-arrow")[0].src =
         "/img/popup/RPolygon-" + id_room + ".png"
       this.pos = 0
-      document.getElementsByClassName("poster")[0].src = this.poster[0]
+      document.getElementsByClassName("podposter")[0].src = this.poster[this.pos]
+      if (this.pos == 0) {
+        document.getElementsByClassName("leftpod-arrow")[0].style.visibility =
+          "hidden"
+      } else {
+        document.getElementsByClassName("leftpod-arrow")[0].style.visibility =
+          "visible"
+      }
+      if (this.pos == this.amount - 1) {
+        document.getElementsByClassName("rightpod-arrow")[0].style.visibility =
+          "hidden"
+      } else {
+        document.getElementsByClassName("rightpod-arrow")[0].style.visibility =
+          "visible"
+      }
     },
     movePos(id_pindah) {
       // CHANGE THE MOVIE POSTER SHOWN
@@ -107,22 +115,22 @@ export default {
       this.pos += id_pindah
       if (this.pos < 0) {
         this.pos = 0
-      } else if (this.pos == this.amount) {
+      } else if (this.pos == this.amount - 1) {
         this.pos = this.amount - 1
       }
-      document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
+      document.getElementsByClassName("podposter")[0].src = this.poster[this.pos]
       if (this.pos == 0) {
-        document.getElementsByClassName("left-arrow")[0].style.visibility =
+        document.getElementsByClassName("leftpod-arrow")[0].style.visibility =
           "hidden"
       } else {
-        document.getElementsByClassName("left-arrow")[0].style.visibility =
+        document.getElementsByClassName("leftpod-arrow")[0].style.visibility =
           "visible"
       }
       if (this.pos == this.amount - 1) {
-        document.getElementsByClassName("right-arrow")[0].style.visibility =
+        document.getElementsByClassName("rightpod-arrow")[0].style.visibility =
           "hidden"
       } else {
-        document.getElementsByClassName("right-arrow")[0].style.visibility =
+        document.getElementsByClassName("rightpod-arrow")[0].style.visibility =
           "visible"
       }
     },
@@ -163,6 +171,7 @@ export default {
       }
     },
     goToKarya(id) {
+      console.log(id)
       let targetRoom = this.room
       if (this.room.toLowerCase() === "sadness") {
         targetRoom = "sad"
@@ -240,12 +249,12 @@ li:hover {
   height: 200px;
   border: 1px solid black;
 }
-.poster {
+.podposter {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
-.poster:hover {
+.podposter:hover {
   cursor: pointer;
 }
 .arrow-area {
@@ -254,13 +263,13 @@ li:hover {
   align-items: center;
   justify-content: center;
 }
-.left-arrow:hover {
+.leftpod-arrow:hover {
   cursor: pointer;
 }
 .center-ghost:hover {
   cursor: pointer;
 }
-.right-arrow:hover {
+.rightpod-arrow:hover {
   cursor: pointer;
 }
 @media screen and (max-width: 1020px) {
