@@ -118,7 +118,7 @@ const TARGET_ZOOM_WIDTH = 3000
       Hash.stop()
     },
     mounted () {
-      const karyaRef = this.$fire.firestore.collection('katalog').doc('metadata')
+      const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('foto').doc(this.id)
       karyaRef.get()
         .then(doc => {
           let data = {id: doc.id, ...doc.data()}
@@ -161,7 +161,7 @@ const TARGET_ZOOM_WIDTH = 3000
         })
         .catch((err) => {
           console.log(err)
-          this.$router.push({path: '/ruangan/' + this.emosi})
+          // this.$router.push({path: '/ruangan/' + this.emosi})
         })
     },
     methods: {
