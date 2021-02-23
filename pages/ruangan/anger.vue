@@ -462,7 +462,11 @@
     localStorage.setItem("last", this.$route.path)
     this.audio = new Audio("/songs/anger.mp3")
     this.audio.volume = 0.5
-    this.audio.play()
+    try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
     this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
     if (window.matchMedia("(orientation: portrait)").matches){
       this.instruksiImg1 = '/instruksi/2 hp.png'
