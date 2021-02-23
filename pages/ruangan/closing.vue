@@ -50,7 +50,7 @@
           <div class="cont meja">
             <img src="/closing/meja.png" alt="meja">
           </div>
-          <div class="figura" />
+          <div class="figura" @click="gotoKatalog" />
           <div class="kamera" @click="gotoPhotobooth" />
           <div class="balon">
             <div class="balloon-area" @click="triggerFeedback" />
@@ -215,6 +215,9 @@
       }
     },
     methods: {
+      gotoKatalog(){
+        this.$router.push({path: '/katalog'})
+      },
       gotoPhotobooth(){
         this.$router.push({path: '/photobooth'})
       },

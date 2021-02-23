@@ -49,7 +49,7 @@
         {{ dataKarya.caption }}
       </p>
     </div>
-    <nuxt-link v-show="!fs" class="back-button" :to="'/ruangan/'+emosi">
+    <nuxt-link v-show="!fs" class="back-button" :to="'/ruangan/closing'">
       Back
     </nuxt-link>
     <rcp />
