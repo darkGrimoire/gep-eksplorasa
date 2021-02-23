@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="team">
+      <div class="/team">
         <h2>Meet The Team</h2>
         <img src="/boutgep/line2.png" class="line2">
         <br><br>
