@@ -53,12 +53,6 @@
           <div class="cont youtube-container" style="display:none;">
             <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :player-vars="playerVars" @ended="restart" />
           </div>
-          <nuxt-link class="cont events-button" tag="div" to="/events" :no-prefetch="true">
-            Events
-          </nuxt-link>
-          <nuxt-link class="cont back-button" :to="'/home'">
-            Back
-          </nuxt-link>
           <div v-if="!isInstruksi1" class="instruksi1">
             <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
           </div>
@@ -104,6 +98,12 @@
       </div>
     </div>
     <rcp />
+    <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
+      Events
+    </nuxt-link>
+    <nuxt-link class="back-button" :to="'/'">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -353,9 +353,9 @@ import { Youtube } from 'vue-youtube'
 
 <style lang="scss" scoped>
 .back-button {
-  position: absolute;
+  position: fixed;
   left: 5%;
-  bottom: 13%;
+  bottom: 7%;
   color: #ede5d1;
   font-size: 40px;
   font-family: 'KG Happy Solid';
@@ -789,9 +789,10 @@ import { Youtube } from 'vue-youtube'
 }
 
 .events-button {
+  position: fixed;
   font-family: 'KG Happy Solid';
   right: 5%;
-  bottom: 13%;
+  bottom: 7%;
   font-size: 40px;
   z-index: 5;
   color: #ede5d1;
@@ -800,6 +801,16 @@ import { Youtube } from 'vue-youtube'
   &:hover {
     opacity: .9;
     cursor: pointer;
+  }
+  @media only screen and (max-width: 800px) {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
   }
 }
 

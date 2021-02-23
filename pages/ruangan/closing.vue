@@ -52,7 +52,9 @@
           </div>
           <div class="figura" />
           <div class="kamera" />
-          <div class="balon" />
+          <div class="balon">
+            <div class="balloon-area" @click="triggerFeedback" />
+          </div>
          
           <div class="cont gantungan">
             <img src="/closing/foto.png" alt="gantungan">
@@ -76,6 +78,8 @@
           <div v-if="!isInstruksi1" class="instruksi1">
             <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
           </div>
+          <div v-if="showFeedback" class="feedback-backdrop" @click="closeFeedback" />
+          <Feedback v-show="showFeedback" class="feedback-modal" style="z-index: 1001" @submitted="closeFeedback" />
           <!-- <div class="cont tulisanbalon">
             <img src="/closing/balon3.png" alt="tulisanbalon">
           </div>
@@ -98,10 +102,12 @@
   const NEXT_ROOM = '/ruangan/template'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import Feedback from '~/components/feedback.vue'
   export default {
     name: "Closing",
     components: {
       rcp,
+      Feedback
     },
     layout: 'ruangan',
     data() {
@@ -128,7 +134,8 @@
         },
         audio: undefined,
         isInstruksi1: false,
-        instruksiImg: '/instruksi/4.png'
+        instruksiImg: '/instruksi/4.png',
+        showFeedback: false
       }
     },
     computed: {
@@ -204,6 +211,15 @@
       }
     },
     methods: {
+      triggerFeedback(){
+        gsap.from('.feedback-modal', {yPercent: -200, duration: .7, ease: 'back'})
+        this.showFeedback = true
+      },
+      closeFeedback(){
+        gsap.to('.feedback-modal', {yPercent: -300, duration: .5, ease: 'back.in', clearProps: 'y', onComplete: () => {
+          this.showFeedback = false
+        }})
+      },
       fadeInstruksi(){
         gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName('instruksi1')[0].style.display = 'none'
@@ -290,8 +306,12 @@
           e.target.setAttribute('src', "/closing/cam1.png")
         }
       },
-
     },
+    head() {
+      return {
+        title: 'Terima kasih! - GEP',
+      }
+    }
   }
 </script>
 
@@ -583,5 +603,21 @@
     transform: scale(.5);
     object-fit: contain;
   }
+}
+
+.feedback-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  opacity: 0;
+  z-index: 1000;
+}
+
+.balloon-area {
+  height: 60%;
+  width: 100%;
 }
 </style>
