@@ -51,7 +51,7 @@
             <img src="/closing/meja.png" alt="meja">
           </div>
           <div class="figura" />
-          <div class="kamera" />
+          <div class="kamera" @click="gotoPhotobooth" />
           <div class="balon">
             <div class="balloon-area" @click="triggerFeedback" />
           </div>
@@ -215,6 +215,9 @@
       }
     },
     methods: {
+      gotoPhotobooth(){
+        this.$router.push({path: '/photobooth'})
+      },
       triggerFeedback(){
         gsap.from('.feedback-modal', {yPercent: -200, duration: .7, ease: 'back'})
         this.showFeedback = true
