@@ -2,17 +2,19 @@
   <div class="fotoPopup" @click="bodyClick">
     <div class="fotopopupwindow">
       <div class="foto-x-button">
-        <img class="foto-exit-image" @click="close()" />
+        <img class="foto-exit-image" @click="close()">
       </div>
       <div class="fotoscroll">
         <div
-          class="foto-area"
           v-for="(item, index) in judul"
           :key="index"
+          class="foto-area"
           @click="keKarya(index)"
         >
-          <img class="foto" :src="poster_foto[index]" />
-          <div class="layout">{{ judul[index] }}</div>
+          <img class="foto" :src="poster_foto[index]">
+          <div class="layout">
+            {{ judul[index] }}
+          </div>
         </div>
       </div>
     </div>
@@ -51,7 +53,7 @@ export default {
         .collection(this.room.toLowerCase())
         .doc("foto")
         .get()
-      const temp_path = testing.data().routes
+      const temp_path = (testing.data().routes || testing.data().route)
       temp_path.forEach(item => {
         this.judul.push(item.judul)
         this.poster_foto.push(item.poster)
@@ -135,9 +137,10 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-size: 100%;
+  transform: translateY(-50%);
   height: 50%;
+  background-attachment:scroll;
+  /* background-color:white; */
 }
 .foto-x-button {
   display: flex;
@@ -148,11 +151,12 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
   overflow-x: auto;
+  justify-content: center;
 }
-.fotoarea {
+.foto-area {
     position: relative;
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
 }
 .foto {
     width: 100%;
@@ -163,5 +167,7 @@ export default {
     position: absolute;
     top: 0%;
     left: 0%;
+    width: 100%;
+    height: 100%;
 }
 </style>

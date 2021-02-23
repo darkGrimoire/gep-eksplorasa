@@ -15,6 +15,12 @@
                         @onExitFull="setButtonLayer(10)"
             />
             <div class="caption-container no-swipe" @mousewheel.stop>
+              <div class="judul">
+                {{ dataKarya.judul }}
+              </div>
+              <div class="author">
+                {{ dataKarya.ph }}
+              </div>
               <div class="title">
                 {{ dataKarya.captionTitle }}
               </div>
@@ -115,7 +121,7 @@ import loading from '~/components/Loading.vue'
           this.dataKarya.ph = data.ph
           this.dataKarya.caption = this.handleNewLines(data.caption)
           this.dataKarya.captionTitle = data.caption_title ? data.caption_title : ''
-          this.dataKarya.videoId = data.videoId
+          this.dataKarya.videoId = (data.videoId || data.videoid)
           this.dataKarya.poster = data.poster
           this.dataKarya.posterMin = this.handleMin(data.poster)
           this.dataKarya.next = data.next
@@ -176,8 +182,8 @@ import loading from '~/components/Loading.vue'
   bottom: 2%;
   left: 2%;
   color: white;
-  font-size: 50px;
-  font-family: 'Mechanical Pencil';
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
   z-index: 1;
   text-decoration: none;
   opacity: 0.7;
@@ -253,6 +259,15 @@ import loading from '~/components/Loading.vue'
   }
 }
 
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 7;
+}
+
+
 .caption-container {
   font-family: 'Karla';
   text-align: left;
@@ -262,8 +277,21 @@ import loading from '~/components/Loading.vue'
   overflow-y: auto;
   max-height: 50vh;
   z-index: 100;
+  .judul {
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .author {
+    text-align: center;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 20px;
+    margin-bottom: 25px;
+  }
   .title {
-    font-size: 44px;
+    font-size: 35px;
   }
   .deskripsi {
     font-size: 16px;
@@ -274,15 +302,21 @@ import loading from '~/components/Loading.vue'
     min-width: 60vw;
 
     .title {
-      font-size: 30px;
+      font-size: 24px;
     }
     .deskripsi {
       font-size: 16px;
     }
   }
   @media only screen and (max-width: 600px) {
+    .judul {
+      font-size: 20px;
+    }
+    .author {
+      font-size: 16px;
+    }
     .title {
-      font-size: 24px;
+      font-size: 16px;
     }
     .deskripsi {
       font-size: 12px;

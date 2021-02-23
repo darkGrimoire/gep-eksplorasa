@@ -39,10 +39,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div v-show="!benda.lampu" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-sad1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-sad1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/sad/bgsad.png" alt="wall">
@@ -65,10 +66,15 @@
           <div class="cont poster">
             <img src="/sad/psotersad.png" alt="poster">
           </div>
-          <div class="book"></div>
-          <div class="podcast"></div>
-          <div class="single"></div>
-          
+          <div class="book" @click="popups = 'foto';tipeKarya = 'buku'" />
+          <div class="podcast" @click="popups = 'podcast'" />
+          <div class="single" @click="popups = 'foto';tipeKarya = 'single'" />
+          <div v-if="!isInstruksi1" class="instruksi instruksi1">
+            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
         </div>
       </div>
     </div>
@@ -86,12 +92,13 @@
     >
       <div class="canvas">
         <div class="canvas canvas-hover">
-          <div class="cont transitionfade-out"/>
+          <div class="cont transitionfade-out" />
           <div v-show="!benda.lampu" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-sad2.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-sad2.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/sad/bgsad.png" alt="wall">
@@ -99,21 +106,31 @@
           <div class="cont floor">
             <img src="/sad/lantaisad.png" alt="floor">
           </div>
-          <div class="lemari">
-          </div>
+          <div class="lemari" />
           <div class="cont meja-pot">
             <img src="/sad/mejaa.png" alt="meja">
           </div>
-          <div class="cont tv">
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/sad/tv.png" alt="tv">
           </div>
-          <div class="zine"></div>
-          <div class="article"></div>
-          <div class="foot" v-show="benda.key"></div>
-          <div class="key" @click="benda.key = true;slide=3"></div>
-          <div class="teropong"></div>
+          <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
+          <div class="article" @click="popups = 'kine';tipeKarya = 'artikel'" />
+          <div v-show="benda.key" class="foot" />
+          <div class="key" @click="benda.key = true;slide=3" />
+          <div class="teropong" @click="handleRasyid" />
+          <div v-if="!isInstruksi2" class="instruksi instruksi2">
+            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
+          </div>
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
+    </div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
     </div>
     <rcp />
   </div>
@@ -129,11 +146,20 @@
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
+  import PodcastPopup from '~/components/podcast-popup.vue'
   export default {
     name: "Sad",
     components: {
       rcp,
+      tvPopup,
+      kinePopup,
+      NewfotoPopup,
+      PodcastPopup
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -163,7 +189,14 @@
         benda: {
           lampu: true,
           key:false
-        }
+        },
+        popups: '',
+        tipeKarya: '',
+        audio: undefined,
+        isInstruksi1: false,
+        isInstruksi2: true,
+        instruksiImg1: '/instruksi/2.png',
+        instruksiImg2: '/instruksi/3.png'
       }
     },
     computed: {
@@ -175,6 +208,13 @@
       slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          this.isInstruksi2 = (localStorage.getItem('instruksi_3') || false)
+          if (window.matchMedia("(orientation: portrait)").matches){
+            this.instruksiImg2 = '/instruksi/3 hp.png'
+          }
+          if (!this.isInstruksi2){
+            localStorage.setItem('instruksi_3', true)
+          }
           if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
             gsap.to('.narasi', {opacity: 0, duration: .5})
@@ -224,6 +264,11 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -231,7 +276,7 @@
 
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           // TODO: Add on enter animation here
@@ -250,17 +295,57 @@
           this.slide = 1
         }})
       }
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
+      localStorage.setItem('last', this.$route.path)
+      this.audio = new Audio('/songs/sad.mp3')
+      this.audio.volume = 0.7
+      try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
+      this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg1 = '/instruksi/2 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_2', true)
+      }
     },
     methods: {
+      fadeInstruksi(classname){
+        gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName(classname)[0].style.display = 'none'
+        }})
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      preloadImages(){
+        new Image().src = '/sad/lemaribfr.png'
+        new Image().src = '/sad/tropong sad.png'
+        new Image().src = '/sad/keysad.png'
+        new Image().src = '/sad/s-artikel-2.png'
+        new Image().src = '/sad/s-zine-2.png'
+        new Image().src = '/sad/s-single-2.png'
+        new Image().src = '/sad/s-photobook-2.png'
+        new Image().src = '/sad/s-podcast-2.png'
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
       },
       goToEmosi(str){
         this.$router.push({path: "/ruangan/" + str})
       },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('sad')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -307,17 +392,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
 
@@ -326,7 +413,19 @@
         } else if (this.slide === 1 && e.key === "ArrowRight"){
           this.switchSlide(1)
         }
+      },
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
       }
+    }
     },
   }
 </script>
@@ -377,6 +476,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -418,15 +518,18 @@
 
 .narasi-masuk {
   z-index: 10000;
+  color: #305fe9;
 }
 
 .narasi-closing {
   font-size: 40px;
   z-index: 10000;
+  color: #ede5d1;
 }
 
 .narasi-keluar {
   font-size: 40px;
+  color: #e14423;
 }
 
 .cont {
@@ -668,6 +771,7 @@
   top:81%;
   left:80%;    
   cursor:pointer;
+  z-index: 15001;
   animation:bounce-7 2s;
   animation-iteration-count: infinite;
 }
@@ -744,6 +848,9 @@
   width: 35%;
   top: 28.8%;
   left: 64.9%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .darkness {
@@ -779,5 +886,45 @@
   width: 100%;
   height:15%;
   top: 70%;
+}
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
+}
+.foto-popup {
+  z-index: 71;
+}
+
+.sound-controller {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: "KG Happy Solid";
+  font-size: 40px;
+  color: whitesmoke;
+  opacity: 0.2;
+  transition: opacity .4s;
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.instruksi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.4);
+    object-fit: contain;
+  }
 }
 </style>

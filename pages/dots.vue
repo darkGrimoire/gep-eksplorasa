@@ -1,31 +1,27 @@
 <template>
   <div class="connect-dots-page">
     <div class="judul">
-      <img src="/img/title.png" class="img-judul">
+      <img src="/img/title.png" class="img-judul" />
     </div>
     <div class="caption">
-      <img src="/img/caption-1.png" class="caption-item cap-1">
-      <img src="/img/caption-2.png" class="caption-item cap-2">
-      <img src="/img/caption-3.png" class="caption-item cap-3">
-      <img src="/img/caption-4.png" class="caption-item cap-4">
-      <img src="/img/caption-5.png" class="caption-item-2 cap-5">
-      <img src="/img/caption-6.png" class="caption-item-2 cap-6">
-      <img src="/img/caption-7.png" class="caption-item-3 cap-6">
+      <img src="/img/caption-1.png" class="caption-item cap-1" />
+      <img src="/img/caption-2.png" class="caption-item cap-2" />
+      <img src="/img/caption-3.png" class="caption-item cap-3" />
+      <img src="/img/caption-4.png" class="caption-item cap-4" />
+      <img src="/img/caption-5.png" class="caption-item-2 cap-5" />
+      <img src="/img/caption-6.png" class="caption-item-2 cap-6" />
+      <img src="/img/caption-7.png" class="caption-item-3 cap-6" />
     </div>
     <div class="dots">
-      <img src="/img/dots_1.png" class="dots-1">
-      <img src="/img/dots_2.png" class="dots-2">
-      <img src="/gif/home-bgbest.gif" class="dots-gif">
-      <img src="/img/dots_3_grass.png" class="dots-3">
-      <img src="/img/dots_3_flower.png" class="dots-4">
-      <img src="/img/dots_3_flower.png" class="dots-5">
+      <img src="/img/dots_1.png" class="dots-1" />
+      <img src="/img/dots_2.png" class="dots-2" />
+      <img src="/gif/home-bgbest.gif" class="dots-gif" />
+      <img src="/img/dots_3_grass.png" class="dots-3" />
+      <img src="/img/dots_3_flower.png" class="dots-4" />
+      <img src="/img/dots_3_flower.png" class="dots-5" />
       <div class="button-area">
-        <button class="skip-button" @click="skipCanvas">
-          Skip
-        </button>
-        <button class="next-button" @click="goToTeras">
-          Next
-        </button>
+        <button class="skip-button" @click="skipCanvas">Skip</button>
+        <button class="next-button" @click="goToTeras">Next</button>
       </div>
       <canvas
         id="dots_canvas"
@@ -51,14 +47,13 @@ export default {
       pos: 0,
       additional_grass: 0,
       mouseHoverInPos: false,
-      mouseClickInPos: false
+      mouseClickInPos: false,
+      placeholder: true
     }
   },
   mounted() {
     this.setUpPic()
-    setTimeout(() => {
-      this.addAditionalGrass(false)
-    }, 500)
+    this.addAditionalGrass(false)
     this.setUpCanvas()
     this.setUpButton()
     this.addCoordinate()
@@ -99,10 +94,7 @@ export default {
         /* FOR COMPUTER */
         const windowHeight = window.innerHeight
         const dots3_height = dotsPic3.offsetHeight
-        const text_element_height =
-          (windowHeight * 2.5 / 100) + document.getElementsByClassName("judul")[0].clientHeight +
-          document.getElementsByClassName("caption")[0].clientHeight
-        const dotsHeight = windowHeight - text_element_height
+        const dotsHeight = windowHeight - document.getElementsByClassName("dots")[0].getBoundingClientRect().top
         dots3_top = dotsHeight - dots3_height
         dots2_top = dots3_top + dots3_height * 0.8 - dotsPic2.offsetHeight
       }
@@ -130,14 +122,12 @@ export default {
       dotsPic4.style.visibility = "visible"
       if (window.innerWidth > 800) {
         dotsPic5.style.visibility = "visible"
-      }
-      else {
+      } else {
         dotsPic5.style.visibility = "hidden"
       }
     },
     addAditionalGrass(isResize) {
       // ADD ADITIONAL GRASS WHEN THERE'S EMPTY SPACE BELOW INITIAL GRASS
-      
       if (isResize) {
         /* Create clean state for adding grass after resize */
         for (let i = 0; i < this.additional_grass; i++) {
@@ -154,22 +144,21 @@ export default {
       const dots3Top = parseFloat(
         document.getElementsByClassName("dots-3")[0].style.top
       )
-      const dots3Height = parseFloat(document.getElementsByClassName("dots-3")[0]
-        .offsetHeight)
-      console.log(windowHeight)
-      console.log(text_element_height + dots3Top + dots3Height)
+      const dots3Height = parseFloat(
+        document.getElementsByClassName("dots-3")[0].offsetHeight
+      )
       let x = 0
-      if (this.additional_grass === 0){
-        x = text_element_height + dots3Top + dots3Height
+      if (this.additional_grass === 0) {
+        x = document.getElementsByClassName("dots-3")[0].getBoundingClientRect().bottom
       } else {
-        const doc = parseFloat(document.getElementsByClassName(`additional-grass-${this.additional_grass - 1}`)[0].style.top)
-        const addGrassHeight = parseFloat(document.getElementsByClassName(`additional-grass-${this.additional_grass - 1}`)[0]
-          .offsetHeight)
-        x = text_element_height + doc + addGrassHeight
+        x = document.getElementsByClassName("additional-grass-" + (this.additional_grass - 1))[0].getBoundingClientRect().bottom
+      }
+      if ((x == document.getElementsByClassName("dots-3")[0].getBoundingClientRect().bottom) && (this.additional_grass != 0)) {
+        alert("Please reload the page if the layout is broken")
+        return
       }
       if (windowHeight > x) {
         /* Creating the element */
-        console.log("yellow")
         let img = document.createElement("img")
         img.src = "/img/dots_3_grass.png"
         const className = "additional-grass-" + this.additional_grass
@@ -206,11 +195,10 @@ export default {
       let div_button = document.getElementsByClassName("button-area")[0]
       const dotsPic2 = document.getElementsByClassName("dots-2")[0]
       let skip_top = 0
-        
+
       if (window.innerWidth < 800) {
         skip_top = parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight * 0.85
-      }
-      else {
+      } else {
         skip_top = parseInt(dotsPic2.style.top) + dotsPic2.offsetHeight * 0.9
       }
       div_button.style.top = skip_top + "px"
@@ -392,13 +380,13 @@ export default {
       }
     },
     goToTeras() {
-      this.$router.push({path: '/teras'})
+      this.$router.push({ path: "/teras" })
     },
-    resetGif(){
-      var img = document.getElementsByClassName('dots-gif')[0]
-      var imageUrl = img.getAttribute('src')
-      img.setAttribute('src', '#')
-      img.setAttribute('src', imageUrl)
+    resetGif() {
+      var img = document.getElementsByClassName("dots-gif")[0]
+      var imageUrl = img.getAttribute("src")
+      img.setAttribute("src", "#")
+      img.setAttribute("src", imageUrl)
     }
   }
 }
@@ -472,7 +460,7 @@ export default {
 }
 .dots-gif {
   visibility: hidden;
-  width: 24vw;
+  width: 24%;
   position: absolute;
   left: 50.3%;
   transform: translateX(-50%);

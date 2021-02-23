@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <div class="content">
-      <img src="/templatekine/g1 kuning.png" class="g1">
-      <img src="/templatekine/g2 kuning.png" class="g2">
+      <img :src="'/templatekine/g1 '+emosi+'.png'" class="g1">
+      <img :src="'/templatekine/g2 '+emosi+'.png'" class="g2">
 
       <div class="layer2">
-        <div class="fotoo">
-          <fa :icon="['fas', 'caret-left']" class="leftarrow arrow" @click="switchPhoto(-1)" />
+        <div v-if="dataKarya.photos" class="fotoo">
+          <fa v-show="dataKarya.photos.length > 1" :icon="['fas', 'caret-left']" :style="'color: '+copal+';'" class="leftarrow arrow" @click="switchPhoto(-1)" />
           <zoom-photo :poster="dataKarya.photoMin" 
                       :full="dataKarya.photo" 
                       :container-class="'poster-container left-side'"
                       :poster-class="'poster-img'"
           />
-          <fa :icon="['fas', 'caret-right']" class="rightarrow arrow" @click="switchPhoto(1)" />
+          <fa v-show="dataKarya.photos.length > 1" :icon="['fas', 'caret-right']" :style="'color: '+copal+';'" class="rightarrow arrow" @click="switchPhoto(1)" />
         </div>
             
         <div class="paper">
@@ -22,8 +22,8 @@
           <img src="/templatekine/paper.png" class="paperrrr">
         
           <div class="papertext">
-            <img src="/templatekine/joy.png" class="header">
-            <div class="judul" v-html="computedJudul" />
+            <img :src="'/templatekine/'+emosi+'.png'" class="header">
+            <div class="judul" :style="'color: '+copal+';'" v-html="computedJudul" />
             <div class="author">
               {{ dataKarya.author }}
             </div>
@@ -33,12 +33,15 @@
           </div>
 
           <div class="printilan">
-            <img src="/templatekine/tape kuning.png" class="tape">
+            <img :src="'/templatekine/orn-'+emosi+'.png'" :style="calculateOrnament" class="tape">
           </div>
         </div>
       </div>
     </div>
     <rcp />
+    <nuxt-link class="back-button" :to="'/ruangan/'+emosi">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -69,7 +72,29 @@ export default {
       },
       dbLoading: true,
       computedParagraphs: [],
-      computedJudul: ''
+      computedJudul: '',
+    }
+  },
+  computed: {
+    copal() {
+      if (this.emosi === 'joy'){
+        return '#d1bb10'
+      } else if (this.emosi === 'sad'){
+        return '#305fe9'
+      } else if (this.emosi === 'fear'){
+        return '#009562'
+      } else if (this.emosi === 'anger'){
+        return '#e14423'
+      } else {
+        return '#ede5d1'
+      }
+    },
+    calculateOrnament(){
+      if (this.emosi === 'sad' || this.emosi === 'joy'){
+        return ''
+      } else {
+        return 'width: 150px;margin-top: -10px;margin-left: 620px;'
+      }
     }
   },
   mounted () {
@@ -81,7 +106,8 @@ export default {
           this.dataKarya.author = data.author
           this.dataKarya.paragraphs = data.paragraphs
           this.dataKarya.photos = data.photos
-          this.handleMins(data.photos)
+          if (data.photos)
+            this.handleMins(data.photos)
           this.dataKarya.next = data.next
           this.dataKarya.prev = data.prev
           this.dataKarya.par_space = (data.par_space || '      ') 
@@ -90,9 +116,13 @@ export default {
 
           this.processParagraphs()
           this.computedJudul = this.handlePipeline(this.dataKarya.judul)
-          this.dataKarya.photo = this.dataKarya.photos[0]
-          this.dataKarya.photoMin = this.dataKarya.photoMins[0]
-          this.preloadImages()
+          if (data.photos) {
+            this.dataKarya.photo = this.dataKarya.photos[0]
+            this.dataKarya.photoMin = this.dataKarya.photoMins[0]
+            this.preloadImages()
+          } else {
+            document.getElementsByClassName('layer2')[0].style.justifyContent = 'center'
+          }
         })
         .catch((err) => {
           console.log(err)
@@ -342,7 +372,6 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 80vh;
-    margin-top: 50px;
   }
 
   .paperr {
@@ -383,7 +412,7 @@ export default {
 
   .isi {
     text-align: left;
-    max-height: 400px;
+    max-height: 350px;
     overflow-y: scroll;
     padding: 0 30px;
     //firefox
@@ -417,7 +446,7 @@ export default {
 
   .tape {
     width: 175px;
-    margin-left: 660px;
+    margin-left: 677px;
     margin-top: 75px;
   }
 
@@ -429,7 +458,7 @@ export default {
     .paperrrr {display: none;}
   }
 
-  @media only screen and (max-width: 1530px) {
+  @media only screen and (max-width: 1400px) {
     .content {
       position: relative;
       display: flex;
@@ -530,6 +559,7 @@ export default {
         font-size: 28px;
         color: #d1bb10;
         padding: 5px 0;
+        max-width: 80%;
     }
 
     .author {
@@ -541,7 +571,7 @@ export default {
 
     .isi {
       text-align: left;
-      max-height: 700px;
+      max-height: 550px;
       overflow-y: scroll;
       padding: 0 30px;
     }
@@ -565,6 +595,17 @@ export default {
       width: 175px;
       margin-left: 660px;
       margin-top: 75px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .fotoo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .paper {
+      max-width: 90vw;
     }
   }
 
@@ -719,7 +760,7 @@ export default {
     }
 
     .arrow {
-      font-size: 50px;
+      font-size: 80px;
     }
 
     .fotoo {
@@ -730,30 +771,34 @@ export default {
         width: 200px;
       }
     }
+    ::v-deep .poster-container {
+      width: 320px;
+    }
 
     .leftarrow {
-      left: -30px;
+      left: 5px;
     }
 
     .rightarrow {
-      right: -30px;
+      right: 5px;
     }
 
     .paper {
       height: 80vh;
+      width: 90vw;
       margin-top: 50px;
     }
 
     .paperr {
-      width: 250px;
+      width: 90vw;
       margin-top: -10px;
     }
     .paperrr {
-      width: 250px;
+      width: 90vw;
       margin-top: -10px;
     }
     .paperrrr {
-      width: 250px;
+      width: 90vw;
       margin-top: -10px;
     }
 
@@ -787,7 +832,7 @@ export default {
 
     .isi {
       text-align: left;
-      max-height: 400px;
+      max-height: 500px;
       overflow-y: scroll;
       padding: 0 10px;
     }
@@ -813,4 +858,31 @@ export default {
       margin-top: -5px;
     }
   }
+
+  .back-button {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    text-decoration: none;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
+}
 </style>

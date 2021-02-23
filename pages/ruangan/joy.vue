@@ -38,10 +38,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
@@ -63,17 +64,25 @@
           <div class="cont karpet">
             <img src="/joy/karpet 1.png" alt="karpet">
           </div>
-          <div class="cont tv">
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/joy/tv 1.png" alt="tv">
           </div>
           <div class="cont pohon">
             <img src="/joy/pohon 1.png" alt="pohon">
           </div>
-          <div class="teddy"/>
-          <div class="bbq"/>
-          <div class="ig"/>
-          <div class="photobook"/>
-          <div class="zine"/>
+          <div class="teddy" />
+          <div class="bbq" />
+          <div class="ig" @click="popups = 'kine';tipeKarya = 'instagram'" />
+          <div class="photobook" @click="popups = 'foto';tipeKarya = 'buku'" />
+          <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
+          <div v-if="!isInstruksi1" class="instruksi instruksi1">
+            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
+          </div>
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -92,10 +101,11 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide2.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide2.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont sky">
             <img src="/joy/sky 1.png" alt="sky">
           </div>
@@ -117,16 +127,24 @@
           <div class="cont pasir">
             <img src="/joy/pasir 1.png" alt="pasir">
           </div>
-          <div class="bounce single"/>
-          <div class="bounce bola"/>
-          <div class="bounce teropong"/>
-          <div class="bounce keranjang"/>
-          <div class="bounce artikel"/>
-          <div class="bounce kamera"/>
-          <div class="bounce kunci" @click="benda.kunci = true;slide=3"/>
-          <div class="foot" v-show="benda.kunci"/>
+          <div class="bounce single" @click="popups = 'foto';tipeKarya = 'single'" />
+          <div class="bounce bola" />
+          <div class="bounce teropong" @click="handleRasyid" />
+          <div class="bounce keranjang" />
+          <div class="bounce artikel" @click="popups = 'kine';tipeKarya = 'artikel'" />
+          <div class="bounce kamera" @click="popups = 'foto';tipeKarya = 'series'" />
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div v-show="benda.kunci" class="foot" />
+          <div v-if="!isInstruksi2" class="instruksi instruksi2">
+            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
+    </div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
     </div>
     <rcp />
   </div>
@@ -141,12 +159,19 @@
   const NEXT_ROOM = '/ruangan/fear'
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
   import rcp from '~/components/rcp.vue'
   export default {
     name: "Joy",
     components: {
       rcp,
+      tvPopup,
+      kinePopup,
+      NewfotoPopup
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -175,7 +200,14 @@
         },
         benda: {
           kunci:false
-        }
+        },
+        popups: '',
+        tipeKarya: '',
+        audio: undefined,
+        isInstruksi1: false,
+        isInstruksi2: true,
+        instruksiImg1: '/instruksi/2.png',
+        instruksiImg2: '/instruksi/3.png'
       }
     },
     computed: {
@@ -187,6 +219,13 @@
       slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          this.isInstruksi2 = (localStorage.getItem('instruksi_3') || false)
+          if (window.matchMedia("(orientation: portrait)").matches){
+            this.instruksiImg2 = '/instruksi/3 hp.png'
+          }
+          if (!this.isInstruksi2){
+            localStorage.setItem('instruksi_3', true)
+          }
           if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
             gsap.to('.narasi', {opacity: 0, duration: .5})
@@ -237,13 +276,18 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
       document.onkeyup = this.handleKeyboard
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           // TODO: Add on enter animation here
@@ -262,6 +306,24 @@
           this.slide = 1
         }})
       }
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
+      localStorage.setItem('last', this.$route.path)
+      this.audio = new Audio('/songs/joy.mp3')
+      this.audio.volume = 0.3
+      try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
+      this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg1 = '/instruksi/2 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_2', true)
+      }
     },
     methods: {
       // bounceInterval(){
@@ -271,12 +333,38 @@
       //     })
       //   }, 4000)
       // },
+      fadeInstruksi(classname){
+        gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName(classname)[0].style.display = 'none'
+        }})
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
       },
+      preloadImages(){
+        new Image().src = '/joy/f4.png'
+        new Image().src = '/joy/PHOTOSERIES_2 1.png'
+        new Image().src = '/joy/ARTIKEL.png'
+        new Image().src = '/joy/kranjang2 1.png'
+        new Image().src = '/joy/tropong joy.png'
+        new Image().src = '/joy/bola1 3.png'
+        new Image().src = '/joy/SINGLEPHOTO_2.png'
+        new Image().src = '/joy/ZINE.png'
+        new Image().src = '/joy/PHOTOBOOK_2.png'
+        new Image().src = '/joy/IG_2.png'
+        new Image().src = '/joy/bbq2.png'
+        new Image().src = '/joy/tedi2.png'
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
+      },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('joy')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -323,17 +411,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
 
@@ -342,7 +432,19 @@
         } else if (this.slide === 1 && e.key === "ArrowRight"){
           this.switchSlide(1)
         }
+      },
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
       }
+    }
     },
   }
 </script>
@@ -393,6 +495,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -434,15 +537,18 @@
 
 .narasi-masuk {
   z-index: 10000;
+  color: #d1bb10;
 }
 
 .narasi-closing {
   font-size: 40px;
   z-index: 10000;
+  color: #ede5d1;
 }
 
 .narasi-keluar {
   font-size: 40px;
+  color: #009562;
 }
 
 .cont {
@@ -489,6 +595,9 @@
   width: 25%;
   top: 37.5%;
   left: 62.9%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .pohon {
   width: 41.2%;
@@ -879,6 +988,7 @@
   top: 78%;
   left: 83%;
   cursor:pointer;
+  z-index: 15001;
   animation:bounce-7 2s;
   animation-iteration-count: infinite;    
 }
@@ -910,4 +1020,54 @@
   100% { transform:scale(1,1) translateY(0);}
 }
 
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
+}
+.darkness {
+  background-color: black;
+  opacity: .8;
+  z-index: 70;
+  width: 150%;
+  height: 200%;
+  top: -50%;
+}
+
+.foto-popup{
+  z-index: 71;
+}
+
+.sound-controller {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: "KG Happy Solid";
+  font-size: 40px;
+  color: black;
+  opacity: 0.2;
+  transition: opacity .4s;
+  
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.instruksi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.4);
+    object-fit: contain;
+  }
+}
 </style>

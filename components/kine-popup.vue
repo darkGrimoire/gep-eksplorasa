@@ -2,11 +2,11 @@
   <div class="kinePopup" @click="bodyClick">
     <div class="kinepopupwindow">
       <div class="kine-x-button">
-        <img class="kine-exit-image" @click="close()" />
+        <img class="kine-exit-image" @click="close()">
       </div>
       <ol class="daftar-kine">
         <li v-for="(item,index) in judul" :key="index" @click="keKarya(index)">
-          {{item}}
+          {{ item }}
         </li>
       </ol>
     </div>
@@ -15,6 +15,12 @@
 
 <script setup>
 export default {
+  props: {
+    tipeKarya: {
+      type: String,
+      default: undefined
+    },
+  },
   data() {
     return {
       room: "",
@@ -22,9 +28,9 @@ export default {
       alamat: []
     }
   },
-  mounted() {
+  async mounted() {
     this.getRoom()
-    this.getData()
+    await this.getData()
     this.initSetUp()
     // this.insertRibbon()
     // window.addEventListener("resize", this.windowChange)
@@ -88,8 +94,11 @@ export default {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
       this.room = link.match(
-        /(Joy|Sadness|Anger|Fear|joy|sadness|anger|fear)/i
+        /(Joy|Sad|Anger|Fear|joy|sadness|anger|fear)/i
       )[0]
+      if (this.room.toLowerCase() === 'sad'){
+        this.room = 'sadness'
+      }
     },
     async getData() {
       // GET THE FILM DATA FROM THE FIREBASE
@@ -101,19 +110,15 @@ export default {
         .get()
       const temp_path = testing.data().routes
       temp_path.forEach(item => {
-        this.judul.push(item.judul)
-        this.alamat.push(item.route)
+        if (item.route.includes(this.tipeKarya)){
+          this.judul.push(item.judul)
+          this.alamat.push(item.route)
+        }
       })
     },
     initSetUp() {
       document.getElementsByClassName("kine-exit-image")[0].src =
         "/img/popup/exit-0.png"
-      const daftar = document.getElementsByClassName("daftar-kine")[0]
-      for (let i = 0; i < this.judul.length; i++) {
-        let temp = document.createElement("li")
-        temp.innerText = this.judul[i]
-        daftar.appendChild(temp)
-      }
     },
     insertRibbon() {
       const ribbon1 = document.createElement("img")
@@ -159,6 +164,7 @@ export default {
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("kinePopup")[0].style.display = "none"
+      this.$emit('closePopup')
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
@@ -183,14 +189,28 @@ export default {
       // CHECK THE LOCATION OF THE CLICK
       // IF INSIDE POPUP, DO NOTHING
       // IF OUTSIDE POPUP, CLOSE POPUP
+      try {
       if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
         return
       }
       this.close()
+      }
+      catch(e) {
+        return
+      }
     },
     keKarya(id) {
-      const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[id]
-      this.$router.push({path: tujuan})
+      if (this.alamat[id].includes('instagram')){
+        window.open(this.alamat[id], '_blank')
+      } else {
+        let targetRoom = this.room
+        if (this.room.toLowerCase() === 'sadness'){
+          targetRoom = 'sad'
+        }
+        let targetUrl = this.alamat[id].charAt(0) === '/' ? this.alamat[id] : '/' + this.alamat[id]
+        const tujuan = "/karya/" + targetRoom + targetUrl
+        this.$router.push({path: tujuan})
+      }
     }
   }
 }
@@ -221,6 +241,8 @@ export default {
   font-family: "Mechanical Pencil";
   font-size: 1.5rem;
   text-align: justify;
+  min-height: 50%;
+  min-width: 30%;
 }
 .kine-x-button {
   display: flex;

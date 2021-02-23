@@ -28,7 +28,7 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div class="genteng" />
-          <div class="meong" @click="catAudio.currentTime = 0.3;catAudio.play()" />
+          <div class="meong" @click="catAudio.currentTime = 0.2;catAudio.play()" />
           <div class="open" @click="toggleTeaser" />
           <div class="keset">
             <img src="/teras/keset 1.png">
@@ -39,8 +39,8 @@
           <div class="jen2">
             <img src="/teras/jka 1.png">
           </div>
-          <!-- <div v-show="close" class="imgpintu" @click="close=false;white=true;zoomIn();" /> -->
-          <div v-show="close" class="imgpintu" @click="showAlert()" />
+          <div v-show="close" class="imgpintu" @click="close=false;white=true;zoomIn();" />
+          <!-- <div v-show="close" class="imgpintu" @click="showAlert()" /> -->
           <div v-show="!close" class="gifpintu" />
           <div class="bg">
             <img src="/teras/bg 2.png">
@@ -53,12 +53,12 @@
           <div class="cont youtube-container" style="display:none;">
             <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :player-vars="playerVars" @ended="restart" />
           </div>
-          <nuxt-link class="cont events-button" tag="div" to="/events">
-            Events
-          </nuxt-link>
-          <nuxt-link class="cont aboutus-button" tag="div" to="/aboutus">
-            About Us
-          </nuxt-link>
+          <div v-if="!isInstruksi1" class="instruksi1">
+            <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
+          </div>
+          <div class="instruksi2" style="display: none;">
+            <img src="/instruksi/transisiy-swipe-hp.gif" alt="instruksi">
+          </div>
         </div>
       </div>
     </div>
@@ -91,10 +91,22 @@
           <div class="lantai">
             <img src="/teras/lantai.png">
           </div>
+          <div class="back-button back-button-second" @click="reverseAnimation">
+            BACK
+          </div>
         </div>
       </div>
     </div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
+    </div>
     <rcp />
+    <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
+      Events
+    </nuxt-link>
+    <nuxt-link class="back-button" :to="'/'">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -114,6 +126,7 @@ import { Youtube } from 'vue-youtube'
       rcp,
       Youtube
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -127,7 +140,7 @@ import { Youtube } from 'vue-youtube'
         slide: 0,
         base: {
           slide0: -50,
-          slide1: -50,
+          slide1: 50,
           slide2: 150
         },
         msg: 'Pesan Kurator Here',
@@ -138,7 +151,10 @@ import { Youtube } from 'vue-youtube'
           rel: 0
         },
         showTeaser: false,
-        catAudio: undefined
+        catAudio: undefined,
+        audio: undefined,
+        isInstruksi1: false,
+        instruksiImg: '/instruksi/1.png'
       }
     },
     computed: {
@@ -193,6 +209,11 @@ import { Youtube } from 'vue-youtube'
         }
       },
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -206,8 +227,46 @@ import { Youtube } from 'vue-youtube'
       setTimeout(() => {
         this.preloadImages()
       }, 1000)
+
+      localStorage.setItem('last', this.$route.path)
+      this.audio = new Audio('/songs/teras.mp3')
+      this.audio.volume = 0.4
+      try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
+      this.isInstruksi1 = (localStorage.getItem('instruksi_1') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg = '/instruksi/1 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_1', true)
+      }
     },
     methods: {
+      fadeInstruksi(){
+        gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName('instruksi1')[0].style.display = 'none'
+          if (window.matchMedia("(orientation: portrait)").matches){
+            document.getElementsByClassName('instruksi2')[0].style.display = 'block'
+            gsap.to('.instruksi2', {opacity: 1, duration: 1})
+            gsap.to('.instruksi2', {opacity: 0, duration: 1, delay: 3.5, onComplete: () => {
+              document.getElementsByClassName('instruksi2')[0].style.display = 'none'
+            }})
+          }
+        }})
+      },
+      reverseAnimation(){
+        document.getElementById('slide1').style.display = 'block'
+        gsap.to('#slide1', {opacity: 1, duration: .5, delay: .3})
+        gsap.to('#slide2', {opacity: 0, duration: 1, delay: .3})
+        gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50, duration: .1, delay: 1.1})
+        gsap.to("#slide1", {duration:3,scale:1, ease: 'power4.out', onComplete: () => {
+          this.close = !this.close
+          this.switchSlide(-1)
+        }})
+      },
       toggleTeaser(){
         this.showTeaser = !this.showTeaser
       },
@@ -224,6 +283,7 @@ import { Youtube } from 'vue-youtube'
         new Image().src = '/teras/A3 1.png'
         new Image().src = '/teras/p2 1.png'
         new Image().src = '/teras/meong1 1.png'
+        new Image().src = '/teras/open me 2.png'
       },
       goToEmosi(str){
         this.$router.push({path: "/ruangan/" + str})
@@ -294,12 +354,51 @@ import { Youtube } from 'vue-youtube'
           this.computedDisplacement = 0
           this.transformed = 0
         }
+      },
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
       }
+    }
     },
   }
 </script>
 
 <style lang="scss" scoped>
+.back-button {
+  position: fixed;
+  left: 5%;
+  bottom: 7%;
+  color: #ede5d1;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 5;
+  text-decoration: none;
+  opacity: 0.4;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    text-decoration: none;
+    opacity: .9;
+  }
+  @media only screen and (max-width: 800px) {
+    position: fixed;
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
+}
 .main {
   background-color: black;
   width: 100vw;
@@ -438,14 +537,14 @@ import { Youtube } from 'vue-youtube'
 }
 
 .imgpintu:hover{
-    // width:20%;
-    // height:60.9%;
-    // top : 19%;
-    // left : 40%;
-    // background-image:url("/teras/p2 1.png");
-    // background-repeat:no-repeat;
+    width:20%;
+    height:60.9%;
+    top : 19%;
+    left : 40%;
+    background-image:url("/teras/p2 1.png");
+    background-repeat:no-repeat;
     cursor:pointer;
-    // position:absolute;
+    position:absolute;
 }
 
 .gifpintu{
@@ -695,8 +794,6 @@ import { Youtube } from 'vue-youtube'
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
-  height: 50%;
   z-index: 100;
 }
 .youtube-backdrop{
@@ -712,8 +809,10 @@ import { Youtube } from 'vue-youtube'
 }
 
 .events-button {
+  position: fixed;
+  font-family: 'KG Happy Solid';
   right: 5%;
-  bottom: 13%;
+  bottom: 7%;
   font-size: 40px;
   z-index: 5;
   color: #ede5d1;
@@ -723,19 +822,63 @@ import { Youtube } from 'vue-youtube'
     opacity: .9;
     cursor: pointer;
   }
+  @media only screen and (max-width: 800px) {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
 }
 
-.aboutus-button {
-  left: 5%;
-  bottom: 13%;
+.sound-controller {
+  position: absolute;
+  top: 20px;
+  left: 50vw;
+  transform: translate(-50%);
+  font-family: "KG Happy Solid";
   font-size: 40px;
-  z-index: 5;
-  color: #ede5d1;
-  opacity: .4;
-  transition: opacity 0.25s ease;
-  &:hover {
-    opacity: .9;
-    cursor: pointer;
+  color: black;
+  opacity: 0.5;
+  transition: opacity .4s;
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.instruksi1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(.5);
+    object-fit: contain;
+  }
+}
+.instruksi2 {
+  position: absolute;
+  top: 97%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  z-index: 15000;
+  opacity: 0;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 </style>

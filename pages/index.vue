@@ -1,324 +1,210 @@
 <template>
-  <div class="page-container">
-    <canvas 
-      ref="canvas" 
-      class="canvas"
-      @click="handleClick"
-      @mousemove="handleMouseMove" 
-      @resize="handleResize"
-    />
-    <div ref="mainContainer" class="main-container">
-      <img src="/gif/uc-text.gif" class="text-gif">
-      <img src="/gif/house.gif" class="house-gif">
-      <div class="countdown-container">
-        <div class="count-text">
-          <div class="number">
-            {{ days }}
-          </div>
-          <div class="text">
-            DAYS
-          </div>
-          <div class="number">
-            {{ hours }}
-          </div>
-          <div class="text">
-            HOURS
-          </div>
-        </div>
-        <img src="/gif/countdown.gif" class="count-gif">
-      </div>
+  <div class="container">
+    <div class="logo-container">
+      <img src="/homepage/homepage.gif" alt="homepage">
     </div>
-    <div class="link-container">
-      <a href="https://www.instagram.com/geplfm/" target="_blank">
-        <img class="link" src="/img/ig.png">
-      </a>
-      <a href="https://www.twitter.com/GEPLFMITB" target="_blank">
-        <img src="/img/twitter.png" class="link">
-      </a>
+    <div class="emosi-container">
+      <img id="anger" class="emosi" src="/homepage/a0.gif" alt="anger" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
+      <img id="fear" class="emosi" src="/homepage/f0.gif" alt="fear" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
+      <img id="sad" class="emosi" src="/homepage/s0.gif" alt="sad" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
+      <img id="joy" class="emosi" src="/homepage/j0.gif" alt="joy" @mouseenter="handleHover($event, 'enter')" @mouseleave="handleHover($event, 'leave')">
     </div>
+    <nuxt-link class="button" to="/buku-tamu" :no-prefetch="true">
+      start exploring
+    </nuxt-link>
+    <rcp />
   </div>
 </template>
 
 <script>
-const gepDate = new Date(2021, 1, 21, 20, 40)
+import rcp from '~/components/rcp.vue'
 export default {
-  name: 'UnderConstruction',
-  data () {
-      return {
-        timerInterval: null,
-        days: 0,
-        hours: 0,
-        radius: 100,
-        canvas: null,
-        offsetX: null,
-        offsetY: null,
-        startX: null,
-        startY: null,
-        isDown: false
+  name: 'Homepage',
+  components: {
+    rcp,
+  },
+  mounted () {
+    setTimeout(() =>{
+      this.preloadImages()
+    }, 500)
+  },
+  methods: {
+    pergi() {
+      this.$router.push({ path: '/dots' })
+    },
+    handleHover(e, type) {
+      if (type === 'enter'){
+        if (e.target.id === 'anger'){
+          e.target.setAttribute('src', "/homepage/yuk1-.gif")
+        } else if (e.target.id === 'sad'){
+          e.target.setAttribute('src', "/homepage/yuk2-.gif")
+        } else if (e.target.id === 'fear'){
+          e.target.setAttribute('src', "/homepage/yuk3-.gif")
+        } else if (e.target.id === 'joy'){
+          e.target.setAttribute('src', "/homepage/yuk4-.gif")
+        }
+      } else {
+        if (e.target.id === 'anger'){
+          e.target.setAttribute('src', "/homepage/a0.gif")
+        } else if (e.target.id === 'sad'){
+          e.target.setAttribute('src', "/homepage/s0.gif")
+        } else if (e.target.id === 'fear'){
+          e.target.setAttribute('src', "/homepage/f0.gif")
+        } else if (e.target.id === 'joy'){
+          e.target.setAttribute('src', "/homepage/j0.gif")
+        }
       }
     },
-    mounted () {
-      if (gepDate - new Date() <= 0){
-        this.$router.push({path: '/home'})
-      }
-      this.setupCanvas()
-      this.updateTimer()
-      this.startCountdown()
-      setTimeout(() => this.canvasLogger(), 2000)
-    },
-    methods: {
-      updateTimer () {
-        const now = new Date()
-        const remainingTime = gepDate - now
-        if (remainingTime > 0) {
-          const remainingHour = Math.floor(remainingTime / 1000 / 60 / 60)
-          this.days = Math.floor(remainingHour / 24) 
-          this.hours = Math.floor(remainingHour % 24) 
-        } else {
-          this.days = 0
-          this.hours = 0
-        }
-      },
-      startCountdown () {
-        this.timerInterval = setInterval(() => this.updateTimer(), 1000 * 60)
-      },
-      setupCanvas(){
-        const canvas = this.$refs.canvas
-        canvas.height = window.innerHeight
-        canvas.width = window.innerWidth
-        const ctx = canvas.getContext('2d')
-        ctx.fillStyle = "#d1bb10"
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
-        ctx.globalCompositeOperation = "destination-out"
-        this.canvas = ctx
-      }, 
-      handleMouseMove(e) {
-        this.erase(this.getXY(e))
-        if (document.elementsFromPoint(e.clientX,e.clientY)[1].className === "link"){
-          document.elementsFromPoint(e.clientX,e.clientY)[0].style.cursor = "pointer"
-        } else if (document.elementsFromPoint(e.clientX,e.clientY)[0].style.cursor === "pointer") {
-          document.elementsFromPoint(e.clientX,e.clientY)[0].style.cursor = "default"
-        }
-      },
-      getXY(e){
-        // console.log(e)
-        const r = this.$refs.canvas.getBoundingClientRect()
-        return { 
-          x: e.clientX - r.left, 
-          y: e.clientY - r.top 
-        }
-      },
-      erase(pos) {
-        this.canvas.beginPath()
-        // console.log(pos)
-        this.canvas.arc(pos.x, pos.y, this.radius, 0, 2 * Math.PI)
-        this.canvas.closePath()
-        this.canvas.fill()
-      },
-      handleClick(e){
-        document.elementsFromPoint(e.clientX,e.clientY)[1].click()
-      },
-      handleResize(){
-        this.canvas.height = window.innerHeight
-        this.canvas.width = window.innerWidth
-      },
-      async canvasLogger(){
-        if (this.isCanvasBlank()){
-          try {
-            await this.$fire.analytics.logEvent('canvas_cleared')
-          } catch (e) {
-            setTimeout(() => this.canvasLogger(), 5000)
-          }
-        } else{
-          setTimeout(() => this.canvasLogger(), 2000)
-        }
-      },
-      isCanvasBlank() {
-        const pixelBuffer = new Uint32Array(
-          this.canvas.getImageData(0, 0, this.$refs.canvas.width, this.$refs.canvas.height).data.buffer
-        )
-
-        return !pixelBuffer.some(color => color !== 0)
-      }
+    preloadImages(){
+      new Image().src = '/homepage/yuk1-.gif'
+      new Image().src = '/homepage/yuk2-.gif'
+      new Image().src = '/homepage/yuk3-.gif'
+      new Image().src = '/homepage/yuk4-.gif'
     }
-  }
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-  div {
-    font-family: 'Mechanical Pencil';
-    font-size: 40px;
+.container {
+  background-image: url('/img/BEIGE-min.png');
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  background-position: center top;
+  height: 100vh;
+  width: 100vw;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.logo-container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  img {
+    width: 100%;
   }
-  .page-container {
-    position: relative;
-    background-image: url("/img/uc-bg.png");
-    background-size: 100% auto;
-    background-repeat: repeat-y;
-    background-position: center top;
-    height: 100vh;
-    width: 100vw;
+  @media only screen and (max-width: 800px) {
+    width: 85%;
+  }
+}
 
-    .canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      // height: 100vh; prevent distortion
-      // width: 100vw;
-      z-index: 2;
-    }
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-
-      .text-gif {
-        width: 40vw;
-      }
-
-      .house-gif {
-        margin-top: 30px;
-        width: 36vw;
-      }
-
-      .countdown-container{
-        position: relative;
-        margin-top: 40px;
-        width: 45vw;
-
-        .count-gif {
-          width: 100%;
-        }
-
-        .count-text{
-          position: absolute;
-          width: 70%;
-          display: flex;
-          justify-content: space-evenly;
-          align-items: center;
-          top: 53%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          color: #e14423;
-
-         .number {
-            font-family: 'KG HAPPY Solid';
-            font-size: 3.5rem;
-          }
-        }
-      }
-    }
-
-    .link-container {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-     
-
-      .link {
-        width: 50px;
-        margin-left: 25px;
-      }
+.emosi {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  height: 17%;
+  max-width: 12%;
+  @media only screen and (max-width: 850px) {
+    height: 22%;
+    max-width: 17%;
+  }
+}
+.emosi-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  #anger {
+    top: 23%;
+    left: 65%;
+    height: 19%;
+    &:hover {
+      height: 30%;
+      max-width: 15%;
     }
   }
-  
-  @media (max-width: 1024px) {
-    .page-container {
-      .canvas {
-        display: none;
+  #sad {
+    top: 25%;
+    left: 30%;
+    &:hover {
+      height: 22%;
+      max-width: 15%;
+    }
+  }
+  #fear {
+    top: 72%;
+    left: 25%;
+    &:hover {
+      height: 24%;
+      max-width: 15%;
+    }
+  }
+  #joy {
+    top: 78%;
+    left: 70%;
+    &:hover {
+      height: 22%;
+      max-width: 35%;
+    }
+  }
+  @media only screen and (max-width: 850px) {
+    #anger {
+      top: 28%;
+      &:hover {
+        height: 33%;
+        max-width: 26%;
       }
-      .main-container {
-        .text-gif {
-          width: 80vw;
-        }
-        .house-gif {
-          margin-top: 30px;
-          width: 60vw;
-        }
-        .countdown-container{
-          margin-top: 60px;
-          width: 80vw;
-          .count-text{
-            .number {
-              font-size: 5rem;
-            }
-            .text {
-              font-size: 3rem;
-            }
-          }
-        }
+    }
+    #sad {
+      top: 30%;
+      &:hover {
+        height: 26%;
+        max-width: 21%;
       }
-
-      .link-container {
-        bottom: 30px;
-        left: 40px;
-      
-        .link {
-          width: 70px;
-          margin-left: 30px;
-        }
+    }
+    #fear {
+      top: 78%;
+      left: 18%;
+      &:hover {
+        height: 26%;
+        max-width: 20%;
+      }
+    }
+    #joy {
+      top: 84%;
+      left: 78%;
+      &:hover {
+        max-width: 35%;
       }
     }
   }
-  @media (max-width: 768px) {
-    .page-container {
-      .main-container {
-        .countdown-container{
-          .count-text{
-            .number {
-              font-size: 3.5rem;
-            }
-            .text {
-              font-size: 1.8rem;
-            }
-          }
-        }
-      }
-    }
+}
+.button {
+  width: 450px;
+  height: 90px;
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Mechanical Pencil';
+  font-size: 3rem;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1.6px;
+  color: black;
+  margin: 0 -30px 0 -20px;
+  padding: 15px;
+  &:hover {
+    background:url("/homepage/z-.gif") no-repeat center center; 
+    background-size: 100%;
+    cursor: pointer;
   }
-  @media (min-width: 461px) and (max-width: 540px) {
-    .name {
-      font-size: 20px;
-    }
-    .position {
-      font-size: 15px;
-    }
+  @media only screen and (max-width: 850px) {
+    top: 65%;
+    background:url("/homepage/z-.gif") no-repeat center center; 
+    background-size: 100%;
+    margin: 0 0 0 0;
   }
-
-  @media (max-width: 460px) {
-    .page-container {
-      .main-container {
-        .text-gif {
-          width: 80vw;
-        }
-        .house-gif {
-          margin-top: 30px;
-          width: 70vw;
-        }
-        .countdown-container{
-          margin-top: 60px;
-          width: 90vw;
-          .count-text{
-            .number {
-              font-size: 2rem;
-            }
-            .text {
-              font-size: 1.2rem;
-            }
-          }
-        }
-      }
-
-      .link-container {
-        bottom: 15px;
-        left: 15px;
-     
-        .link {
-          width: 40px;
-          margin-left: 20px;
-        }
-      }
-    }
+  @media only screen and (max-width: 600px) {
+    height: 70px;
+    width: 280px;
+    font-size: 1.9rem;
+    margin: 0 0 0 0;
   }
+}
 </style>

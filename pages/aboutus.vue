@@ -29,6 +29,9 @@
         </div>
       </div>
     </div>
+    <nuxt-link class="back-button" :to="last">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -36,6 +39,14 @@
 
 export default {
   name: 'AboutUs',
+  data() {
+    return {
+      last: '/teras'
+    }
+  },
+  mounted () {
+    this.last = this.checkBefore()
+  },
   methods: {
     gotocatkur() {
       this.$router.push({path: '/catatankuratorial'})
@@ -45,12 +56,45 @@ export default {
     },
     gotomerch() {
       window.open("https://bit.ly/AyoBeliMerchGEP2021", '_blank')
+    },
+    checkBefore() {
+      if (localStorage.getItem('last')){
+        return `${localStorage.getItem('last')}`
+      } else {
+        return '/teras'
+      }
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.back-button {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  color: #ede5d1;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    text-decoration: none;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
+}
   div {
     font-family: 'KG Happy Solid';
     font-size: 20px;

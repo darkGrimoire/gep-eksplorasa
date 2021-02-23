@@ -2,22 +2,21 @@
   <div class="tvPopUp" @click="bodyClick">
     <div class="popupwindow bordered">
       <div class="x-button">
-        <img class="exit-image" @click="close()" />
+        <img class="exit-image" @click="close()">
       </div>
       <div class="main-popup">
         <div class="left-area">
-          <div class="now-showing"></div>
+          <div class="now-showing" />
           <div class="main-poster">
-            <div class="left-arrow" @click="movePos(-1)"></div>
+            <div class="left-arrow-tv-popup" @click="movePos(-1)" />
             <div class="poster-area" @click="gotoKarya()">
-              <img class="poster bordered" />
+              <img class="poster-tv bordered">
             </div>
-            <div class="right-arrow" @click="movePos(1)"></div>
+            <div class="right-arrow-tv-popup" @click="movePos(1)" />
           </div>
-          <div class="title-movie" @click="gotoKarya()">
-          </div>
+          <div class="title-movie" @click="gotoKarya()" />
         </div>
-        <div class="right-area"></div>
+        <div class="right-area" />
       </div>
     </div>
   </div>
@@ -36,16 +35,19 @@ export default {
       amount: 0
     }
   },
-  mounted() {
+  async mounted() {
     this.getRoom()
-    this.getData()
+    await this.getData()
     this.initSetUpTV()
   },
   methods: {
     getRoom() {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
-      this.room = link.match(/(Joy|Sadness|`Anger`|Fear|joy|sadness|anger|fear)/i)[0]
+      this.room = link.match(/(Joy|Sad|`Anger`|Fear|joy|sad|anger|fear)/i)[0]
+      if (this.room.toLowerCase() === "sad") {
+        this.room = "sadness"
+      }
     },
     async getData() {
       // GET THE FILM DATA FROM THE FIREBASE
@@ -65,10 +67,11 @@ export default {
         this.alamat.push(item.route)
       })
       this.amount = this.poster.length
-      document.getElementsByClassName("poster")[0].src = (this.poster[0] || "/loading.svg")
-      document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
-        0
-      ] || "Loading")
+      // this.pos = 0
+      // document.getElementsByClassName("poster")[0].src = (this.poster[0] || "/loading.svg")
+      // document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
+      //   0
+      // ] || "Loading")
     },
     initSetUpTV() {
       // SET UP THE COMPONENT BASED ON THE ROOM
@@ -111,27 +114,32 @@ export default {
       let rArrowImg = document.createElement("img")
       lArrowImg.src = leftArrowPath
       rArrowImg.src = rightArrowPath
-      temp = document.getElementsByClassName("left-arrow")[0]
+      temp = document.getElementsByClassName("left-arrow-tv-popup")[0]
       temp.style.visibility = "hidden"
       temp.appendChild(lArrowImg)
-      temp = document.getElementsByClassName("right-arrow")[0]
+      temp = document.getElementsByClassName("right-arrow-tv-popup")[0]
       temp.appendChild(rArrowImg)
       /* Choose the bookshelf */
       if (this.room.toLowerCase() == "anger") {
-        const shelf_path = "/img/popup/rak-" + this.room.toLowerCase()+ ".png"
+        const shelf_path = "/img/popup/rak-" + this.room.toLowerCase() + ".png"
         let shelf_img = document.createElement("img")
         shelf_img.src = shelf_path
         shelf_img.classList.add("shelf")
         shelf_img.style.width = "75%"
         temp = document.getElementsByClassName("right-area")[0]
         temp.appendChild(shelf_img)
-      } else if (this.room.toLowerCase()== "joy" || this.room.toLowerCase()== "sadness") {
-        const shelf_path_1 = "/img/popup/rak-" + this.room.toLowerCase()+ "-1.png"
+      } else if (
+        this.room.toLowerCase() == "joy" ||
+        this.room.toLowerCase() == "sadness"
+      ) {
+        const shelf_path_1 =
+          "/img/popup/rak-" + this.room.toLowerCase() + "-1.png"
         let shelf_img_1 = document.createElement("img")
         shelf_img_1.src = shelf_path_1
         shelf_img_1.classList.add("shelf")
         shelf_img_1.style.width = "60%"
-        const shelf_path_2 = "/img/popup/rak-" + this.room.toLowerCase()+ "-2.png"
+        const shelf_path_2 =
+          "/img/popup/rak-" + this.room.toLowerCase() + "-2.png"
         let shelf_img_2 = document.createElement("img")
         shelf_img_2.src = shelf_path_2
         shelf_img_2.classList.add("shelf")
@@ -141,8 +149,8 @@ export default {
         temp.appendChild(shelf_img_2)
       }
       /* Set up poster and title */
-      this.pos = -1
-      document.getElementsByClassName("poster")[0].src = (this.poster[this.pos] || "/loading.svg")
+      this.pos = 0
+      document.getElementsByClassName("poster-tv")[0].src = (this.poster[this.pos] || "/loading.svg")
       document.getElementsByClassName("title-movie")[0].innerHTML = (this.judul[
         this.pos
       ] || "Loading")
@@ -154,7 +162,7 @@ export default {
       this.setUpBorderColor(color)
       this.insertExitButton(4)
       document.getElementsByClassName("left-area")[0].style.display = "none"
-      const shelf_path = "/img/popup/rak-" + this.room.toLowerCase()+ ".png"
+      const shelf_path = "/img/popup/rak-" + this.room.toLowerCase() + ".png"
       let shelf_img = document.createElement("img")
       shelf_img.src = shelf_path
       shelf_img.classList.add("shelf")
@@ -186,30 +194,35 @@ export default {
       } else if (this.pos == this.amount) {
         this.pos = this.amount - 1
       }
-      document.getElementsByClassName("poster")[0].src = this.poster[this.pos]
+      document.getElementsByClassName("poster-tv")[0].src = this.poster[this.pos]
       
       document.getElementsByClassName("title-movie")[0].innerHTML = ""
       document.getElementsByClassName("title-movie")[0].innerHTML = this.judul[
         this.pos
       ]
       if (this.pos == 0) {
-        document.getElementsByClassName("left-arrow")[0].style.visibility =
-          "hidden"
+        document.getElementsByClassName(
+          "left-arrow-tv-popup"
+        )[0].style.visibility = "hidden"
       } else {
-        document.getElementsByClassName("left-arrow")[0].style.visibility =
-          "visible"
+        document.getElementsByClassName(
+          "left-arrow-tv-popup"
+        )[0].style.visibility = "visible"
       }
       if (this.pos == this.amount - 1) {
-        document.getElementsByClassName("right-arrow")[0].style.visibility =
-          "hidden"
+        document.getElementsByClassName(
+          "right-arrow-tv-popup"
+        )[0].style.visibility = "hidden"
       } else {
-        document.getElementsByClassName("right-arrow")[0].style.visibility =
-          "visible"
+        document.getElementsByClassName(
+          "right-arrow-tv-popup"
+        )[0].style.visibility = "visible"
       }
     },
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("tvPopUp")[0].style.display = "none"
+      this.$emit("closePopup")
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
@@ -234,20 +247,33 @@ export default {
       // CHECK THE LOCATION OF THE CLICK
       // IF INSIDE POPUP, DO NOTHING
       // IF OUTSIDE POPUP, CLOSE POPUP
-      if (this.isInsidePopUpWindow(event.clientX, event.clientY)) { 
+      try {
+        if (this.isInsidePopUpWindow(event.clientX, event.clientY)) {
+          return
+        }
+        this.close()
+      } catch (e) {
         return
       }
-      this.close()
     },
     gotoKarya() {
-      const tujuan = "/karya/" + this.room.toLowerCase() +"/" + this.alamat[this.pos]
-      this.$router.push({path: tujuan})
+      let targetRoom = this.room
+      if (this.room.toLowerCase() === "sadness") {
+        targetRoom = "sad"
+      }
+      let targetUrl =
+        this.alamat[this.pos].charAt(0) === "/"
+          ? this.alamat[this.pos]
+          : "/" + this.alamat[this.pos]
+      const tujuan = "/karya/" + targetRoom + targetUrl
+      console.log(`|${tujuan}|`)
+      this.$router.push({ path: tujuan })
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .tvPopUp {
   position: absolute;
   width: 100vw;
@@ -269,7 +295,9 @@ export default {
   background-color: rgb(0, 0, 0);
   border: 2px solid;
   padding: 1vw 1vh;
-  z-index: 1001
+  z-index: 1001;
+  min-height: 60%;
+  min-width: 50%;
 }
 .x-button {
   display: flex;
@@ -304,7 +332,7 @@ export default {
 .poster-area:hover {
   cursor: pointer;
 }
-.poster {
+.poster-tv {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -328,6 +356,16 @@ export default {
   flex-wrap: nowrap;
 }
 
+.left-arrow-tv-popup,
+.right-arrow-tv-popup {
+  transform: scale(1);
+  transition: transform 0.2s ease;
+  &:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .popupwindow {
     transform: translate(-50%, -45%);
@@ -338,7 +376,7 @@ export default {
     justify-content: center;
   }
   .right-area {
-    flex-wrap:wrap;
+    flex-wrap: wrap;
   }
 }
 </style>

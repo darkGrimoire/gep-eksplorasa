@@ -14,24 +14,41 @@
 
         <div class="isibox">
           <!-- nyomot dari w3 hehe ^-^ -->
-            <div class="tanggal">
-              <button class="tablink" :class="{active: date==22}" v-on:click="getevent(22)">22</button>
-              <button class="tablink" :class="{active: date==23}" v-on:click="getevent(23)">23</button>
-              <button class="tablink" :class="{active: date==24}" v-on:click="getevent(24)">24</button>
-              <button class="tablink" :class="{active: date==25}" v-on:click="getevent(25)">25</button>
-              <button class="tablink" :class="{active: date==26}" v-on:click="getevent(26)">26</button>
-              <button class="tablink" :class="{active: date==27}" v-on:click="getevent(27)">27</button>
-              <button class="tablink" :class="{active: date==28}" v-on:click="getevent(28)">28</button>
-            </div>
+          <div class="tanggal">
+            <button class="tablink" :class="{active: date==22}" @click="getevent(22)">
+              22
+            </button>
+            <button class="tablink" :class="{active: date==23}" @click="getevent(23)">
+              23
+            </button>
+            <button class="tablink" :class="{active: date==24}" @click="getevent(24)">
+              24
+            </button>
+            <button class="tablink" :class="{active: date==25}" @click="getevent(25)">
+              25
+            </button>
+            <button class="tablink" :class="{active: date==26}" @click="getevent(26)">
+              26
+            </button>
+            <button class="tablink" :class="{active: date==27}" @click="getevent(27)">
+              27
+            </button>
+            <button class="tablink" :class="{active: date==28}" @click="getevent(28)">
+              28
+            </button>
+          </div>
 
-            <img src="/events/garis.png" class="garis">
-            <img src="/events/garis.png" class="garisx">
-            <div class="konten">
-              <div v-html="eventout"></div>
-            </div>
+          <img src="/events/garis.png" class="garis">
+          <img src="/events/garis.png" class="garisx">
+          <div class="konten">
+            <div v-html="eventout" />
+          </div>
         </div>
       </div>
     </div>
+    <nuxt-link class="back-button" :to="'/teras'">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -74,16 +91,16 @@ export default {
           this.eventout += '<div class="tabcontent">'
           this.eventout += '<div class="jam">'+this.datetojam(this.convertToWIB( new Date(1000*event.tanggal.seconds)) )+'</div>'
           this.eventout += '<div class="acara">'
-          this.eventout += event.nama + "<br>"
+          this.eventout += '<div class="judulacara">'+event.nama + '</div><div class="deskripsi">'
           if (event.deskripsi) {
-            this.eventout += event.deskripsi +"<br>"
+            this.eventout += event.deskripsi
           }
           if(Array.isArray(event.link) && event.link.length>0){
             for (let j in event.link){
-              this.eventout += '<a href="' + event.link[j] + '" target="_blank">' + event.link[j] + '</a><br>'
+              this.eventout += '<div class="link"><a href="' + event.link[j] + '" target="_blank">' + event.link[j] + '</a></div>'
             }
           }
-          this.eventout += '</div></div>'
+          this.eventout += '</div></div></div>'
         }
         if(this.eventout==""){
           this.eventout = "Nothing found :("
@@ -146,13 +163,38 @@ export default {
 </script>
 
 <!-- sblmnya ada "scoped" tp w apus biar bisa pake v-html -->
-<style lang="scss">
+<style lang="scss" scoped>
 /* ini kode cal yaaa gue ga berani hapus yang di bawah wkwk */
-  * {
+.back-button {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  color: #ede5d1;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    text-decoration: none;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
+}
+  div {
     font-family: 'KG Happy Solid';
     font-size: 25px;
     color: #1f1f1f;
-    text-align: center;
   }
 
   .container {
@@ -173,14 +215,14 @@ export default {
     align-items: center;
   }
 
-  a {
+  ::v-deep a {
     color: #1f1f1f;
     text-decoration: none;
     font-family: 'Mechanical Pencil';
-    font-size: 30px;
+    font-size: 25px;
   }
 
-  a:hover {
+  ::v-deep a:hover {
     text-decoration: underline;
   }
 
@@ -210,16 +252,19 @@ export default {
     outline: none;
     cursor: pointer;
     font-size: 37px;
+    font-family: 'KG Happy Solid';
+    color: #1f1f1f;
+    text-align: center;
   }
 
-  .tabcontent {
+  ::v-deep .tabcontent {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
     margin-bottom: 50px;
   }
 
-  .acara {
+  ::v-deep .acara {
     padding-left: 50px;
     text-align: left;
   }
@@ -227,6 +272,13 @@ export default {
   .judul {
     margin-top: -30px;
     width: 525px;
+  }
+
+  .deskripsi {
+    font-family: 'Karla';
+    font-style: bold;
+    font-size: 23px;
+    list-style-position: outside;
   }
 
   .box {
@@ -326,8 +378,8 @@ export default {
       font-size: 20px;
     }
 
-    a {
-      font-size: 20px;
+    ::v-deep a {
+      font-size: 15px;
     }
 
     button {
@@ -345,12 +397,12 @@ export default {
       font-size: 27px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 50px;
     }
 
@@ -412,8 +464,8 @@ export default {
       font-size: 15px;
     }
 
-    a {
-      font-size: 20px;
+    ::v-deep a {
+      font-size: 15px;
     }
 
     button {
@@ -431,12 +483,12 @@ export default {
       font-size: 22px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 20px;
     }
 
@@ -490,8 +542,8 @@ export default {
       font-size: 10px;
     }
 
-    a {
-      font-size: 15px;
+    ::v-deep a {
+      font-size: 10px;
     }
 
     button {
@@ -509,12 +561,12 @@ export default {
       font-size: 15px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 20px;
     }
 

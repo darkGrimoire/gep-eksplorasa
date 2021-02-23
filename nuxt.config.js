@@ -10,6 +10,17 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Ganesha Exhibition Programme adalah ekshibisi karya kru LFM ITB tahunan yang kali ini membawakan tema Eksplorasa.' }
     ],
+    script: [
+      { 
+        src: '/extras/jquery.min.1.7.js',
+        defer: true,
+      },
+      {
+        src: '/extras/jquery-ui-1.8.20.custom.min.js',
+        defer: true,
+      },
+      { src: '/extras/modernizr.2.5.3.min.js' },
+    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon/gep.ico' }
     ]

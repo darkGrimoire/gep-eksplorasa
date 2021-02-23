@@ -27,10 +27,10 @@
       <div class="canvas">
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
-          <div class="cont guide">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/template-example/closing.png" alt="guide" style="opacity: .0;">
-          </div>
+          <!-- <div class="cont guide"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/template-example/closing.png" alt="guide" style="opacity: .0;">
+          </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
             <img src="/closing/1-paper.png" alt="wall">
@@ -50,27 +50,16 @@
           <div class="cont meja">
             <img src="/closing/meja.png" alt="meja">
           </div>
-          <div class="cont figura">
-            <img src="/closing/1.png" alt="figura">
+          <div class="figura" @click="gotoKatalog" />
+          <div class="kamera" @click="gotoPhotobooth" />
+          <div class="balon">
+            <div class="balloon-area" @click="triggerFeedback" />
           </div>
-          <div class="cont figura2">
-            <img src="/closing/gantungan-out.png" alt="figura2" :style="`opacity: ${benda.figura2}`" @mouseenter="benda.figura2 = 1" @mouseout="benda.figura2 = 0">
-          </div>
-          <div class="cont kamera">
-            <img src="/closing/cam1.png" alt="kamera">
-          </div>
-          <div class="cont kamera2">
-            <img src="/closing/cam-out.png" alt="kamera2" :style="`opacity: ${benda.kamera2}`" @mouseenter="benda.kamera2 = 1" @mouseout="benda.kamera2 = 0">
-          </div>
+         
           <div class="cont gantungan">
             <img src="/closing/foto.png" alt="gantungan">
           </div>
-          <div class="cont balon">
-            <img src="/closing/balon1.png" alt="balon" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont balon2">
-            <img src="/closing/balon1-out.png" alt="balon2" :style="`opacity: ${benda.balon2}`" @mouseenter="benda.balon2 = 1" @mouseout="benda.balon2 = 0">
-          </div>
+         
           <div class="cont e1">
             <img src="/closing/e1.png" alt="e1">
           </div>
@@ -83,17 +72,25 @@
           <div class="cont e3">
             <img src="/closing/e3.png" alt="e3">
           </div>
-          <div class="cont tulisanbalon">
-            <img src="/closing/balon3.png" alt="tulisanbalon">
-          </div>
           <div class="cont tulisankamera">
             <img src="/closing/cam3.png" alt="tulisankamera">
           </div>
+          <div v-if="!isInstruksi1" class="instruksi1">
+            <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
+          </div>
+          <div v-if="showFeedback" class="feedback-backdrop" @click="closeFeedback" />
+          <Feedback v-show="showFeedback" class="feedback-modal" style="z-index: 1001" @submitted="closeFeedback" />
+          <!-- <div class="cont tulisanbalon">
+            <img src="/closing/balon3.png" alt="tulisanbalon">
+          </div>
           <div class="cont tulisanfigura">
             <img src="/closing/katalog3.png" alt="tulisanfigura">
-          </div>
+          </div> -->
         </div>
       </div>
+    </div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
     </div>
     <rcp />
   </div>
@@ -108,11 +105,14 @@
   const NEXT_ROOM = '/ruangan/template'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import Feedback from '~/components/feedback.vue'
   export default {
     name: "Closing",
     components: {
       rcp,
+      Feedback
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -134,7 +134,11 @@
           kamera2: 0,
           balon2: 0,
           figura2: 0
-        }
+        },
+        audio: undefined,
+        isInstruksi1: false,
+        instruksiImg: '/instruksi/4.png',
+        showFeedback: false
       }
     },
     computed: {
@@ -178,6 +182,11 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -190,8 +199,47 @@
         localStorage.setItem('closing', true)
         this.slide = 1
       }})
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
+      localStorage.setItem('last', this.$route.path)
+      this.audio = new Audio('/songs/closing.mp3')
+      this.audio.volume = 0.3
+      this.audio.play()
+      this.isInstruksi1 = (localStorage.getItem('instruksi_4') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg = '/instruksi/4 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_4', true)
+      }
     },
     methods: {
+      gotoKatalog(){
+        this.$router.push({path: '/katalog'})
+      },
+      gotoPhotobooth(){
+        this.$router.push({path: '/photobooth'})
+      },
+      triggerFeedback(){
+        gsap.from('.feedback-modal', {yPercent: -200, duration: .7, ease: 'back'})
+        this.showFeedback = true
+      },
+      closeFeedback(){
+        gsap.to('.feedback-modal', {yPercent: -300, duration: .5, ease: 'back.in', clearProps: 'y', onComplete: () => {
+          this.showFeedback = false
+        }})
+      },
+      fadeInstruksi(){
+        gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName('instruksi1')[0].style.display = 'none'
+        }})
+      },
+      preloadImages(){
+        new Image().src = '/closing/balon1-out.png'
+        new Image().src = '/closing/cam-out.png'
+        new Image().src = '/closing/gantungan-out.png'
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
@@ -268,8 +316,24 @@
           e.target.setAttribute('src', "/closing/cam1.png")
         }
       },
-
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
+      }
+      }
     },
+    head() {
+      return {
+        title: 'Terima kasih! - GEP',
+      }
+    }
   }
 </script>
 
@@ -393,7 +457,6 @@
   transform: translate(100%, 0);
 }
 
-
 .center-anchor {
   transform: translate(-50%,-50%);
 }
@@ -428,36 +491,85 @@
   left: 6.5%;
   top: 54.5%;
 }
-.kamera{
-  width: 16%;
-  left: 79.2%;
-  top: 32%;
-}
-.kamera2{
-  width: 16%;
-  left: 79.2%;
-  top: 32%;
-}
+
 .figura{
+  background-image:url("/closing/1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
   width: 15%;
   left: 13%;
   top: 6.5%;
+  z-index: 71;
+  cursor:pointer;
 }
-.figura2{
+
+.figura:hover{
+  background-image:url("/closing/gantungan-out.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
   width: 15%;
   left: 13%;
   top: 6.5%;
+  z-index: 71;
+  cursor:pointer;
 }
+
+.kamera{
+  background-image:url("/closing/cam1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
+  width: 16%;
+  left: 79.2%;
+  top: 32%;
+  z-index: 71;
+  cursor:pointer;
+}
+
+.kamera:hover{
+  background-image:url("/closing/cam-out.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:45%;
+  width: 16%;
+  left: 79.2%;
+  top: 32%;
+  z-index: 71;
+  cursor:pointer;
+}
+
 .balon{
+  background-image:url("/closing/balon1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:50%;
   width: 17%;
   left: 26.2%;
   top: 3%;
+  z-index: 71;
+  cursor:pointer;
 }
-.balon2{
+
+.balon:hover{
+  background-image:url("/closing/balon1-out.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:50%;
   width: 17%;
   left: 26.2%;
   top: 3%;
+  z-index: 71;
+  cursor:pointer;
 }
+
 .vas{
   width: 6.3%;
   left: 6%;
@@ -498,5 +610,51 @@
   left: 13.1%;
   top: 31%;
 }
+.sound-controller {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: "KG Happy Solid";
+  font-size: 40px;
+  color: whitesmoke;
+  opacity: 0.2;
+  transition: opacity .4s;
+  
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.instruksi1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(.5);
+    object-fit: contain;
+  }
+}
 
+.feedback-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  opacity: 0;
+  z-index: 1000;
+}
+
+.balloon-area {
+  height: 60%;
+  width: 100%;
+}
 </style>

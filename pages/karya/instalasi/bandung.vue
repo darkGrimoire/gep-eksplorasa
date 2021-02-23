@@ -78,6 +78,9 @@
         </div>
       </div>
     </div>
+    <nuxt-link class="back-button" :to="lastRoute">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -107,7 +110,19 @@ import 'swiper/swiper-bundle.css'
             replaceState: true,
             watchState: true
           },
-        }
+          on: {
+            slideChange: (sw) => {
+              if (sw.activeIndex === 3 && sw.previousIndex === 2) {
+                setTimeout(() => {
+                  sw.slideNext()
+                }, 2500)
+              } else if (sw.activeIndex === 3 && sw.previousIndex === 4){
+                sw.slidePrev(1500)
+              }
+            }
+          }
+        },
+        lastRoute: '/teras'
       }
     },
     async mounted () {
@@ -117,8 +132,16 @@ import 'swiper/swiper-bundle.css'
       await this.initializeDatabase()
       
       this.preloadImages()
+      this.lastRoute = this.checkLastRoute()
     },
     methods: {
+      checkLastRoute(){
+        if (localStorage.getItem('before_instalasi')){
+          return localStorage.getItem('before_instalasi')
+        } else {
+          return '/teras'
+        }
+      },
       initializeLocalStorage(){
         if (localStorage.getItem('instalasi')){
           try{
@@ -529,5 +552,31 @@ import 'swiper/swiper-bundle.css'
 
 .black {
   background-color: black;
+}
+
+.back-button {
+  position: fixed;
+  bottom: 2%;
+  left: 2%;
+  color: #1f1f1f;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
 }
 </style>

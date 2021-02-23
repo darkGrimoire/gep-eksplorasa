@@ -39,10 +39,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-in" />
           <div v-show="benda.saklar" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-fear1.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-fear1.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont wall">
             <img src="/fear/bg 1.png" alt="wall">
           </div>
@@ -82,18 +83,20 @@
           <div class="cont lampu">
             <img src="/fear/lampu 1.png" alt="lampu">
           </div>
-          <div class="cont photoseries">
-            <img src="/fear/f-photoseries-1.png" alt="photoseries" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          <div class="photoseries" @click="popups = 'foto';tipeKarya = 'series'" />
+          <div class="kamera" @click="popups = 'foto';tipeKarya = 'single'" />
+          <div class="radio" @click="popups = 'podcast'" />
+          <div class="kucing" />
+          <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
+          <div v-if="!isInstruksi1" class="instruksi instruksi1">
+            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
           </div>
-          <div class="cont kamera">
-            <img src="/fear/f-single-1.png" alt="kamera" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont radio">
-            <img src="/fear/f-radio-1.png" alt="radio" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont kucing">
-            <img src="/fear/KUCING.png" alt="kucing" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
+          <!-- <div class="cont zine">
+            <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
+          </div> -->
         </div>
       </div>
     </div>
@@ -113,10 +116,11 @@
         <div class="canvas canvas-hover">
           <div class="cont transitionfade-out" />
           <div v-show="benda.saklar" class="cont darkness" />
-          <div class="cont guide" style="display: none;">
-            <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
-            <img src="/guide-fear3.png" alt="guide" style="opacity: 0;">
-          </div>
+          <div v-show="popups === 'foto'" class="cont darkness" @click="popups = ''" />
+          <!-- <div class="cont guide" style="display: none;"> -->
+          <!-- Ubah src jadi guide image yang kamu inginkan, setel opacity sesuai keinginan. -->
+          <!-- <img src="/guide-fear3.png" alt="guide" style="opacity: 0;">
+          </div> -->
           <div class="cont wall">
             <img src="/fear/bg 1.png" alt="wall">
           </div>
@@ -126,10 +130,8 @@
           <div class="cont pintu">
             <img src="/fear/pintu 1.png" alt="pintu">
           </div>
-          <div class="cont trap-door">
-            <img src="/fear/monster1 1.png" alt="trap door" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont tv">
+          <div class="trap-door" />
+          <div class="cont tv" @click="popups = 'tv'">
             <img src="/fear/tv.gif" alt="tv">
           </div>
           <div v-show="!benda.saklar" class="cont sadako">
@@ -144,9 +146,7 @@
           <div class="cont ventilasi">
             <img src="/fear/vent 1.png" alt="ventilasi">
           </div>
-          <div v-show="!benda.saklar" class="cont foto">
-            <img src="/fear/fohepi 1.png" alt="foto" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
+          <div v-show="!benda.saklar" class="foto" />
           <div v-show="benda.saklar" class="cont foto">
             <img src="/fear/fokripi 1.png" alt="foto">
           </div>
@@ -171,32 +171,37 @@
           <div class="cont pipa-l">
             <img src="/fear/pipaHAPE 1.png" alt="pipa">
           </div>
-          <div class="cont artikel">
-            <img src="/fear/f-artikel-1.png" alt="artikel" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
-          </div>
-          <div class="cont photobook">
+          <div class="artikel" @click="popups = 'kine';tipeKarya = 'artikel'" />
+          <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-1.png" alt="photobook">
           </div>
-          <div v-show="!benda.saklar" class="cont photobook1">
+          <div v-show="!benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-2.png" alt="photobook1" :style="`opacity: ${benda.ouija}`" @mouseenter="benda.ouija = 1" @mouseout="benda.ouija = 0">
           </div>
-          <div v-show="benda.saklar" class="cont photobook1">
+          <div v-show="benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
             <img src="/fear/f-photobook-2.png" alt="photobook1">
           </div>
-          <div class="cont teropong">
+          <div class="cont teropong" @click="handleRasyid">
             <img src="/fear/tropong fear.png" alt="teropong">
           </div>
-          <div class="cont kunci">
-            <img src="/fear/fear1.png" alt="kunci">
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div v-show="benda.kunci" class="kaki" />
+          <div v-if="!isInstruksi2" class="instruksi instruksi2">
+            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
-          <div v-show="benda.kunci" class="cont kaki">
-            <img src="/fear/fearf.gif" alt="kaki">
+          <div class="tv-popup">
+            <TvPopup v-if="popups === 'tv' && slide === 2" @closePopup="popups = ''" />
           </div>
+          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
         </div>
       </div>
+    </div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
     </div>
     <rcp />
   </div>
@@ -212,11 +217,20 @@
   const CLOSING = '/ruangan/closing'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
+  import PodcastPopup from '~/components/podcast-popup.vue'
   export default {
     name: "Fear",
     components: {
       rcp,
+      tvPopup,
+      kinePopup,
+      NewfotoPopup,
+      PodcastPopup
     },
+    layout: 'ruangan',
     data() {
       return {
         drag: false,
@@ -250,7 +264,14 @@
           photobook1: 0,
           kunci: false,
           ouija: 0
-        }
+        },
+        popups: '',
+        tipeKarya: '',
+        audio: undefined,
+        isInstruksi1: false,
+        isInstruksi2: true,
+        instruksiImg1: '/instruksi/2.png',
+        instruksiImg2: '/instruksi/3.png'
       }
     },
     computed: {
@@ -262,6 +283,13 @@
       slide(newVal, oldVal) {
         if (newVal === 2){
           gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          this.isInstruksi2 = (localStorage.getItem('instruksi_3') || false)
+          if (window.matchMedia("(orientation: portrait)").matches){
+            this.instruksiImg2 = '/instruksi/3 hp.png'
+          }
+          if (!this.isInstruksi2){
+            localStorage.setItem('instruksi_3', true)
+          }
           if (oldVal > 2){
             gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
             gsap.to('.narasi', {opacity: 0, duration: .5})
@@ -309,6 +337,11 @@
         }
       }
     },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleResize)
+      this.audio.pause()
+      this.audio.currentTime = 0
+    },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
       window.addEventListener("resize", this.handleResize)
@@ -316,7 +349,7 @@
       
       // wait for loading to finish
       //animasi masuk
-      if (this.isAllRoomVisited()){
+      if (this.isAllRoomVisited() || this.isRoomVisited()){
         gsap.to('.loading', {opacity: 0, delay: 1, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           localStorage.setItem('fear', true)
@@ -335,14 +368,55 @@
           this.slide = 1
         }})
       }
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
+      localStorage.setItem('last', this.$route.path)
+      this.audio = new Audio('/songs/fear.mp3')
+      this.audio.volume = 0.4
+      try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
+      this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg1 = '/instruksi/2 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_2', true)
+      }
     },
     methods: {
+      fadeInstruksi(classname){
+        gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName(classname)[0].style.display = 'none'
+        }})
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
       },
+      preloadImages(){
+        new Image().src = '/fear/fear1.png'
+        new Image().src = '/fear/f-artikel-2.png'
+        new Image().src = '/fear/kucing 2.png'
+        new Image().src = '/fear/fokripi 1.png'
+        new Image().src = '/fear/f-radio-2.png'
+        new Image().src = '/fear/f-single-2.png'
+        new Image().src = '/fear/f-photoseries-2.png'
+        new Image().src = '/fear/f-zine-2.png'
+        new Image().src = '/fear/monster2 1.png'
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
+      },
       isAllRoomVisited(){
         return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('fear')
       },
       isClosingVisited(){
         return localStorage.getItem('closing')
@@ -389,17 +463,19 @@
         return interaction
       },
       handleResize(){
-        this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
-        if (window.matchMedia("(orientation: landscape)").matches){
-          this.computedDisplacement = 0
-          this.transformed = 0
+        if (document.getElementsByClassName("top-cont")[0]){
+          this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
+          if (window.matchMedia("(orientation: landscape)").matches){
+            this.computedDisplacement = 0
+            this.transformed = 0
+          }
         }
       },
       handleKeyboard(e){
         // DEBUGGING PURPOSE
-        if (this.slide === 2 && e.key === "ArrowRight"){
-          this.switchSlide(1)
-        }
+        // if (this.slide === 2 && e.key === "ArrowRight"){
+        //   this.switchSlide(1)
+        // }
 
 
 
@@ -454,7 +530,19 @@
       },
       toggleKunci(){
         this.benda.kunci = !this.benda.kunci
+      },
+      changeMute() {
+      this.audio.muted = !this.audio.muted
+      if (this.audio.muted == true) {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "line-through"
+      } else {
+        document.getElementsByClassName(
+          "sound-controller"
+        )[0].style.textDecoration = "none"
       }
+    }
     },
   }
 </script>
@@ -505,6 +593,7 @@
     color: rgba($color: white, $alpha: 0.2);
     transition: color 0.2s ease-in-out;
     &:hover {
+      cursor: pointer;
       color: rgba($color: white, $alpha: 0.8);
     }
     &:active {
@@ -546,15 +635,18 @@
 
 .narasi-masuk {
   z-index: 10000;
+  color: #009562;
 }
 
 .narasi-closing {
   font-size: 40px;
   z-index: 10000;
+  color: #ede5d1;
 }
 
 .narasi-keluar {
   font-size: 40px;
+  color: #305fe9;
 }
 
 .cont {
@@ -615,17 +707,42 @@
   left: 3.4%;
 }
 
-.trap-door {
+.trap-door{
+  background-image:url("/fear/monster1 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
   width: 17.4%;
   top: 74.7%;
   left: 9.6%;
   z-index: 71;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.trap-door:hover{
+  background-image:url("/fear/monster2 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 17.4%;
+  top: 74.7%;
+  left: 9.6%;
+  z-index: 71;
+  cursor:pointer;
+  animation: none;
 }
 
 .tv {
   width: 17.2%;
   top: 32%;
-  left: 36.2%;
+  left: 36.2%; 
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .sadako {
@@ -646,33 +763,151 @@
   top: 5.7%;
   left: 49%;
 }
+
+
+.zine{
+  background-image:url("/fear/f-zine-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 10%;
+  top: 40.7%;
+  left: 54%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.zine:hover{
+  background-image:url("/fear/f-zine-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 10%;
+  top: 40.7%;
+  left: 54%;
+  cursor:pointer;
+  animation: none;
+}
+
 .photoseries{
+  background-image:url("/fear/f-photoseries-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 14%;
   top: 12.7%;
   left: 32%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.photoseries:hover{
+  background-image:url("/fear/f-photoseries-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
+  width: 14%;
+  top: 12.7%;
+  left: 32%;
+  cursor:pointer;
+  animation: none;
+}
+
 .kamera{
+  background-image:url("/fear/f-single-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
   width: 10%;
   top: 24.7%;
   left: 51%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.kamera:hover{
+  background-image:url("/fear/f-single-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
+  width: 10%;
+  top: 24.7%;
+  left: 51%;
+  cursor:pointer;
+  animation: none;
 }
 
 .teropong{
   width: 13.5%;
   top: 51%;
   left: 73.8%;
+  &:hover{
+    cursor: pointer;
+  }
 }
+
 .radio{
-  width: 16%;
-  top: 5%;
+  background-image:url("/fear/f-radio-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
+  width: 18%;
+  top: 9%;
   left: 69%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.radio:hover{
+  background-image:url("/fear/f-radio-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:15%;
+  width: 18%;
+  top: 9%;
+  left: 69%;
+  cursor:pointer;
+  animation: none;
 }
 
 .foto {
+  background-image:url("/fear/fohepi 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:19%;
+  width: 13.2%;
+  top: 13%;
+  left: 79.5%;
+  z-index: 71;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.foto:hover {
+  background-image:url("/fear/fokripi 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:17%;
   width: 12.2%;
   top: 13%;
   left: 79.5%;
   z-index: 71;
+  cursor:pointer;
+  animation: none;
 }
 
 .tikus1 {
@@ -737,9 +972,30 @@
 }
 
 .kucing{
-  width: 6.8%;
-  top: 37.7%;
-  left: 57.7%;
+  background-image:url("/fear/KUCING.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 8.8%;
+  top: 63.7%;
+  left: 52.7%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.kucing:hover{
+  background-image:url("/fear/kucing 2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 8.8%;
+  top: 63.7%;
+  left: 52.7%;
+  cursor:pointer;
+  animation: none;
 }
 
 .lemari {
@@ -796,38 +1052,149 @@
   height: 200%;
   top: -50%;
 }
+
 .artikel{
+  background-image:url("/fear/f-artikel-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
   width: 7%;
   top: 13.8%;
   left: 38.2%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.artikel:hover{
+  background-image:url("/fear/f-artikel-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
+  width: 7%;
+  top: 13.8%;
+  left: 38.2%;
+  cursor:pointer;
+  animation: none;
+}
+
 .photobook{
   width: 26%;
   top: 76.8%;
   left: 37.2%;
+  z-index: 71;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .photobook1{
   width: 13%;
   top: 53.8%;
   left: 47.2%;
   z-index: 71;
-}
-.zine{
-  width: 16%;
-  top: 36.8%;
-  left: 41.2%;
-}
-.kunci{
-  width: 8%;
-  top: 81.7%;
-  left: 79%;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 }
+// .zine{
+//   width: 16%;
+//   top: 36.8%;
+//   left: 41.2%;
+// }
 .kaki{
-  width: 10%;
-  top: 24.7%;
-  left: 51%;
+  background-image:url("/fear/fearf.gif");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:10%;
+  height:10%;
+  top:83%;
+  left:89%;
+}
+
+.kunci{
+  background-image:url("/fear/fear1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height: 8%;
+  top: 81%;
+  left: 83%;
+  cursor:pointer;
+  z-index: 15001;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;    
+}
+
+.kunci:hover{
+  background-image:url("/fear/fear1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 8%;
+  height:8%;
+  top: 81%;
+  left: 83%;
+  cursor:pointer;
+  animation:none;
+}
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
+}
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  5%  { transform: scale(1.1,.9)   translateY(0); }
+  15%  { transform: scale(.9,1.1)   translateY(-10px); }
+  25%  { transform: scale(1.05,.95) translateY(0); }
+  28.5%  { transform: scale(1,1)      translateY(-7px); }
+  32%  { transform: scale(1,1)      translateY(0); }
+  50% { transform: scale(1,1)      translateY(0); }
+  100% { transform:scale(1,1) translateY(0);}
+}
+
+.tv-popup {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  height: 150vh;
+}
+
+.foto-popup {
+  z-index: 71;
+}
+
+.sound-controller {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-family: "KG Happy Solid";
+  font-size: 40px;
+  color: whitesmoke;
+  opacity: 0.2;
+  transition: opacity .4s;
+}
+.sound-controller:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.instruksi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.4);
+    object-fit: contain;
+  }
 }
 </style>
