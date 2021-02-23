@@ -231,9 +231,7 @@ import { Youtube } from 'vue-youtube'
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/teras.mp3')
       this.audio.volume = 0.4
-      setTimeout(() => {
-        this.audio.play()
-      }, 3000)
+      this.audio.play()
       this.isInstruksi1 = (localStorage.getItem('instruksi_1') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
         this.instruksiImg = '/instruksi/1 hp.png'
