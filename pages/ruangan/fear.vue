@@ -172,18 +172,15 @@
             <img src="/fear/pipaHAPE 1.png" alt="pipa">
           </div>
           <div class="artikel" @click="popups = 'kine';tipeKarya = 'artikel'" />
-          <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'">
-            <img src="/fear/f-photobook-1.png" alt="photobook">
-          </div>
-          <div v-show="!benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
-            <img src="/fear/f-photobook-2.png" alt="photobook1" :style="`opacity: ${benda.ouija}`" @mouseenter="benda.ouija = 1" @mouseout="benda.ouija = 0">
-          </div>
+          <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'" />
+   
+          <div v-show="!benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'" />
+
           <div v-show="benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
-            <img src="/fear/f-photobook-2.png" alt="photobook1">
+            <img src="/fear/f-photobook-2.png" alt="hantu">
           </div>
-          <div class="cont teropong" @click="handleRasyid">
-            <img src="/fear/tropong fear.png" alt="teropong">
-          </div>
+          <div class="cont teropong" @click="handleRasyid" />
+
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="kaki" />
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
@@ -374,7 +371,11 @@
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/fear.mp3')
       this.audio.volume = 0.4
-      this.audio.play()
+      try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
       this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
         this.instruksiImg1 = '/instruksi/2 hp.png'
@@ -802,19 +803,6 @@
   animation-iteration-count: infinite;
 }
 
-.photoseries:hover{
-  background-image:url("/fear/f-photoseries-2.png");
-  background-size:contain;
-  background-repeat:no-repeat;
-  position:absolute;
-  height:35%;
-  width: 14%;
-  top: 12.7%;
-  left: 32%;
-  cursor:pointer;
-  animation: none;
-}
-
 .kamera{
   background-image:url("/fear/f-single-1.png");
   background-size:contain;
@@ -842,13 +830,32 @@
   animation: none;
 }
 
+
 .teropong{
+  background-image:url("/fear/tropong fear.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 13.5%;
   top: 51%;
   left: 73.8%;
-  &:hover{
-    cursor: pointer;
-  }
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.teropong:hover{
+  background-image:url("/fear/tropong fear.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
+  width: 13.5%;
+  top: 51%;
+  left: 73.8%;
+  cursor:pointer;
+  animation: none;
 }
 
 .radio{
@@ -1076,29 +1083,66 @@
   animation: none;
 }
 
+// .photobook{
+//   width: 26%;
+//   top: 76.8%;
+//   left: 37.2%;
+//   z-index: 71;
+//   &:hover {
+//     cursor: pointer;
+//   }
+// }
+
 .photobook{
+  background-image:url("/fear/f-photobook-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
   width: 26%;
   top: 76.8%;
   left: 37.2%;
   z-index: 71;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
 .photobook1{
+  background-image:url("/fear/f-photobook-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 13%;
   top: 53.8%;
   left: 47.2%;
   z-index: 71;
-  &:hover {
-    cursor: pointer;
-  }
+  opacity: 0;
 }
+
+.photobook:hover + .photobook1{
+  opacity : 1;
+  animation: none;
+}
+
+.photobook:hover{
+  animation: none;
+}
+
+// .photobook1{
+//   width: 13%;
+//   top: 53.8%;
+//   left: 47.2%;
+//   z-index: 71;
+// }
+
 // .zine{
 //   width: 16%;
 //   top: 36.8%;
 //   left: 41.2%;
 // }
+
 .kaki{
   background-image:url("/fear/fearf.gif");
   background-size:contain;

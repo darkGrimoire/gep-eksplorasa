@@ -2,10 +2,10 @@
   <div class="nav-container">
     <div class="blackbg-nav" style="display: none;" @click="handleBgClick" />
     <div class="top-left nav-btn" :no-prefetch="true" @click="toggleRuang">
-      Ruang
+      RUANG
     </div>
     <nuxt-link class="top-right nav-btn" to="/aboutus" tag="div" :no-prefetch="true">
-      About Us
+      ABOUT US
     </nuxt-link>
     <div v-if="isRuang" class="ruangfull">
       <nuxt-link to="/teras" class="nav-ruangan" tag="div" @click.native="handleBgClick">
@@ -114,7 +114,7 @@ import gsap from 'gsap'
   height: 100vh;
   font-family: 'KG Happy Solid';
   font-size: 40px;
-  
+  text-transform: uppercase;
 }
 
 .blackbg-nav {
@@ -132,10 +132,10 @@ import gsap from 'gsap'
   color: #1f1f1f;
   position: absolute;
   font-size: 45px;
-  opacity: .7;
+  opacity: .8;
   transition: opacity .2s;
   &:hover {
-    opacity: .9;
+    opacity: 1;
     cursor: pointer;
   }
   @media only screen and (max-width: 600px) {

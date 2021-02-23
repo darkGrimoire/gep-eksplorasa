@@ -92,7 +92,7 @@
             <img src="/teras/lantai.png">
           </div>
           <div class="back-button back-button-second" @click="reverseAnimation">
-            BACK
+            BACK 
           </div>
         </div>
       </div>
@@ -104,8 +104,8 @@
     <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
       Events
     </nuxt-link>
-    <nuxt-link class="back-button" :to="'/'">
-      Back
+    <nuxt-link v-if="slide === 1" class="back-button" :to="'/'">
+      BACK
     </nuxt-link>
   </div>
 </template>
@@ -231,7 +231,11 @@ import { Youtube } from 'vue-youtube'
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/teras.mp3')
       this.audio.volume = 0.4
-      this.audio.play()
+      try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
       this.isInstruksi1 = (localStorage.getItem('instruksi_1') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
         this.instruksiImg = '/instruksi/1 hp.png'

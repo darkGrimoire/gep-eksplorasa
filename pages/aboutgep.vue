@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <div class="team">
+      <div class="/team">
         <h2>Meet The Team</h2>
         <img src="/boutgep/line2.png" class="line2">
         <br><br>
@@ -75,6 +75,7 @@
         <div class="divisi">
           <img src="/team/te/c.png" class="fotorg">
           <img src="/team/kr/h.png" class="fotorg">
+          <img src="/team/te/vito.png" class="fotorg">
           <img src="/team/te/t.png" class="fotorg">
           <img src="/team/te/sean.png" class="fotorg">
           <img src="/team/te/r.png" class="fotorg">

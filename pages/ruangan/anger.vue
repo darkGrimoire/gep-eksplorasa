@@ -145,7 +145,10 @@
             "
           />
           <div class="sampah" />
-          <div class="garpu" />
+          <div class="garpu"/>
+          <div class="garpu1"/>
+
+          
           <div v-if="!isInstruksi1" class="instruksi instruksi1">
             <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
           </div>
@@ -209,11 +212,7 @@
             <img src="/anger/meja.png" alt="meja">
           </div>
           <div class="cont meong">
-            <img
-              src="/anger/meong2.png"
-              alt="meong"
-              @mouseenter="handleObjChange($event)"
-              @mouseout="handleObjChangeEnd($event)"
+            <img src="/anger/meong.png" alt="meong" :style="`opacity: ${benda.kucing}`" @mouseenter="benda.kucing = 1" @mouseout="benda.kucing = 0"
             >
           </div>
           <div class="cont rak">
@@ -235,9 +234,8 @@
               @mouseout="benda.cakar = 0"
             >
           </div>
-          <div class="cont teropong" @click="handleRasyid">
-            <img src="/anger/tropong anger.png" alt="teropong">
-          </div>
+          <div class="cont teropong" @click="handleRasyid" />
+
           <div class="pisau" />
           <div class="buku" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="gantungan" @click="popups = 'foto';tipeKarya = 'series'" />
@@ -270,6 +268,7 @@
     </div>
     <rcp />
   </div>
+
 </template>
 
 <script>
@@ -323,7 +322,8 @@
         },
         benda: {
           cakar: 0,
-          garpu: 0
+          garpu: 0, 
+          kucing: 0
         },
         popups: '',
         tipeKarya: '',
@@ -462,7 +462,11 @@
     localStorage.setItem("last", this.$route.path)
     this.audio = new Audio("/songs/anger.mp3")
     this.audio.volume = 0.5
-    this.audio.play()
+    try {
+        this.audio.play()
+      } catch (error) {
+        this.changeMute()
+      }
     this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
     if (window.matchMedia("(orientation: portrait)").matches){
       this.instruksiImg1 = '/instruksi/2 hp.png'
@@ -924,7 +928,7 @@
   animation-iteration-count: infinite;
 }
 
-.garpu:hover {
+.garpu1 {
   background-image: url("/anger/gep anger berserakan.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -933,9 +937,19 @@
   top: 76.5%;
   left: 81%;
   height: 35%;
-  cursor: pointer;
+  opacity: 0;
   animation: none;
 }
+
+.garpu:hover + .garpu1{
+ opacity: 10;
+ animation: none;
+}
+
+.garpu:hover{
+  opacity: 0;
+}
+
 
 .koran {
   background-image: url("/anger/a-artikel-1.png");
@@ -1184,14 +1198,40 @@
   top: 25.8%;
   left: 2.5%;
 }
-.teropong {
+.teropong{
+  background-image:url("/anger/tropong anger.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 13%;
   top: 79%;
   left: 10.5%;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.teropong:hover{
+  background-image:url("/anger/tropong anger.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
+  width: 13%;
+  top: 79%;
+  left: 10.5%;
+  cursor:pointer;
+  animation: none;
+}
+// .teropong {
+//   width: 13%;
+//   top: 79%;
+//   left: 10.5%;
+//   &:hover {
+//     cursor: pointer;
+//   }
+// }
 .tv-popup {
   position: absolute;
   top: 4%;
