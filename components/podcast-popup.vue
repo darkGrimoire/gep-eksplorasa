@@ -71,7 +71,6 @@ export default {
         this.alamat.push(item.route)
       })
       this.amount = this.judul.length
-      console.log(this.poster)
     },
     initSetUpPodcast() {
       document.getElementsByClassName("podcast-exit-image")[0].src =
@@ -171,14 +170,12 @@ export default {
       }
     },
     goToKarya(id) {
-      console.log(id)
       let targetRoom = this.room
       if (this.room.toLowerCase() === "sadness") {
         targetRoom = "sad"
       }
       let targetUrl = this.alamat[id].charAt(0) === '/' ? this.alamat[id] : '/' + this.alamat[id]
       const tujuan = "/karya/" + targetRoom.toLowerCase() + targetUrl
-      console.log(tujuan)
       this.$router.push({ path: tujuan })
     }
   }
