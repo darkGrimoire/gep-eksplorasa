@@ -12,7 +12,7 @@
         <div v-for="(judul, idx) in juduls" :key="idx" class="swiper-slide" @mouseenter="enableOverlay($event)" @mouseleave="disableOverlay($event)">
           <div class="minposter-container">
             <img :src="poster_fotos[idx]" :alt="judul" @click="handleClick(judul)">
-            <nuxt-link class="mini-overlay" :to="computeUrl(alamats[idx])" tag="div" :style="'background-color:'+color+';'">
+            <nuxt-link class="mini-overlay" :to="computeUrl(alamats[idx])" tag="div" :style="'background-color:'+copal+';'">
               <div class="title">
                 {{ judul }}
               </div>
@@ -23,6 +23,7 @@
           </div>
         </div>
       </div>
+      <div slot="scrollbar" class="swiper-scrollbar" />
     </div>
   </div>
 </template>
@@ -40,20 +41,42 @@ import 'swiper/swiper-bundle.css'
     data () {
       return {
         room: "",
-        color: "#d1bb10",
+        emosi: '',
         juduls: [],
         poster_fotos: [],
         alamats: [],
         authors: [],
         swiperOptions: {
-          slidesPerView: 4,
+          slidesPerView: 3.5,
           direction: 'horizontal',
           mousewheel: true,
-          freeMode: true,
           grabCursor: true,
-          spaceBetween: 5
+          spaceBetween: 5,
+          observer: true,
+          observeParents: true,
+          freeMode: true,
+          scrollbar: {
+            el: '.swiper-scrollbar',
+            hide: false,
+            draggable: true,
+          }
         }
       }
+    },
+    computed: {
+      copal() {
+        if (this.emosi === 'joy'){
+          return '#d1bb10'
+        } else if (this.emosi === 'sad'){
+          return '#305fe9'
+        } else if (this.emosi === 'fear'){
+          return '#009562'
+        } else if (this.emosi === 'anger'){
+          return '#e14423'
+        } else {
+          return '#ede5d1'
+        }
+      },
     },
     async mounted () {
       this.getRoom()
@@ -66,6 +89,7 @@ import 'swiper/swiper-bundle.css'
         this.room = link.match(
           /(Joy|Sad|Anger|Fear|joy|sad|anger|fear)/i
         )[0]
+        this.emosi = this.room
         if (this.room.toLowerCase() === 'sad'){
           this.room = 'sadness'
         }
@@ -160,11 +184,22 @@ import 'swiper/swiper-bundle.css'
   align-items: center;
 }
 
+::v-deep .swiper-scrollbar {
+  z-index: 1010;
+  bottom: 20px;
+  background: rgba($color: #ede5d1, $alpha: .4);
+}
+
+::v-deep .swiper-scrollbar-drag {
+  background: rgba($color: #ede5d1, $alpha: .9);
+}
+
 .swiper-slide {
   position: relative;
+  top: -4px;
 
   width: 100px;
-  height: 200px;
+  height: 180px;
 }
 
 .minposter-container {
@@ -197,7 +232,7 @@ import 'swiper/swiper-bundle.css'
   }
 }
 .mini-overlay.mini-overlay-hover {
-  cursor: pointer;
+  // cursor: pointer;
   opacity: .9;
 }
 </style>

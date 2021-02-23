@@ -60,6 +60,10 @@ var hashes = {},
 
 window.Hash = freeze({
 
+		stop: function () {
+			stopTimer()
+		},
+
 		pushState: function(yes) {
 
 			if (window.history && window.history.pushState)

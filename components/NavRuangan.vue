@@ -138,6 +138,9 @@ import gsap from 'gsap'
     opacity: .9;
     cursor: pointer;
   }
+  @media only screen and (max-width: 600px) {
+    font-size: 25px;
+  }
 }
 
 .top-left {
@@ -179,6 +182,9 @@ import gsap from 'gsap'
   &:hover {
     cursor: pointer;
   }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
+  }
 }
 .reset {
   font-size: 25px;
@@ -186,6 +192,9 @@ import gsap from 'gsap'
   margin-top: 20px;
   &:hover {
     cursor: pointer;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
   }
 }
 </style>

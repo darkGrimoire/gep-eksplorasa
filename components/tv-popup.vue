@@ -2,7 +2,7 @@
   <div class="tvPopUp" @click="bodyClick">
     <div class="popupwindow bordered">
       <div class="x-button">
-        <img class="exit-image" @click="close()" />
+        <img class="exit-image" @click="close()">
       </div>
       <div class="main-popup">
         <div class="left-area">
@@ -296,7 +296,7 @@ export default {
   border: 2px solid;
   padding: 1vw 1vh;
   z-index: 1001;
-  min-height: 80%;
+  min-height: 60%;
   min-width: 50%;
 }
 .x-button {

@@ -110,6 +110,7 @@ const TARGET_ZOOM_WIDTH = 3000
       if (this.isPhone){
         this.destroyPhoneHandler()
       }
+      Hash.stop()
     },
     mounted () {
       const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('buku').doc(this.id)
@@ -151,7 +152,7 @@ const TARGET_ZOOM_WIDTH = 3000
           this.fs = document.fullscreenElement
           setTimeout(() => {
             this.initjQuery()
-          }, 0)
+          }, 20)
         })
         .catch((err) => {
           console.log(err)
@@ -160,12 +161,12 @@ const TARGET_ZOOM_WIDTH = 3000
     },
     methods: {
       initjQuery(){
-        if (this.isjQueryLoaded && this.isUiLoaded){
+        if (window.$){
             this.initialization()
         } else{
           setTimeout(() => {
             this.initjQuery()
-          }, 20)
+          }, 50)
         }
       },
       initialization(){
@@ -330,7 +331,7 @@ const TARGET_ZOOM_WIDTH = 3000
           zoomOut: () => {
             this.toggleControls(true)
             $('#slider-bar').fadeIn()
-            $('.back-button').fadeOut()
+            $('.back-button').fadeIn()
             $('.blackbg').fadeOut()
             $('.exit-message').hide()
             $('.made').fadeIn()
@@ -689,19 +690,21 @@ const TARGET_ZOOM_WIDTH = 3000
             description: 'Karya "'+this.dataKarya.judul+'" oleh '+this.dataKarya.author
           }
         ],
-        script: [
-          { 
-            vmid: 'extscript',
-            src: '/extras/jquery.min.1.7.js',
-            callback: () => (this.isjQueryLoaded = true)
-          },
-          {
-            skip: !this.isjQueryLoaded,
-            src: '/extras/jquery-ui-1.8.20.custom.min.js',
-            callback: () => (this.isUiLoaded = true)
-          },
-          { src: '/extras/modernizr.2.5.3.min.js' },
-        ],
+        // script: [
+        //   { 
+        //     vmid: 'extscript',
+        //     src: '/extras/jquery.min.1.7.js',
+        //     defer: true,
+        //     callback: () => (this.isjQueryLoaded = true)
+        //   },
+        //   {
+        //     skip: !this.isjQueryLoaded,
+        //     src: '/extras/jquery-ui-1.8.20.custom.min.js',
+        //     defer: true,
+        //     callback: () => (this.isUiLoaded = true)
+        //   },
+        //   { src: '/extras/modernizr.2.5.3.min.js' },
+        // ],
         link: [
           { rel: 'stylesheet',  href: '/extras/jquery.ui.css' }
         ]

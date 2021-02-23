@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <nuxt-link class="back-button" :to="'/aboutus'">
+    <nuxt-link class="back-button" :to="'/teras'">
       Back
     </nuxt-link>
   </div>
@@ -163,7 +163,7 @@ export default {
 </script>
 
 <!-- sblmnya ada "scoped" tp w apus biar bisa pake v-html -->
-<style lang="scss">
+<style lang="scss" scoped>
 /* ini kode cal yaaa gue ga berani hapus yang di bawah wkwk */
 .back-button {
   position: fixed;
@@ -195,7 +195,6 @@ export default {
     font-family: 'KG Happy Solid';
     font-size: 25px;
     color: #1f1f1f;
-    text-align: center;
   }
 
   .container {
@@ -216,14 +215,14 @@ export default {
     align-items: center;
   }
 
-  a {
+  ::v-deep a {
     color: #1f1f1f;
     text-decoration: none;
     font-family: 'Mechanical Pencil';
     font-size: 25px;
   }
 
-  a:hover {
+  ::v-deep a:hover {
     text-decoration: underline;
   }
 
@@ -253,16 +252,19 @@ export default {
     outline: none;
     cursor: pointer;
     font-size: 37px;
+    font-family: 'KG Happy Solid';
+    color: #1f1f1f;
+    text-align: center;
   }
 
-  .tabcontent {
+  ::v-deep .tabcontent {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
     margin-bottom: 50px;
   }
 
-  .acara {
+  ::v-deep .acara {
     padding-left: 50px;
     text-align: left;
   }
@@ -270,6 +272,13 @@ export default {
   .judul {
     margin-top: -30px;
     width: 525px;
+  }
+
+  .deskripsi {
+    font-family: 'Karla';
+    font-style: bold;
+    font-size: 23px;
+    list-style-position: outside;
   }
 
   .box {
@@ -369,7 +378,7 @@ export default {
       font-size: 20px;
     }
 
-    a {
+    ::v-deep a {
       font-size: 15px;
     }
 
@@ -388,12 +397,12 @@ export default {
       font-size: 27px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 50px;
     }
 
@@ -455,7 +464,7 @@ export default {
       font-size: 15px;
     }
 
-    a {
+    ::v-deep a {
       font-size: 15px;
     }
 
@@ -474,12 +483,12 @@ export default {
       font-size: 22px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 20px;
     }
 
@@ -533,7 +542,7 @@ export default {
       font-size: 10px;
     }
 
-    a {
+    ::v-deep a {
       font-size: 10px;
     }
 
@@ -552,12 +561,12 @@ export default {
       font-size: 15px;
     }
 
-    .tabcontent {
+    ::v-deep .tabcontent {
       margin-top: 10px;
       margin-bottom: 50px;
     }
 
-    .acara {
+    ::v-deep .acara {
       padding-left: 20px;
     }
 

@@ -91,44 +91,44 @@
           </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
-            <img src="/anger/wall.png" alt="wall" />
+            <img src="/anger/wall.png" alt="wall">
           </div>
           <div class="cont floor">
-            <img src="/anger/lt.png" alt="floor" />
+            <img src="/anger/lt.png" alt="floor">
           </div>
           <div class="kulkas" />
           <div class="cont lemari">
-            <img src="/anger/lmari.png" alt="lemari" />
+            <img src="/anger/lmari.png" alt="lemari">
           </div>
           <div class="cont piring">
-            <img src="/anger/piring.png" alt="piring" />
+            <img src="/anger/piring.png" alt="piring">
           </div>
           <div class="cont rak1">
-            <img src="/anger/rak1.png" alt="rak1" />
+            <img src="/anger/rak1.png" alt="rak1">
           </div>
           <div class="cont rak2">
-            <img src="/anger/rak2.png" alt="rak2" />
+            <img src="/anger/rak2.png" alt="rak2">
           </div>
           <div class="cont rak3">
-            <img src="/anger/rak3.png" alt="rak3" />
+            <img src="/anger/rak3.png" alt="rak3">
           </div>
           <div class="cont pecah1">
-            <img src="/anger/pecah1.png" alt="pecah1" />
+            <img src="/anger/pecah1.png" alt="pecah1">
           </div>
           <div class="cont pecah2">
-            <img src="/anger/pecah2.png" alt="pecah2" />
+            <img src="/anger/pecah2.png" alt="pecah2">
           </div>
           <div class="cont trio">
-            <img src="/anger/trio.png" alt="trio" />
+            <img src="/anger/trio.png" alt="trio">
           </div>
           <div class="cont air">
-            <img src="/anger/aer.png" alt="air" />
+            <img src="/anger/aer.png" alt="air">
           </div>
           <div class="cont tong">
-            <img src="/anger/tong.png" alt="tong" />
+            <img src="/anger/tong.png" alt="tong">
           </div>
           <div class="cont oven">
-            <img src="/anger/kgif.gif" alt="oven" />
+            <img src="/anger/kgif.gif" alt="oven">
           </div>
           <div
             class="figura"
@@ -146,16 +146,11 @@
           />
           <div class="sampah" />
           <div class="garpu" />
-          <KinePopup
-            v-if="popups === 'kine' && slide === 1"
-            :tipe-karya="tipeKarya"
-            @closePopup="popups = ''"
-          />
-          <NewfotoPopup
-            v-if="popups === 'foto' && slide === 1"
-            :tipe-karya="tipeKarya"
-            class="foto-popup"
-          />
+          <div v-if="!isInstruksi1" class="instruksi instruksi1">
+            <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
+          </div>
+          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
@@ -196,22 +191,22 @@
           </div> -->
           <!-- Tambahin Objek lainnya disini -->
           <div class="cont wall">
-            <img src="/anger/wall.png" alt="wall" />
+            <img src="/anger/wall.png" alt="wall">
           </div>
           <div class="cont floor">
-            <img src="/anger/lt.png" alt="floor" />
+            <img src="/anger/lt.png" alt="floor">
           </div>
           <div class="cont lemari2">
-            <img src="/anger/lemari.png" alt="lemari2" />
+            <img src="/anger/lemari.png" alt="lemari2">
           </div>
           <div class="cont jendela">
-            <img src="/anger/jndl.png" alt="jendela" />
+            <img src="/anger/jndl.png" alt="jendela">
           </div>
           <div class="cont frame">
-            <img src="/anger/frame.png" alt="frame" />
+            <img src="/anger/frame.png" alt="frame">
           </div>
           <div class="cont meja">
-            <img src="/anger/meja.png" alt="meja" />
+            <img src="/anger/meja.png" alt="meja">
           </div>
           <div class="cont meong">
             <img
@@ -219,17 +214,17 @@
               alt="meong"
               @mouseenter="handleObjChange($event)"
               @mouseout="handleObjChangeEnd($event)"
-            />
+            >
           </div>
           <div class="cont rak">
-            <img src="/anger/rak.png" alt="rak" />
+            <img src="/anger/rak.png" alt="rak">
           </div>
           <div class="cont trolley">
-            <img src="/anger/trolley.png" alt="trolley" />
+            <img src="/anger/trolley.png" alt="trolley">
           </div>
           <div class="tv" @click="popups = 'tv'" />
           <div class="cont kran">
-            <img src="/anger/kran.gif" alt="kran" />
+            <img src="/anger/kran.gif" alt="kran">
           </div>
           <div class="cont cakar">
             <img
@@ -238,22 +233,19 @@
               :style="`opacity: ${benda.cakar}`"
               @mouseenter="benda.cakar = 1"
               @mouseout="benda.cakar = 0"
-            />
+            >
           </div>
-          <div class="cont teropong">
-            <img src="/anger/tropong anger.png" alt="teropong" />
+          <div class="cont teropong" @click="handleRasyid">
+            <img src="/anger/tropong anger.png" alt="teropong">
           </div>
           <div class="pisau" />
-          <div class="buku" />
-          <div class="gantungan" />
-          <div
-            class="bounce kunci"
-            @click="
-              benda.kunci = true;
-              slide = 3;
-            "
-          />
+          <div class="buku" @click="popups = 'foto';tipeKarya = 'buku'" />
+          <div class="gantungan" @click="popups = 'foto';tipeKarya = 'series'" />
+          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="foot" />
+          <div v-if="!isInstruksi2" class="instruksi instruksi2">
+            <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
+          </div>
           <div class="tv-popup">
             <TvPopup
               v-if="popups === 'tv' && slide === 2"
@@ -273,7 +265,9 @@
         </div>
       </div>
     </div>
-    <div class="sound-controller" @click="changeMute()">SOUND</div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
+    </div>
     <rcp />
   </div>
 </template>
@@ -283,118 +277,104 @@
 // top-cont: tempat perhitungan rasio
 // canvas: kalau mau ada tooltip, taro disini
 // canvas-hover: kalau mau ada efek hover kaya di moooi, taro sini
-const SCALE = 2
-const NEXT_ROOM = "/ruangan/joy"
-const CLOSING = "/ruangan/closing"
-import gsap from "gsap"
-import rcp from "~/components/rcp.vue"
-import tvPopup from "~/components/tv-popup.vue"
-import kinePopup from "~/components/kine-popup.vue"
-import NewfotoPopup from "~/components/newfoto-popup.vue"
-export default {
-  name: "Anger",
-  components: {
-    rcp,
-    tvPopup,
-    kinePopup,
-    NewfotoPopup
-  },
-  layout: "ruangan",
-  data() {
-    return {
-      drag: false,
-      mouseStart: {
-        x: undefined,
-        y: undefined // not used for now though
-      },
-      computedDisplacement: 0,
-      transformed: 0,
-      xBoundary: undefined,
-      slide: 0,
-      base: {
-        slide0: -50,
-        slide1: 50,
-        slide2: 150
-      },
-      msg: {
-        masuk:
-          "Kesal, jengkel, tidak terima, tak adil rasanya, tidak seharusnya seperti ini. Ingin meledak, ingin marah. ",
-        keluar:
-          "Marah telah diluapkan. Keluh kesah sudah dibuang. Sedikit kelegaan muncul. Semangat yang baru pun timbul. Hal-hal kecil yang menyenangkan kembali terlihat setelah tertutup amarah dan hal pahit lainnya.",
-        closings: [
-          "Akhirnya amarah pun dilepaskan. Tapi tak apa, setidaknya sekarang sedikit lebih lega.",
-          "Ruang-ruang rasa telah dikunjungi. Tiap emosi telah dikenali. Rasa sudah dieksplorasi. Melalui eksplorasi rasa ini tiap perasaan tertuangkan menjadi suatu bentuk karya. Rasa-rasa ini pastinya tidak asing, tapi selalu ada ruang untuk eksplorasi. Rasa dapat berkembang, berubah, dan dibentuk menjadi suatu yang indah. ",
-          "Akhir kata, semoga melalui ini, perasaan yang biasa kamu lalui dapat menjadi temanmu untuk berkarya. Dan semoga kesenangan kamu di hari ini bertahan lama ya! (Terima kasih.)"
-        ],
-        closing: ""
-      },
-      benda: {
-        cakar: 0,
-        garpu: 0
-      },
-      popups: "",
-      tipeKarya: "",
-      audio: undefined
-    }
-  },
-  computed: {
-    sign() {
-      return this.computedDisplacement >= 0 ? "+" : "-"
-    }
-  },
-  watch: {
-    slide(newVal, oldVal) {
-      if (newVal === 2) {
-        gsap.to(this.base, { slide0: -250, slide1: -150, slide2: -50 })
-        if (oldVal > 2) {
-          gsap.to(".transitionfade-out", {
-            x: "100%",
-            duration: 0.5,
-            delay: 0.2
-          })
-          gsap.to(".narasi", { opacity: 0, duration: 0.5 })
-        }
-      } else if (newVal === 1) {
-        gsap.to(this.base, { slide0: -150, slide1: -50, slide2: 50 })
-        if (oldVal === 0)
-          gsap.to(".transitionfade-in", {
-            x: "-100%",
-            duration: 0.7,
-            delay: 0.2
-          })
-      } else if (newVal === 0) {
-        gsap.to(this.base, { slide0: -50, slide1: 50, slide2: 150 })
-        if (oldVal === 1)
-          gsap.to(".transitionfade-in", { x: "0", duration: 0.7, delay: 0.2 })
-      } else {
-        gsap.to(this.base, {
-          duration: 3,
-          ease: "none",
-          slide0: -350,
-          slide1: -250,
-          slide2: -150
-        })
-        gsap.to(".transitionfade-out", { x: "40%", duration: 0.7 })
-        gsap.to(".transitionfade-out", {
-          x: "0",
-          duration: 1.3,
-          ease: "none",
-          delay: 0.7
-        })
-        if (this.isClosingVisited()) {
-          this.$router.push({ path: CLOSING })
-        }
-        if (this.isAllRoomVisited()) {
-          // animasi closing
-          document.getElementsByClassName("narasi-closing")[0].style.display =
-            "block"
-          this.msg.closing = this.msg.closings[0]
-          gsap.to(".narasi-closing", { opacity: 1, duration: 1, delay: 2 })
-          gsap.to(".narasi-closing", {
-            opacity: 0,
-            duration: 0.5,
-            delay: 7,
-            onComplete: () => {
+  const SCALE = 2
+  const NEXT_ROOM = '/ruangan/joy'
+  const CLOSING = '/ruangan/closing'
+  import gsap from 'gsap'
+  import rcp from '~/components/rcp.vue'
+  import tvPopup from '~/components/tv-popup.vue'
+  import kinePopup from "~/components/kine-popup.vue"
+  import NewfotoPopup from '~/components/newfoto-popup.vue'
+  export default {
+    name: "Anger",
+    components: {
+      rcp,
+      tvPopup,
+      kinePopup,
+      NewfotoPopup,
+      
+    },
+    layout: 'ruangan',
+    data() {
+      return {
+        drag: false,
+        mouseStart: {
+          x: undefined,
+          y: undefined // not used for now though
+        },
+        computedDisplacement: 0,
+        transformed: 0,
+        xBoundary: undefined,
+        slide: 0,
+        base: {
+          slide0: -50,
+          slide1: 50,
+          slide2: 150
+        },
+        msg: {
+          masuk: 'Kesal, jengkel, tidak terima, tak adil rasanya, tidak seharusnya seperti ini. Ingin meledak, ingin marah. ',
+          keluar: 'Marah telah diluapkan. Keluh kesah sudah dibuang. Sedikit kelegaan muncul. Semangat yang baru pun timbul. Hal-hal kecil yang menyenangkan kembali terlihat setelah tertutup amarah dan hal pahit lainnya.',
+          closings: [
+            'Akhirnya amarah pun dilepaskan. Tapi tak apa, setidaknya sekarang sedikit lebih lega.',
+            'Ruang-ruang rasa telah dikunjungi. Tiap emosi telah dikenali. Rasa sudah dieksplorasi. Melalui eksplorasi rasa ini tiap perasaan tertuangkan menjadi suatu bentuk karya. Rasa-rasa ini pastinya tidak asing, tapi selalu ada ruang untuk eksplorasi. Rasa dapat berkembang, berubah, dan dibentuk menjadi suatu yang indah. ',
+            'Akhir kata, semoga melalui ini, perasaan yang biasa kamu lalui dapat menjadi temanmu untuk berkarya. Dan semoga kesenangan kamu di hari ini bertahan lama ya! (Terima kasih.)'
+          ],
+          closing: ''
+        },
+        benda: {
+          cakar: 0,
+          garpu: 0
+        },
+        popups: '',
+        tipeKarya: '',
+        audio: undefined,
+        isInstruksi1: false,
+        isInstruksi2: true,
+        instruksiImg1: '/instruksi/2.png',
+        instruksiImg2: '/instruksi/3.png'
+      }
+    },
+    computed: {
+      sign() {
+        return this.computedDisplacement >= 0 ? '+' : '-'
+      }
+    },
+    watch: {
+      slide(newVal, oldVal) {
+        if (newVal === 2){
+          gsap.to(this.base, {slide0: -250, slide1: -150, slide2: -50})
+          this.isInstruksi2 = (localStorage.getItem('instruksi_3') || false)
+          if (window.matchMedia("(orientation: portrait)").matches){
+            this.instruksiImg2 = '/instruksi/3 hp.png'
+          }
+          if (!this.isInstruksi2){
+            localStorage.setItem('instruksi_3', true)
+          }
+          if (oldVal > 2){
+            gsap.to('.transitionfade-out', {x: '100%', duration: .5, delay: .2})
+            gsap.to('.narasi', {opacity: 0, duration: .5})
+          }
+        } else if (newVal === 1){
+          gsap.to(this.base, {slide0: -150, slide1: -50, slide2: 50})
+          if (oldVal === 0)
+            gsap.to('.transitionfade-in', {x: '-100%', duration: .7, delay: .2})
+        } else if (newVal === 0){
+          gsap.to(this.base, {slide0: -50, slide1: 50, slide2: 150})
+          if (oldVal === 1)
+            gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
+        } else {
+          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+          gsap.to('.transitionfade-out', {x: '40%', duration: .7})
+          gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
+          if (this.isClosingVisited()){
+            this.$router.push({path: CLOSING})
+          }
+          if (this.isAllRoomVisited()){
+            // animasi closing
+            document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
+            this.msg.closing = this.msg.closings[0]
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 7, onComplete: () =>{
               this.msg.closing = this.msg.closings[1]
             }
           })
@@ -476,30 +456,56 @@ export default {
         }
       })
     }
+    setTimeout(() => {
+      this.preloadImages()
+    }, 1000)
     localStorage.setItem("last", this.$route.path)
     this.audio = new Audio("/songs/anger.mp3")
     this.audio.volume = 0.5
     this.audio.play()
+    this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
+    if (window.matchMedia("(orientation: portrait)").matches){
+      this.instruksiImg1 = '/instruksi/2 hp.png'
+    }
+    if (!this.isInstruksi1){
+      localStorage.setItem('instruksi_2', true)
+    }
   },
   methods: {
-    switchSlide(val) {
-      this.slide += val
-      gsap.to(this.$data, { computedDisplacement: 0, transformed: 0 })
+    fadeInstruksi(classname){
+      gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
+        document.getElementsByClassName(classname)[0].style.display = 'none'
+      }})
     },
-    isAllRoomVisited() {
-      return (
-        localStorage.getItem("joy") &&
-        localStorage.getItem("fear") &&
-        localStorage.getItem("sad") &&
-        localStorage.getItem("anger")
-      )
-    },
-    isRoomVisited() {
-      return localStorage.getItem("anger")
-    },
-    isClosingVisited() {
-      return localStorage.getItem("closing")
-    },
+    switchSlide(val){
+        this.slide += val
+        gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+      },
+      preloadImages(){
+        new Image().src = '/anger/anger1.png'
+        new Image().src = '/anger/a-photo series-2.png'
+        new Image().src = '/anger/a-photobook-2.png'
+        new Image().src = '/anger/gep pisau.png'
+        new Image().src = '/anger/tv2.png'
+        new Image().src = '/anger/a-single-2.png'
+        new Image().src = '/anger/a-artikel-2.png'
+        new Image().src = '/anger/gep anger berserakan.png'
+        new Image().src = '/anger/gep anger meledak.png'
+        new Image().src = '/anger/kulopen.png'
+      },
+      handleRasyid(){
+        localStorage.setItem('before_instalasi', this.$route.path)
+        this.$router.push({path: '/karya/instalasi/bandung'})
+      },
+      isAllRoomVisited(){
+        return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+      },
+      isRoomVisited(){
+        return localStorage.getItem('anger')
+      },
+      isClosingVisited(){
+        return localStorage.getItem('closing')
+      },
     startDrag(e) {
       if (window.matchMedia("(orientation: portrait)").matches) {
         // enable dragging and keep mouseStart point
@@ -1155,9 +1161,10 @@ export default {
   height: 10%;
   top: 78%;
   left: 83%;
-  cursor: pointer;
-  animation: bounce-7 2s;
-  animation-iteration-count: infinite;
+  cursor:pointer;
+  z-index: 15001;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;    
 }
 
 .kunci:hover {
@@ -1181,6 +1188,9 @@ export default {
   width: 13%;
   top: 79%;
   left: 10.5%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .tv-popup {
   position: absolute;
@@ -1244,5 +1254,21 @@ export default {
 }
 .foto-popup {
   z-index: 71;
+}
+.instruksi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(0.4);
+    object-fit: contain;
+  }
 }
 </style>

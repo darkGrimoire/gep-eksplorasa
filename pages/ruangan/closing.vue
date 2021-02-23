@@ -52,7 +52,9 @@
           </div>
           <div class="figura" />
           <div class="kamera" />
-          <div class="balon" />
+          <div class="balon">
+            <div class="balloon-area" @click="triggerFeedback" />
+          </div>
          
           <div class="cont gantungan">
             <img src="/closing/foto.png" alt="gantungan">
@@ -73,6 +75,11 @@
           <div class="cont tulisankamera">
             <img src="/closing/cam3.png" alt="tulisankamera">
           </div>
+          <div v-if="!isInstruksi1" class="instruksi1">
+            <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
+          </div>
+          <div v-if="showFeedback" class="feedback-backdrop" @click="closeFeedback" />
+          <Feedback v-show="showFeedback" class="feedback-modal" style="z-index: 1001" @submitted="closeFeedback" />
           <!-- <div class="cont tulisanbalon">
             <img src="/closing/balon3.png" alt="tulisanbalon">
           </div>
@@ -82,7 +89,9 @@
         </div>
       </div>
     </div>
-    <div class="sound-controller" @click="changeMute()">SOUND</div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
+    </div>
     <rcp />
   </div>
 </template>
@@ -96,10 +105,12 @@
   const NEXT_ROOM = '/ruangan/template'
   import gsap from 'gsap'
   import rcp from '~/components/rcp.vue'
+  import Feedback from '~/components/feedback.vue'
   export default {
     name: "Closing",
     components: {
       rcp,
+      Feedback
     },
     layout: 'ruangan',
     data() {
@@ -124,7 +135,10 @@
           balon2: 0,
           figura2: 0
         },
-        audio: undefined
+        audio: undefined,
+        isInstruksi1: false,
+        instruksiImg: '/instruksi/4.png',
+        showFeedback: false
       }
     },
     computed: {
@@ -185,12 +199,41 @@
         localStorage.setItem('closing', true)
         this.slide = 1
       }})
+      setTimeout(() => {
+        this.preloadImages()
+      }, 1000)
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/closing.mp3')
       this.audio.volume = 0.3
       this.audio.play()
+      this.isInstruksi1 = (localStorage.getItem('instruksi_4') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg = '/instruksi/4 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_4', true)
+      }
     },
     methods: {
+      triggerFeedback(){
+        gsap.from('.feedback-modal', {yPercent: -200, duration: .7, ease: 'back'})
+        this.showFeedback = true
+      },
+      closeFeedback(){
+        gsap.to('.feedback-modal', {yPercent: -300, duration: .5, ease: 'back.in', clearProps: 'y', onComplete: () => {
+          this.showFeedback = false
+        }})
+      },
+      fadeInstruksi(){
+        gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName('instruksi1')[0].style.display = 'none'
+        }})
+      },
+      preloadImages(){
+        new Image().src = '/closing/balon1-out.png'
+        new Image().src = '/closing/cam-out.png'
+        new Image().src = '/closing/gantungan-out.png'
+      },
       switchSlide(val){
         this.slide += val
         gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
@@ -280,6 +323,11 @@
       }
       }
     },
+    head() {
+      return {
+        title: 'Terima kasih! - GEP',
+      }
+    }
   }
 </script>
 
@@ -570,5 +618,37 @@
 .sound-controller:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+.instruksi1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(.5);
+    object-fit: contain;
+  }
+}
+
+.feedback-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  opacity: 0;
+  z-index: 1000;
+}
+
+.balloon-area {
+  height: 60%;
+  width: 100%;
 }
 </style>

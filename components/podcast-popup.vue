@@ -2,7 +2,7 @@
   <div class="podcastPopup" @click="bodyClick">
     <div class="podcastpopupwindow">
       <div class="podcast-x-button">
-        <img class="podcast-exit-image" @click="close()" />
+        <img class="podcast-exit-image" @click="close()">
       </div>
       <div class="main-podcast">
         <div class="list-area">
@@ -18,12 +18,12 @@
         </div>
         <div class="pod-area">
           <div class="poster-area" @click="gotoKarya(this.pos)">
-            <img class="poster bordered" />
+            <img class="poster bordered">
           </div>
           <div class="arrow-area">
-            <img class="leftpod-arrow" @click="movePos(-1)" />
-            <img class="center-ghost" @click="gotoKarya(this.pos)" />
-            <img class="rightpod-arrow" @click="movePos(1)" />
+            <img class="leftpod-arrow" @click="movePos(-1)">
+            <img class="center-ghost" @click="gotoKarya(this.pos)">
+            <img class="rightpod-arrow" @click="movePos(1)">
           </div>
         </div>
       </div>
@@ -167,11 +167,9 @@ export default {
       if (this.room.toLowerCase() === "sadness") {
         targetRoom = "sad"
       }
-      let targetUrl =
-        this.alamat[id].charAt(0) === "/"
-          ? this.alamat[id]
-          : "/" + this.alamat[id]
-      const tujuan = "/karya/" + targetRoom.toLowerCase() + "/" + targetUrl
+      let targetUrl = this.alamat[id].charAt(0) === '/' ? this.alamat[id] : '/' + this.alamat[id]
+      const tujuan = "/karya/" + targetRoom.toLowerCase() + targetUrl
+      console.log(tujuan)
       this.$router.push({ path: tujuan })
     }
   }
