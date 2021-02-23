@@ -36,14 +36,35 @@
             <div v-if="videoLoading" class="loading-wrapper">
               <Loading />
             </div>
-            <youtube v-if="!dbLoading" ref="youtube" :resize-delay="0" :resize="true" :fit-parent="true" :video-id="dataKarya.videoId" :player-vars="playerVars" @ended="restart" @ready="onPlayerReady" />
+            <youtube v-if="!dbLoading" ref="youtube" :resize-delay="0" :resize="true" :fit-parent="true" :video-id="dataKarya.videoId[0]" :player-vars="playerVars" @ended="restart" @ready="onPlayerReady" />
           </div>
         </div>
         <!-- TODO: SLIDE 3 -->
         <!-- Kalo ada deskripsi dan still image lain. Kalo gaada hapus aja -->
-        <!-- <div id="slide3" class="swiper-slide narasi" data-hash="slide3">
-          <div>jadi ini slide 3</div>
-        </div> -->
+        <div id="slide3" class="swiper-slide narasi" data-hash="slide3">
+          <div class="slide-container">
+            <div class="video-wrapper" style="margin-left: 30px;">
+              <div v-if="videoLoading" class="loading-wrapper">
+                <Loading />
+              </div>
+              <youtube v-if="!dbLoading" ref="youtube" :resize-delay="0" :resize="true" :fit-parent="true" :video-id="dataKarya.videoId[1]" :player-vars="playerVars" @ended="restart" @ready="onPlayerReady" />
+            </div>
+            <div class="caption-container no-swipe" @mousewheel.stop>
+              <div class="judul">
+                {{ dataKarya.judul2 }}
+              </div>
+              <div class="author">
+                {{ dataKarya.ph2 }}
+              </div>
+              <div class="title">
+                {{ dataKarya.captionTitle2 }}
+              </div>
+              <p class="deskripsi">
+                {{ dataKarya.caption2 }}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <div slot="pagination" class="swiper-pagination" />
     </div>
@@ -67,9 +88,8 @@ import loading from '~/components/Loading.vue'
       loading
     },
     async asyncData({ params }) {
-      const id = params.id
       const emosi = params.emosi
-      return { emosi, id }
+      return { emosi }
     },
     data () {
       return {
@@ -77,8 +97,9 @@ import loading from '~/components/Loading.vue'
           judul: '',
           ph: '',
           caption: '',
+          caption2: '',
           captionTitle: '',
-          videoId: '',
+          videoId: [],
           posterMin: '',
           poster: '',
         }, 
@@ -113,17 +134,21 @@ import loading from '~/components/Loading.vue'
       }
     },
     mounted () {
-      const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('video').doc(this.id)
+      const karyaRef = this.$fire.firestore.collection('karya').doc('biasa').collection('video').doc('bestfriend')
       karyaRef.get()
         .then(doc => {
           let data = {id: doc.id, ...doc.data()}
           this.dataKarya.judul = data.judul
+          this.dataKarya.judul2 = data.judul2
           this.dataKarya.ph = data.ph
+          this.dataKarya.ph2 = data.ph2
           this.dataKarya.caption = this.handleNewLines(data.caption)
-          this.dataKarya.captionTitle = data.caption_title ? data.caption_title : ''
+          this.dataKarya.caption2 = this.handleNewLines(data.caption2)
+          this.dataKarya.captionTitle = data.captionTitle
+          this.dataKarya.captionTitle2 = data.captionTitle2
           this.dataKarya.videoId = (data.videoId || data.videoid)
           this.dataKarya.poster = data.poster
-          this.dataKarya.posterMin = this.handleMin(data.poster)
+          this.dataKarya.posterMin = 'https://storage.googleapis.com/gep-teknis.appspot.com/karya/video/_bestfriend/minposter-Poster เพื่อนแท้ (Best Friend)(1).png'
           this.dataKarya.next = data.next
           this.dataKarya.prev = data.prev
           this.dbLoading = false

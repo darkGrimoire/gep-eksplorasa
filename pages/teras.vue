@@ -53,12 +53,12 @@
           <div class="cont youtube-container" style="display:none;">
             <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :player-vars="playerVars" @ended="restart" />
           </div>
-          <nuxt-link class="cont events-button" tag="div" to="/events" :no-prefetch="true">
-            Events
-          </nuxt-link>
-          <nuxt-link class="cont back-button" :to="'/home'">
-            Back
-          </nuxt-link>
+          <div v-if="!isInstruksi1" class="instruksi1">
+            <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
+          </div>
+          <div class="instruksi2" style="display: none;">
+            <img src="/instruksi/transisiy-swipe-hp.gif" alt="instruksi">
+          </div>
         </div>
       </div>
     </div>
@@ -97,8 +97,16 @@
         </div>
       </div>
     </div>
-    <div class="sound-controller" @click="changeMute()">SOUND</div>
+    <div class="sound-controller" @click="changeMute()">
+      SOUND
+    </div>
     <rcp />
+    <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
+      Events
+    </nuxt-link>
+    <nuxt-link class="back-button" :to="'/'">
+      Back
+    </nuxt-link>
   </div>
 </template>
 
@@ -144,7 +152,9 @@ import { Youtube } from 'vue-youtube'
         },
         showTeaser: false,
         catAudio: undefined,
-        audio: undefined
+        audio: undefined,
+        isInstruksi1: false,
+        instruksiImg: '/instruksi/1.png'
       }
     },
     computed: {
@@ -221,9 +231,30 @@ import { Youtube } from 'vue-youtube'
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/teras.mp3')
       this.audio.volume = 0.4
-      this.audio.play()
+      setTimeout(() => {
+        this.audio.play()
+      }, 3000)
+      this.isInstruksi1 = (localStorage.getItem('instruksi_1') || false)
+      if (window.matchMedia("(orientation: portrait)").matches){
+        this.instruksiImg = '/instruksi/1 hp.png'
+      }
+      if (!this.isInstruksi1){
+        localStorage.setItem('instruksi_1', true)
+      }
     },
     methods: {
+      fadeInstruksi(){
+        gsap.to('.instruksi1', {opacity: 0, duration: 1, onComplete: () => {
+          document.getElementsByClassName('instruksi1')[0].style.display = 'none'
+          if (window.matchMedia("(orientation: portrait)").matches){
+            document.getElementsByClassName('instruksi2')[0].style.display = 'block'
+            gsap.to('.instruksi2', {opacity: 1, duration: 1})
+            gsap.to('.instruksi2', {opacity: 0, duration: 1, delay: 3.5, onComplete: () => {
+              document.getElementsByClassName('instruksi2')[0].style.display = 'none'
+            }})
+          }
+        }})
+      },
       reverseAnimation(){
         document.getElementById('slide1').style.display = 'block'
         gsap.to('#slide1', {opacity: 1, duration: .5, delay: .3})
@@ -250,6 +281,7 @@ import { Youtube } from 'vue-youtube'
         new Image().src = '/teras/A3 1.png'
         new Image().src = '/teras/p2 1.png'
         new Image().src = '/teras/meong1 1.png'
+        new Image().src = '/teras/open me 2.png'
       },
       goToEmosi(str){
         this.$router.push({path: "/ruangan/" + str})
@@ -339,9 +371,9 @@ import { Youtube } from 'vue-youtube'
 
 <style lang="scss" scoped>
 .back-button {
-  position: absolute;
+  position: fixed;
   left: 5%;
-  bottom: 13%;
+  bottom: 7%;
   color: #ede5d1;
   font-size: 40px;
   font-family: 'KG Happy Solid';
@@ -775,9 +807,10 @@ import { Youtube } from 'vue-youtube'
 }
 
 .events-button {
+  position: fixed;
   font-family: 'KG Happy Solid';
   right: 5%;
-  bottom: 13%;
+  bottom: 7%;
   font-size: 40px;
   z-index: 5;
   color: #ede5d1;
@@ -786,6 +819,16 @@ import { Youtube } from 'vue-youtube'
   &:hover {
     opacity: .9;
     cursor: pointer;
+  }
+  @media only screen and (max-width: 800px) {
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
   }
 }
 
@@ -805,4 +848,35 @@ import { Youtube } from 'vue-youtube'
   opacity: 0.8;
 }
 
+.instruksi1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 300vh;
+  background-color: rgba($color: black, $alpha: .9);
+  z-index: 15000;
+  img {
+    width: 100%;
+    height: 100%;
+    transform: scale(.5);
+    object-fit: contain;
+  }
+}
+.instruksi2 {
+  position: absolute;
+  top: 97%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  z-index: 15000;
+  opacity: 0;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
 </style>
