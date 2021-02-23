@@ -74,6 +74,7 @@ export default {
     },
     setUpPic() {
       // SET UP THE MARGIN OF ALL THE IMG INSIDE THE DOTS AREA
+      
       let dots3_top = 0
       let dots2_top = 0
       const dotsPic1 = document.getElementsByClassName("dots-1")[0]
@@ -82,6 +83,10 @@ export default {
       const dotsPic4 = document.getElementsByClassName("dots-4")[0]
       const dotsPic5 = document.getElementsByClassName("dots-5")[0]
       const dotsGif = document.getElementsByClassName("dots-gif")[0]
+      let x = dotsPic1.clientHeight
+      if (x == 0) {
+        this.$router.push({path: '/eksplor'})
+      }
       if (window.innerWidth < 600) {
         /* FOR PHONE */
         dots2_top = dotsPic1.clientHeight * 1.5
