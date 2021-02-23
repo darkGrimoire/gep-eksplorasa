@@ -76,11 +76,6 @@ const TARGET_ZOOM_WIDTH = 3000
       rcp,
       Loading
     },
-    async asyncData({ params }) {
-      const emosi = params.emosi
-      const id = params.id
-      return { emosi, id }
-    },
     data() {
       return {
         dataKarya: {
@@ -161,7 +156,7 @@ const TARGET_ZOOM_WIDTH = 3000
         })
         .catch((err) => {
           console.log(err)
-          this.$router.push({path: '/ruangan/' + this.emosi})
+          this.$router.push({path: '/ruangan/closing'})
         })
     },
     methods: {
