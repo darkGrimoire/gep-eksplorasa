@@ -60,11 +60,6 @@
 // import gsap from 'gsap'
 import rcp from '~/components/rcp.vue'
 import Loading from '~/components/Loading.vue'
-if (process.client){
-  require('~/assets/turnjs4/lib/turn')
-  require('~/assets/turnjs4/lib/zoom')
-  require('~/assets/turnjs4/lib/hash')
-}
 /* eslint no-undef: 0 */
 const PAGE_WIDTH = 500
 const PAGE_HEIGHT = 650
@@ -161,7 +156,7 @@ const TARGET_ZOOM_WIDTH = 3000
         })
         .catch((err) => {
           console.log(err)
-          // this.$router.push({path: '/ruangan/' + this.emosi})
+          this.$router.push({path: '/ruangan/' + this.emosi})
         })
     },
     methods: {
@@ -175,6 +170,11 @@ const TARGET_ZOOM_WIDTH = 3000
         }
       },
       initialization(){
+        if (process.client){
+          require('~/assets/turnjs4/lib/turn')
+          require('~/assets/turnjs4/lib/zoom')
+          require('~/assets/turnjs4/lib/hash')
+        }
         this.options.when = {
           turning: (event, page) => {
             var book = $(this.selector)

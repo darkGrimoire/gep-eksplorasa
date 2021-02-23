@@ -105,7 +105,7 @@
       Events
     </nuxt-link>
     <nuxt-link v-if="slide === 1" class="back-button" :to="'/'">
-      Back
+      BACK
     </nuxt-link>
   </div>
 </template>
