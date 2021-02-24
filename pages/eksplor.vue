@@ -1,10 +1,14 @@
 <template>
   <div class="background">
-    <div class="button-container">Loading</div>
+    <div class="button-container">
+      Loading {{ Math.floor(progress) }} %
+    </div>
   </div>
 </template>
 
 <script>
+import gsap from 'gsap'
+
 export default {
   data() {
     return {
@@ -14,16 +18,10 @@ export default {
   },
   mounted() {
     this.initSetup()
-    let x = setInterval(() => {
-      if (this.progress == 100) {
-        clearInterval(x)
+    gsap.to(this.$data, {progress: 100, duration: this.randomInteger(4, 6), ease: 'power3.out', delay: .3,
+      onComplete: () => {
         this.$router.push({path: '/dots'})
-      } else {
-        this.progress += 10
-        document.getElementsByClassName("button-container")[0].innerHTML =  "Loading " + this.progress + "%"
-      }
-      
-    },500)
+      }})
   },
   methods: {
     initSetup() {
@@ -32,6 +30,9 @@ export default {
       new Image().src = "/img/dots_3_flower.png"
       new Image().src = "/img/dots_3_grass.png"
     },
+    randomInteger(min, max) {
+      return (Math.random() * (max - min + 1)) + min
+    }
   }
 }
 </script>
