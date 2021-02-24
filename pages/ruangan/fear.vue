@@ -131,9 +131,8 @@
             <img src="/fear/pintu 1.png" alt="pintu">
           </div>
           <div class="trap-door" />
-          <div class="cont tv" @click="popups = 'tv'">
-            <img src="/fear/tv.gif" alt="tv">
-          </div>
+          <div class="cont tv" @click="popups = 'tv'" />
+        
           <div v-show="!benda.saklar" class="cont sadako">
             <img src="/fear/sadako 1.png" alt="sadako" :style="`opacity: ${benda.sadako}`" @mouseenter="benda.sadako = 1" @mouseout="benda.sadako = 0">
           </div>
@@ -180,7 +179,7 @@
             <img src="/fear/f-photobook-2.png" alt="hantu">
           </div>
           <div class="cont teropong" @click="handleRasyid" />
-
+          <div class="playlist" />
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="kaki" />
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
@@ -733,14 +732,33 @@
   animation: none;
 }
 
-.tv {
+.tv{
+  background-image: url("/fear/tv.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
   width: 17.2%;
   top: 32%;
   left: 36.2%; 
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  animation: bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.tv:hover {
+  background-image: url("/fear/tv.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 17.2%;
+  top: 32%;
+  left: 36.2%; 
+  cursor: pointer;
+  animation: none;
+}
+
 
 .sadako {
   width: 15.8%;
@@ -1142,6 +1160,33 @@
 //   top: 36.8%;
 //   left: 41.2%;
 // }
+
+.playlist{
+  background-image: url("/fear/playlist-fear.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 8%;
+  top: 45%;
+  left: 64.5%;
+  cursor: pointer;
+  animation: bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.playlist:hover {
+  background-image: url("/fear/playlist-fear.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 8%;
+  top: 45%;
+  left: 64.5%;
+  cursor: pointer;
+  animation: none;
+}
 
 .kaki{
   background-image:url("/fear/fearf.gif");

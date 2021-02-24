@@ -237,6 +237,7 @@
           <div class="cont teropong" @click="handleRasyid" />
 
           <div class="pisau" />
+          <div class="playlist" />
           <div class="buku" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="gantungan" @click="popups = 'foto';tipeKarya = 'series'" />
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
@@ -1030,6 +1031,34 @@
   top: 29.5%;
   left: 35.5%;
 }
+
+.playlist{
+  background-image: url("/anger/playlist-anger.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 8%;
+  top: 43%;
+  left: 16.5%;
+  cursor: pointer;
+  animation: bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.playlist:hover {
+  background-image: url("/anger/playlist-anger.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 8%;
+  top: 43%;
+  left: 16.5%;
+  cursor: pointer;
+  animation: none;
+}
+
 .rak {
   width: 13%;
   top: 34%;
