@@ -275,17 +275,14 @@ export default {
 
 <style lang="scss" scoped>
 .tvPopUp {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  top: 0%;
-  left: 0%;
-  background-color: rgba(0, 0, 0, 0.8);
-  background-size: 100% auto;
-  background-repeat: repeat-y;
-  background-position: center top;
-  overflow: auto;
-  z-index: 1000;
+  background-color: black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 400vh;
+  z-index: 3000;
 }
 .popupwindow {
   position: absolute;
@@ -296,8 +293,8 @@ export default {
   border: 2px solid;
   padding: 1vw 1vh;
   z-index: 1001;
-  min-height: 60%;
-  min-width: 50%;
+  min-height: 60vh;
+  min-width: 50vw;
 }
 .x-button {
   display: flex;
@@ -368,12 +365,24 @@ export default {
 
 @media screen and (max-width: 800px) {
   .popupwindow {
-    transform: translate(-50%, -45%);
+    max-width: 80vw;
   }
+  .now-showing {
+    margin-top: -5vh;
+  }
+  .poster-area {
+  margin-left: 1vw;
+  margin-right: 1vw;
+  width: 150px;
+  height: 150px;
+}
   .main-popup {
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: center;
+  }
+  .title-movie {
+    font-size: 20px;
   }
   .right-area {
     flex-wrap: wrap;

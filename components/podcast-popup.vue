@@ -184,28 +184,25 @@ export default {
 
 <style>
 .podcastPopup {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0%;
-  left: 0%;
-  background-color: rgba(0, 0, 0, 0.8);
-  background-size: 100% auto;
-  background-repeat: repeat-y;
-  background-position: center top;
-  overflow: auto;
+  background-color: black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 400vh;
   z-index: 1000;
-  color: black;
-  font-family: "Mechanical Pencil";
-  font-size: 2rem;
 }
 .podcastpopupwindow {
+  font-family: "Mechanical Pencil";
+  font-size: 2rem;
+  color: black;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-image: url("/img/bg_beige-min.png");
-  min-width: 35%;
+  min-width: 35vw;
 }
 .podcast-x-button {
   display: flex;
@@ -276,7 +273,7 @@ li:hover {
 }
 @media screen and (max-width: 700px) {
   .podcastpopupwindow {
-    min-width: 75%;
+    min-width: 75vw;
   }
 }
 @media screen and (max-width: 500px) {
