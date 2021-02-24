@@ -838,6 +838,15 @@
   left: 3%;  
 }
 
+.tv img{
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.tv img:hover{
+  animation:none;
+}
+
 .meja-pot {
   width: 40%;
   top: 22.1%;
