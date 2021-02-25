@@ -23,6 +23,9 @@
         <div class="canvas canvas-hover" />
       </div>
     </div>
+    <!-- <div v-if="slide === 0" class="foot-in">
+      <img src="/gif/f220.gif" alt="footstep">
+    </div> -->
     
     <!-- SLIDE 1 -->
     <div id="slide1" class="top-cont" 
@@ -180,8 +183,11 @@
           </div>
           <div class="cont teropong" @click="handleRasyid" />
           <div class="playlist" @click="popups = 'playlist'" />
-          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div class="bounce kunci" @click="benda.kunci = true; resetGif(); slide=3" />
           <div v-show="benda.kunci" class="kaki" />
+          <!-- <div v-show="benda.kunci" class="foot-out">
+            <img id="foot-out" src="/gif/s220.gif" alt="footstep">
+          </div> -->
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
             <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
@@ -313,15 +319,15 @@
             document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
             this.msg.closing = this.msg.closings[0]
             gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 7, onComplete: () =>{
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 10, onComplete: () =>{
               this.msg.closing = this.msg.closings[1]
             }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 7.5})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 14.5, onComplete: () => {
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 10.5})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 25, onComplete: () => {
               this.msg.closing = this.msg.closings[2]
             }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 15})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 20, onComplete: () => {
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 25.5})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 35, onComplete: () => {
               this.$router.push({path: CLOSING})
             }})
           } else {
@@ -329,7 +335,7 @@
             document.getElementsByClassName('narasi-keluar')[0].style.display = 'block'
             gsap.to('.narasi-keluar', {opacity: 1, duration: 2, delay: 2})
             document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 7, onComplete: () => {
+            gsap.to('.loading', {opacity: 1, duration: 1, delay: 12, onComplete: () => {
               this.$router.push({path: NEXT_ROOM})
             }})
           }
@@ -358,8 +364,8 @@
       } else {
         document.getElementsByClassName('narasi-masuk')[0].style.display = 'block'
         gsap.to('.narasi-masuk', {opacity: 1,  duration: .5})
-        gsap.to('.narasi-masuk', {opacity: 0, delay: 3, duration: .5})
-        gsap.to('.loading', {opacity: 0, delay: 3, duration: .2, onComplete: () => {
+        gsap.to('.narasi-masuk', {opacity: 0, delay: 5, duration: .5})
+        gsap.to('.loading', {opacity: 0, delay: 5, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           document.getElementsByClassName('narasi-masuk')[0].style.display = 'none'
           localStorage.setItem('fear', true)
@@ -387,6 +393,12 @@
       }
     },
     methods: {
+      resetGif() {
+        // var img = document.getElementById("foot-out")
+        // var imageUrl = img.getAttribute("src")
+        // img.setAttribute("src", "#")
+        // img.setAttribute("src", imageUrl)
+      },
       fadeInstruksi(classname){
         gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName(classname)[0].style.display = 'none'
@@ -1200,6 +1212,22 @@
   height:10%;
   top:83%;
   left:89%;
+}
+
+.foot-in {
+  position: absolute;
+  width: 100vw;
+  top: 75%;
+  left: 45%;
+  z-index: 20000;
+}
+
+.foot-out {
+  position: absolute;
+  width: 100vw;
+  top: 75%;
+  left: 90%;
+  z-index: 20000;
 }
 
 .kunci{
