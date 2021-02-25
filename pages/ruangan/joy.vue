@@ -598,7 +598,20 @@
   &:hover {
     cursor: pointer;
   }
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.tv:hover {
+  width: 25%;
+  top: 37.5%;
+  left: 62.9%;
+  &:hover {
+    cursor: pointer;
+  }
+  animation:none;
+}
+
 .pohon {
   width: 41.2%;
   top: -31.7%;
