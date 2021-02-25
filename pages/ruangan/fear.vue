@@ -93,7 +93,7 @@
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
-          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -179,7 +179,7 @@
             <img src="/fear/f-photobook-2.png" alt="hantu">
           </div>
           <div class="cont teropong" @click="handleRasyid" />
-          <div class="playlist" />
+          <div class="playlist" @click="popups = 'playlist'" />
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
           <div v-show="benda.kunci" class="kaki" />
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
@@ -190,6 +190,7 @@
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PlaylistPopup v-if="popups === 'playlist' && slide === 2" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -217,6 +218,7 @@
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
   import PodcastPopup from '~/components/podcast-popup.vue'
+  import PlaylistPopup from '~/components/playlist-popup.vue'
   export default {
     name: "Fear",
     components: {
@@ -224,7 +226,8 @@
       tvPopup,
       kinePopup,
       NewfotoPopup,
-      PodcastPopup
+      PodcastPopup,
+      PlaylistPopup
     },
     layout: 'ruangan',
     data() {

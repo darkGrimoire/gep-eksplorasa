@@ -68,13 +68,15 @@
           </div>
           <div class="book" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="podcast" @click="popups = 'podcast'" />
+          <div class="playlist" @click="popups = 'playlist'" />
           <div class="single" @click="popups = 'foto';tipeKarya = 'single'" />
           <div v-if="!isInstruksi1" class="instruksi instruksi1">
             <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
-          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" @closePopup="popups = ''" />
+          <PlaylistPopup v-if="popups === 'playlist' && slide === 1" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -110,14 +112,13 @@
           <div class="cont meja-pot">
             <img src="/sad/mejaa.png" alt="meja">
           </div>
-          <div class="cont tv" @click="popups = 'tv'">
-            <img src="/sad/tv.png" alt="tv">
-          </div>
+          <div class="cont tv" @click="popups = 'tv'" />
           <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
           <div class="article" @click="popups = 'kine';tipeKarya = 'artikel'" />
           <div v-show="benda.key" class="foot" />
           <div class="key" @click="benda.key = true;slide=3" />
           <div class="teropong" @click="handleRasyid" />
+          <div class="series" @click="popups = 'foto';tipeKarya = 'series'" />
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
             <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
@@ -150,6 +151,7 @@
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
   import PodcastPopup from '~/components/podcast-popup.vue'
+  import PlaylistPopup from '~/components/playlist-popup.vue'
   export default {
     name: "Sad",
     components: {
@@ -157,7 +159,8 @@
       tvPopup,
       kinePopup,
       NewfotoPopup,
-      PodcastPopup
+      PodcastPopup,
+      PlaylistPopup
     },
     layout: 'ruangan',
     data() {
@@ -838,28 +841,31 @@
   left: 3%;  
 }
 
-.tv img{
+.tv {
+  background-image:url("/sad/tv.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 60%;
+  height: 60%;
+  top: 30.5%;
+  left: 67.9%;
   animation:bounce-7 2s;
   animation-iteration-count: infinite;
-}
-
-.tv img:hover{
-  animation:none;
+  cursor: pointer;
+  &:hover {
+    background-image:url("/sad/hover tv s.png");
+    cursor: pointer;
+    animation:none;
+    left: 70.9%;
+    width: 56%;
+  }
 }
 
 .meja-pot {
   width: 40%;
   top: 22.1%;
   left: 31%;
-}
-
-.tv {
-  width: 35%;
-  top: 28.8%;
-  left: 64.9%;
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .darkness {
@@ -935,5 +941,62 @@
     transform: scale(0.4);
     object-fit: contain;
   }
+}
+
+.series{
+  background-image:url("/sad/series-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:75%;
+  height:22%;
+  top:15%;
+  left:67%;
+  z-index:71;
+  cursor:pointer;  
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.series:hover{
+  background-image:url("/sad/series-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:75%;
+  height:22%;
+  top:15%;
+  left:67%;
+  z-index:71;
+  cursor:pointer;  
+  animation:none;
+}
+
+.playlist{
+  background-image:url("/sad/playlist-sad.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:75%;
+  height:17%;
+  top:58%;
+  left:57%;
+  cursor:pointer;  
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.playlist:hover{
+  background-image:url("/sad/playlist-sad.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute; 
+  width:75%;
+  height:17%;
+  top:58%;
+  left:57%;
+  z-index:71;
+  cursor:pointer;  
+  animation:none;
 }
 </style>

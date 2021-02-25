@@ -64,14 +64,16 @@
           <div class="cont karpet">
             <img src="/joy/karpet 1.png" alt="karpet">
           </div>
-          <div class="cont tv" @click="popups = 'tv'">
-            <img src="/joy/tv 1.png" alt="tv">
-          </div>
+          <div class="tv" @click="popups = 'tv'" />
           <div class="cont pohon">
             <img src="/joy/pohon 1.png" alt="pohon">
           </div>
+          <div class="cont lemon">
+            <img src="/joy/lemon.png" alt="pohon">
+          </div>
           <div class="teddy" />
           <div class="bbq" />
+          <div class="playlist" @click="popups = 'playlist'" />
           <div class="ig" @click="popups = 'kine';tipeKarya = 'instagram'" />
           <div class="photobook" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="zine" @click="popups = 'kine';tipeKarya = 'buku'" />
@@ -83,6 +85,7 @@
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PlaylistPopup v-if="popups === 'playlist' && slide === 1" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -162,6 +165,7 @@
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
+  import PlaylistPopup from '~/components/playlist-popup.vue'
   import rcp from '~/components/rcp.vue'
   export default {
     name: "Joy",
@@ -169,7 +173,8 @@
       rcp,
       tvPopup,
       kinePopup,
-      NewfotoPopup
+      NewfotoPopup,
+      PlaylistPopup
     },
     layout: 'ruangan',
     data() {
@@ -592,24 +597,23 @@
 }
 
 .tv {
-  width: 25%;
-  top: 37.5%;
-  left: 62.9%;
-  &:hover {
-    cursor: pointer;
-  }
+  background-image:url("/joy/tv 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 40%;
+  height: 40%;
+  top: 36.5%;
+  left: 64.9%;
   animation:bounce-7 2s;
   animation-iteration-count: infinite;
-}
-
-.tv:hover {
-  width: 25%;
-  top: 37.5%;
-  left: 62.9%;
+  cursor: pointer;
   &:hover {
+    background-image:url("/joy/hover tv joy.png");
     cursor: pointer;
+    animation:none;
+    left: 66.9%;
   }
-  animation:none;
 }
 
 .pohon {
@@ -682,6 +686,12 @@
   width: 100%;
   top: 52%;
   left: 0;
+}
+
+.lemon{
+  width: 14%;
+  top: 4%;
+  left: 3%;
 }
 
 .teddy{
@@ -969,6 +979,33 @@
 
 .kamera:hover{
   background-image:url("/joy/PHOTOSERIES_2 1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 10%;
+  height:14%;
+  top: 62%;
+  left: 88%;
+  cursor:pointer;
+  animation:none;
+}
+
+.playlist{
+  background-image:url("/joy/playlist joy.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 15%;
+  height:15%;
+  top: 73%;
+  left: 45%;
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;  
+}
+
+.playlist:hover{
+  background-image:url("/joy/playlist joy.png");
   background-size:contain;
   background-repeat:no-repeat;
   position:absolute;

@@ -145,8 +145,8 @@
             "
           />
           <div class="sampah" />
-          <div class="garpu"/>
-          <div class="garpu1"/>
+          <div class="garpu" />
+          <div class="garpu1" />
 
           
           <div v-if="!isInstruksi1" class="instruksi instruksi1">
@@ -212,8 +212,7 @@
             <img src="/anger/meja.png" alt="meja">
           </div>
           <div class="cont meong">
-            <img src="/anger/meong.png" alt="meong" :style="`opacity: ${benda.kucing}`" @mouseenter="benda.kucing = 1" @mouseout="benda.kucing = 0"
-            >
+            <img src="/anger/meong.png" alt="meong" :style="`opacity: ${benda.kucing}`" @mouseenter="benda.kucing = 1" @mouseout="benda.kucing = 0">
           </div>
           <div class="cont rak">
             <img src="/anger/rak.png" alt="rak">
@@ -237,7 +236,7 @@
           <div class="cont teropong" @click="handleRasyid" />
 
           <div class="pisau" />
-          <div class="playlist" />
+          <div class="playlist" @click="popups = 'playlist'" />
           <div class="buku" @click="popups = 'foto';tipeKarya = 'buku'" />
           <div class="gantungan" @click="popups = 'foto';tipeKarya = 'series'" />
           <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
@@ -261,6 +260,7 @@
             :tipe-karya="tipeKarya"
             class="foto-popup"
           />
+          <PlaylistPopup v-if="popups === 'playlist' && slide === 2" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
@@ -269,7 +269,6 @@
     </div>
     <rcp />
   </div>
-
 </template>
 
 <script>
@@ -285,6 +284,7 @@
   import tvPopup from '~/components/tv-popup.vue'
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
+  import PlaylistPopup from '~/components/playlist-popup.vue'
   export default {
     name: "Anger",
     components: {
@@ -292,7 +292,7 @@
       tvPopup,
       kinePopup,
       NewfotoPopup,
-      
+      PlaylistPopup
     },
     layout: 'ruangan',
     data() {

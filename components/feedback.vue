@@ -9,8 +9,9 @@
         <div v-for="star in 5" :key="star" :class="{ 'active': star <= stars }" class="star" @click="rate(star)" />
       </div>
       <div class="input-container">
-        <textarea id="pesan" v-model="pesan" class="input-pesan" name="pesan" cols="30" rows="3" placeholder="Ketikkan pesan..." @keyup.enter="submitFeedback" />
+        <textarea id="pesan" v-model="pesan" class="input-pesan" name="pesan" cols="30" rows="2" placeholder="Ketikkan pesan..." />
         <img src="/feedback/_garisx.png" alt="garis" class="garis">
+        <div class="submit-btn" @click="submitFeedback" />
       </div>
       <div class="emo-container">
         <img src="/feedback/emo goyang.gif" alt="emosi">
@@ -162,6 +163,25 @@ img {
     }
   }
 }
+
+.submit-btn {
+  background-image:url("/feedback/submit-before.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  width: 14%;
+  height: 14%;
+  top: 68%;
+  left: 62%;
+  &:hover {
+    background-image:url("/feedback/submit-after.png");
+    cursor: pointer;
+  }
+  @media only screen and (max-width: 450px) {
+    top: 74%;
+  }
+}
+
 .garis {
   position: relative;
   justify-self: flex-start;
@@ -173,11 +193,11 @@ img {
   margin-bottom: 3%;
   height: 100px;
   @media only screen and (max-width: 800px) {
-    margin-top: 0;
     margin-bottom: 2%;
     height: 70px;
   }
   @media only screen and (max-width: 450px) {
+    margin-top: 0;
     height: 40px;
   }
 }
