@@ -22,6 +22,9 @@ export default {
       ease: "power3.out",
       delay: 0.3,
       onComplete: () => {
+        const browser_name = Bowser.getParser(
+              window.navigator.userAgent
+            ).getBrowserName()
         if (browser_name == "Safari") {
           this.$router.push({ path: "/teras" })
         } else {
