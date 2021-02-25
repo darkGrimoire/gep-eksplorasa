@@ -215,6 +215,7 @@
         popups: '',
         tipeKarya: '',
         audio: undefined,
+        isAudioPlaying: false,
         isInstruksi1: false,
         isInstruksi2: true,
         instruksiImg1: '/instruksi/2.png',
@@ -286,8 +287,10 @@
     },
     beforeDestroy() {
       window.removeEventListener("resize", this.handleResize)
-      this.audio.pause()
-      this.audio.currentTime = 0
+      gsap.to(this.audio, {volume: 0, duration: .3, onComplete: () => {
+        this.audio.pause()
+        this.audio.currentTime = 0
+      }})
     },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
@@ -320,11 +323,8 @@
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/joy.mp3')
       this.audio.volume = 0.3
-      try {
-        this.audio.play()
-      } catch (error) {
-        this.changeMute()
-      }
+      this.audio.loop = true
+      this.playAudio()
       this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
         this.instruksiImg1 = '/instruksi/2 hp.png'
@@ -448,17 +448,35 @@
         }
       },
       changeMute() {
-      this.audio.muted = !this.audio.muted
-      if (this.audio.muted == true) {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "line-through"
-      } else {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "none"
-      }
-    }
+        this.audio.muted = !this.audio.muted
+        if (this.audio.muted == true) {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "line-through"
+        } else {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "none"
+        }
+        if (!this.isAudioPlaying) {
+          this.playAudio()
+        }
+      },
+      playAudio(){
+        let startPlayPromise = this.audio.play()
+        this.isAudioPlaying = true
+        if (startPlayPromise !== undefined) {
+          startPlayPromise.then(() => {
+            // Yaudah biarin aja dia ngeplay
+          }).catch(() => {
+            this.isAudioPlaying = false
+            this.audio.muted = true
+            document.getElementsByClassName(
+              "sound-controller"
+            )[0].style.textDecoration = "line-through"
+              })
+        }
+      },
     },
   }
 </script>
@@ -1018,10 +1036,10 @@
   background-size:contain;
   background-repeat:no-repeat;
   position:absolute;
-  width: 10%;
-  height:14%;
-  top: 62%;
-  left: 88%;
+  width: 15%;
+  height:15%;
+  top: 73%;
+  left: 45%;
   cursor:pointer;
   animation:none;
 }
