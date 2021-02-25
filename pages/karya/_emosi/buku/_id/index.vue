@@ -752,6 +752,16 @@ const TARGET_ZOOM_WIDTH = 3000
   z-index: 0;
 }
 
+::v-deep .animated .page {
+  cursor: zoom-in;
+}
+
+::v-deep .zoom-in .page {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
 
 .prev-karya-button {
   position: fixed;

@@ -1,14 +1,12 @@
 <template>
   <div class="background">
-    <div class="button-container">
-      Loading {{ Math.floor(progress) }} %
-    </div>
+    <div class="button-container">Loading {{ Math.floor(progress) }} %</div>
   </div>
 </template>
 
 <script>
-import gsap from 'gsap'
-
+import gsap from "gsap"
+import Bowser from "bowser"
 export default {
   data() {
     return {
@@ -18,10 +16,24 @@ export default {
   },
   mounted() {
     this.initSetup()
-    gsap.to(this.$data, {progress: 100, duration: this.randomInteger(4, 6), ease: 'power3.out', delay: .3,
+    gsap.to(this.$data, {
+      progress: 100,
+      duration: this.randomInteger(4, 6),
+      ease: "power3.out",
+      delay: 0.3,
       onComplete: () => {
-        this.$router.push({path: '/dots'})
-      }})
+        const browser_name = Bowser.getParser(
+              window.navigator.userAgent
+            ).getBrowserName()
+        if (browser_name == "Safari") {
+          this.$router.push({ path: "/teras" })
+        } else {
+          this.$router.push({
+            path: "/dots"
+          })
+        }
+      }
+    })
   },
   methods: {
     initSetup() {
@@ -31,7 +43,7 @@ export default {
       new Image().src = "/img/dots_3_grass.png"
     },
     randomInteger(min, max) {
-      return (Math.random() * (max - min + 1)) + min
+      return Math.random() * (max - min + 1) + min
     }
   }
 }
