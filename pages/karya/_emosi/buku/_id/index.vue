@@ -52,12 +52,12 @@
     <nuxt-link v-show="!fs" class="back-button" :to="'/ruangan/'+emosi">
       Back
     </nuxt-link>
-    <nuxt-link v-if="dataKarya.prev" class="prev-button" :no-prefetch="true"
+    <nuxt-link v-if="dataKarya.prev" class="prev-karya-button" :no-prefetch="true"
                :to="'/karya/'+this.emosi+(this.dataKarya.prev.charAt(0) === '/' ? '' : '/')+this.dataKarya.prev"
     >
       Prev
     </nuxt-link>
-    <nuxt-link v-if="dataKarya.next" class="next-button" :no-prefetch="true"
+    <nuxt-link v-if="dataKarya.next" class="next-karya-button" :no-prefetch="true"
                :to="'/karya/'+this.emosi+(this.dataKarya.next.charAt(0) === '/' ? '' : '/')+this.dataKarya.next"
     >
       Next
@@ -753,7 +753,7 @@ const TARGET_ZOOM_WIDTH = 3000
 }
 
 
-.prev-button {
+.prev-karya-button {
   position: fixed;
   top: 2%;
   left: 2%;
@@ -775,7 +775,7 @@ const TARGET_ZOOM_WIDTH = 3000
   }
 }
 
-.next-button {
+.next-karya-button {
   position: fixed;
   right: 2%;
   top: 2%;
