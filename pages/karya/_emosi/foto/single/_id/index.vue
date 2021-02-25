@@ -159,6 +159,7 @@ import rcp from '~/components/rcp.vue'
   margin-top: 5%;
   width: 700px;
   max-width: 80%;
+  height: 50%;
   max-height: 50%;
   @media only screen and (max-width: 800px) {
     width: 550px;
