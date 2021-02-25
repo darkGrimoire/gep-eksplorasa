@@ -425,6 +425,8 @@ import 'swiper/swiper-bundle.css'
 }
 
 .journal{
+  position: relative;
+  top: -5%;
   @media only screen and (max-width: 600px) {
     width: 220%;
   }

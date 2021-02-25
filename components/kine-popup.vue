@@ -218,16 +218,13 @@ export default {
 
 <style lang="scss" scoped>
 .kinePopup {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0%;
-  left: 0%;
-  background-color: rgba(0, 0, 0, 0.8);
-  background-size: 100% auto;
-  background-repeat: repeat-y;
-  background-position: center top;
-  overflow: auto;
+  background-color: black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200vw;
+  height: 400vh;
   z-index: 1000;
   color: black;
 }
@@ -241,8 +238,8 @@ export default {
   font-family: "Mechanical Pencil";
   font-size: 1.5rem;
   text-align: justify;
-  min-height: 50%;
-  min-width: 30%;
+  min-width: 50vw;
+  min-height: 20vh;
 }
 .kine-x-button {
   display: flex;
@@ -267,11 +264,6 @@ li:hover {
 @media (max-width: 1020px) {
   .kinepopupwindow {
     font-size: 1.25rem;
-  }
-}
-@media (max-width: 600px) {
-  .kinepopupwindow {
-    width: 75%;
   }
 }
 @media (max-width: 410px) {

@@ -23,6 +23,9 @@
         <div class="canvas canvas-hover" />
       </div>
     </div>
+    <!-- <div v-if="slide === 0" class="foot-in">
+      <img src="/gif/f220.gif" alt="footstep">
+    </div> -->
     
     <!-- SLIDE 1 -->
     <div id="slide1" class="top-cont" 
@@ -93,7 +96,7 @@
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
-          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -131,9 +134,8 @@
             <img src="/fear/pintu 1.png" alt="pintu">
           </div>
           <div class="trap-door" />
-          <div class="cont tv" @click="popups = 'tv'">
-            <img src="/fear/tv.gif" alt="tv">
-          </div>
+          <div class="cont tv" @click="popups = 'tv'" />
+        
           <div v-show="!benda.saklar" class="cont sadako">
             <img src="/fear/sadako 1.png" alt="sadako" :style="`opacity: ${benda.sadako}`" @mouseenter="benda.sadako = 1" @mouseout="benda.sadako = 0">
           </div>
@@ -172,20 +174,20 @@
             <img src="/fear/pipaHAPE 1.png" alt="pipa">
           </div>
           <div class="artikel" @click="popups = 'kine';tipeKarya = 'artikel'" />
-          <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'">
-            <img src="/fear/f-photobook-1.png" alt="photobook">
-          </div>
-          <div v-show="!benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
-            <img src="/fear/f-photobook-2.png" alt="photobook1" :style="`opacity: ${benda.ouija}`" @mouseenter="benda.ouija = 1" @mouseout="benda.ouija = 0">
-          </div>
+          <div class="cont photobook" @click="popups = 'foto';tipeKarya = 'buku'" />
+   
+          <div v-show="!benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'" />
+
           <div v-show="benda.saklar" class="cont photobook1" @click="popups = 'foto';tipeKarya = 'buku'">
-            <img src="/fear/f-photobook-2.png" alt="photobook1">
+            <img src="/fear/f-photobook-2.png" alt="hantu">
           </div>
-          <div class="cont teropong" @click="handleRasyid">
-            <img src="/fear/tropong fear.png" alt="teropong">
-          </div>
-          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div class="cont teropong" @click="handleRasyid" />
+          <div class="playlist" @click="popups = 'playlist'" />
+          <div class="bounce kunci" @click="benda.kunci = true; resetGif(); slide=3" />
           <div v-show="benda.kunci" class="kaki" />
+          <!-- <div v-show="benda.kunci" class="foot-out">
+            <img id="foot-out" src="/gif/s220.gif" alt="footstep">
+          </div> -->
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
             <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
@@ -194,6 +196,7 @@
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PlaylistPopup v-if="popups === 'playlist' && slide === 2" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -221,6 +224,7 @@
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
   import PodcastPopup from '~/components/podcast-popup.vue'
+  import PlaylistPopup from '~/components/playlist-popup.vue'
   export default {
     name: "Fear",
     components: {
@@ -228,7 +232,8 @@
       tvPopup,
       kinePopup,
       NewfotoPopup,
-      PodcastPopup
+      PodcastPopup,
+      PlaylistPopup
     },
     layout: 'ruangan',
     data() {
@@ -314,15 +319,15 @@
             document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
             this.msg.closing = this.msg.closings[0]
             gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 7, onComplete: () =>{
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 10, onComplete: () =>{
               this.msg.closing = this.msg.closings[1]
             }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 7.5})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 14.5, onComplete: () => {
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 10.5})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 25, onComplete: () => {
               this.msg.closing = this.msg.closings[2]
             }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 15})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 20, onComplete: () => {
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 25.5})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 35, onComplete: () => {
               this.$router.push({path: CLOSING})
             }})
           } else {
@@ -330,7 +335,7 @@
             document.getElementsByClassName('narasi-keluar')[0].style.display = 'block'
             gsap.to('.narasi-keluar', {opacity: 1, duration: 2, delay: 2})
             document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 7, onComplete: () => {
+            gsap.to('.loading', {opacity: 1, duration: 1, delay: 12, onComplete: () => {
               this.$router.push({path: NEXT_ROOM})
             }})
           }
@@ -359,8 +364,8 @@
       } else {
         document.getElementsByClassName('narasi-masuk')[0].style.display = 'block'
         gsap.to('.narasi-masuk', {opacity: 1,  duration: .5})
-        gsap.to('.narasi-masuk', {opacity: 0, delay: 3, duration: .5})
-        gsap.to('.loading', {opacity: 0, delay: 3, duration: .2, onComplete: () => {
+        gsap.to('.narasi-masuk', {opacity: 0, delay: 5, duration: .5})
+        gsap.to('.loading', {opacity: 0, delay: 5, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           document.getElementsByClassName('narasi-masuk')[0].style.display = 'none'
           localStorage.setItem('fear', true)
@@ -388,6 +393,12 @@
       }
     },
     methods: {
+      resetGif() {
+        // var img = document.getElementById("foot-out")
+        // var imageUrl = img.getAttribute("src")
+        // img.setAttribute("src", "#")
+        // img.setAttribute("src", imageUrl)
+      },
       fadeInstruksi(classname){
         gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName(classname)[0].style.display = 'none'
@@ -736,14 +747,33 @@
   animation: none;
 }
 
-.tv {
+.tv{
+  background-image: url("/fear/tv.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
   width: 17.2%;
   top: 32%;
   left: 36.2%; 
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  animation: bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
+.tv:hover {
+  background-image: url("/fear/tv.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 17.2%;
+  top: 32%;
+  left: 36.2%; 
+  cursor: pointer;
+  animation: none;
+}
+
 
 .sadako {
   width: 15.8%;
@@ -806,19 +836,6 @@
   animation-iteration-count: infinite;
 }
 
-.photoseries:hover{
-  background-image:url("/fear/f-photoseries-2.png");
-  background-size:contain;
-  background-repeat:no-repeat;
-  position:absolute;
-  height:35%;
-  width: 14%;
-  top: 12.7%;
-  left: 32%;
-  cursor:pointer;
-  animation: none;
-}
-
 .kamera{
   background-image:url("/fear/f-single-1.png");
   background-size:contain;
@@ -846,13 +863,32 @@
   animation: none;
 }
 
+
 .teropong{
+  background-image:url("/fear/tropong fear.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 13.5%;
   top: 51%;
   left: 73.8%;
-  &:hover{
-    cursor: pointer;
-  }
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.teropong:hover{
+  background-image:url("/fear/tropong fear.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
+  width: 13.5%;
+  top: 51%;
+  left: 73.8%;
+  cursor:pointer;
+  animation: none;
 }
 
 .radio{
@@ -1080,29 +1116,93 @@
   animation: none;
 }
 
+// .photobook{
+//   width: 26%;
+//   top: 76.8%;
+//   left: 37.2%;
+//   z-index: 71;
+//   &:hover {
+//     cursor: pointer;
+//   }
+// }
+
 .photobook{
+  background-image:url("/fear/f-photobook-1.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:25%;
   width: 26%;
   top: 76.8%;
   left: 37.2%;
   z-index: 71;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor:pointer;
+  animation:bounce-7 2s;
+  animation-iteration-count: infinite;
 }
+
 .photobook1{
+  background-image:url("/fear/f-photobook-2.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  position:absolute;
+  height:35%;
   width: 13%;
   top: 53.8%;
   left: 47.2%;
   z-index: 71;
-  &:hover {
-    cursor: pointer;
-  }
+  opacity: 0;
 }
+
+.photobook:hover + .photobook1{
+  opacity : 1;
+  animation: none;
+}
+
+.photobook:hover{
+  animation: none;
+}
+
+// .photobook1{
+//   width: 13%;
+//   top: 53.8%;
+//   left: 47.2%;
+//   z-index: 71;
+// }
+
 // .zine{
 //   width: 16%;
 //   top: 36.8%;
 //   left: 41.2%;
 // }
+
+.playlist{
+  background-image: url("/fear/playlist-fear.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 8%;
+  top: 45%;
+  left: 64.5%;
+  cursor: pointer;
+  animation: bounce-7 2s;
+  animation-iteration-count: infinite;
+}
+
+.playlist:hover {
+  background-image: url("/fear/playlist-fear.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 65%;
+  width: 8%;
+  top: 45%;
+  left: 64.5%;
+  cursor: pointer;
+  animation: none;
+}
+
 .kaki{
   background-image:url("/fear/fearf.gif");
   background-size:contain;
@@ -1112,6 +1212,22 @@
   height:10%;
   top:83%;
   left:89%;
+}
+
+.foot-in {
+  position: absolute;
+  width: 100vw;
+  top: 75%;
+  left: 45%;
+  z-index: 20000;
+}
+
+.foot-out {
+  position: absolute;
+  width: 100vw;
+  top: 75%;
+  left: 90%;
+  z-index: 20000;
 }
 
 .kunci{

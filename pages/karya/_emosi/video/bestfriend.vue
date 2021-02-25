@@ -71,6 +71,16 @@
     <nuxt-link class="back-button" :to="'/ruangan/'+emosi">
       Back
     </nuxt-link>
+    <nuxt-link v-if="dataKarya.prev" class="prev-button" :no-prefetch="true"
+               :to="'/karya/'+this.emosi+(this.dataKarya.prev.charAt(0) === '/' ? '' : '/')+this.dataKarya.prev"
+    >
+      Prev
+    </nuxt-link>
+    <nuxt-link v-if="dataKarya.next" class="next-button" :no-prefetch="true"
+               :to="'/karya/'+this.emosi+(this.dataKarya.next.charAt(0) === '/' ? '' : '/')+this.dataKarya.next"
+    >
+      Next
+    </nuxt-link>
   </div>
 </template>
 
@@ -224,6 +234,50 @@ import loading from '~/components/Loading.vue'
   }
 }
 
+.prev-button {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    top: 5%;
+    opacity: 1;
+  }
+}
+
+.next-button {
+  position: fixed;
+  right: 2%;
+  top: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    right: 5%;
+    top: 5%;
+    opacity: 1;
+  }
+}
+
 .swiper {
   height: 100vh;
   width: 100vw;
@@ -302,6 +356,9 @@ import loading from '~/components/Loading.vue'
   overflow-y: auto;
   max-height: 50vh;
   z-index: 100;
+  scrollbar-color: #f1f1f1 rgba($color: #888, $alpha: 0.6); 
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
   .judul {
     text-align: center;
     font-size: 48px;

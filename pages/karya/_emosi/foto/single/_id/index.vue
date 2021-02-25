@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <div class="ornament-container">
+      <img :class="`${emosi}-1`" :src="'/img/'+emosi+'.png'" alt="ornamen1">
+      <img :class="`${emosi}-2`" :src="'/img/'+emosi+'2.png'" alt="ornamen2">
+      <img v-if="emosi === 'joy'" :class="`${emosi}-3`" :src="'/img/'+emosi+'3.png'" alt="ornamen3">
+    </div>
     <zoom-photo :poster="dataKarya.photoMin" 
                 :full="dataKarya.photo" 
                 :container-class="'poster-container left-side'"
@@ -26,6 +31,16 @@
     </div>
     <nuxt-link class="back-button" :to="'/ruangan/'+emosi">
       Back
+    </nuxt-link>
+    <nuxt-link v-if="dataKarya.prev" class="prev-button" :no-prefetch="true"
+               :to="'/karya/'+this.emosi+(this.dataKarya.prev.charAt(0) === '/' ? '' : '/')+this.dataKarya.prev"
+    >
+      Prev
+    </nuxt-link>
+    <nuxt-link v-if="dataKarya.next" class="next-button" :no-prefetch="true"
+               :to="'/karya/'+this.emosi+(this.dataKarya.next.charAt(0) === '/' ? '' : '/')+this.dataKarya.next"
+    >
+      Next
     </nuxt-link>
     <rcp />
   </div>
@@ -156,6 +171,52 @@ import rcp from '~/components/rcp.vue'
   }
 }
 
+
+.prev-button {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    top: 5%;
+    opacity: 1;
+  }
+}
+
+.next-button {
+  position: fixed;
+  right: 2%;
+  top: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    right: 5%;
+    top: 5%;
+    opacity: 1;
+  }
+}
+
+
 .back-button {
   position: fixed;
   bottom: 2%;
@@ -283,5 +344,56 @@ import rcp from '~/components/rcp.vue'
   ::-webkit-scrollbar-thumb:hover {
     background: #fff; 
   }
+
+.ornament-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  img {
+    position: absolute;
+  }
+  .joy-1 {
+    width: 12%;
+    top: 15%;
+  }
+  .joy-2 {
+    width: 8%;
+    right: 0;
+    top: 12%;
+  }
+  .joy-3 {
+    width: 18%;
+    bottom: 5%;
+    right: 0;
+  }
+  .sad-1 {
+    width: 15%;
+    bottom: 0;
+    right: 0;
+  }
+  .sad-2 {
+    width: 14%;
+    left: 0;
+    top: 22%;
+  }
+  .fear-1 {
+    width: 14%;
+    top: 30%;
+  }
+  .fear-2 {
+    width: 12%;
+    top: 50%;
+    right: 0;
+  }
+  .anger-1 {
+    width: 14%;
+    top: 30%;
+  }
+  .anger-2 {
+    width: 18%;
+    bottom: 0;
+    right: 0;
+  }
+}
 
 </style>
