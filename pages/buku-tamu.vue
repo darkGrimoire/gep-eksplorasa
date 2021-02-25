@@ -1,31 +1,35 @@
 <template>
   <div class="page-container">
     <div class="main-container">
-      <img src="/img/paper-min.png" class="background" />
+      <img src="/img/paper-min.png" class="background">
       <div class="form-container">
         <div class="title">
-          <img src="/img/emo-joy-min.png" class="smiley-left" />
-          <img src="/img/bubble-1-min.png" class="image-title" />
-          <img src="/img/emo-joy-min.png" class="smiley-right" />
+          <img src="/img/emo-joy-min.png" class="smiley-left">
+          <img src="/img/bubble-1-min.png" class="image-title">
+          <img src="/img/emo-joy-min.png" class="smiley-right">
         </div>
         <div class="form-name">
-          <img src="/img/emo-fear-min.png" class="image" />
+          <img src="/img/emo-fear-min.png" class="image">
 
           <div class="field">
-            <div class="label">uhm... your name?</div>
+            <div class="label">
+              uhm... your name?
+            </div>
             <input
               v-model="form.nama"
               type="text"
               class="input"
               placeholder="Tell me!"
               required
-            />
+            >
           </div>
         </div>
         <div class="form-from">
-          <img src="/img/emo-anger-min.png" class="image" />
+          <img src="/img/emo-anger-min.png" class="image">
           <div class="field">
-            <div class="label">Where are you from !?</div>
+            <div class="label">
+              Where are you from !?
+            </div>
             <input
               v-model="form.institusi"
               type="text"
@@ -33,24 +37,28 @@
               placeholder="Tell me!"
               required
               @keyup.enter.prevent="submit"
-            />
+            >
           </div>
         </div>
         <div class="form-submit">
-          <img src="/img/emo-sad-min.png" class="image" />
+          <img src="/img/emo-sad-min.png" class="image">
           <div class="field">
-            <div class="label">submit please</div>
-            <div class="btn" @click.prevent="submit">submit</div>
+            <div class="label">
+              submit please
+            </div>
+            <div class="btn" @click.prevent="submit">
+              submit
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="image-container">
-      <img src="/img/things-1-min.png" class="image-1" />
-      <img src="/img/things-2-min.png" class="image-2" />
-      <img src="/img/things-3-min.png" class="image-3" />
-      <img src="/img/things-4-min.png" class="image-4" />
-      <img src="/img/things-5-min.png" class="image-5" />
+      <img src="/img/things-1-min.png" class="image-1">
+      <img src="/img/things-2-min.png" class="image-2">
+      <img src="/img/things-3-min.png" class="image-3">
+      <img src="/img/things-4-min.png" class="image-4">
+      <img src="/img/things-5-min.png" class="image-5">
     </div>
   </div>
 </template>
@@ -185,6 +193,7 @@ div {
         width: 85%;
         display: flex;
         justify-content: center;
+        align-items: flex-start;
 
         .smiley-left {
           width: 10%;

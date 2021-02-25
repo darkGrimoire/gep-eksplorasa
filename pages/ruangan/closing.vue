@@ -222,11 +222,11 @@
         this.$router.push({path: '/photobooth'})
       },
       triggerFeedback(){
-        gsap.from('.feedback-modal', {yPercent: -200, duration: .7, ease: 'back'})
+        gsap.fromTo('.feedback-modal', {yPercent: -200}, {yPercent: 0, duration: .7, ease: 'back'})
         this.showFeedback = true
       },
       closeFeedback(){
-        gsap.to('.feedback-modal', {yPercent: -300, duration: .5, ease: 'back.in', clearProps: 'y', onComplete: () => {
+        gsap.to('.feedback-modal', {yPercent: -200, duration: .5, ease: 'back.in', onComplete: () => {
           this.showFeedback = false
         }})
       },

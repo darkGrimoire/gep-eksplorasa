@@ -118,6 +118,7 @@ import rcp from '@/components/rcp.vue'
           this.computedCaption = this.computeCaption(this.dataKarya.caption)
 
           this.preloadImages()
+          document.onkeyup = this.handleKeyboard
         })
         .catch((err) => {
           console.log(err)
@@ -128,6 +129,13 @@ import rcp from '@/components/rcp.vue'
       handleMin(text){
         let pos = text.lastIndexOf('/')+'/'.length
         return text.slice(0, pos) + 'min-' + text.slice(pos)
+      },
+      handleKeyboard(e){
+        if (e.key === "ArrowLeft"){
+          this.switchPhoto(-1)
+        } else if (e.key === "ArrowRight"){
+          this.switchPhoto(1)
+        }
       },
       handleMins(photos){
         photos.forEach(photo => {
@@ -260,6 +268,7 @@ import rcp from '@/components/rcp.vue'
   margin-top: 5%;
   width: 700px;
   max-width: 80%;
+  height: 50%;
   max-height: 50%;
   @media only screen and (max-width: 800px) {
     width: 550px;

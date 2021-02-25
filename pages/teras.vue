@@ -102,7 +102,7 @@
     </div>
     <rcp />
     <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
-      Events
+      EVENTS
     </nuxt-link>
     <nuxt-link v-if="slide === 1" class="back-button" :to="'/'">
       BACK
@@ -153,6 +153,7 @@ import { Youtube } from 'vue-youtube'
         showTeaser: false,
         catAudio: undefined,
         audio: undefined,
+        isAudioPlaying: false,
         isInstruksi1: false,
         instruksiImg: '/instruksi/1.png'
       }
@@ -231,11 +232,8 @@ import { Youtube } from 'vue-youtube'
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/teras.mp3')
       this.audio.volume = 0.4
-      try {
-        this.audio.play()
-      } catch (error) {
-        this.changeMute()
-      }
+      this.audio.loop = true
+      this.playAudio()
       this.isInstruksi1 = (localStorage.getItem('instruksi_1') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
         this.instruksiImg = '/instruksi/1 hp.png'
@@ -356,17 +354,35 @@ import { Youtube } from 'vue-youtube'
         }
       },
       changeMute() {
-      this.audio.muted = !this.audio.muted
-      if (this.audio.muted == true) {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "line-through"
-      } else {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "none"
-      }
-    }
+        this.audio.muted = !this.audio.muted
+        if (this.audio.muted == true) {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "line-through"
+        } else {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "none"
+        }
+        if (!this.isAudioPlaying) {
+          this.playAudio()
+        }
+      },
+      playAudio(){
+        let startPlayPromise = this.audio.play()
+        this.isAudioPlaying = true
+        if (startPlayPromise !== undefined) {
+          startPlayPromise.then(() => {
+            // Yaudah biarin aja dia ngeplay
+          }).catch(() => {
+            this.isAudioPlaying = false
+            this.audio.muted = true
+            document.getElementsByClassName(
+              "sound-controller"
+            )[0].style.textDecoration = "line-through"
+              })
+        }
+      },
     },
   }
 </script>
