@@ -23,6 +23,9 @@
         <div class="canvas canvas-hover" />
       </div>
     </div>
+    <!-- <div v-if="slide === 0" class="foot-in">
+      <img src="/gif/f220.gif" alt="footstep">
+    </div> -->
     
     <!-- SLIDE 1 -->
     <div id="slide1" class="top-cont" 
@@ -93,7 +96,7 @@
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
-          <PodcastPopup v-if="popups === 'podcast' && slide === 1" />
+          <PodcastPopup v-if="popups === 'podcast' && slide === 1" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -179,9 +182,12 @@
             <img src="/fear/f-photobook-2.png" alt="hantu">
           </div>
           <div class="cont teropong" @click="handleRasyid" />
-          <div class="playlist" />
-          <div class="bounce kunci" @click="benda.kunci = true;slide=3" />
+          <div class="playlist" @click="popups = 'playlist'" />
+          <div class="bounce kunci" @click="benda.kunci = true; resetGif(); slide=3" />
           <div v-show="benda.kunci" class="kaki" />
+          <!-- <div v-show="benda.kunci" class="foot-out">
+            <img id="foot-out" src="/gif/s220.gif" alt="footstep">
+          </div> -->
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
             <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
@@ -190,6 +196,7 @@
           </div>
           <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
           <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
+          <PlaylistPopup v-if="popups === 'playlist' && slide === 2" @closePopup="popups = ''" />
           <!-- <div class="cont zine">
             <img src="/fear/f-zine-1.png" alt="zine" @mouseenter="handleObjChange($event)" @mouseout="handleObjChangeEnd($event)">
           </div> -->
@@ -217,6 +224,7 @@
   import kinePopup from "~/components/kine-popup.vue"
   import NewfotoPopup from '~/components/newfoto-popup.vue'
   import PodcastPopup from '~/components/podcast-popup.vue'
+  import PlaylistPopup from '~/components/playlist-popup.vue'
   export default {
     name: "Fear",
     components: {
@@ -224,7 +232,8 @@
       tvPopup,
       kinePopup,
       NewfotoPopup,
-      PodcastPopup
+      PodcastPopup,
+      PlaylistPopup
     },
     layout: 'ruangan',
     data() {
@@ -264,6 +273,7 @@
         popups: '',
         tipeKarya: '',
         audio: undefined,
+        isAudioPlaying: false,
         isInstruksi1: false,
         isInstruksi2: true,
         instruksiImg1: '/instruksi/2.png',
@@ -310,15 +320,15 @@
             document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
             this.msg.closing = this.msg.closings[0]
             gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 7, onComplete: () =>{
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 10, onComplete: () =>{
               this.msg.closing = this.msg.closings[1]
             }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 7.5})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 14.5, onComplete: () => {
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 10.5})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 25, onComplete: () => {
               this.msg.closing = this.msg.closings[2]
             }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 15})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 20, onComplete: () => {
+            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 25.5})
+            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 35, onComplete: () => {
               this.$router.push({path: CLOSING})
             }})
           } else {
@@ -326,7 +336,7 @@
             document.getElementsByClassName('narasi-keluar')[0].style.display = 'block'
             gsap.to('.narasi-keluar', {opacity: 1, duration: 2, delay: 2})
             document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 7, onComplete: () => {
+            gsap.to('.loading', {opacity: 1, duration: 1, delay: 12, onComplete: () => {
               this.$router.push({path: NEXT_ROOM})
             }})
           }
@@ -335,8 +345,10 @@
     },
     beforeDestroy() {
       window.removeEventListener("resize", this.handleResize)
-      this.audio.pause()
-      this.audio.currentTime = 0
+      gsap.to(this.audio, {volume: 0, duration: .3, onComplete: () => {
+        this.audio.pause()
+        this.audio.currentTime = 0
+      }})
     },
     mounted () {
       this.xBoundary = document.getElementsByClassName("top-cont")[0].clientWidth
@@ -355,8 +367,8 @@
       } else {
         document.getElementsByClassName('narasi-masuk')[0].style.display = 'block'
         gsap.to('.narasi-masuk', {opacity: 1,  duration: .5})
-        gsap.to('.narasi-masuk', {opacity: 0, delay: 3, duration: .5})
-        gsap.to('.loading', {opacity: 0, delay: 3, duration: .2, onComplete: () => {
+        gsap.to('.narasi-masuk', {opacity: 0, delay: 5, duration: .5})
+        gsap.to('.loading', {opacity: 0, delay: 5, duration: .2, onComplete: () => {
           document.getElementsByClassName('loading')[0].style.display = 'none'
           document.getElementsByClassName('narasi-masuk')[0].style.display = 'none'
           localStorage.setItem('fear', true)
@@ -370,11 +382,8 @@
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/fear.mp3')
       this.audio.volume = 0.4
-      try {
-        this.audio.play()
-      } catch (error) {
-        this.changeMute()
-      }
+      this.audio.loop = true
+      this.playAudio()
       this.isInstruksi1 = (localStorage.getItem('instruksi_2') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
         this.instruksiImg1 = '/instruksi/2 hp.png'
@@ -384,6 +393,12 @@
       }
     },
     methods: {
+      resetGif() {
+        // var img = document.getElementById("foot-out")
+        // var imageUrl = img.getAttribute("src")
+        // img.setAttribute("src", "#")
+        // img.setAttribute("src", imageUrl)
+      },
       fadeInstruksi(classname){
         gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
           document.getElementsByClassName(classname)[0].style.display = 'none'
@@ -528,17 +543,35 @@
         this.benda.kunci = !this.benda.kunci
       },
       changeMute() {
-      this.audio.muted = !this.audio.muted
-      if (this.audio.muted == true) {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "line-through"
-      } else {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "none"
-      }
-    }
+        this.audio.muted = !this.audio.muted
+        if (this.audio.muted == true) {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "line-through"
+        } else {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "none"
+        }
+        if (!this.isAudioPlaying) {
+          this.playAudio()
+        }
+      },
+      playAudio(){
+        let startPlayPromise = this.audio.play()
+        this.isAudioPlaying = true
+        if (startPlayPromise !== undefined) {
+          startPlayPromise.then(() => {
+            // Yaudah biarin aja dia ngeplay
+          }).catch(() => {
+            this.isAudioPlaying = false
+            this.audio.muted = true
+            document.getElementsByClassName(
+              "sound-controller"
+            )[0].style.textDecoration = "line-through"
+              })
+        }
+      },
     },
   }
 </script>
@@ -1197,6 +1230,22 @@
   height:10%;
   top:83%;
   left:89%;
+}
+
+.foot-in {
+  position: absolute;
+  width: 100vw;
+  top: 75%;
+  left: 45%;
+  z-index: 20000;
+}
+
+.foot-out {
+  position: absolute;
+  width: 100vw;
+  top: 75%;
+  left: 90%;
+  z-index: 20000;
 }
 
 .kunci{

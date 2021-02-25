@@ -10,8 +10,9 @@
             <li
               v-for="(item, index) in judul"
               :key="index"
-              :class="{choosen: pos === index}"
-              @click="goToKarya(index)"
+              :class="{choosen: pos === index, hasroute: alamat[index] !== '#'}"
+              :style="'--choosen-color: '+copal+';'"
+              @click="switchKarya(index)"
             >
               {{ judul[index] }}
             </li>
@@ -23,7 +24,7 @@
           </div>
           <div class="arrow-area">
             <img class="leftpod-arrow" @click="movePos(-1)">
-            <img class="center-ghost" @click="goToKarya(pos)">
+            <img class="center-ghost" :style="'--choosen-color: '+copal+';'" @click="goToKarya(pos)">
             <img class="rightpod-arrow" @click="movePos(1)">
           </div>
         </div>
@@ -41,15 +42,40 @@ export default {
       judul: [],
       poster: [],
       alamat: [],
-      amount: 0
+      amount: 0,
+      computedPoster: '#',
+      computedfull: '#'
     }
+  },
+  computed: {
+    copal() {
+      if (this.room === 'joy'){
+        return '#d1bb10'
+      } else if (this.room === 'sadness'){
+        return '#305fe9'
+      } else if (this.room === 'fear'){
+        return '#009562'
+      } else if (this.room === 'anger'){
+        return '#e14423'
+      } else {
+        return '#ede5d1'
+      }
+    },
   },
   async mounted() {
     this.getRoom()
     await this.getPodcastData()
     this.initSetUpPodcast()
+    this.preloadImages()
   },
   methods: {
+    preloadImages(){
+      setTimeout(() => {
+          this.poster.forEach( (src) => {
+            new Image().src = src
+          })
+        }, 500)
+    },
     getRoom() {
       // GET THE ROOM NAME USING REGEX FROM THE URL
       const link = window.location.href
@@ -63,13 +89,17 @@ export default {
         .collection("karya")
         .doc("routes")
         .collection(this.room.toLowerCase())
-        .doc("podcast")
+        .doc("playlist")
         .get()
       const temp_path = testing.data().routes
       temp_path.forEach(item => {
         this.judul.push(item.judul)
         this.poster.push(item.poster)
-        this.alamat.push(item.route)
+        if (item.route){
+          this.alamat.push(item.route)
+        } else {
+          this.alamat.push('#')
+        }
       })
       this.amount = this.judul.length
     },
@@ -109,6 +139,10 @@ export default {
           "visible"
       }
     },
+    switchKarya(id){
+      let target = id - this.pos
+      this.movePos(target)
+    },
     movePos(id_pindah) {
       // CHANGE THE MOVIE POSTER SHOWN
       // 0 <= this.pos < this.amount
@@ -119,6 +153,13 @@ export default {
         this.pos = this.amount - 1
       }
       document.getElementsByClassName("podposter")[0].src = this.poster[this.pos]
+      if (this.alamat[this.pos] !== '#'){
+        document.getElementsByClassName("podposter")[0].classList.add('hasroute')
+        document.getElementsByClassName("center-ghost")[0].classList.add('hasroutebounce')
+      } else {
+        document.getElementsByClassName("podposter")[0].classList.remove('hasroute')
+        document.getElementsByClassName("center-ghost")[0].classList.remove('hasroutebounce')
+      }
       if (this.pos == 0) {
         document.getElementsByClassName("leftpod-arrow")[0].style.visibility =
           "hidden"
@@ -137,7 +178,7 @@ export default {
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
       document.getElementsByClassName("podcastPopup")[0].style.display = "none"
-      this.$emit('closePopup')
+      this.$emit("closePopup")
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
@@ -172,6 +213,9 @@ export default {
       }
     },
     goToKarya(id) {
+      if (this.alamat[id] === '#'){
+        return
+      }
       let targetRoom = this.room
       if (this.room.toLowerCase() === "sadness") {
         targetRoom = "sad"
@@ -184,7 +228,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .podcastPopup {
   background-color: black;
   position: fixed;
@@ -204,7 +248,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   background-image: url("/img/bg_beige-min.png");
-  min-width: 45vw;
+  min-width: 65vw;
 }
 .podcast-x-button {
   display: flex;
@@ -221,7 +265,6 @@ export default {
 }
 .list-area {
   max-width: 50%;
-  margin-right: 3%;
 }
 ol {
   list-style-position: inside;
@@ -242,18 +285,14 @@ li:hover {
   padding-left: 5%;
 }
 .poster-area {
-  width: 300px;
+  width: 350px;
   height: 200px;
-  flex-grow: 1;
   border: 1px solid black;
 }
 .podposter {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-.podposter:hover {
-  cursor: pointer;
+  object-fit: contain;
 }
 .arrow-area {
   display: flex;
@@ -264,9 +303,6 @@ li:hover {
 .leftpod-arrow:hover {
   cursor: pointer;
 }
-.center-ghost:hover {
-  cursor: pointer;
-}
 .rightpod-arrow:hover {
   cursor: pointer;
 }
@@ -274,10 +310,20 @@ li:hover {
   .podcastPopup {
     font-size: 1.5rem;
   }
+  .poster-area {
+    width: 250px;
+    height: 150px;
+    border: 1px solid black;
+  }
 }
 @media screen and (max-width: 700px) {
   .podcastpopupwindow {
     min-width: 75vw;
+  }
+  .poster-area {
+    width: 200px;
+    height: 100px;
+    border: 1px solid black;
   }
 }
 @media screen and (max-width: 500px) {
@@ -304,5 +350,37 @@ li:hover {
 
 .choosen {
   text-decoration: underline;
+}
+
+.hasroute {
+  color: var(--choosen-color);
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.hasroutebounce {
+  -webkit-filter: drop-shadow(0px 0px 7px var(--choosen-color));
+  filter: drop-shadow(0px 0px 7px var(--choosen-color));
+  animation:bounce-7 2s;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.bounce-7 {
+  animation-name: bounce-7;
+  animation-timing-function: cubic-bezier(0.140, 0.420, 0.210, 0.5, 1);
+}
+
+@keyframes bounce-7 {
+  0%   { transform: scale(1,1)      translateY(0); }
+  5%  { transform: scale(1.1,.9)   translateY(0); }
+  15%  { transform: scale(.9,1.1)   translateY(-10px); }
+  25%  { transform: scale(1.05,.95) translateY(0); }
+  28.5%  { transform: scale(1,1)      translateY(-7px); }
+  32%  { transform: scale(1,1)      translateY(0); }
+  50% { transform: scale(1,1)      translateY(0); }
+  100% { transform:scale(1,1) translateY(0);}
 }
 </style>

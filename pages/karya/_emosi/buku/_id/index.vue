@@ -52,6 +52,16 @@
     <nuxt-link v-show="!fs" class="back-button" :to="'/ruangan/'+emosi">
       Back
     </nuxt-link>
+    <nuxt-link v-if="dataKarya.prev" class="prev-karya-button" :no-prefetch="true"
+               :to="'/karya/'+this.emosi+(this.dataKarya.prev.charAt(0) === '/' ? '' : '/')+this.dataKarya.prev"
+    >
+      Prev
+    </nuxt-link>
+    <nuxt-link v-if="dataKarya.next" class="next-karya-button" :no-prefetch="true"
+               :to="'/karya/'+this.emosi+(this.dataKarya.next.charAt(0) === '/' ? '' : '/')+this.dataKarya.next"
+    >
+      Next
+    </nuxt-link>
     <rcp />
   </div>
 </template>
@@ -741,6 +751,62 @@ const TARGET_ZOOM_WIDTH = 3000
   left: 0;
   z-index: 0;
 }
+
+::v-deep .animated .page {
+  cursor: zoom-in;
+}
+
+::v-deep .zoom-in .page {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.prev-karya-button {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 5%;
+    top: 5%;
+    opacity: 1;
+  }
+}
+
+.next-karya-button {
+  position: fixed;
+  right: 2%;
+  top: 2%;
+  color: white;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 1;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 800px) {
+    right: 5%;
+    top: 5%;
+    opacity: 1;
+  }
+}
+
 
 .blackbg {
   position: absolute;
