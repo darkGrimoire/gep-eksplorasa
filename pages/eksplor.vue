@@ -8,7 +8,7 @@
 
 <script>
 import gsap from 'gsap'
-
+import Bowser from "bowser"
 export default {
   data() {
     return {
@@ -20,7 +20,13 @@ export default {
     this.initSetup()
     gsap.to(this.$data, {progress: 100, duration: this.randomInteger(4, 6), ease: 'power3.out', delay: .3,
       onComplete: () => {
-        this.$router.push({path: '/dots'})
+        if (browser_name == "Safari") {
+              this.$router.push({ path: "/teras" })
+            } else {
+              this.$router.push({
+                path: "/dots"
+              })
+            }
       }})
   },
   methods: {
