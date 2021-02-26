@@ -363,6 +363,9 @@ import rcp from '@/components/rcp.vue'
     top: 5%;
     opacity: 1;
   }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
+  }
 }
 
 .next-button {
@@ -384,6 +387,9 @@ import rcp from '@/components/rcp.vue'
     right: 5%;
     top: 5%;
     opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
   }
 }
 

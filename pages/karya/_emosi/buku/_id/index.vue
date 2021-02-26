@@ -528,12 +528,16 @@ const TARGET_ZOOM_WIDTH = 3000
           $('.next-button').show()
           $('.next-button-mobile').show()
           $('.exit-button-mobile').show()
+          $('.prev-karya-button').show()
+          $('.next-karya-button').show()
         } else{
           $('.previous-button').hide()
           $('.previous-button-mobile').hide()
           $('.next-button').hide()
           $('.next-button-mobile').hide()
           $('.exit-button-mobile').hide()
+          $('.prev-karya-button').hide()
+          $('.next-karya-button').hide()
         }
       },
       resizeViewport() {
@@ -783,6 +787,9 @@ const TARGET_ZOOM_WIDTH = 3000
     top: 5%;
     opacity: 1;
   }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
+  }
 }
 
 .next-karya-button {
@@ -804,6 +811,9 @@ const TARGET_ZOOM_WIDTH = 3000
     right: 5%;
     top: 5%;
     opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
   }
 }
 
@@ -864,7 +874,8 @@ const TARGET_ZOOM_WIDTH = 3000
   }
 }
 .exit-button-mobile{
-  left: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   bottom: 2%;
   font-size: 20px; /* Set a font size */
   @media only screen and (max-width: 800px) {

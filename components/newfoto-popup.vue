@@ -147,12 +147,19 @@ import 'swiper/swiper-bundle.css'
 }
 
 .foto-popup-container {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
   font-family: 'KG Happy Solid';
+  @media only screen and (max-width: 800px) {
+    left: 55%;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 250px;
+    left: 55%;
+  }
 }
 
 .film {
@@ -168,6 +175,11 @@ import 'swiper/swiper-bundle.css'
   z-index: 1005;
   img {
     height: 100%;
+  }
+  @media only screen and (max-width: 600px) {
+    height: 175px;
+    left: -33px;
+    top: 40%;
   }
 }
 
@@ -200,6 +212,10 @@ import 'swiper/swiper-bundle.css'
 
   width: 100px;
   height: 180px;
+  @media only screen and (max-width: 600px) {
+    width: 80px;
+    height: 65%;
+  }
 }
 
 .minposter-container {
@@ -229,6 +245,9 @@ import 'swiper/swiper-bundle.css'
   }
   .title {
     margin-bottom: 15px;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 8px;
   }
 }
 .mini-overlay.mini-overlay-hover {

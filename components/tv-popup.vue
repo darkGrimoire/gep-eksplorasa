@@ -275,7 +275,7 @@ export default {
 
 <style lang="scss" scoped>
 .tvPopUp {
-  background-color: black;
+  background-color: rgba($color: black, $alpha: .6);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -285,7 +285,7 @@ export default {
   z-index: 3000;
 }
 .popupwindow {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -386,6 +386,11 @@ export default {
   }
   .right-area {
     flex-wrap: wrap;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .popupwindow {
+    max-width: 70vw;
   }
 }
 </style>

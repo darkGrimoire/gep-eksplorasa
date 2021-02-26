@@ -184,9 +184,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .podcastPopup {
-  background-color: black;
+  background-color: rgba(0, 0, 0, .6);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -199,12 +199,15 @@ export default {
   font-family: "Mechanical Pencil";
   font-size: 2rem;
   color: black;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-image: url("/img/bg_beige-min.png");
   min-width: 45vw;
+  @media only screen and (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 }
 .podcast-x-button {
   display: flex;

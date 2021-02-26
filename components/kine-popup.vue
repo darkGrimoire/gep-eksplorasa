@@ -218,7 +218,7 @@ export default {
 
 <style lang="scss" scoped>
 .kinePopup {
-  background-color: black;
+  background-color: rgba($color: black, $alpha: 0.6);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -231,7 +231,7 @@ export default {
 .kinepopupwindow {
   background-image: url("/img/bg_beige-min.png");
   background-size: 100% auto;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -269,6 +269,7 @@ li:hover {
 @media (max-width: 410px) {
   .kinepopupwindow {
     font-size: 1rem;
+    padding: 5px;
   }
 }
 </style>
