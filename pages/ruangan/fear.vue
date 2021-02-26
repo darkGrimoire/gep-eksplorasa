@@ -665,6 +665,9 @@
   // -moz-text-fill-color: transparent;
   opacity: 0;
   text-align: center;
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 
 .narasi-masuk {
@@ -676,11 +679,17 @@
   font-size: 40px;
   z-index: 10000;
   color: #ede5d1;
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 
 .narasi-keluar {
   font-size: 40px;
   color: #305fe9;
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 
 .cont {
