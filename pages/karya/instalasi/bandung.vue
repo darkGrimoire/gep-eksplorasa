@@ -577,7 +577,7 @@ import 'swiper/swiper-bundle.css'
     opacity: 1;
   }
   @media only screen and (max-width: 600px) {
-    bottom: 3%;
+    bottom: 2%;
     font-size: 30px;
   }
 }

@@ -207,6 +207,9 @@ import loading from '~/components/Loading.vue'
     bottom: 5%;
     opacity: 1;
   }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
+  }
 }
 
 .prev-button {
@@ -229,6 +232,9 @@ import loading from '~/components/Loading.vue'
     top: 5%;
     opacity: 1;
   }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
+  }
 }
 
 .next-button {
@@ -250,6 +256,9 @@ import loading from '~/components/Loading.vue'
     right: 5%;
     top: 5%;
     opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 30px;
   }
 }
 

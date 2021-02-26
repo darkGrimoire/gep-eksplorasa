@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <div class="slide-controls">
-      <fa v-show="slide === 2" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
-      <fa v-show="slide === 1" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
+      <fa v-show="slide === 2 && popups === ''" :icon="['fas', 'chevron-left']" class="left-arrow arrow" @click="switchSlide(-1)" />
+      <fa v-show="slide === 1 && popups === ''" :icon="['fas', 'chevron-right']" class="right-arrow arrow" @click="switchSlide(1)" />
     </div>
 
     <div class="loading" style="position: absolute; background-color: black; opacity: 1; z-index: 9999; width: 100vw; height: 100vh;" />
@@ -83,15 +83,15 @@
           <div v-if="!isInstruksi1" class="instruksi instruksi1">
             <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
           </div>
-          <div class="tv-popup">
-            <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
-          </div>
-          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
-          <PlaylistPopup v-if="popups === 'playlist' && slide === 1" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
+    <div class="tv-popup">
+      <TvPopup v-if="popups === 'tv' && slide === 1" @closePopup="popups = ''" />
+    </div>
+    <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+    <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
+    <PlaylistPopup v-if="popups === 'playlist' && slide === 1" @closePopup="popups = ''" />
 
     <!-- SLIDE 2 -->
     <div id="slide2" class="top-cont" 
@@ -147,11 +147,11 @@
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
             <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
-          <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
+    <KinePopup v-if="popups === 'kine' && slide === 2" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+    <NewfotoPopup v-if="popups === 'foto' && slide === 2" :tipe-karya="tipeKarya" class="foto-popup" />
     <div class="sound-controller" @click="changeMute()">
       SOUND
     </div>
@@ -251,37 +251,13 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150, 
+            onComplete: () => {
+              this.animasiAntarRuangan()
+            }})
           gsap.to('.transitionfade-out', {x: '40%', duration: .7})
           gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
-          if (this.isClosingVisited()){
-            this.$router.push({path: CLOSING})
-          }
-          if (this.isAllRoomVisited()){
-            // animasi closing
-            document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
-            this.msg.closing = this.msg.closings[0]
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 10, onComplete: () =>{
-              this.msg.closing = this.msg.closings[1]
-            }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 10.5})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 25, onComplete: () => {
-              this.msg.closing = this.msg.closings[2]
-            }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 25.5})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 35, onComplete: () => {
-              this.$router.push({path: CLOSING})
-            }})
-          } else {
-            // animasi keluar
-            document.getElementsByClassName('narasi-keluar')[0].style.display = 'block'
-            gsap.to('.narasi-keluar', {opacity: 1, duration: 2, delay: 2})
-            document.getElementsByClassName('loading')[0].style.display = 'block'
-            gsap.to('.loading', {opacity: 1, duration: 1, delay: 12, onComplete: () => {
-              this.$router.push({path: NEXT_ROOM})
-            }})
-          } 
+           
         }
       }
     },
@@ -346,6 +322,36 @@
         // var imageUrl = img.getAttribute("src")
         // img.setAttribute("src", "#")
         // img.setAttribute("src", imageUrl)
+      },
+      animasiAntarRuangan(){
+        if (this.isClosingVisited()){
+          this.$router.push({path: CLOSING})
+        }
+        else if (this.isAllRoomVisited()){
+          // animasi closing
+          document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
+          this.msg.closing = this.msg.closings[0]
+          gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
+          gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 10, onComplete: () =>{
+            this.msg.closing = this.msg.closings[1]
+          }})
+          gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 10.5})
+          gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 25, onComplete: () => {
+            this.msg.closing = this.msg.closings[2]
+          }})
+          gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 25.5})
+          gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 35, onComplete: () => {
+            this.$router.push({path: CLOSING})
+          }})
+        } else {
+          // animasi keluar
+          document.getElementsByClassName('narasi-keluar')[0].style.display = 'block'
+          gsap.to('.narasi-keluar', {opacity: 1, duration: 2, delay: 2})
+          document.getElementsByClassName('loading')[0].style.display = 'block'
+          gsap.to('.loading', {opacity: 1, duration: 1, delay: 12, onComplete: () => {
+            this.$router.push({path: NEXT_ROOM})
+          }})
+        }
       },
       fadeInstruksi(classname){
         gsap.to('.'+classname, {opacity: 0, duration: 1, onComplete: () => {
@@ -1141,7 +1147,9 @@
   color: black;
   opacity: 0.2;
   transition: opacity .4s;
-  
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 .sound-controller:hover {
   cursor: pointer;

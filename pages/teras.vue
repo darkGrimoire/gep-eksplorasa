@@ -49,10 +49,6 @@
             <img src="/teras/lantai.png">
           </div>
           <!-- Tambahin Objek lainnya disini -->
-          <div class="youtube-backdrop" style="display:none;" @click="toggleTeaser" />
-          <div class="cont youtube-container" style="display:none;">
-            <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :player-vars="playerVars" @ended="restart" />
-          </div>
           <div v-if="!isInstruksi1" class="instruksi1">
             <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
           </div>
@@ -61,6 +57,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="youtube-backdrop" style="display:none;" @click="toggleTeaser" />
+    <div class="cont youtube-container" style="display:none;">
+      <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :width="width" :height="height" :player-vars="playerVars" @ended="restart" />
     </div>
 
     <!-- SLIDE 2 -->
@@ -91,9 +91,6 @@
           <div class="lantai">
             <img src="/teras/lantai.png">
           </div>
-          <div class="back-button back-button-second" @click="reverseAnimation">
-            BACK 
-          </div>
         </div>
       </div>
     </div>
@@ -107,6 +104,9 @@
     <nuxt-link v-if="slide === 1" class="back-button" :to="'/'">
       BACK
     </nuxt-link>
+    <div v-if="slide === 2" class="back-button back-button-second" @click="reverseAnimation">
+      BACK 
+    </div>
   </div>
 </template>
 
@@ -150,6 +150,8 @@ import { Youtube } from 'vue-youtube'
           autoplay: 0,
           rel: 0
         },
+        width: 640,
+        height: 360,
         showTeaser: false,
         catAudio: undefined,
         audio: undefined,
@@ -241,6 +243,10 @@ import { Youtube } from 'vue-youtube'
       if (!this.isInstruksi1){
         localStorage.setItem('instruksi_1', true)
       }
+      if (window.matchMedia("(max-width: 600px)").matches){
+        this.width = 352
+        this.height = 240
+      }
     },
     methods: {
       fadeInstruksi(){
@@ -266,6 +272,9 @@ import { Youtube } from 'vue-youtube'
         }})
       },
       toggleTeaser(){
+        if (this.showTeaser){
+          this.$refs.youtube.player.pauseVideo()
+        }
         this.showTeaser = !this.showTeaser
       },
       restart(){
@@ -807,13 +816,14 @@ import { Youtube } from 'vue-youtube'
 }
 
 .youtube-container {
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
 }
 .youtube-backdrop{
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 200vw;
@@ -860,6 +870,10 @@ import { Youtube } from 'vue-youtube'
   color: black;
   opacity: 0.5;
   transition: opacity .4s;
+  @media only screen and (max-width: 600px) {
+    top: 60px;
+    font-size: 25px;
+  }
 }
 .sound-controller:hover {
   cursor: pointer;
