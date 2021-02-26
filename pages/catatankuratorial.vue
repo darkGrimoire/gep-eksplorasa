@@ -60,7 +60,7 @@ export default {
   position: fixed;
   bottom: 2%;
   left: 2%;
-  color: #ede5d1;
+  color: #1f1f1f;
   font-size: 40px;
   font-family: 'KG Happy Solid';
   z-index: 1;
