@@ -22,10 +22,10 @@
             <a href="/aboutgep">About GEP</a>
           </div>
 
-          <div class="item">
+          <!-- <div class="item">
             <div class="merpng" @click="gotomerch" />
             <a href="https://bit.ly/AyoBeliMerchGEP2021">Merch</a>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

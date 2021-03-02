@@ -11,24 +11,9 @@
       <nuxt-link to="/teras" class="nav-ruangan" tag="div" @click.native="handleBgClick">
         TERAS
       </nuxt-link>
-      <nuxt-link v-if="isClosing" tag="div" class="nav-ruangan" to="/ruangan/joy" @click.native="handleBgClick">
-        JOY
-      </nuxt-link>
-      <nuxt-link v-if="isClosing" tag="div" class="nav-ruangan" to="/ruangan/sad" @click.native="handleBgClick">
-        SAD
-      </nuxt-link>
-      <nuxt-link v-if="isClosing" tag="div" class="nav-ruangan" to="/ruangan/fear" @click.native="handleBgClick">
-        FEAR
-      </nuxt-link>
-      <nuxt-link v-if="isClosing" tag="div" class="nav-ruangan" to="/ruangan/anger" @click.native="handleBgClick">
-        ANGER
-      </nuxt-link>
-      <nuxt-link v-if="isClosing" tag="div" class="nav-ruangan" to="/ruangan/closing" @click.native="handleBgClick">
+      <nuxt-link tag="div" class="nav-ruangan" to="/ruangan/closing" @click.native="handleBgClick">
         CLOSING
       </nuxt-link>
-      <div v-if="isClosing" tag="div" class="nav-ruangan reset" @click="resetRuangan">
-        reset ruangan
-      </div>
     </div>
   </div>
 </template>

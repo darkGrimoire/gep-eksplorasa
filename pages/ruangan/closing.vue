@@ -75,9 +75,9 @@
           <div class="cont tulisankamera">
             <img src="/closing/cam3.png" alt="tulisankamera">
           </div>
-          <div v-if="!isInstruksi1" class="instruksi1">
+          <!-- <div v-if="!isInstruksi1" class="instruksi1">
             <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
-          </div>
+          </div> -->
           <div v-if="showFeedback" class="feedback-backdrop" @click="closeFeedback" />
           <!-- <div class="cont tulisanbalon">
             <img src="/closing/balon3.png" alt="tulisanbalon">
@@ -92,6 +92,9 @@
     <div class="sound-controller" @click="changeMute()">
       SOUND
     </div>
+    <nuxt-link class="back-button" :to="'/teras'">
+      BACK
+    </nuxt-link>
     <rcp />
   </div>
 </template>
@@ -136,8 +139,9 @@
           figura2: 0
         },
         audio: undefined,
-        isInstruksi1: false,
-        instruksiImg: '/instruksi/4.png',
+        isAudioPlaying: false,
+        // isInstruksi1: false,
+        // instruksiImg: '/instruksi/4.png',
         showFeedback: false
       }
     },
@@ -205,14 +209,15 @@
       localStorage.setItem('last', this.$route.path)
       this.audio = new Audio('/songs/closing.mp3')
       this.audio.volume = 0.3
-      this.audio.play()
-      this.isInstruksi1 = (localStorage.getItem('instruksi_4') || false)
-      if (window.matchMedia("(orientation: portrait)").matches){
-        this.instruksiImg = '/instruksi/4 hp.png'
-      }
-      if (!this.isInstruksi1){
-        localStorage.setItem('instruksi_4', true)
-      }
+      this.audio.loop = true
+      this.playAudio()
+      // this.isInstruksi1 = (localStorage.getItem('instruksi_4') || false)
+      // if (window.matchMedia("(orientation: portrait)").matches){
+      //   this.instruksiImg = '/instruksi/4 hp.png'
+      // }
+      // if (!this.isInstruksi1){
+      //   localStorage.setItem('instruksi_4', true)
+      // }
     },
     methods: {
       gotoKatalog(){
@@ -317,17 +322,35 @@
         }
       },
       changeMute() {
-      this.audio.muted = !this.audio.muted
-      if (this.audio.muted == true) {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "line-through"
-      } else {
-        document.getElementsByClassName(
-          "sound-controller"
-        )[0].style.textDecoration = "none"
-      }
-      }
+        this.audio.muted = !this.audio.muted
+        if (this.audio.muted == true) {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "line-through"
+        } else {
+          document.getElementsByClassName(
+            "sound-controller"
+          )[0].style.textDecoration = "none"
+        }
+        if (!this.isAudioPlaying) {
+          this.playAudio()
+        }
+      },
+      playAudio(){
+        let startPlayPromise = this.audio.play()
+        this.isAudioPlaying = true
+        if (startPlayPromise !== undefined) {
+          startPlayPromise.then(() => {
+            // Yaudah biarin aja dia ngeplay
+          }).catch(() => {
+            this.isAudioPlaying = false
+            this.audio.muted = true
+            document.getElementsByClassName(
+              "sound-controller"
+            )[0].style.textDecoration = "line-through"
+              })
+        }
+      },
     },
     head() {
       return {
@@ -338,6 +361,33 @@
 </script>
 
 <style lang="scss" scoped>
+.back-button {
+  position: fixed;
+  left: 5%;
+  bottom: 5%;
+  color: #ede5d1;
+  font-size: 40px;
+  font-family: 'KG Happy Solid';
+  z-index: 5;
+  text-decoration: none;
+  opacity: 0.4;
+  transition: opacity 0.25s ease-in-out;
+  &:hover{
+    cursor: pointer;
+    text-decoration: none;
+    opacity: .9;
+  }
+  @media only screen and (max-width: 800px) {
+    position: fixed;
+    left: 5%;
+    bottom: 5%;
+    opacity: 1;
+  }
+  @media only screen and (max-width: 600px) {
+    bottom: 3%;
+    font-size: 30px;
+  }
+}
 .main {
   background-color: black;
   width: 100vw;
@@ -612,15 +662,17 @@
 }
 .sound-controller {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  top: 20px;
+  left: 50vw;
+  transform: translate(-50%);
   font-family: "KG Happy Solid";
   font-size: 40px;
-  color: whitesmoke;
-  opacity: 0.2;
+  color: black;
+  opacity: 0.5;
   transition: opacity .4s;
   @media only screen and (max-width: 600px) {
-    font-size: 20px;
+    top: 60px;
+    font-size: 25px;
   }
 }
 .sound-controller:hover {

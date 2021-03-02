@@ -49,9 +49,9 @@
             <img src="/teras/lantai.png">
           </div>
           <!-- Tambahin Objek lainnya disini -->
-          <div v-if="!isInstruksi1" class="instruksi1">
+          <!-- <div v-if="!isInstruksi1" class="instruksi1">
             <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
-          </div>
+          </div> -->
           <div class="instruksi2" style="display: none;">
             <img src="/instruksi/transisiy-swipe-hp.gif" alt="instruksi">
           </div>
@@ -66,12 +66,13 @@
     <!-- SLIDE 2 -->
     <div id="slide2" class="top-cont" 
          :style="{'transform': 'translate(calc('+base.slide2+'% '+sign+' '+(Math.abs(computedDisplacement)-1)+'px), -50%)'}" 
+         style="display: none;" 
          @mousedown="startDrag($event)" 
-         @mousemove="dragContainer($event)" 
+         @mousemove="dragContainer($event)"
          @mouseup="endDrag($event)"
-         @mouseleave="endDrag($event)"
+         @mouseleave="endDrag($event)" 
          @touchstart="startDrag($event)" 
-         @touchmove="dragContainer($event)" 
+         @touchmove="dragContainer($event)"
          @touchend="endDrag($event)"
     >
       <div class="canvas">
@@ -98,15 +99,15 @@
       SOUND
     </div>
     <rcp />
-    <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
+    <!-- <nuxt-link class="events-button" tag="div" to="/events" :no-prefetch="true">
       EVENTS
-    </nuxt-link>
+    </nuxt-link> -->
     <nuxt-link v-if="slide === 1" class="back-button" :to="'/'">
       BACK
     </nuxt-link>
-    <div v-if="slide === 2" class="back-button back-button-second" @click="reverseAnimation">
+    <!-- <div v-if="slide === 2" class="back-button back-button-second" @click="reverseAnimation">
       BACK 
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -236,13 +237,13 @@ import { Youtube } from 'vue-youtube'
       this.audio.volume = 0.4
       this.audio.loop = true
       this.playAudio()
-      this.isInstruksi1 = (localStorage.getItem('instruksi_1') || false)
+      this.isInstruksi1 = (sessionStorage.getItem('closing_statement') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
         this.instruksiImg = '/instruksi/1 hp.png'
       }
-      if (!this.isInstruksi1){
-        localStorage.setItem('instruksi_1', true)
-      }
+      // if (!this.isInstruksi1){
+      //   sessionStorage.setItem('closing_statement', true)
+      // }
       if (window.matchMedia("(max-width: 600px)").matches){
         this.width = 352
         this.height = 240
@@ -308,6 +309,7 @@ import { Youtube } from 'vue-youtube'
         gsap.to('#slide2', {opacity: 1, duration: .5, delay: 3.9})
         gsap.to('#slide1', {opacity: 0, duration: 1, delay: 3.9, onComplete: () => {
           document.getElementById('slide1').style.display = 'none'
+          this.$router.push({path: '/ruangan/closing'})
         }})
       }
       ,

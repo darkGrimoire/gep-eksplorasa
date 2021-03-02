@@ -2,6 +2,7 @@
   <div class="photobooth-container">
     <div class="video-container">
       <video id="videoElement" autoplay="true" />
+      <img id="skeleton-frame" :src="`/oleholeh/${frame} ${mode}.png`" alt="frame">
       <img id="frame" :src="`/oleholeh/${frame} ${mode}.png`" alt="frame">
       <canvas id="snapshotCanvas" style="display: none;" />
     </div>
@@ -68,16 +69,19 @@ const MAX_FRAME = 10
         this.video = document.querySelector("#videoElement")
       },
       switchFrame(n){
-        if (this.frame - n < 1){
-          this.frame + MAX_FRAME
+        if (this.frame + n < 1){
+          this.frame += MAX_FRAME+n
+        } else if (this.frame + n > MAX_FRAME) {
+          this.frame = this.frame%MAX_FRAME + 1
+        } else {
+          this.frame = this.frame+n
         }
-        this.frame = (this.frame%MAX_FRAME)+n
       },
       capture(){
         var newContext
         var scaleFactor
         if (window.matchMedia("(orientation: portrait)").matches){
-          scaleFactor = 1280/this.canvas.height //How much we scale?
+          scaleFactor = 720/this.canvas.width //How much we scale?
         } else {
           scaleFactor = 1280/this.canvas.width //How much we scale?
         }
@@ -106,7 +110,7 @@ const MAX_FRAME = 10
       },
       download(){
         var link = document.getElementById('link')
-        link.setAttribute('download', 'Oleh2 GEP Eksplorasa <3.png')
+        link.setAttribute('download', 'Oleh2 GEP Eksplorasa.png')
         link.setAttribute('href', this.newCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream"))
         link.click()
       },
@@ -148,10 +152,10 @@ const MAX_FRAME = 10
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 60%;
-  @media only screen and (orientation: portrait) {
-    width: 90%;
-  }
+  // height: 60%;
+  // @media only screen and (orientation: portrait) {
+  //   max-width: 90%;
+  // }
 }
 
 button {
@@ -190,15 +194,19 @@ button {
   }
 }
 #videoElement {
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  // height: 100%;
   width: 100%;
+  z-index: 0;
   object-fit: contain;
 }
 #captureButton, #downloadButton {
   bottom: 15%;
   left: 50%;
   transform: translate(-50%, 0);
-  z-index: 11;
+  z-index: 1;
   @media only screen and (orientation: portrait) {
     bottom: 15%;
   }
@@ -211,13 +219,24 @@ button {
   height: 100%;
   z-index: 10;
 }
+#skeleton-frame {
+  object-fit: contain;
+  opacity: 0;
+  height: 60vh;
+  @media only screen and (orientation: portrait) {
+    max-width: 90vw;
+  }
+}
 #frame {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   object-fit: contain;
+  z-index: 99999;
+  height: 60vh;
+  @media only screen and (orientation: portrait) {
+    max-width: 90vw;
+  }
 }
 .back-button {
   position: fixed;
