@@ -49,9 +49,6 @@
             <img src="/teras/lantai.png">
           </div>
           <!-- Tambahin Objek lainnya disini -->
-          <!-- <div v-if="!isInstruksi1" class="instruksi1">
-            <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
-          </div> -->
           <div class="instruksi2" style="display: none;">
             <img src="/instruksi/transisiy-swipe-hp.gif" alt="instruksi">
           </div>
@@ -61,6 +58,9 @@
     <div class="youtube-backdrop" style="display:none;" @click="toggleTeaser" />
     <div class="cont youtube-container" style="display:none;">
       <youtube ref="youtube" :video-id="'U5a4BPXM6ac'" :width="width" :height="height" :player-vars="playerVars" @ended="restart" />
+    </div>
+    <div v-if="!isInstruksi1" class="instruksi1">
+      <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
     </div>
 
     <!-- SLIDE 2 -->
@@ -158,7 +158,7 @@ import { Youtube } from 'vue-youtube'
         audio: undefined,
         isAudioPlaying: false,
         isInstruksi1: false,
-        instruksiImg: '/instruksi/1.png'
+        instruksiImg: '/instruksi/5 - closing - web.png'
       }
     },
     computed: {
@@ -239,11 +239,11 @@ import { Youtube } from 'vue-youtube'
       this.playAudio()
       this.isInstruksi1 = (sessionStorage.getItem('closing_statement') || false)
       if (window.matchMedia("(orientation: portrait)").matches){
-        this.instruksiImg = '/instruksi/1 hp.png'
+        this.instruksiImg = '/instruksi/5 - closing - hp.png'
       }
-      // if (!this.isInstruksi1){
-      //   sessionStorage.setItem('closing_statement', true)
-      // }
+      if (!this.isInstruksi1){
+        sessionStorage.setItem('closing_statement', true)
+      }
       if (window.matchMedia("(max-width: 600px)").matches){
         this.width = 352
         this.height = 240
@@ -275,8 +275,18 @@ import { Youtube } from 'vue-youtube'
       toggleTeaser(){
         if (this.showTeaser){
           this.$refs.youtube.player.pauseVideo()
+          this.changeMute()
+        } else {
+          if (!this.audio.muted){
+            this.changeMute()
+          }
         }
         this.showTeaser = !this.showTeaser
+      },
+      onYoutubePlay(){
+        if (!this.audio.muted) {
+          this.changeMute()
+        }
       },
       restart(){
         this.player.cueVideoById(this.dataKarya.videoId)
