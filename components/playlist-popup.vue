@@ -1,10 +1,10 @@
 <template>
-  <div class="podcastPopup" @click="bodyClick">
-    <div class="podcastpopupwindow">
-      <div class="podcast-x-button">
-        <img class="podcast-exit-image" @click="close()">
+  <div class="playlistPopup" @click="bodyClick">
+    <div class="playlistpopupwindow">
+      <div class="playlist-x-button">
+        <img class="playlist-exit-image" @click="close()">
       </div>
-      <div class="main-podcast">
+      <div class="main-playlist">
         <div class="list-area">
           <ol>
             <li
@@ -64,8 +64,8 @@ export default {
   },
   async mounted() {
     this.getRoom()
-    await this.getPodcastData()
-    this.initSetUpPodcast()
+    await this.getplaylistData()
+    this.initSetUpplaylist()
     this.preloadImages()
   },
   methods: {
@@ -84,7 +84,7 @@ export default {
         this.room = "sadness"
       }
     },
-    async getPodcastData() {
+    async getplaylistData() {
       const testing = await this.$fire.firestore
         .collection("karya")
         .doc("routes")
@@ -103,8 +103,8 @@ export default {
       })
       this.amount = this.judul.length
     },
-    initSetUpPodcast() {
-      document.getElementsByClassName("podcast-exit-image")[0].src =
+    initSetUpplaylist() {
+      document.getElementsByClassName("playlist-exit-image")[0].src =
         "/img/popup/exit-0.png"
       let id_room = 0
       if (this.room.toLowerCase() == "joy") {
@@ -177,22 +177,22 @@ export default {
     },
     close() {
       // CLOSE (UN-DISPLAY) THE POP UP WINDOW
-      document.getElementsByClassName("podcastPopup")[0].style.display = "none"
+      document.getElementsByClassName("playlistPopup")[0].style.display = "none"
       this.$emit("closePopup")
     },
     isInsidePopUpWindow(x, y) {
       // CHECK IF CLICK IS INSIDE THE POPUP
       const x1 = document
-        .getElementsByClassName("podcastpopupwindow")[0]
+        .getElementsByClassName("playlistpopupwindow")[0]
         .getBoundingClientRect().left
       const x2 = document
-        .getElementsByClassName("podcastpopupwindow")[0]
+        .getElementsByClassName("playlistpopupwindow")[0]
         .getBoundingClientRect().right
       const y1 = document
-        .getElementsByClassName("podcastpopupwindow")[0]
+        .getElementsByClassName("playlistpopupwindow")[0]
         .getBoundingClientRect().top
       const y2 = document
-        .getElementsByClassName("podcastpopupwindow")[0]
+        .getElementsByClassName("playlistpopupwindow")[0]
         .getBoundingClientRect().bottom
       if (x > x1 && x < x2 && y > y1 && y < y2) {
         return true
@@ -229,8 +229,8 @@ export default {
 </script>
 
 <style lang="scss">
-.podcastPopup {
-  background-color: black;
+.playlistPopup {
+  background-color: rgba($color: black, $alpha: .6);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -239,23 +239,26 @@ export default {
   height: 400vh;
   z-index: 1000;
 }
-.podcastpopupwindow {
+.playlistpopupwindow {
   font-family: "Mechanical Pencil";
   font-size: 2rem;
   color: black;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-image: url("/img/bg_beige-min.png");
   min-width: 65vw;
+  @media only screen and (max-width: 600px) {
+    font-size: 1rem;
+  }
 }
-.podcast-x-button {
+.playlist-x-button {
   display: flex;
   flex-direction: row-reverse;
   margin: 1% 1% 1% 0;
 }
-.main-podcast {
+.main-playlist {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -299,6 +302,14 @@ li:hover {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  @media only screen and (max-width: 600px) {
+    .leftpod-arrow, .rightpod-arrow {
+      width: 25px;
+    }
+    .center-ghost {
+      width: 50px;
+    }
+  }
 }
 .leftpod-arrow:hover {
   cursor: pointer;
@@ -307,7 +318,7 @@ li:hover {
   cursor: pointer;
 }
 @media screen and (max-width: 1020px) {
-  .podcastPopup {
+  .playlistPopup {
     font-size: 1.5rem;
   }
   .poster-area {
@@ -317,7 +328,7 @@ li:hover {
   }
 }
 @media screen and (max-width: 700px) {
-  .podcastpopupwindow {
+  .playlistpopupwindow {
     min-width: 75vw;
   }
   .poster-area {
@@ -334,7 +345,7 @@ li:hover {
   }
 }
 @media screen and (max-width: 400px) {
-  .podcastPopup {
+  .playlistPopup {
     font-size: 1.25rem;
   }
   .poster-area {

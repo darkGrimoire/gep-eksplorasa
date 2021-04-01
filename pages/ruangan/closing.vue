@@ -79,7 +79,6 @@
             <img :src="instruksiImg" alt="instruksi" @click="fadeInstruksi">
           </div>
           <div v-if="showFeedback" class="feedback-backdrop" @click="closeFeedback" />
-          <Feedback v-show="showFeedback" class="feedback-modal" style="z-index: 1001" @submitted="closeFeedback" />
           <!-- <div class="cont tulisanbalon">
             <img src="/closing/balon3.png" alt="tulisanbalon">
           </div>
@@ -89,6 +88,7 @@
         </div>
       </div>
     </div>
+    <Feedback v-show="showFeedback" class="feedback-modal" style="z-index: 1001" @submitted="closeFeedback" />
     <div class="sound-controller" @click="changeMute()">
       SOUND
     </div>
@@ -619,7 +619,9 @@
   color: whitesmoke;
   opacity: 0.2;
   transition: opacity .4s;
-  
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 .sound-controller:hover {
   cursor: pointer;

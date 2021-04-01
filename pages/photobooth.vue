@@ -75,7 +75,12 @@ const MAX_FRAME = 10
       },
       capture(){
         var newContext
-        var scaleFactor = 1280/this.canvas.width //How much we scale?
+        var scaleFactor
+        if (window.matchMedia("(orientation: portrait)").matches){
+          scaleFactor = 1280/this.canvas.height //How much we scale?
+        } else {
+          scaleFactor = 1280/this.canvas.width //How much we scale?
+        }
         this.newCanvas = document.createElement('canvas')
         newContext = this.newCanvas.getContext('2d')
         this.newCanvas.width = this.canvas.width * scaleFactor

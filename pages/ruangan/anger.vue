@@ -155,11 +155,11 @@
           <div v-if="!isInstruksi1" class="instruksi instruksi1">
             <img :src="instruksiImg1" alt="instruksi" @click="fadeInstruksi('instruksi1')">
           </div>
-          <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
-          <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
         </div>
       </div>
     </div>
+    <KinePopup v-if="popups === 'kine' && slide === 1" :tipe-karya="tipeKarya" @closePopup="popups = ''" />
+    <NewfotoPopup v-if="popups === 'foto' && slide === 1" :tipe-karya="tipeKarya" class="foto-popup" />
 
     <!-- SLIDE 2 -->
     <div
@@ -250,26 +250,26 @@
           <div v-if="!isInstruksi2" class="instruksi instruksi2">
             <img :src="instruksiImg2" alt="instruksi" @click="fadeInstruksi('instruksi2')">
           </div>
-          <div class="tv-popup">
-            <TvPopup
-              v-if="popups === 'tv' && slide === 2"
-              @closePopup="popups = ''"
-            />
-          </div>
-          <KinePopup
-            v-if="popups === 'kine' && slide === 2"
-            :tipe-karya="tipeKarya"
-            @closePopup="popups = ''"
-          />
-          <NewfotoPopup
-            v-if="popups === 'foto' && slide === 2"
-            :tipe-karya="tipeKarya"
-            class="foto-popup"
-          />
-          <PlaylistPopup v-if="popups === 'playlist' && slide === 2" @closePopup="popups = ''" />
         </div>
       </div>
     </div>
+    <div class="tv-popup">
+      <TvPopup
+        v-if="popups === 'tv' && slide === 2"
+        @closePopup="popups = ''"
+      />
+    </div>
+    <KinePopup
+      v-if="popups === 'kine' && slide === 2"
+      :tipe-karya="tipeKarya"
+      @closePopup="popups = ''"
+    />
+    <NewfotoPopup
+      v-if="popups === 'foto' && slide === 2"
+      :tipe-karya="tipeKarya"
+      class="foto-popup"
+    />
+    <PlaylistPopup v-if="popups === 'playlist' && slide === 2" @closePopup="popups = ''" />
     <div class="sound-controller" @click="changeMute()">
       SOUND
     </div>
@@ -371,43 +371,12 @@
           if (oldVal === 1)
             gsap.to('.transitionfade-in', {x: '0', duration: .7, delay: .2})
         } else {
-          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150})
+          gsap.to(this.base, {duration: 3, ease: 'none' ,slide0: -350, slide1: -250, slide2: -150,
+            onComplete: () => {
+              this.animasiAntarRuangan()
+            }})
           gsap.to('.transitionfade-out', {x: '40%', duration: .7})
           gsap.to('.transitionfade-out', {x: '0', duration: 1.3, ease: 'none', delay: .7})
-          if (this.isClosingVisited()){
-            this.$router.push({path: CLOSING})
-          }
-          if (this.isAllRoomVisited()){
-            // animasi closing
-            document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
-            this.msg.closing = this.msg.closings[0]
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 10, onComplete: () =>{
-              this.msg.closing = this.msg.closings[1]
-            }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 10.5})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 25, onComplete: () => {
-              this.msg.closing = this.msg.closings[2]
-            }})
-            gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 25.5})
-            gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 35, onComplete: () => {
-              this.$router.push({path: CLOSING})
-            }})
-        } else {
-          // animasi keluar
-          document.getElementsByClassName("narasi-keluar")[0].style.display =
-            "block"
-          gsap.to(".narasi-keluar", { opacity: 1, duration: 2, delay: 2 })
-          document.getElementsByClassName("loading")[0].style.display = "block"
-          gsap.to(".loading", {
-            opacity: 1,
-            duration: 1,
-            delay: 12,
-            onComplete: () => {
-              this.$router.push({ path: NEXT_ROOM })
-            }
-          })
-        }
       }
     }
   },
@@ -483,35 +452,71 @@
         document.getElementsByClassName(classname)[0].style.display = 'none'
       }})
     },
+    animasiAntarRuangan(){
+      if (this.isClosingVisited()){
+        this.$router.push({path: CLOSING})
+      }
+      else if (this.isAllRoomVisited()){
+        // animasi closing
+        document.getElementsByClassName('narasi-closing')[0].style.display = 'block'
+        this.msg.closing = this.msg.closings[0]
+        gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 2})
+        gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 10, onComplete: () =>{
+          this.msg.closing = this.msg.closings[1]
+        }})
+        gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 10.5})
+        gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 25, onComplete: () => {
+          this.msg.closing = this.msg.closings[2]
+        }})
+        gsap.to('.narasi-closing', {opacity: 1, duration: 1, delay: 25.5})
+        gsap.to('.narasi-closing', {opacity: 0, duration: .5, delay: 35, onComplete: () => {
+          this.$router.push({path: CLOSING})
+        }})
+      } else {
+        // animasi keluar
+        document.getElementsByClassName("narasi-keluar")[0].style.display =
+          "block"
+        gsap.to(".narasi-keluar", { opacity: 1, duration: 2, delay: 2 })
+        document.getElementsByClassName("loading")[0].style.display = "block"
+        gsap.to(".loading", {
+          opacity: 1,
+          duration: 1,
+          delay: 12,
+          onComplete: () => {
+            this.$router.push({ path: NEXT_ROOM })
+          }
+        })
+      }
+    },
     switchSlide(val){
-        this.slide += val
-        gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
-      },
-      preloadImages(){
-        new Image().src = '/anger/anger1.png'
-        new Image().src = '/anger/a-photo series-2.png'
-        new Image().src = '/anger/a-photobook-2.png'
-        new Image().src = '/anger/gep pisau.png'
-        new Image().src = '/anger/tv2.png'
-        new Image().src = '/anger/a-single-2.png'
-        new Image().src = '/anger/a-artikel-2.png'
-        new Image().src = '/anger/gep anger berserakan.png'
-        new Image().src = '/anger/gep anger meledak.png'
-        new Image().src = '/anger/kulopen.png'
-      },
-      handleRasyid(){
-        localStorage.setItem('before_instalasi', this.$route.path)
-        this.$router.push({path: '/karya/instalasi/bandung'})
-      },
-      isAllRoomVisited(){
-        return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
-      },
-      isRoomVisited(){
-        return localStorage.getItem('anger')
-      },
-      isClosingVisited(){
-        return localStorage.getItem('closing')
-      },
+      this.slide += val
+      gsap.to(this.$data, {computedDisplacement: 0, transformed: 0})
+    },
+    preloadImages(){
+      new Image().src = '/anger/anger1.png'
+      new Image().src = '/anger/a-photo series-2.png'
+      new Image().src = '/anger/a-photobook-2.png'
+      new Image().src = '/anger/gep pisau.png'
+      new Image().src = '/anger/tv2.png'
+      new Image().src = '/anger/a-single-2.png'
+      new Image().src = '/anger/a-artikel-2.png'
+      new Image().src = '/anger/gep anger berserakan.png'
+      new Image().src = '/anger/gep anger meledak.png'
+      new Image().src = '/anger/kulopen.png'
+    },
+    handleRasyid(){
+      localStorage.setItem('before_instalasi', this.$route.path)
+      this.$router.push({path: '/karya/instalasi/bandung'})
+    },
+    isAllRoomVisited(){
+      return localStorage.getItem('joy') && localStorage.getItem('fear') && localStorage.getItem('sad') && localStorage.getItem('anger')
+    },
+    isRoomVisited(){
+      return localStorage.getItem('anger')
+    },
+    isClosingVisited(){
+      return localStorage.getItem('closing')
+    },
     startDrag(e) {
       if (window.matchMedia("(orientation: portrait)").matches) {
         // enable dragging and keep mouseStart point
@@ -759,6 +764,9 @@
   // -moz-text-fill-color: transparent;
   opacity: 0;
   text-align: center;
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 
 .narasi-masuk {
@@ -770,11 +778,17 @@
   font-size: 40px;
   z-index: 10000;
   color: #ede5d1;
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 
 .narasi-keluar {
   font-size: 40px;
   color: #d1bb10;
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 
 .cont {
@@ -939,7 +953,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 35%;
+  height: 25%;
   width: 8.5%;
   top: 13.5%;
   left: 83.5%;
@@ -976,7 +990,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 17.5%;
   top: 77.5%;
   left: 43%;
@@ -990,7 +1004,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 17.5%;
   top: 77.5%;
   left: 43%;
@@ -1003,7 +1017,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 8%;
   top: 14%;
   left: 55.5%;
@@ -1017,7 +1031,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 8%;
   top: 14%;
   left: 55.5%;
@@ -1056,7 +1070,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 22%;
   width: 8%;
   top: 43%;
   left: 16.5%;
@@ -1070,7 +1084,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 22%;
   width: 8%;
   top: 43%;
   left: 16.5%;
@@ -1094,7 +1108,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 12%;
   top: 30.5%;
   left: 77.5%;
@@ -1108,7 +1122,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 15%;
   top: 30.5%;
   left: 76.5%;
@@ -1127,7 +1141,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 35%;
   width: 20%;
   top: 65%;
   left: 53.5%;
@@ -1141,7 +1155,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 35%;
   width: 20%;
   top: 65%;
   left: 53.5%;
@@ -1154,7 +1168,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 22%;
   width: 17%;
   top: 73%;
   left: 30.5%;
@@ -1168,7 +1182,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 22%;
   width: 17%;
   top: 73%;
   left: 30.5%;
@@ -1181,7 +1195,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 10.5%;
   top: 9%;
   left: 52.5%;
@@ -1195,7 +1209,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 10.5%;
   top: 9%;
   left: 52.5%;
@@ -1267,7 +1281,7 @@
   background-size:contain;
   background-repeat:no-repeat;
   position:absolute;
-  height:35%;
+  height:21%;
   width: 13%;
   top: 79%;
   left: 10.5%;
@@ -1281,7 +1295,7 @@
   background-size:contain;
   background-repeat:no-repeat;
   position:absolute;
-  height:35%;
+  height:21%;
   width: 13%;
   top: 79%;
   left: 10.5%;
@@ -1320,6 +1334,9 @@
   color: whitesmoke;
   opacity: 0.2;
   transition: opacity .4s;
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
 }
 .sound-controller:hover {
   cursor: pointer;

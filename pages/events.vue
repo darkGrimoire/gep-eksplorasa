@@ -195,6 +195,9 @@ export default {
     font-family: 'KG Happy Solid';
     font-size: 25px;
     color: #1f1f1f;
+    @media only screen and (max-width: 600px) {
+      font-size: 14px;
+    }
   }
 
   .container {
@@ -274,11 +277,13 @@ export default {
     width: 525px;
   }
 
-  .deskripsi {
+  ::v-deep .deskripsi {
     font-family: 'Karla';
-    font-style: bold;
     font-size: 23px;
     list-style-position: outside;
+    @media only screen and (max-width: 600px) {
+      font-size: 12px;
+    }
   }
 
   .box {

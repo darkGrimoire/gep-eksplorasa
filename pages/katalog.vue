@@ -197,7 +197,7 @@ const TARGET_ZOOM_WIDTH = 3000
         }
         if (window.matchMedia("(orientation: portrait)").matches){
           this.isPhone = true
-          this.defaultScale = this.dataKarya.display.orientation === 'portrait' ? 3 : 4
+          this.defaultScale = this.dataKarya.display.orientation === 'portrait' ? 3 : 1.8
           this.defaultWidth = this.dataKarya.display.orientation === 'portrait' ? screen.width * 0.8 : screen.width * 0.9
           this.options.width = this.defaultWidth
           this.options.height = (this.options.width)/(this.dataKarya.metadata.ori_width/this.dataKarya.metadata.ori_height)
@@ -513,12 +513,16 @@ const TARGET_ZOOM_WIDTH = 3000
           $('.next-button').show()
           $('.next-button-mobile').show()
           $('.exit-button-mobile').show()
+          $('.prev-karya-button').show()
+          $('.next-karya-button').show()
         } else{
           $('.previous-button').hide()
           $('.previous-button-mobile').hide()
           $('.next-button').hide()
           $('.next-button-mobile').hide()
           $('.exit-button-mobile').hide()
+          $('.prev-karya-button').hide()
+          $('.next-karya-button').hide()
         }
       },
       resizeViewport() {
@@ -793,7 +797,8 @@ const TARGET_ZOOM_WIDTH = 3000
   }
 }
 .exit-button-mobile{
-  left: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   bottom: 2%;
   font-size: 20px; /* Set a font size */
   @media only screen and (max-width: 800px) {
