@@ -274,8 +274,18 @@ import { Youtube } from 'vue-youtube'
       toggleTeaser(){
         if (this.showTeaser){
           this.$refs.youtube.player.pauseVideo()
+          this.changeMute()
+        } else {
+          if (!this.audio.muted){
+            this.changeMute()
+          }
         }
         this.showTeaser = !this.showTeaser
+      },
+      onYoutubePlay(){
+        if (!this.audio.muted) {
+          this.changeMute()
+        }
       },
       restart(){
         this.player.cueVideoById(this.dataKarya.videoId)

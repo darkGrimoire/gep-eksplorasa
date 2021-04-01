@@ -80,7 +80,7 @@ import 'swiper/swiper-bundle.css'
     },
     async mounted () {
       this.getRoom()
-      await this.getData()
+      // await this.getData()
     },
     methods: {
       getRoom() {

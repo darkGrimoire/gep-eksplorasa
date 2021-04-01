@@ -30,7 +30,7 @@ export default {
   },
   async mounted() {
     this.getRoom()
-    await this.getData()
+    // await this.getData()
     this.initSetUp()
     // this.insertRibbon()
     // window.addEventListener("resize", this.windowChange)
